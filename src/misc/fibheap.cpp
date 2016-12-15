@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 
 FibHeapEntry::FibHeapEntry(void *value, Uint32 key)

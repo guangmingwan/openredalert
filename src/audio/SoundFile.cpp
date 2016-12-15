@@ -22,7 +22,7 @@
 #include <memory>
 #include <string>
 
-#include "SDL/SDL_audio.h"
+#include "SDL_audio.h"
 
 #include "SOUND_DECODE_STATE.h"
 #include "SoundCommon.h"

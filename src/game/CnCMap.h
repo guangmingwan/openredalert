@@ -22,8 +22,8 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 #include "triggers.h"
 #include "MiniMapClipping.h"

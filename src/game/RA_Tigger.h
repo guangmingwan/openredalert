@@ -18,7 +18,7 @@
 #ifndef RA_TIGGER_H
 #define RA_TIGGER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Event data for trigger

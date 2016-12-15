@@ -18,7 +18,7 @@
 #ifndef POWERINFO_H
 #define POWERINFO_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Power information of a structure

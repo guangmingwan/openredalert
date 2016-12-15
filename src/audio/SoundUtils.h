@@ -18,7 +18,7 @@
 #ifndef SOUNDUTILS_H
 #define SOUNDUTILS_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * 

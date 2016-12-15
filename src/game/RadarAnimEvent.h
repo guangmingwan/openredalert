@@ -18,7 +18,7 @@
 #ifndef RADARANIMEVENT_H
 #define RADARANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "ActionEvent.h"
 

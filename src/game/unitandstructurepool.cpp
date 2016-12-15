@@ -21,7 +21,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Logger.hpp"
 #include "misc/config.h"

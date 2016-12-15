@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"

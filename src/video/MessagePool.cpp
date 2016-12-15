@@ -21,9 +21,9 @@
 #include <functional>
 #include <algorithm>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
-#include "SDL/SDL_timer.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
+#include "SDL_timer.h"
 
 #include "video/Renderer.h"
 #include "ui/RA_Label.h"

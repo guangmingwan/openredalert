@@ -20,7 +20,7 @@
 
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Params of the Ai

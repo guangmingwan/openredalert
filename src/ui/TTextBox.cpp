@@ -21,7 +21,7 @@
 
 #include "RA_Label.h"
 #include "TTextBox.h"
-#include "SDL/SDL_video.h"
+#include "SDL_video.h"
 #include "Font.h"
 #include "video/CPSImage.h"
 #include "misc/common.h"

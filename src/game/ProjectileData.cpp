@@ -19,7 +19,7 @@
 
 #include <iostream>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "misc/common.h"
 #include "misc/INIFile.h"

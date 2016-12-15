@@ -17,7 +17,7 @@
 
 #include "TCheckBox.h"
 
-#include "SDL/SDL_video.h"
+#include "SDL_video.h"
 
 #include "video/GraphicsEngine.h"
 

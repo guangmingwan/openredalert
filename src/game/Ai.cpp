@@ -20,7 +20,7 @@
 #include <cmath>
 #include <sstream>
 
-#include "SDL/SDL_timer.h"
+#include "SDL_timer.h"
 
 #include "Logger.hpp"
 #include "ActionEventQueue.h"

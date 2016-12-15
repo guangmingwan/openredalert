@@ -17,7 +17,7 @@
 
 #include "ImageCacheEntry.h"
 
-#include "SDL/SDL_video.h"
+#include "SDL_video.h"
 
 /** 
  * Ensure that the pointers start off pointing somewhere that's safe to

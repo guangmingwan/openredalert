@@ -22,9 +22,9 @@
 #include <stdexcept>
 #include <string>
 
-#include "SDL/SDL_audio.h"
-#include "SDL/SDL_events.h"
-#include "SDL/SDL_mutex.h"
+#include "SDL_audio.h"
+#include "SDL_events.h"
+#include "SDL_mutex.h"
 
 #include "misc/config.h"
 #include "misc/Compression.hpp"

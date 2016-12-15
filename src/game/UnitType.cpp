@@ -20,8 +20,8 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_timer.h"
+#include "SDL_types.h"
+#include "SDL_timer.h"
 
 #include "misc/common.h"
 #include "CnCMap.h"

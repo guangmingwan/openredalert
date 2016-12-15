@@ -18,7 +18,7 @@
 #ifndef CPSHEADER_H
 #define CPSHEADER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Header of .CPS image

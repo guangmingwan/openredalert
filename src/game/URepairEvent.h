@@ -18,7 +18,7 @@
 #ifndef UREPAIREVENT_H
 #define UREPAIREVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "UnitAnimEvent.h"
 

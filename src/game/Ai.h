@@ -20,7 +20,7 @@
 
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #define DIFFICUTY_EASY		1
 #define DIFFICUTY_MEDIUM	2

@@ -20,7 +20,7 @@
 #include <string>
 #include <math.h>
 
-#include "SDL/SDL_timer.h"
+#include "SDL_timer.h"
 
 #include "Logger.hpp"
 #include "CnCMap.h"

@@ -32,7 +32,7 @@
 #include <dirent.h>
 #endif
 
-#include "SDL/SDL_endian.h"
+#include "SDL_endian.h"
 
 #include "video/Renderer.h"
 #include "externalvfs.h"

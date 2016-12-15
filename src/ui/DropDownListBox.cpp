@@ -18,7 +18,7 @@
 
 #include <math.h>
 
-#include "SDL/SDL_video.h"
+#include "SDL_video.h"
 
 #include "RA_Label.h"
 #include "Font.h"

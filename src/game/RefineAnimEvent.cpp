@@ -17,7 +17,7 @@
 
 #include "RefineAnimEvent.h"
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "PlayerPool.h"
 #include "ProjectileAnim.h"

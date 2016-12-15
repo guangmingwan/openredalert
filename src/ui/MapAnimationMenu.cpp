@@ -16,7 +16,7 @@
 
 #include "MapAnimationMenu.hpp"
 
-#include <SDL/SDL.h>
+#include "SDL.h"
 
 #include "video/WSAMovie.h"
 #include "video/GraphicsEngine.h"

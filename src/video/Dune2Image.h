@@ -18,8 +18,8 @@
 #ifndef DUNE2IMAGE_H
 #define DUNE2IMAGE_H
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 #include "Dune2Header.h"
 #include "SHPBase.h"

@@ -21,7 +21,7 @@
 #include <vector>
 #include <string>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "vfs/archive.h"
 #include "misc/gametypes.h"

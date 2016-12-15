@@ -16,7 +16,7 @@
 
 #include "UnitOrStructure.h"
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Logger.hpp"
 

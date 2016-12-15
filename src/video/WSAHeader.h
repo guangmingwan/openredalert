@@ -18,7 +18,7 @@
 #ifndef WSAHEADER_H
 #define WSAHEADER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Header of the WSA Movie

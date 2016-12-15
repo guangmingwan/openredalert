@@ -18,7 +18,7 @@
 #ifndef PROCANIMEVENT_H
 #define PROCANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "BuildingAnimEvent.h"
 #include "anim_nfo.h"

@@ -16,7 +16,7 @@
 
 #include "Structure.h"
 
-#include "SDL/SDL_timer.h"
+#include "SDL_timer.h"
 
 #include "CnCMap.h"
 #include "PlayerPool.h"

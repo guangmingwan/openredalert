@@ -18,7 +18,7 @@
 #ifndef BTURNANIMEVENT_H
 #define BTURNANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 #include "BuildingAnimEvent.h"
 #include "Structure.h"
 

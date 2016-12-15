@@ -18,8 +18,8 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
-#include "SDL/SDL_video.h"
-#include "SDL/SDL_types.h"
+#include "SDL_video.h"
+#include "SDL_types.h"
 
 class Renderer {
 public:

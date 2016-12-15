@@ -24,8 +24,8 @@
 #include <string>
 
 
-#include "SDL/SDL_mouse.h"
-#include "SDL/SDL_video.h"
+#include "SDL_mouse.h"
+#include "SDL_video.h"
 
 #include "misc/common.h"
 #include "video/GraphicsEngine.h"

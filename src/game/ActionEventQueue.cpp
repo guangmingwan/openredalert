@@ -17,7 +17,7 @@
 
 #include "ActionEventQueue.h"
 
-#include "SDL/SDL_timer.h"
+#include "SDL_timer.h"
 
 #include "ActionEvent.h"
 #include "Comp.h"

@@ -18,7 +18,7 @@
 #ifndef WALKANIMEVENT_H
 #define WALKANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "UnitAnimEvent.h"
 #include "Unit.hpp"

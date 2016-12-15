@@ -18,7 +18,7 @@
 #ifndef UATTACKANIMEVENT_H
 #define UATTACKANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "UnitAnimEvent.h"
 

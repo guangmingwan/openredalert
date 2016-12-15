@@ -17,8 +17,8 @@
 
 #include "PauseMenu.h"
 
-#include "SDL/SDL_video.h"
-#include "SDL/SDL_events.h"
+#include "SDL_video.h"
+#include "SDL_events.h"
 
 #include "Button.h"
 #include "RA_Label.h"

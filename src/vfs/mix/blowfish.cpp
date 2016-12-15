@@ -19,7 +19,7 @@
 
 #include <cstring>
 
-#include "SDL/SDL_endian.h"
+#include "SDL_endian.h"
 
 void Cblowfish::set_key(const Uint8* key, Uint32 cb_key)
 {

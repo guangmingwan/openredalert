@@ -16,7 +16,7 @@
 
 #include "MoneyCounter.h"
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "audio/SoundEngine.h"
 #include "misc/config.h"

@@ -18,7 +18,7 @@
 #ifndef UINFILTRATEANIMEVENT_H
 #define UINFILTRATEANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "UnitAnimEvent.h"
 

@@ -18,7 +18,7 @@
 #ifndef MIXFILES_H
 #define MIXFILES_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include <vector>
 #include <map>

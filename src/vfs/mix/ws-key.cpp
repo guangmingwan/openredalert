@@ -22,8 +22,8 @@
  * Introduced to the FreeCNC code base by Kareem Dana
  * Various stylistic changes by Euan MacGregor
  *****************************************************************************/
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_endian.h"
+#include "SDL_types.h"
+#include "SDL_endian.h"
 #include <cstring>
 #include "ws-key.h"
 

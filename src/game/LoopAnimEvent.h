@@ -18,7 +18,7 @@
 #ifndef LOOPANIMEVENT_H
 #define LOOPANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "BuildingAnimEvent.h"
 

@@ -22,7 +22,7 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_events.h"
+#include "SDL_events.h"
 #include "RA_Label.h"
 
 /**

@@ -19,7 +19,7 @@
 
 #include <stdexcept>
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 #include "Logger.hpp"
 #include "ActionEventQueue.h"

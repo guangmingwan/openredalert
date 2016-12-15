@@ -18,7 +18,7 @@
 #ifndef DUNE2HEADER_H
 #define DUNE2HEADER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 class Dune2Header {
 public:

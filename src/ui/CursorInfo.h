@@ -18,7 +18,7 @@
 #ifndef CURSORINFO_H
 #define CURSORINFO_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * All Data of a cursor 

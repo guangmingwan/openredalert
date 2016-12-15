@@ -26,7 +26,7 @@
 #include <stack>
 #include <time.h>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "game/TalkbackType.h"
 #include "UnitOrStructure.h"

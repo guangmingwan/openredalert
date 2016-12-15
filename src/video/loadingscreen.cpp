@@ -16,8 +16,8 @@
 
 #include "LoadingScreen.h"
 
-#include "SDL/SDL_timer.h"
-#include "SDL/SDL_events.h"
+#include "SDL_timer.h"
+#include "SDL_events.h"
 
 #include "video/CPSImage.h"
 #include "video/GraphicsEngine.h"

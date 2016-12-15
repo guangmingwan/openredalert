@@ -18,8 +18,8 @@
 #ifndef RA_PROGRESSBAR_H
 #define RA_PROGRESSBAR_H
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 class RaWindow;
 

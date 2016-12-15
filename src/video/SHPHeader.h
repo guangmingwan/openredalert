@@ -18,7 +18,7 @@
 #ifndef SHPHEADER_H
 #define SHPHEADER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Header of SHP Image

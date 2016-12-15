@@ -18,7 +18,7 @@
 #ifndef ANIMINFO_T_H
 #define ANIMINFO_T_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Information about image animation (use to decode image in animation) 

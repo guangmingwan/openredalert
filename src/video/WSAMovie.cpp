@@ -20,8 +20,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "SDL/SDL_timer.h"
-#include "SDL/SDL_video.h"
+#include "SDL_timer.h"
+#include "SDL_video.h"
 
 #include "Renderer.h"
 #include "misc/config.h"

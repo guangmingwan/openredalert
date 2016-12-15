@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include "SDL/SDL_video.h"
+#include "SDL_video.h"
 
 #include "WSAHeader.h"
 #include "GraphicsEngine.h"

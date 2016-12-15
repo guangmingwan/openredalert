@@ -18,8 +18,8 @@
 #ifndef TTEXTBOX_H
 #define TTEXTBOX_H
 
-#include "SDL/SDL_events.h"
-#include "SDL/SDL_video.h"
+#include "SDL_events.h"
+#include "SDL_video.h"
 
 #include "RA_Label.h"
 

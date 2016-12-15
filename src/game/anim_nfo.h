@@ -18,7 +18,7 @@
 #ifndef ANIM_NFO_H
 #define ANIM_NFO_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Rather than have each derived class be a friend of the Structure

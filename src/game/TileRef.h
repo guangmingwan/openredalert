@@ -18,7 +18,7 @@
 #ifndef TILEREF_H
 #define TILEREF_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Reference to a tile

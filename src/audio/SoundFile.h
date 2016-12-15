@@ -20,8 +20,8 @@
 
 #include <string>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_audio.h"
+#include "SDL_types.h"
+#include "SDL_audio.h"
 
 #include "SoundBuffer.h"
 

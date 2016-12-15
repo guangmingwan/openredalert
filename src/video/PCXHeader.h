@@ -18,8 +18,8 @@
 #ifndef PCXHEADER_H
 #define PCXHEADER_H
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 /**
  * Header of a .pcx file

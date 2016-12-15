@@ -20,7 +20,7 @@
 
 #include <stack>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 class Unit;
 

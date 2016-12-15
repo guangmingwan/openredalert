@@ -18,7 +18,7 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "DispatchLogState.h"
 #include "ConStatus.h"

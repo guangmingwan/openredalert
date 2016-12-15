@@ -19,7 +19,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "misc/Compression.hpp"
 #include "include/fcnc_endian.h"

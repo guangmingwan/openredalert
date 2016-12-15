@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 //
 //  Commands that tell us what the unit or structure should be doing

@@ -18,7 +18,7 @@
 #ifndef INFANTRYGROUP_H
 #define INFANTRYGROUP_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 class Unit;
 

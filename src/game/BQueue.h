@@ -20,7 +20,7 @@
 #include <list>
 #include <map>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "ConStatus.h"
 #include "Production.h"

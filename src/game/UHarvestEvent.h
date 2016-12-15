@@ -18,7 +18,7 @@
 #ifndef UHARVESTEVENT_H
 #define UHARVESTEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "UnitAnimEvent.h"
 

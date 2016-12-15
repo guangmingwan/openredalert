@@ -22,8 +22,8 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_events.h"
-#include "SDL/SDL_types.h"
+#include "SDL_events.h"
+#include "SDL_types.h"
 
 #define BUTTON_TYPE_DEFAULT	1
 #define BUTTON_TYPE_LOCK_UNLOCK	2

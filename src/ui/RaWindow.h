@@ -18,8 +18,8 @@
 #ifndef RAWINDOW_H
 #define RAWINDOW_H
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 class Font;
 class RA_Label;

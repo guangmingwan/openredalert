@@ -18,9 +18,9 @@
 #ifndef VQAMOVIE_H
 #define VQAMOVIE_H
 
-#include "SDL/SDL_audio.h"
-#include "SDL/SDL_mutex.h"
-#include "SDL/SDL_video.h"
+#include "SDL_audio.h"
+#include "SDL_mutex.h"
+#include "SDL_video.h"
 
 #include "VQAHeader.h"
 

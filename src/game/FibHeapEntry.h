@@ -18,7 +18,7 @@
 #ifndef FIBHEAPENTRY_H
 #define FIBHEAPENTRY_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 class TileRef;
 

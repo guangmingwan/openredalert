@@ -18,7 +18,7 @@
 #ifndef REFINEANIMEVENT_H
 #define REFINEANIMEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "BuildingAnimEvent.h"
 

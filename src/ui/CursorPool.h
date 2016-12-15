@@ -22,7 +22,7 @@
 #include <map>
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 using std::string;
 using std::map;

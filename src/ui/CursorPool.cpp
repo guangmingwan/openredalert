@@ -18,7 +18,7 @@
 
 #include <iterator>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "misc/INIFile.h"
 #include "CursorInfo.h"

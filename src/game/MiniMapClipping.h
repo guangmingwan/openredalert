@@ -18,7 +18,7 @@
 #ifndef MINIMAPCLIPPING_H
 #define MINIMAPCLIPPING_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**  */
 class MiniMapClipping {

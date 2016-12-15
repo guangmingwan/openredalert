@@ -18,7 +18,7 @@
 #ifndef ACTIONEVENT_H
 #define ACTIONEVENT_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /** 
  * An abstract class which all actionevents must extend.

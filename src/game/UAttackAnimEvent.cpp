@@ -19,7 +19,7 @@
 
 #include <cmath>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Logger.hpp"
 #include "ActionEventQueue.h"

@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "armour_t.h"
 #include "WeaponData.h"

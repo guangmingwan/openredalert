@@ -19,8 +19,8 @@
 
 #include <string>
 
-#include "SDL/SDL_events.h"
-#include "SDL/SDL_timer.h"
+#include "SDL_events.h"
+#include "SDL_timer.h"
 
 #include "Cursor.h"
 #include "Selection.h"

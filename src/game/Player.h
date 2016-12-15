@@ -22,7 +22,7 @@
 #include <map>
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "ConStatus.h"
 #include "UnitOrStructureType.h"

@@ -18,7 +18,7 @@
 #ifndef BLOWFISH_H
 #define BLOWFISH_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 typedef Uint32 t_bf_p[18];
 typedef Uint32 t_bf_s[4][256];

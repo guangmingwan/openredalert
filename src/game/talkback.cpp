@@ -22,7 +22,7 @@
 #include <string>
 #include <vector>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Logger.hpp"
 #include "misc/INIFile.h"

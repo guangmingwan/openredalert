@@ -18,7 +18,7 @@
 #ifndef SIDEBARGEOMETRY_H
 #define SIDEBARGEOMETRY_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Information about Height and Width to manage drawing of sidebar buttons

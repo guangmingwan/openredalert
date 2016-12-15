@@ -17,7 +17,7 @@
 
 #include "FibHeapEntry.h"
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "TileRef.h"
 

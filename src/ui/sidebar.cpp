@@ -24,8 +24,8 @@
 #include <sstream>
 #include <algorithm>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 #include "Input.h"
 #include "Cursor.h"

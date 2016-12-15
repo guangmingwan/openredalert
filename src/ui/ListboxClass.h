@@ -21,9 +21,9 @@
 #include <vector>
 #include <string>
 
-#include "SDL/SDL_events.h"
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_events.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 #include "ListBoxLine.h"
 
 // Listbox defines

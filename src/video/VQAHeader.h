@@ -18,7 +18,7 @@
 #ifndef VQAHEADER_H
 #define VQAHEADER_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 namespace VQA
 {

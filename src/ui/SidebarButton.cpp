@@ -17,7 +17,7 @@
 
 #include "SidebarButton.h"
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Sidebar.h"
 #include "video/ImageCache.h"

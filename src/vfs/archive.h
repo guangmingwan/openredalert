@@ -18,7 +18,7 @@
 #ifndef ARCHIVE_H
 #define ARCHIVE_H
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 /**
  * Abstract interface to manipulate VFile in archives

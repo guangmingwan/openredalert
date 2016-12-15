@@ -19,7 +19,7 @@
 
 #include <cstring>
 
-#include "SDL/SDL_types.h"
+#include "SDL_types.h"
 
 #include "Logger.hpp"
 #include "misc/common.h"

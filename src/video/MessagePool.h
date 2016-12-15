@@ -21,8 +21,8 @@
 #include <list>
 #include <string>
 
-#include "SDL/SDL_types.h"
-#include "SDL/SDL_video.h"
+#include "SDL_types.h"
+#include "SDL_video.h"
 
 #include "ui/RA_Label.h"
 
