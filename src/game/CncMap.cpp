@@ -3245,7 +3245,7 @@ SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint3
         catch (ImageNotFound&)
         {
             stringstream message;
-            message << "Unable to locate template " << templ << ", " << tile << ", '" << tilefilename << "' in mix! using tile 0, 0 instead";
+            message << "Unable to locate template " << templ << ", " << tile << ", '" << tilefilename.str() << "' in mix! using tile 0, 0 instead";
             Logger::getInstance()->Warning(message.str());
             if (templ == 0 && tile == 0)
             {
@@ -3268,7 +3268,7 @@ SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint3
     if (retimage == NULL)
     {
         stringstream message;
-        message << "Illegal template " << templ << ", " << tile << " ('" << tilefilename << "')! using tile 0, 0 instead\n",
+        message << "Illegal template " << templ << ", " << tile << " ('" << tilefilename.str() << "')! using tile 0, 0 instead\n",
         Logger::getInstance()->Warning(message.str());
         
         if (templ == 0 && tile == 0)

@@ -747,26 +747,26 @@ Unit* UnitAndStructurePool::createUnit(const char *typen, Uint16 cellpos, Uint8 
 Unit* UnitAndStructurePool::createUnit(UnitType* type, Uint16 cellpos, Uint8 subpos, unsigned int owner, Uint16 health, Uint8 facing, Uint8 action, string trigger_name)
 {
     if (cellpos >= p::ccmap->getSize()){
-        return false;
+        return nullptr;
     }
 
     Uint32 unitnum = 0;
 
     if (cellpos > (p::ccmap->getWidth() * p::ccmap->getHeight())) {
         Logger::getInstance()->Error("Attempted to create a '" + type->getName() + "' at %i, outside map.");//, cellpos);
-        return false;
+        return nullptr;
     }
     if ((getStructureAt(cellpos) != 0) && ((unitandstructmat[cellpos].flags&(US_HIGH_COST)) == 0)) 
     {
         Logger::getInstance()->Error("Cell %i already occupied by structure " //, cellpos,
                 + getStructureAt(cellpos)->getType()->getName());
-        return false;
+        return nullptr;
     }
     if (getUnitAt(cellpos,subpos) != 0) {
         // @todo appear next !!! (next subpos)
         Logger::getInstance()->Error("Cell/subpos already occupied by " + getUnitAt(cellpos,
                     subpos)->getType()->getName());
-        return false;
+        return nullptr;
     }
 
     // Reuse an expired unitnum.
