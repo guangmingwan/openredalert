@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3C004430-E567-4129-85E5-EF8D6F353996}</ProjectGuid>
+    <RootNamespace>openredalert</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDLmain.lib;SDL.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol />
+      <NoEntryPoint>false</NoEntryPoint>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDLmain.lib;SDL.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\audio\SoundEngine.cpp" />
+    <ClCompile Include="src\audio\SoundError.cpp" />
+    <ClCompile Include="src\audio\SoundFile.cpp" />
+    <ClCompile Include="src\audio\SoundUtils.cpp" />
+    <ClCompile Include="src\game\ActionEvent.cpp" />
+    <ClCompile Include="src\game\ActionEventQueue.cpp" />
+    <ClCompile Include="src\game\Ai.cpp" />
+    <ClCompile Include="src\game\AiCommand.cpp" />
+    <ClCompile Include="src\game\BarrelExplosionActionEvent.cpp" />
+    <ClCompile Include="src\game\BAttackAnimEvent.cpp" />
+    <ClCompile Include="src\game\BExplodeAnimEvent.cpp" />
+    <ClCompile Include="src\game\BQTimer.cpp" />
+    <ClCompile Include="src\game\BQueue.cpp" />
+    <ClCompile Include="src\game\BRepairUnitAnimEvent.cpp" />
+    <ClCompile Include="src\game\BTurnAnimEvent.cpp" />
+    <ClCompile Include="src\game\BuildAnimEvent.cpp" />
+    <ClCompile Include="src\game\BuildingAnimEvent.cpp" />
+    <ClCompile Include="src\game\CncMap.cpp" />
+    <ClCompile Include="src\game\Comp.cpp" />
+    <ClCompile Include="src\game\DataLoader.cpp" />
+    <ClCompile Include="src\game\Dispatcher.cpp" />
+    <ClCompile Include="src\game\DoorAnimEvent.cpp" />
+    <ClCompile Include="src\game\ExplosionAnim.cpp" />
+    <ClCompile Include="src\game\FibHeapEntry.cpp" />
+    <ClCompile Include="src\game\Game.cpp" />
+    <ClCompile Include="src\game\GameError.cpp" />
+    <ClCompile Include="src\game\GlobalClearTriggerAction.cpp" />
+    <ClCompile Include="src\game\GlobalSetTriggerAction.cpp" />
+    <ClCompile Include="src\game\InfantryGroup.cpp" />
+    <ClCompile Include="src\game\KeyComp.cpp" />
+    <ClCompile Include="src\game\L2Overlay.cpp" />
+    <ClCompile Include="src\game\LoadMapError.cpp" />
+    <ClCompile Include="src\game\LoopAnimEvent.cpp" />
+    <ClCompile Include="src\game\MissionData.cpp" />
+    <ClCompile Include="src\game\MissionMapsClass.cpp" />
+    <ClCompile Include="src\game\MissionTheater.cpp" />
+    <ClCompile Include="src\game\MoneyCounter.cpp" />
+    <ClCompile Include="src\game\MoveAnimEvent.cpp" />
+    <ClCompile Include="src\game\MultiPlayerMaps.cpp" />
+    <ClCompile Include="src\game\NoActionTriggerAction.cpp" />
+    <ClCompile Include="src\game\Path.cpp" />
+    <ClCompile Include="src\game\Player.cpp" />
+    <ClCompile Include="src\game\PlayerPool.cpp" />
+    <ClCompile Include="src\game\ProcAnimEvent.cpp" />
+    <ClCompile Include="src\game\Projectile.cpp" />
+    <ClCompile Include="src\game\ProjectileAnim.cpp" />
+    <ClCompile Include="src\game\ProjectileData.cpp" />
+    <ClCompile Include="src\game\ProjectileDataList.cpp" />
+    <ClCompile Include="src\game\RadarAnimEvent.cpp" />
+    <ClCompile Include="src\game\RawTriggerAction.cpp" />
+    <ClCompile Include="src\game\RedAlertDataLoader.cpp" />
+    <ClCompile Include="src\game\RefineAnimEvent.cpp" />
+    <ClCompile Include="src\game\RepairAnimEvent.cpp" />
+    <ClCompile Include="src\game\SnowMissionTheater.cpp" />
+    <ClCompile Include="src\game\structure.cpp" />
+    <ClCompile Include="src\game\StructureType.cpp" />
+    <ClCompile Include="src\game\talkback.cpp" />
+    <ClCompile Include="src\game\TextTriggerAction.cpp" />
+    <ClCompile Include="src\game\Trigger.cpp" />
+    <ClCompile Include="src\game\TriggerAction.cpp" />
+    <ClCompile Include="src\game\TriggerManager.cpp" />
+    <ClCompile Include="src\game\triggers.cpp" />
+    <ClCompile Include="src\game\TurnAnimEvent.cpp" />
+    <ClCompile Include="src\game\UAttackAnimEvent.cpp" />
+    <ClCompile Include="src\game\UHarvestEvent.cpp" />
+    <ClCompile Include="src\game\UInfiltrateAnimEvent.cpp" />
+    <ClCompile Include="src\game\unit.cpp" />
+    <ClCompile Include="src\game\unitandstructurepool.cpp" />
+    <ClCompile Include="src\game\UnitAnimEvent.cpp" />
+    <ClCompile Include="src\game\UnitOrStructure.cpp" />
+    <ClCompile Include="src\game\UnitOrStructureType.cpp" />
+    <ClCompile Include="src\game\UnitType.cpp" />
+    <ClCompile Include="src\game\URepairEvent.cpp" />
+    <ClCompile Include="src\game\WalkAnimEvent.cpp" />
+    <ClCompile Include="src\game\Warhead.cpp" />
+    <ClCompile Include="src\game\WarheadData.cpp" />
+    <ClCompile Include="src\game\WarheadDataList.cpp" />
+    <ClCompile Include="src\game\Weapon.cpp" />
+    <ClCompile Include="src\game\WeaponData.cpp" />
+    <ClCompile Include="src\game\WeaponDataList.cpp" />
+    <ClCompile Include="src\game\weaponspool.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
+    <ClCompile Include="src\misc\args.cpp" />
+    <ClCompile Include="src\misc\common.cpp" />
+    <ClCompile Include="src\misc\Compression.cpp" />
+    <ClCompile Include="src\misc\fibheap.cpp" />
+    <ClCompile Include="src\misc\INIFile.cpp" />
+    <ClCompile Include="src\misc\KeyNotFound.cpp" />
+    <ClCompile Include="src\misc\StringTableFile.cpp" />
+    <ClCompile Include="src\OpenRedAlert.cpp" />
+    <ClCompile Include="src\ui\Button.cpp" />
+    <ClCompile Include="src\ui\Cursor.cpp" />
+    <ClCompile Include="src\ui\CursorInfo.cpp" />
+    <ClCompile Include="src\ui\CursorPool.cpp" />
+    <ClCompile Include="src\ui\DropDownListBox.cpp" />
+    <ClCompile Include="src\ui\Font.cpp" />
+    <ClCompile Include="src\ui\FontCache.cpp" />
+    <ClCompile Include="src\ui\Input.cpp" />
+    <ClCompile Include="src\ui\ListboxClass.cpp" />
+    <ClCompile Include="src\ui\MapAnimationMenu.cpp" />
+    <ClCompile Include="src\ui\Menu.cpp" />
+    <ClCompile Include="src\ui\PauseMenu.cpp" />
+    <ClCompile Include="src\ui\RaWindow.cpp" />
+    <ClCompile Include="src\ui\RA_Label.cpp" />
+    <ClCompile Include="src\ui\RA_ProgressBar.cpp" />
+    <ClCompile Include="src\ui\selection.cpp" />
+    <ClCompile Include="src\ui\sidebar.cpp" />
+    <ClCompile Include="src\ui\SidebarButton.cpp" />
+    <ClCompile Include="src\ui\SidebarError.cpp" />
+    <ClCompile Include="src\ui\TCheckBox.cpp" />
+    <ClCompile Include="src\ui\TTextBox.cpp" />
+    <ClCompile Include="src\vfs\filesystem\externalvfs.cpp" />
+    <ClCompile Include="src\vfs\mix\blowfish.cpp" />
+    <ClCompile Include="src\vfs\mix\mixvfs.cpp" />
+    <ClCompile Include="src\vfs\mix\ws-key.cpp" />
+    <ClCompile Include="src\vfs\VFile.cpp" />
+    <ClCompile Include="src\vfs\vfs.cpp" />
+    <ClCompile Include="src\video\CPSImage.cpp" />
+    <ClCompile Include="src\video\Dune2Image.cpp" />
+    <ClCompile Include="src\video\GraphicsEngine.cpp" />
+    <ClCompile Include="src\video\imagecache.cpp" />
+    <ClCompile Include="src\video\ImageCacheEntry.cpp" />
+    <ClCompile Include="src\video\ImageNotFound.cpp" />
+    <ClCompile Include="src\video\imageproc.cpp" />
+    <ClCompile Include="src\video\loadingscreen.cpp" />
+    <ClCompile Include="src\video\message.cpp" />
+    <ClCompile Include="src\video\MessagePool.cpp" />
+    <ClCompile Include="src\video\PCXImage.cpp" />
+    <ClCompile Include="src\video\Renderer.cpp" />
+    <ClCompile Include="src\video\sdllayer.cpp" />
+    <ClCompile Include="src\video\SHPBase.cpp" />
+    <ClCompile Include="src\video\SHPImage.cpp" />
+    <ClCompile Include="src\video\TemplateImage.cpp" />
+    <ClCompile Include="src\video\VideoError.cpp" />
+    <ClCompile Include="src\video\VQAMovie.cpp" />
+    <ClCompile Include="src\video\WSAError.cpp" />
+    <ClCompile Include="src\video\WSAMovie.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\audio\SoundBuffer.h" />
+    <ClInclude Include="src\audio\SoundCache.h" />
+    <ClInclude Include="src\audio\SoundCacheCleaner.hpp" />
+    <ClInclude Include="src\audio\SoundCommon.h" />
+    <ClInclude Include="src\audio\SoundEngine.h" />
+    <ClInclude Include="src\audio\SoundError.h" />
+    <ClInclude Include="src\audio\SoundFile.h" />
+    <ClInclude Include="src\audio\SoundUtils.h" />
+    <ClInclude Include="src\audio\SOUND_DECODE_STATE.h" />
+    <ClInclude Include="src\game\ActionEvent.h" />
+    <ClInclude Include="src\game\ActionEventQueue.h" />
+    <ClInclude Include="src\game\Ai.h" />
+    <ClInclude Include="src\game\AiCommand.h" />
+    <ClInclude Include="src\game\AiRules.h" />
+    <ClInclude Include="src\game\animinfo_t.h" />
+    <ClInclude Include="src\game\anim_nfo.h" />
+    <ClInclude Include="src\game\armour_t.h" />
+    <ClInclude Include="src\game\BarrelExplosionActionEvent.h" />
+    <ClInclude Include="src\game\BAttackAnimEvent.h" />
+    <ClInclude Include="src\game\BExplodeAnimEvent.h" />
+    <ClInclude Include="src\game\BQTimer.h" />
+    <ClInclude Include="src\game\BQueue.h" />
+    <ClInclude Include="src\game\BRepairUnitAnimEvent.h" />
+    <ClInclude Include="src\game\BTurnAnimEvent.h" />
+    <ClInclude Include="src\game\BuildAnimEvent.h" />
+    <ClInclude Include="src\game\BuildingAnimEvent.h" />
+    <ClInclude Include="src\game\CellTrigger.h" />
+    <ClInclude Include="src\game\CnCMap.h" />
+    <ClInclude Include="src\game\Comp.h" />
+    <ClInclude Include="src\game\ConStatus.h" />
+    <ClInclude Include="src\game\DataLoader.h" />
+    <ClInclude Include="src\game\Dispatcher.h" />
+    <ClInclude Include="src\game\DispatchLogState.h" />
+    <ClInclude Include="src\game\DoorAnimEvent.h" />
+    <ClInclude Include="src\game\ExplosionAnim.h" />
+    <ClInclude Include="src\game\FibHeapEntry.h" />
+    <ClInclude Include="src\game\Game.h" />
+    <ClInclude Include="src\game\GameError.h" />
+    <ClInclude Include="src\game\GameMode.h" />
+    <ClInclude Include="src\game\GlobalClearTriggerAction.h" />
+    <ClInclude Include="src\game\GlobalSetTriggerAction.h" />
+    <ClInclude Include="src\game\InfantryGroup.h" />
+    <ClInclude Include="src\game\KeyComp.h" />
+    <ClInclude Include="src\game\L2Overlay.h" />
+    <ClInclude Include="src\game\LoadMapError.h" />
+    <ClInclude Include="src\game\LOADSTATE.h" />
+    <ClInclude Include="src\game\LoopAnimEvent.h" />
+    <ClInclude Include="src\game\MiniMapClipping.h" />
+    <ClInclude Include="src\game\MissionData.h" />
+    <ClInclude Include="src\game\MissionMapsClass.h" />
+    <ClInclude Include="src\game\MissionTheater.h" />
+    <ClInclude Include="src\game\MoneyCounter.h" />
+    <ClInclude Include="src\game\MoveAnimEvent.h" />
+    <ClInclude Include="src\game\movement.h" />
+    <ClInclude Include="src\game\MultiPlayerMaps.h" />
+    <ClInclude Include="src\game\NoActionTriggerAction.h" />
+    <ClInclude Include="src\game\Path.h" />
+    <ClInclude Include="src\game\Player.h" />
+    <ClInclude Include="src\game\PlayerPool.h" />
+    <ClInclude Include="src\game\PowerInfo.h" />
+    <ClInclude Include="src\game\ProcAnimEvent.h" />
+    <ClInclude Include="src\game\Production.h" />
+    <ClInclude Include="src\game\Projectile.h" />
+    <ClInclude Include="src\game\ProjectileAnim.h" />
+    <ClInclude Include="src\game\ProjectileData.h" />
+    <ClInclude Include="src\game\ProjectileDataList.h" />
+    <ClInclude Include="src\game\pside.h" />
+    <ClInclude Include="src\game\Queue.h" />
+    <ClInclude Include="src\game\RadarAnimEvent.h" />
+    <ClInclude Include="src\game\RawTriggerAction.h" />
+    <ClInclude Include="src\game\RA_Tigger.h" />
+    <ClInclude Include="src\game\RedAlertDataLoader.h" />
+    <ClInclude Include="src\game\RefineAnimEvent.h" />
+    <ClInclude Include="src\game\RepairAnimEvent.h" />
+    <ClInclude Include="src\game\RQstate.h" />
+    <ClInclude Include="src\game\SnowMissionTheater.h" />
+    <ClInclude Include="src\game\Structure.h" />
+    <ClInclude Include="src\game\StructureType.h" />
+    <ClInclude Include="src\game\Talkback.h" />
+    <ClInclude Include="src\game\TalkbackType.h" />
+    <ClInclude Include="src\game\TextTriggerAction.h" />
+    <ClInclude Include="src\game\TileRef.h" />
+    <ClInclude Include="src\game\Trigger.hpp" />
+    <ClInclude Include="src\game\TriggerAction.h" />
+    <ClInclude Include="src\game\TriggerManager.hpp" />
+    <ClInclude Include="src\game\triggers.h" />
+    <ClInclude Include="src\game\TurnAnimEvent.h" />
+    <ClInclude Include="src\game\UAttackAnimEvent.h" />
+    <ClInclude Include="src\game\UHarvestEvent.h" />
+    <ClInclude Include="src\game\UInfiltrateAnimEvent.h" />
+    <ClInclude Include="src\game\Unit.h" />
+    <ClInclude Include="src\game\UnitAndStructureMat.h" />
+    <ClInclude Include="src\game\UnitAndStructurePool.h" />
+    <ClInclude Include="src\game\UnitAnimEvent.h" />
+    <ClInclude Include="src\game\UnitOrStructure.h" />
+    <ClInclude Include="src\game\UnitOrStructureType.h" />
+    <ClInclude Include="src\game\UnitType.h" />
+    <ClInclude Include="src\game\unittypes.h" />
+    <ClInclude Include="src\game\URepairEvent.h" />
+    <ClInclude Include="src\game\WalkAnimEvent.h" />
+    <ClInclude Include="src\game\Warhead.h" />
+    <ClInclude Include="src\game\WarheadData.h" />
+    <ClInclude Include="src\game\WarheadDataList.h" />
+    <ClInclude Include="src\game\Weapon.h" />
+    <ClInclude Include="src\game\WeaponData.h" />
+    <ClInclude Include="src\game\WeaponDataList.h" />
+    <ClInclude Include="src\game\weaponspool.h" />
+    <ClInclude Include="src\include\common.h" />
+    <ClInclude Include="src\include\config.h" />
+    <ClInclude Include="src\include\fcnc_endian.h" />
+    <ClInclude Include="src\include\fibheap.h" />
+    <ClInclude Include="src\include\imageproc.h" />
+    <ClInclude Include="src\include\Logger.h" />
+    <ClInclude Include="src\include\sdllayer.h" />
+    <ClInclude Include="src\Logger.hpp" />
+    <ClInclude Include="src\misc\Compression.h" />
+    <ClInclude Include="src\misc\gametypes.h" />
+    <ClInclude Include="src\misc\IniEntry.h" />
+    <ClInclude Include="src\misc\INIFile.h" />
+    <ClInclude Include="src\misc\INIKey.h" />
+    <ClInclude Include="src\misc\INISection.h" />
+    <ClInclude Include="src\misc\KeyNotFound.h" />
+    <ClInclude Include="src\misc\StringTableFile.h" />
+    <ClInclude Include="src\ui\Button.h" />
+    <ClInclude Include="src\ui\createmode_t.h" />
+    <ClInclude Include="src\ui\Cursor.h" />
+    <ClInclude Include="src\ui\CursorInfo.h" />
+    <ClInclude Include="src\ui\CursorPool.h" />
+    <ClInclude Include="src\ui\DropDownListBox.h" />
+    <ClInclude Include="src\ui\Font.h" />
+    <ClInclude Include="src\ui\FontCache.h" />
+    <ClInclude Include="src\ui\FontOptions.h" />
+    <ClInclude Include="src\ui\Input.h" />
+    <ClInclude Include="src\ui\ListboxClass.h" />
+    <ClInclude Include="src\ui\ListBoxLine.h" />
+    <ClInclude Include="src\ui\MapAnimationMenu.hpp" />
+    <ClInclude Include="src\ui\Menu.h" />
+    <ClInclude Include="src\ui\PauseMenu.h" />
+    <ClInclude Include="src\ui\RaWindow.h" />
+    <ClInclude Include="src\ui\RA_Label.h" />
+    <ClInclude Include="src\ui\RA_ProgressBar.h" />
+    <ClInclude Include="src\ui\Selection.h" />
+    <ClInclude Include="src\ui\Sidebar.h" />
+    <ClInclude Include="src\ui\SidebarButton.h" />
+    <ClInclude Include="src\ui\SidebarError.h" />
+    <ClInclude Include="src\ui\SidebarGeometry.h" />
+    <ClInclude Include="src\ui\sidebarop.h" />
+    <ClInclude Include="src\ui\TCheckBox.h" />
+    <ClInclude Include="src\ui\TFontImage.h" />
+    <ClInclude Include="src\ui\TTextBox.h" />
+    <ClInclude Include="src\vfs\archive.h" />
+    <ClInclude Include="src\vfs\filesystem\externalvfs.h" />
+    <ClInclude Include="src\vfs\mix\blowfish.h" />
+    <ClInclude Include="src\vfs\mix\mixvfs.h" />
+    <ClInclude Include="src\vfs\mix\ws-key.h" />
+    <ClInclude Include="src\vfs\VFile.h" />
+    <ClInclude Include="src\vfs\vfs.h" />
+    <ClInclude Include="src\video\CPSHeader.h" />
+    <ClInclude Include="src\video\CPSImage.h" />
+    <ClInclude Include="src\video\drawmessage.h" />
+    <ClInclude Include="src\video\Dune2Header.h" />
+    <ClInclude Include="src\video\Dune2Image.h" />
+    <ClInclude Include="src\video\GraphicsEngine.h" />
+    <ClInclude Include="src\video\headerformats.h" />
+    <ClInclude Include="src\video\ImageCache.h" />
+    <ClInclude Include="src\video\ImageCacheEntry.h" />
+    <ClInclude Include="src\video\ImageNotFound.h" />
+    <ClInclude Include="src\video\LoadingScreen.h" />
+    <ClInclude Include="src\video\Message.h" />
+    <ClInclude Include="src\video\MessagePool.h" />
+    <ClInclude Include="src\video\Palettes.h" />
+    <ClInclude Include="src\video\PCXHeader.h" />
+    <ClInclude Include="src\video\PCXImage.h" />
+    <ClInclude Include="src\video\Renderer.h" />
+    <ClInclude Include="src\video\SHPBase.h" />
+    <ClInclude Include="src\video\SHPHeader.h" />
+    <ClInclude Include="src\video\SHPImage.h" />
+    <ClInclude Include="src\video\TemplateImage.h" />
+    <ClInclude Include="src\video\VideoError.h" />
+    <ClInclude Include="src\video\VQAHeader.h" />
+    <ClInclude Include="src\video\VQAMovie.h" />
+    <ClInclude Include="src\video\WSAError.h" />
+    <ClInclude Include="src\video\WSAHeader.h" />
+    <ClInclude Include="src\video\WSAMovie.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
