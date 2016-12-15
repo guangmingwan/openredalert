@@ -23,7 +23,7 @@
 #include <ctime>
 #include <locale.h>
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 #include "audio/SoundEngine.h"
 #include "game/Game.h"
