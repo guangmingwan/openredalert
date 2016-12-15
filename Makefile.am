@@ -321,10 +321,9 @@ openredalert_SOURCES= \
     src/video/WSAHeader.h \
     src/video/WSAMovie.cpp \
     src/video/WSAMovie.h
-    
-openredalert_LDFLAGS = $(SDL_CFLAGS)
-openredalert_LDADD = $(SDL_LIBS)
 
-INCLUDES = -Isrc/
+AM_CFLAGS = $(SDL_CFLAGS) -Isrc/
+AM_CXXFLAGS = $(SDL_CFLAGS) -Isrc/
+openredalert_LDADD = $(SDL_LIBS) $(SDL_mixer_LIBS)
 
 EXTRA_DIST = src/* data/*
