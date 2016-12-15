@@ -1,6 +1,5 @@
 // VFSUtils.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,13 +20,7 @@
 #include <vector>
 #include <string>
 
-#include "SDL_types.h"
-
-#include "vfs/archive.h"
 #include "misc/gametypes.h"
-
-using std::vector; 
-using std::string;
 
 class ExternalFiles;
 class MIXFiles;
@@ -36,35 +29,35 @@ class VFile;
 /**
  *
  */
-class VFSUtils
-{
-public:
-	/** Sets up externals so that the logger can work */
-	static void VFS_PreInit(const char* binpath);
-	static void VFS_Init(const string& binpath);
-	static void VFS_Destroy();
-	/** Try to load all archive of a specific game */
-	static void VFS_LoadGame(gametypes gt);
-	/** Most code just uses the VFS for reading, so this default to reading */
-	static VFile *VFS_Open(const char *fname);
-	/**
-	 * tries to read file with specified name. first as external file, if not found then from the mixfiles
-	 * returns 0 if no file found with this name
-	*/
-	static VFile *VFS_Open(const char *fname, const char* mode);
-	/** Close a VFile */
-	static void VFS_Close(VFile *file);
-	static const char* VFS_getFirstExisting(const std::vector<const char*>& files);
-	static const char* VFS_getFirstExisting(Uint32 count, ...);
+class VFSUtils {
+ public:
+  /** Sets up externals so that the logger can work */
+  static void VFS_PreInit(const char* binpath);
+  static void VFS_Init(const std::string& binpath);
+  static void VFS_Destroy();
+  /** Try to load all archive of a specific game */
+  static void VFS_LoadGame(gametypes gt);
+  /** Most code just uses the VFS for reading, so this default to reading */
+  static VFile *VFS_Open(const char *fname);
+  /**
+   * tries to read file with specified name. first as external file,
+   * if not found then from the mixfiles
+   * returns 0 if no file found with this name
+   */
+  static VFile *VFS_Open(const char *fname, const char* mode);
+  /** Close a VFile */
+  static void VFS_Close(VFile *file);
+  static const char* VFS_getFirstExisting(const std::vector<const char*>& files);
+  static const char* VFS_getFirstExisting(uint32_t count, ...);
 
-	/**
-	 * External files added to the originals files
-	 */
-	static ExternalFiles* externals;
-	/**
-	 * Originals mixFiles from westwood files
-	 */
-	static MIXFiles* mixfiles;
+  /**
+   * External files added to the originals files
+   */
+  static ExternalFiles* externals;
+  /**
+   * Originals mixFiles from westwood files
+   */
+  static MIXFiles* mixfiles;
 };
 
 #endif //VFSUTILS_H

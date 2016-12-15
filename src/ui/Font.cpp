@@ -358,7 +358,7 @@ void Font::Load(string FontName)
 	fontfile->readWord(&hpos, 1);
 	fontfile->seekCur(2);
 	fontfile->readWord(&nchars, 1);
-	nchars = SDL_Swap16(nchars); // Yes, even on LE systems.
+	nchars = bswap16(nchars); // Yes, even on LE systems.
 	fontfile->readByte(&fnheight, 1);
 	fontfile->readByte(&fnmaxw, 1);
 

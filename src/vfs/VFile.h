@@ -1,6 +1,5 @@
 // VFile.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,50 +17,86 @@
 #ifndef VFILE_H
 #define VFILE_H
 
-#include <cstdarg> // for use fct like 'printf'
+#include <cstddef>
+#include <cstdint>
+#include <string>
 
-#include "SDL_types.h"
+class VFolder;
+
+class VFileBase {
+ public:
+  virtual ~VFileBase() {}
+
+  virtual size_t read(void *buffer, size_t buflen) = 0;
+  virtual std::string readLine() = 0;
+
+  virtual size_t writу(void *buffer, size_t buflen) = 0;
+  virtual void writeLine(const std::string &string) = 0;
+
+  virtual void flush() = 0;
+
+  virtual void seekSet(size_t pos) = 0;
+  virtual void seekCur(ptrdiff_t offset) = 0;
+  virtual size_t fileSize() = 0;
+  virtual size_t tell() = 0;
+
+  virtual const char *getPath() = 0;
+};
+
+class VFileInfo {
+ public:
+  virtual ~VFileInfo() {};
+
+  virtual std::string getName() const = 0;
+  virtual size_t getSize() const = 0;
+
+  virtual VFileBase *open() const = 0;
+};
+
+class VFolder {
+ public:
+  virtual ~VFolder() {}
+
+  virtual VFileBase *openFile(const std::string &name) = 0;
+  virtual bool append(VFolder *folder) = 0;
+};
 
 class Archive;
 
 /**
  * Virtual file class.
- * 
+ *
  * All virtual files can be opened for reading, but only external files
  *  can be written to since it's mostly used for loading graphics,
  *  sound, etc. data.
  */
 class VFile {
-public:
-    VFile(Uint32 filenum, Archive * arch);
-    ~VFile();
+ public:
+  VFile(uintptr_t filenum, Archive * arch);
+  virtual ~VFile();
 
+  size_t readByte(uint8_t *databuf, size_t numBytes);
+  size_t readWord(uint16_t *databuf, size_t numWords);
+  size_t readDWord(uint32_t *databuf, size_t numDWords);
+  char *readLine(char *string, size_t buflen);
 
-    Uint32 readByte(Uint8 * databuf, Uint32 numBytes);
-    Uint32 readWord(Uint16 * databuf, Uint32 numWords);
-    Uint32 readThree(Uint32 * databuf, Uint32 numThrees);
-    Uint32 readDWord(Uint32 * databuf, Uint32 numDWords);
+  size_t writeByte(uint8_t *databuf, size_t numBytes);
+  size_t writeWord(uint16_t *databuf, size_t numWords);
+  size_t writeDWord(uint32_t *databuf, size_t numDWords);
+  void writeLine(const char *string);
 
-    /** Read a line of file */
-    char * getLine(char * string, Uint32 buflen);
+  void flush();
 
-    Uint32 writeByte(Uint8 * databuf, Uint32 numBytes);
-    Uint32 writeWord(Uint16 * databuf, Uint32 numWords);
-    Uint32 writeThree(Uint32 * databuf, Uint32 numThrees);
-    Uint32 writeDWord(Uint32 * databuf, Uint32 numDWords);
-    void writeLine(const char * string);
-    
-    void flush();
+  void seekSet(uint32_t pos);
+  void seekCur(int32_t offset);
+  size_t fileSize();
+  size_t tell();
 
-    void seekSet(Uint32 pos);
-    void seekCur(Sint32 offset);
-    Uint32 fileSize();
-    Uint32 tell();
+  const char *getPath();
 
-    const char * getPath();
-private:
-    Uint32 filenum;
-    Archive * archive;
+ private:
+  uintptr_t filenum;
+  Archive * archive;
 };
 
 #endif //VFILE_H

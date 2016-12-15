@@ -78,7 +78,7 @@ void MissionMapsClass::readMissionData()
 
 	// Parse all line of the file
 	int linesize = sizeof (Line);
-	while (MapFile->getLine(Line, linesize ))
+	while (MapFile->readLine(Line, linesize ))
 	{
 		// Get the string
 		tmpString = Line;

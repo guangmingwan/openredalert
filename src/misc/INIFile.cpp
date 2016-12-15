@@ -73,7 +73,7 @@ INIFile::INIFile(const string& filename)
     cursectionName = "";
 
     // parse the inifile and write data to inidata
-    while (inifile->getLine(line, 1024) != 0) {
+    while (inifile->readLine(line, 1024) != 0) {
         str = line;
 
         while ((*str) == ' ' || (*str) == '\t') {

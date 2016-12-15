@@ -1,6 +1,5 @@
 // Archive.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,51 +17,46 @@
 #ifndef ARCHIVE_H
 #define ARCHIVE_H
 
-#include "SDL_types.h"
-
 /**
  * Abstract interface to manipulate VFile in archives
  */
-class Archive
-{
-public:
-    virtual ~Archive() {}
-    virtual const char *getArchiveType() const = 0;
-    virtual bool loadArchive(const char *fname) = 0;
-    virtual void unloadArchives() {};
-    virtual Uint32 getFile(const char *fname) = 0;
-    virtual void releaseFile(Uint32 file) = 0;
+class Archive {
+ public:
+  virtual ~Archive() {}
+  virtual const char *getArchiveType() const = 0;
+  virtual bool loadArchive(const char *fname) = 0;
+  virtual void unloadArchives() {};
+  virtual uintptr_t getFile(const char *fname) = 0;
+  virtual void releaseFile(uintptr_t file) = 0;
 
-    virtual Uint32 readByte(Uint32 file, Uint8 *databuf, Uint32 numBytes) = 0;
-    virtual Uint32 readWord(Uint32 file, Uint16 *databuf, Uint32 numWords) = 0;
-    virtual Uint32 readThree(Uint32 file, Uint32 *databuf, Uint32 numThrees) = 0;
-    virtual Uint32 readDWord(Uint32 file, Uint32 *databuf, Uint32 numDWords) = 0;
+  virtual uint32_t readByte(uintptr_t file, uint8_t *databuf, uint32_t numBytes) = 0;
+  virtual uint32_t readWord(uintptr_t file, uint16_t *databuf, uint32_t numWords) = 0;
+  virtual uint32_t readDWord(uintptr_t file, uint32_t *databuf, uint32_t numDWords) = 0;
 
-    /**
-     * Read a line of file.
-     * \param file id of the file in archive
-     * \param databuf will contain the read  line
-     * \param buflen size of the buffer
-     */
-    virtual char* readLine(Uint32 file, char *databuf, Uint32 buflen) = 0;
+  /**
+   * Read a line of file.
+   * \param file id of the file in archive
+   * \param databuf will contain the read  line
+   * \param buflen size of the buffer
+   */
+  virtual char* readLine(uintptr_t file, char *databuf, uint32_t buflen) = 0;
 
-    /* Since only external files can write, we provide stubs here for the other
-     * plugins.
-     */
-    virtual Uint32 writeByte(Uint32 file, const Uint8* databuf, Uint32 numBytes) {return 0;}
-    virtual Uint32 writeWord(Uint32 file, const Uint16* databuf, Uint32 numWords) {return 0;}
-    virtual Uint32 writeThree(Uint32 file, const Uint32* databuf, Uint32 numThrees) {return 0;}
-    virtual Uint32 writeDWord(Uint32 file, const Uint32* databuf, Uint32 numDWords) {return 0;}
-    virtual void writeLine(Uint32 file, const char* databuf) {}
-    
-    virtual void flush(Uint32 file) {}
+  /* Since only external files can write, we provide stubs here for the other
+   * plugins.
+   */
+  virtual uint32_t writeByte(uintptr_t file, const uint8_t* databuf, uint32_t numBytes) {return 0;}
+  virtual uint32_t writeWord(uintptr_t file, const uint16_t* databuf, uint32_t numWords) {return 0;}
+  virtual uint32_t writeDWord(uintptr_t file, const uint32_t* databuf, uint32_t numDWords) {return 0;}
+  virtual void writeLine(uintptr_t file, const char* databuf) {}
 
-    virtual void seekSet(Uint32 file, Uint32 pos) = 0;
-    virtual void seekCur(Uint32 file, Sint32 pos) = 0;
+  virtual void flush(uintptr_t file) {}
 
-    virtual Uint32 getPos(Uint32 file) const = 0;
-    virtual Uint32 getSize(Uint32 file) const = 0;
-    virtual const char* getPath(Uint32 filenum) const = 0;
+  virtual void seekSet(uintptr_t file, uint32_t pos) = 0;
+  virtual void seekCur(uintptr_t file, int32_t pos) = 0;
+
+  virtual uint32_t getPos(uintptr_t file) const = 0;
+  virtual uint32_t getSize(uintptr_t file) const = 0;
+  virtual const char* getPath(uintptr_t file) const = 0;
 };
 
 #endif //ARCHIVE_H

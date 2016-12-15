@@ -112,7 +112,7 @@ void MultiPlayerMaps::readMapData()
     }
 
     // While there are lines Read one and save
-    while (MapFile->getLine(Line, sizeof (Line)))
+    while (MapFile->readLine(Line, sizeof (Line)))
     {
         MACRO_LOG_DEBUG("Line = " + string(Line))
 

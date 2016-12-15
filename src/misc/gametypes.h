@@ -1,6 +1,5 @@
 // gametypes.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,10 +17,9 @@
 #ifndef GAMETYPES_H
 #define GAMETYPES_H
 
-enum gametypes
-{
-    GAME_TD = 1,
-    GAME_RA = 2
+enum gametypes {
+  GAME_TD = 1,
+  GAME_RA = 2
 };
 
 #endif //GAMETYPES_H

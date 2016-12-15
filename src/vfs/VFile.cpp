@@ -1,6 +1,5 @@
 // VFile.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,97 +16,69 @@
 
 #include "VFile.h"
 
-#include "SDL_types.h"
-
 #include "archive.h"
 
-VFile::VFile(Uint32 filenum, Archive * arch)
-{
-    this->filenum = filenum;
-    this->archive = arch;
+VFile::VFile(uintptr_t filenum, Archive *arch) {
+  this->filenum = filenum;
+  this->archive = arch;
 }
 
-VFile::~VFile()
-{
-    archive->releaseFile(filenum);
+VFile::~VFile() {
+  archive->releaseFile(filenum);
 }
 
-Uint32 VFile::readByte(Uint8 * databuf, Uint32 numBytes)
-{
-    return archive->readByte(filenum, databuf, numBytes);
+size_t VFile::readByte(uint8_t * databuf, size_t numBytes) {
+  return archive->readByte(filenum, databuf, numBytes);
 }
 
-Uint32 VFile::readWord(Uint16 * databuf, Uint32 numWords)
-{
-    return archive->readWord(filenum, databuf, numWords);
+size_t VFile::readWord(uint16_t * databuf, size_t numWords) {
+  return archive->readWord(filenum, databuf, numWords);
 }
 
-Uint32 VFile::readThree(Uint32 * databuf, Uint32 numThrees)
-{
-    return archive->readThree(filenum, databuf, numThrees);
+size_t VFile::readDWord(uint32_t * databuf, size_t numDWords) {
+  return archive->readDWord(filenum, databuf, numDWords);
 }
 
-Uint32 VFile::readDWord(Uint32 * databuf, Uint32 numDWords)
-{
-    return archive->readDWord(filenum, databuf, numDWords);
+char * VFile::readLine(char * string, size_t buflen) {
+  return archive->readLine(filenum, string, buflen);
 }
 
-char * VFile::getLine(char * string, Uint32 buflen)
-{
-    return archive->readLine(filenum, string, buflen);
+size_t VFile::writeByte(uint8_t * databuf, size_t numBytes) {
+  return archive->writeByte(filenum, databuf, numBytes);
 }
 
-Uint32 VFile::writeByte(Uint8 * databuf, Uint32 numBytes)
-{
-    return archive->writeByte(filenum, databuf, numBytes);
+size_t VFile::writeWord(uint16_t * databuf, size_t numWords) {
+  return archive->writeWord(filenum, databuf, numWords);
 }
 
-Uint32 VFile::writeWord(Uint16 * databuf, Uint32 numWords)
-{
-    return archive->writeWord(filenum, databuf, numWords);
+size_t VFile::writeDWord(uint32_t * databuf, size_t numDWords) {
+  return archive->writeDWord(filenum, databuf, numDWords);
 }
 
-Uint32 VFile::writeThree(Uint32 * databuf, Uint32 numThrees)
-{
-    return archive->writeThree(filenum, databuf, numThrees);
+void VFile::writeLine(const char * string) {
+  archive->writeLine(filenum, string);
 }
 
-Uint32 VFile::writeDWord(Uint32 * databuf, Uint32 numDWords)
-{
-    return archive->writeDWord(filenum, databuf, numDWords);
+void VFile::flush() {
+  archive->flush(filenum);
 }
 
-void VFile::writeLine(const char * string)
-{
-    archive->writeLine(filenum, string);
+void VFile::seekSet(uint32_t pos) {
+  archive->seekSet(filenum, pos);
 }
 
-void VFile::flush()
-{
-    archive->flush(filenum);
+void VFile::seekCur(int32_t offset) {
+  archive->seekCur(filenum, offset);
 }
 
-void VFile::seekSet(Uint32 pos)
-{
-    archive->seekSet(filenum, pos);
+size_t VFile::fileSize() {
+  return archive->getSize(filenum);
 }
 
-void VFile::seekCur(Sint32 offset)
-{
-    archive->seekCur(filenum, offset);
+size_t VFile::tell() {
+  return archive->getPos(filenum);
 }
 
-Uint32 VFile::fileSize()
-{
-    return archive->getSize(filenum);
-}
-
-Uint32 VFile::tell()
-{
-    return archive->getPos(filenum);
-}
-
-const char * VFile::getPath()
-{
-    return archive->getPath(filenum);
+const char * VFile::getPath() {
+  return archive->getPath(filenum);
 }
