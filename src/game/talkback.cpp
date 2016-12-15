@@ -21,6 +21,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <iterator>
 
 #include "SDL_types.h"
 

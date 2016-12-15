@@ -19,6 +19,7 @@
 
 #include <cmath>
 #include <string>
+#include <algorithm>
 
 #include "blowfish.h"
 #include "ws-key.h"

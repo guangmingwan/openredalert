@@ -20,6 +20,7 @@
 #include <map>
 #include <algorithm>
 #include <exception>
+#include <iterator>
 
 #include "Logger.hpp"
 #include "game/Dispatcher.h"
