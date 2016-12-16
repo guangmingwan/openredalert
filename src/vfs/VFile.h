@@ -30,7 +30,7 @@ class VFileBase {
   virtual size_t read(void *buffer, size_t buflen) = 0;
   virtual std::string readLine() = 0;
 
-  virtual size_t writу(void *buffer, size_t buflen) = 0;
+  virtual size_t write(void *buffer, size_t buflen) = 0;
   virtual void writeLine(const std::string &string) = 0;
 
   virtual void flush() = 0;
@@ -40,7 +40,7 @@ class VFileBase {
   virtual size_t fileSize() = 0;
   virtual size_t tell() = 0;
 
-  virtual const char *getPath() = 0;
+  virtual std::string getPath() = 0;
 };
 
 class VFileInfo {
