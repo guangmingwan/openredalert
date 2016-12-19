@@ -2506,9 +2506,7 @@ void CnCMap::advancedSections(INIFile *inifile)
                         break;
                     }
 
-                    printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
                     PrintTrigger(triggers);
-                    printf ("\n\n\n");
 
                     // Set to zero (=never executed)
                     triggers.hasexecuted = false;

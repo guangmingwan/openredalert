@@ -1,6 +1,5 @@
 // RA_Tigger.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,22 +17,19 @@
 #ifndef RA_TIGGER_H
 #define RA_TIGGER_H
 
-#include "SDL_types.h"
-
 /**
  * Event data for trigger
- * 
+ *
  * @see triggers.h for list of TRIGGER_EVENT_TYPE
  */
-class RA_Tigger
-{
-public:	
-    /** Trigger event type */
-    int event;
-    /** first parameter, -1 == off */
-    int param1;
-    /** second parameter, 0 == off */
-    int param2;
+class RA_Tigger {
+ public:
+  /** Trigger event type */
+  int event;
+  /** first parameter, -1 == off */
+  int param1;
+  /** second parameter, 0 == off */
+  int param2;
 };
 
 #endif //RA_TIGGER_H

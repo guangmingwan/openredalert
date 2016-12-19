@@ -68,17 +68,18 @@
  * @since r360
  */
 class TriggerAction {
-public:
+ public:
 	/** Execute the action */
 	virtual void execute() = 0;
 
 	/** Return the number of the type of the action */
 	int getAction();
+  std::string getName();
 
 	/** Destructor */
 	virtual ~TriggerAction();
 
-protected:
+ protected:
 	/** Create a TriggerAction with a specified type */
 	TriggerAction(int action);
 

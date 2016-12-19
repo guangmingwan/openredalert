@@ -41,9 +41,10 @@ namespace p {
 	extern CnCMap* ccmap;
 	extern UnitAndStructurePool* uspool;
 }
+
 namespace pc {
-    extern ConfigType Config;
-    extern SoundEngine* sfxeng;
+  extern ConfigType Config;
+  extern SoundEngine* sfxeng;
 }
 
 /** Global variables for triggers */
@@ -63,8 +64,6 @@ bool GlobalVar[100];
  */
 bool CheckEvent(unsigned int Event, int param1, int param2, unsigned int Eventparam, int value)
 {
-    return false;
-    
     switch (Event)
     {
     	//
@@ -341,8 +340,6 @@ bool CheckSecondTriggerEvent(int TriggerNumb, RA_Tiggers  *Trigger)
  */
 void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param)
 {
-    return;
-    
 	string AssociatedTriggerName = "None";
 	RA_Tiggers* AssociatedTrigger = 0;
 	//int			value = 0;
@@ -663,8 +660,6 @@ void HandleGlobalTrigger(int Event, int value)
 
 void CheckCellTriggers(Uint32 pos)
 {
-    return;
- 
 	//UnitOrStructure *unitOrStructure;
 	Unit            *unit;
 	RA_Tiggers      *Trigger;
@@ -734,8 +729,6 @@ void CheckCellTriggers(Uint32 pos)
 void ExecuteTriggerAction(TriggerAction* action)
 //void ExecuteTriggerAction(unsigned int Event, Uint8 ActionNr, RA_Tiggers *Trigger )
 {
-    return;
- 
     /*unsigned int    Action;
     int             parameter;
     RA_Tiggers      *Trig;
@@ -993,50 +986,28 @@ void ExecuteTriggerAction(TriggerAction* action)
 /**
  * Print a Trigger
  */
-void PrintTrigger(const RA_Tiggers& Trigger)
-{
-    return;
- 
-	printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
-	printf ("name = \t\t\t%s\n", Trigger.name.c_str());	
-	printf ("repeatable = \t\t%i\n", Trigger.repeatable);
-    printf ("country = \t\t%i\n", Trigger.country);
-    printf ("activate = \t\t%i\n", Trigger.activate);
-    printf ("actions = \t\t%i\n", Trigger.actions);
-   
-    printf ("trigger1.event = \t%s\n", getTriggerEventNameByNumber(Trigger.trigger1.event).c_str());
-    //printf ("trigger1.event = \t%i\n", Trigger.trigger1.event);
-    printf ("trigger1.param1 = \t%i\n", Trigger.trigger1.param1);
-    printf ("trigger1.param2 = \t%i\n", Trigger.trigger1.param2);
-    
-    printf ("trigger2.event = \t%s\n", getTriggerEventNameByNumber(Trigger.trigger2.event).c_str());
-    printf ("trigger2.param1 = \t%i\n", Trigger.trigger2.param1);
-    printf ("trigger2.param2 = \t%i\n", Trigger.trigger2.param2);
-    
-    printf ("action1->Action = \t%i\n", Trigger.action1->getAction());
-    /*
-    printf ("action1->param1 = \t%i\n", Trigger.action1->param1);
-    printf ("action1->param2 = \t%i\n", Trigger.action1->param2);
-    printf ("action1->param3 = \t%i\n", Trigger.action1->param3);
-    */
-    printf ("action2->Action = \t%i\n", Trigger.action2->getAction());
-    /*
-    printf ("action2->param1 = \t%i\n", Trigger.action2->param1);
-    printf ("action2->param2 = \t%i\n", Trigger.action2->param2);
-    printf ("action2->param3 = \t%i\n", Trigger.action2->param3);
-    */
-    printf ("\n\n\n");
+void PrintTrigger(const RA_Tiggers& Trigger) {
+  printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
+  printf ("name = \t\t\t%s\n", Trigger.name.c_str());
+  printf ("repeatable = \t\t%i\n", Trigger.repeatable);
+  printf ("country = \t\t%i\n", Trigger.country);
+  printf ("activate = \t\t%i\n", Trigger.activate);
+  printf ("actions = \t\t%i\n", Trigger.actions);
+
+  printf ("trigger #1 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(Trigger.trigger1.event).c_str(), Trigger.trigger1.param1, Trigger.trigger1.param2);
+  printf ("trigger #2 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(Trigger.trigger2.event).c_str(), Trigger.trigger2.param1, Trigger.trigger2.param2);
+
+  printf ("action #1 = \t%s\n", Trigger.action1->getName().c_str());
+  printf ("action #2 = \t%s\n", Trigger.action2->getName().c_str());
+  printf ("\n");
 }
 
 /**
  * Initialize Triggers
- * 
+ *
  * - Reset global vars
  */
-void InitializeTriggers()
-{
-    return;
-    
+void InitializeTriggers() {
 	// Reset all the Global Vars
     for (int i = 0; i < 100; i++){
         GlobalVar[i] = false;
