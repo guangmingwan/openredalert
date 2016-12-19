@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B28C4181E03F4F10025E1EC /* RealFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B28C4161E03F4F10025E1EC /* RealFile.cpp */; };
 		7B523F111DFFE88100EB265F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B523F101DFFE88100EB265F /* CoreFoundation.framework */; };
 		7B523F131DFFE88600EB265F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B523F121DFFE88600EB265F /* AppKit.framework */; };
 		7BE755351DFFEF90006C3DE2 /* SoundEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B523F031DFFE7E100EB265F /* SoundEngine.cpp */; };
@@ -161,8 +160,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7B28C4161E03F4F10025E1EC /* RealFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RealFile.cpp; path = ../src/vfs/RealFile.cpp; sourceTree = "<group>"; };
-		7B28C4171E03F4F10025E1EC /* RealFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RealFile.h; path = ../src/vfs/RealFile.h; sourceTree = "<group>"; };
 		7B523EF31DFFE72300EB265F /* ./.. */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = ./..; path = OpenRedAlert; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B523EFE1DFFE7E100EB265F /* SOUND_DECODE_STATE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SOUND_DECODE_STATE.h; path = ../src/audio/SOUND_DECODE_STATE.h; sourceTree = "<group>"; };
 		7B523EFF1DFFE7E100EB265F /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = ../src/audio/SoundBuffer.h; sourceTree = "<group>"; };
@@ -835,8 +832,6 @@
 		7B5240791DFFE95000EB265F /* vfs */ = {
 			isa = PBXGroup;
 			children = (
-				7B28C4161E03F4F10025E1EC /* RealFile.cpp */,
-				7B28C4171E03F4F10025E1EC /* RealFile.h */,
 				7B5240C51DFFE9A900EB265F /* filesystem */,
 				7B5240C91DFFE9C400EB265F /* mix */,
 				7B52407A1DFFE96300EB265F /* archive.h */,
@@ -1085,7 +1080,6 @@
 				7BE755A11DFFF0DC006C3DE2 /* TCheckBox.cpp in Sources */,
 				7BE755A21DFFF0DC006C3DE2 /* TTextBox.cpp in Sources */,
 				7BE755A31DFFF0DC006C3DE2 /* externalvfs.cpp in Sources */,
-				7B28C4181E03F4F10025E1EC /* RealFile.cpp in Sources */,
 				7BE755A41DFFF0DC006C3DE2 /* blowfish.cpp in Sources */,
 				7BE755A51DFFF0DC006C3DE2 /* mixvfs.cpp in Sources */,
 				7BE755A61DFFF0DC006C3DE2 /* ws-key.cpp in Sources */,
