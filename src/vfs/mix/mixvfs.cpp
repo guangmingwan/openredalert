@@ -41,13 +41,8 @@ MIXFiles::~MIXFiles() {
  * Load a specifique archive
  */
 bool MIXFiles::loadArchive(const char *fname) {
-  VFile* file = 0;
-
-  //
-  printf("Loading archive [%s]\n", fname);
-
   // Try to load the archive file
-  file = VFSUtils::VFS_Open(fname);
+  VFile *file = VFSUtils::VFS_Open(fname);
   if (file == 0) {
     return false;
   }
@@ -60,8 +55,7 @@ bool MIXFiles::loadArchive(const char *fname) {
  * Unload all MIX archives
  */
 void MIXFiles::unloadArchives() {
-  uint32_t i;
-  for (i = 0; i < mixfiles.size(); ++i) {
+  for (size_t i = 0; i < mixfiles.size(); ++i) {
     VFSUtils::VFS_Close(mixfiles[i]);
   }
   mixfiles.resize(0);
@@ -72,19 +66,14 @@ void MIXFiles::unloadArchives() {
  * Search a file from a name ???
  */
 uintptr_t MIXFiles::getFile(const char *fname) {
-  mixheaders_t::iterator epos;
-  openfiles_t::iterator of;
-
-  // Calcul ID of the string ???
+  // Calcul ID of the string
   uint32_t id = calcID(fname);
-  printf("Find '%s' (%8X) in loaded archives\n", fname, id);
 
-  epos = mixheaders.find(id);
+  mixheaders_t::iterator epos = mixheaders.find(id);
   if (mixheaders.end() == epos) {
     return (uintptr_t)-1;
   }
 
-//  VFile *myvfile = mixfiles[epos->second.filenum];
   OpenFile newfile;
   newfile.id = id;
   newfile.pos = 0;
@@ -111,19 +100,16 @@ uint32_t MIXFiles::calcID(const std::string &name) {
   size_t size = name.length();
   size = ((size_t)((size + 3) / 4)) * 4;
   char *buffer = new char[size];
+  memset(buffer, 0, size);
 
-  size_t i;
-  for (i = 0; name[i] != 0 && i < size; i++){
+  for (size_t i = 0; name[i] != 0 && i < size; i++){
     buffer[i]=toupper(name[i]);
-  }
-  while (i < size) {
-    buffer[i++] = 0;
   }
 
   uint32_t calc = 0;
   uint32_t *qbuf = (uint32_t*)buffer;
   size /= 4;
-  for (i = 0; i < size; i++) {
+  for (size_t i = 0; i < size; i++) {
     calc = ROL(calc) + le32toh(qbuf[i]);
   }
 
@@ -148,7 +134,6 @@ MixRecord* MIXFiles::decodeHeader(VFile* mix, MixHeader* header, tscheck_ tschec
   Cblowfish bf;
   uint8_t *e;
   MixRecord* mindex;
-  //bool aligned = true;
 
   mix->readByte(WSKey, 80);
   get_blowfish_key((const uint8_t*)&WSKey, (uint8_t*)&BFKey);
@@ -160,10 +145,8 @@ MixRecord* MIXFiles::decodeHeader(VFile* mix, MixHeader* header, tscheck_ tschec
   // Extract the header from Block
   memcpy(&header->c_files, &Block[0], sizeof(uint16_t));
   memcpy(&header->size, &Block[sizeof(uint16_t)], sizeof(uint32_t));
-#ifdef WORDS_BIGENDIAN
-  header->c_files = bswap16(header->c_files);
-  header->size = bswap32(header->size);
-#endif
+  header->c_files = le16toh(header->c_files);
+  header->size = le32toh(header->size);
 
   // Decrypt all indexes
   const int m_size = sizeof(MixRecord) * header->c_files;
@@ -179,11 +162,9 @@ MixRecord* MIXFiles::decodeHeader(VFile* mix, MixHeader* header, tscheck_ tschec
   delete[] e;
 
   for (int i = 0; i < header->c_files; i++) {
-#ifdef WORDS_BIGENDIAN
-    mindex[i].id = bswap32(mindex[i].id);
-    mindex[i].offset = bswap32(mindex[i].offset);
-    mindex[i].size = bswap32(mindex[i].size);
-#endif
+    mindex[i].id = le32toh(mindex[i].id);
+    mindex[i].offset = le32toh(mindex[i].offset);
+    mindex[i].size = le32toh(mindex[i].size);
 #if 0
     if (check_ts == tscheck) {
       if (mindex[i].offset & 0xf)
@@ -201,31 +182,21 @@ MixRecord* MIXFiles::decodeHeader(VFile* mix, MixHeader* header, tscheck_ tschec
   return mindex;
 }
 
-
 /**
  * read the mixheader
  */
-void MIXFiles::readMIXHeader(VFile *mix)
-{
-  MIXEntry mentry;
-  MixHeader header;
-  MixRecord *m_index = NULL;
-  game_t game;
-  uint32_t i;
-  uint32_t flags;
-
+void MIXFiles::readMIXHeader(VFile *mix) {
   // Read header
+  MixHeader header;
   mix->readWord(&header.c_files, 1);
   mix->readDWord(&header.size, 1);
+  header.c_files = le16toh(header.c_files);
+  header.size = le32toh(header.size);
 
-#ifdef WORDS_BIGENDIAN
-  // Don't know if this is needed.
-  //    header.flags = SDL_Swap32(header.flags);
-#endif
+  uint32_t flags = header.c_files | (header.size << 16);
 
-  flags = header.c_files | (header.size << 16);
-
-  game = which_game(flags);
+  MixRecord *m_index = NULL;
+  game_t game = which_game(flags);
   if (game == game_ra) {
     mix->seekCur(-2);
     if (flags & mix_encrypted) {
@@ -239,12 +210,10 @@ void MIXFiles::readMIXHeader(VFile *mix)
       const int m_size = sizeof(MixRecord) * header.c_files;
       m_index = new MixRecord[header.c_files];
       mix->readByte((uint8_t*)m_index, m_size);
-      for (i = 0; i < header.c_files; i++) {
-#ifdef WORDS_BIGENDIAN
-        m_index[i].id = bswap32(m_index[i].id);
-        m_index[i].size = bswap32(m_index[i].size);
-        m_index[i].offset = bswap32(m_index[i].offset);
-#endif
+      for (uint16_t i = 0; i < header.c_files; i++) {
+        m_index[i].id = le32toh(m_index[i].id);
+        m_index[i].size = le32toh(m_index[i].size);
+        m_index[i].offset = le32toh(m_index[i].offset);
 
         if (m_index[i].offset & 0xf)
           aligned = false;
@@ -266,112 +235,84 @@ void MIXFiles::readMIXHeader(VFile *mix)
     m_index = new MixRecord[header.c_files];
     //fread(reinterpret_cast<Uint8 *>(m_index), m_size, 1, mix);
     mix->readByte((uint8_t*)m_index, m_size);
-    for (i = 0; i < header.c_files; i++) {
-#ifdef WORDS_BIGENDIAN
-      m_index[i].id = bswap32(m_index[i].id);
-      m_index[i].offset = bswap32(m_index[i].offset);
-      m_index[i].size = bswap32(m_index[i].size);
-#endif
+    for (uint16_t i = 0; i < header.c_files; i++) {
+      m_index[i].id = le32toh(m_index[i].id);
+      m_index[i].offset = le32toh(m_index[i].offset);
+      m_index[i].size = le32toh(m_index[i].size);
       /* 6 = 6 byte header - no other header/flags or keys in TD mixes */
       m_index[i].offset += 6 + m_size;
     }
   }
-  for (i = 0; i < header.c_files; ++i) {
+  for (uint16_t i = 0; i < header.c_files; ++i) {
+    MIXEntry mentry;
     mentry.filenum = (uint8_t)mixfiles.size()-1;
     mentry.offset = m_index[i].offset;
     mentry.size = m_index[i].size;
     mixheaders[m_index[i].id] = mentry;
-    printf("%X\t(%d)\n", m_index[i].id, m_index[i].size);
   }
   delete[] m_index;
 }
 
-size_t MIXFiles::readByte(uintptr_t file, uint8_t *databuf, size_t numBytes)
-{
-  size_t numRead;
-  uint32_t id;
-  size_t pos;
-  MIXEntry me;
+size_t MIXFiles::readByte(uintptr_t file, uint8_t *databuf, size_t numBytes) {
+  uint32_t id = openfiles[file].id;
+  size_t pos = openfiles[file].pos;
 
-  id = openfiles[file].id;
-  pos = openfiles[file].pos;
-
-  me = mixheaders[id];
+  MIXEntry me = mixheaders[id];
 
   mixfiles[me.filenum]->seekSet(me.offset+pos);
 
-  numRead = std::min(numBytes, (me.size-pos));
+  size_t numRead = std::min(numBytes, (me.size-pos));
   numRead = mixfiles[me.filenum]->readByte(databuf, numRead);
   openfiles[file].pos += numRead;
   return numRead;
 }
 
-size_t MIXFiles::readWord(uintptr_t file, uint16_t *databuf, size_t numWords)
-{
-  size_t numRead;
-  uint32_t id;
-  size_t pos;
-  MIXEntry me;
+size_t MIXFiles::readWord(uintptr_t file, uint16_t *databuf, size_t numWords) {
+  uint32_t id = openfiles[file].id;
+  size_t pos = openfiles[file].pos;
 
-  id = openfiles[file].id;
-  pos = openfiles[file].pos;
-
-  me = mixheaders[id];
+  MIXEntry me = mixheaders[id];
 
   mixfiles[me.filenum]->seekSet(me.offset+pos);
 
-  numRead = std::min(numWords, ((me.size-pos)>>1));
+  size_t numRead = std::min(numWords, ((me.size-pos)>>1));
   numRead = mixfiles[me.filenum]->readWord(databuf, numRead);
   openfiles[file].pos += numRead<<1;
   return numRead;
 }
 
-size_t MIXFiles::readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords)
-{
-  size_t numRead;
-  uint32_t id;
-  size_t pos;
-  MIXEntry me;
+size_t MIXFiles::readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords) {
+  uint32_t id = openfiles[file].id;
+  size_t pos = openfiles[file].pos;
 
-  id = openfiles[file].id;
-  pos = openfiles[file].pos;
-
-  me = mixheaders[id];
+  MIXEntry me = mixheaders[id];
 
   mixfiles[me.filenum]->seekSet(me.offset+pos);
 
-  numRead = std::min(numDWords, ((me.size-pos)>>2));
+  size_t numRead = std::min(numDWords, ((me.size-pos)>>2));
   numRead = mixfiles[me.filenum]->readDWord(databuf, numRead);
   openfiles[file].pos += numRead<<2;
   return numRead;
 }
 
-char* MIXFiles::readLine(uintptr_t file, char *databuf, size_t buflen)
-{
-  size_t numRead;
-  uint32_t id;
-  size_t pos;
-  MIXEntry me;
-  char* retval;
+char* MIXFiles::readLine(uintptr_t file, char *databuf, size_t buflen) {
+  uint32_t id = openfiles[file].id;
+  size_t pos = openfiles[file].pos;
 
-  id = openfiles[file].id;
-  pos = openfiles[file].pos;
-
-  me = mixheaders[id];
+  MIXEntry me = mixheaders[id];
 
   mixfiles[me.filenum]->seekSet(me.offset+pos);
 
-  numRead = std::min(buflen-1, me.size-pos);
-  if( numRead == 0 ) {
+  size_t numRead = std::min(buflen-1, me.size-pos);
+  if (numRead == 0) {
     return NULL;
   }
-  retval = mixfiles[me.filenum]->readLine(databuf, numRead+1);
+  char *retval = mixfiles[me.filenum]->readLine(databuf, numRead+1);
   openfiles[file].pos += strlen(databuf);
   return retval;
 }
 
-void MIXFiles::seekSet(uintptr_t file, size_t pos)
-{
+void MIXFiles::seekSet(uintptr_t file, size_t pos) {
   openfiles[file].pos = pos;
   if( openfiles[file].pos > mixheaders[openfiles[file].id].size ) {
     openfiles[file].pos = mixheaders[openfiles[file].id].size;
@@ -379,8 +320,7 @@ void MIXFiles::seekSet(uintptr_t file, size_t pos)
   mixfiles[mixheaders[openfiles[file].id].filenum]->seekSet(openfiles[file].pos+mixheaders[openfiles[file].id].offset);
 }
 
-void MIXFiles::seekCur(uintptr_t file, ptrdiff_t pos)
-{
+void MIXFiles::seekCur(uintptr_t file, ptrdiff_t pos) {
   openfiles[file].pos += pos;
   if( openfiles[file].pos > mixheaders[openfiles[file].id].size ) {
     openfiles[file].pos = mixheaders[openfiles[file].id].size;
@@ -389,8 +329,7 @@ void MIXFiles::seekCur(uintptr_t file, ptrdiff_t pos)
 }
 
 
-size_t MIXFiles::getPos(uintptr_t file) const
-{
+size_t MIXFiles::getPos(uintptr_t file) const {
   // @todo Abstract this const version of operator[]
   std::map<uintptr_t, MIXPriv::OpenFile>::const_iterator i = openfiles.find(file);
   if (openfiles.end() != i) {
@@ -401,8 +340,7 @@ size_t MIXFiles::getPos(uintptr_t file) const
   }
 }
 
-size_t MIXFiles::getSize(uintptr_t file) const
-{
+size_t MIXFiles::getSize(uintptr_t file) const {
   // @todo Abstract this const version of operator[]
   openfiles_t::const_iterator i = openfiles.find(file);
   if (openfiles.end() != i) {
@@ -415,12 +353,10 @@ size_t MIXFiles::getSize(uintptr_t file) const
   return 0;
 }
 
-const char* MIXFiles::getPath(uintptr_t file) const
-{
+const char* MIXFiles::getPath(uintptr_t file) const {
   return NULL;
 }
 
-const char* MIXFiles::getArchiveType() const
-{
+const char* MIXFiles::getArchiveType() const {
   return "mix archive";
 }

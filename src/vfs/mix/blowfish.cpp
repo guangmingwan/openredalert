@@ -93,8 +93,7 @@ const t_bf_s bfs = {
     0xd60f573f, 0xbc9bc6e4, 0x2b60a476, 0x81e67400,
     0x08ba6fb5, 0x571be91f, 0xf296ec6b, 0x2a0dd915,
     0xb6636521, 0xe7b9f9b6, 0xff34052e, 0xc5855664,
-    0x53b02d5d, 0xa99f8fa1, 0x08ba4799, 0x6e85076a
-  },
+    0x53b02d5d, 0xa99f8fa1, 0x08ba4799, 0x6e85076a},
   {
     0x4b7a70e9, 0xb5b32944, 0xdb75092e, 0xc4192623,
     0xad6ea6b0, 0x49a7df7d, 0x9cee60b8, 0x8fedb266,
@@ -394,23 +393,12 @@ void Cblowfish::decipher(uint32_t& xl, uint32_t& xr) const {
   ROUND (Xl, Xr, 1);
   Xr ^= m_p[0];
 
-  xl = le16toh(Xr);
-  xr = le16toh(Xl);
+  xl = htole16(Xr);
+  xr = htole16(Xl);
 }
 
 static inline uint32_t reverse(uint32_t v) {
   return bswap32(v);
-  /*_asm
-   {
-   mov        eax, v
-   xchg    al, ah
-   rol        eax, 16
-   xchg    al, ah
-   mov        v, eax
-   }
-   return v;
-   */
-
 }
 
 void Cblowfish::encipher(const void* s, void* d, uint32_t size) const {

@@ -122,7 +122,7 @@ uintptr_t ExternalFiles::getFile(const char *fname, const char* mode) {
   }
   for (i = 0; i < path.size(); ++i)	{			//try to load the file at several different paths
     filename = path[i] + fname;
-    f = fcaseopen(&filename, mode, path[i].length());
+    f = fcaseopen(&filename, mode, (uint32_t)path[i].length());
     if (f != NULL) {
       fseek(f, 0, SEEK_END);
       size = ftell(f);
@@ -184,7 +184,7 @@ size_t ExternalFiles::readDWord(uintptr_t file, uint32_t *databuf, size_t numDWo
 char* ExternalFiles::readLine(uintptr_t file, char *databuf, size_t buflen)
 {
 
-  return fgets(databuf, buflen, openfiles[file].file);
+  return fgets(databuf, (int)buflen, openfiles[file].file);
 }
 
 size_t ExternalFiles::writeByte(uintptr_t file, const uint8_t* databuf, size_t numBytes)
