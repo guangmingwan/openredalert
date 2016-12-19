@@ -29,9 +29,9 @@ class Archive {
   virtual uintptr_t getFile(const char *fname) = 0;
   virtual void releaseFile(uintptr_t file) = 0;
 
-  virtual uint32_t readByte(uintptr_t file, uint8_t *databuf, uint32_t numBytes) = 0;
-  virtual uint32_t readWord(uintptr_t file, uint16_t *databuf, uint32_t numWords) = 0;
-  virtual uint32_t readDWord(uintptr_t file, uint32_t *databuf, uint32_t numDWords) = 0;
+  virtual size_t readByte(uintptr_t file, uint8_t *databuf, size_t numBytes) = 0;
+  virtual size_t readWord(uintptr_t file, uint16_t *databuf, size_t numWords) = 0;
+  virtual size_t readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords) = 0;
 
   /**
    * Read a line of file.
@@ -39,23 +39,23 @@ class Archive {
    * \param databuf will contain the read  line
    * \param buflen size of the buffer
    */
-  virtual char* readLine(uintptr_t file, char *databuf, uint32_t buflen) = 0;
+  virtual char* readLine(uintptr_t file, char *databuf, size_t buflen) = 0;
 
   /* Since only external files can write, we provide stubs here for the other
    * plugins.
    */
-  virtual uint32_t writeByte(uintptr_t file, const uint8_t* databuf, uint32_t numBytes) {return 0;}
-  virtual uint32_t writeWord(uintptr_t file, const uint16_t* databuf, uint32_t numWords) {return 0;}
-  virtual uint32_t writeDWord(uintptr_t file, const uint32_t* databuf, uint32_t numDWords) {return 0;}
+  virtual size_t writeByte(uintptr_t file, const uint8_t* databuf, size_t numBytes) {return 0;}
+  virtual size_t writeWord(uintptr_t file, const uint16_t* databuf, size_t numWords) {return 0;}
+  virtual size_t writeDWord(uintptr_t file, const uint32_t* databuf, size_t numDWords) {return 0;}
   virtual void writeLine(uintptr_t file, const char* databuf) {}
 
   virtual void flush(uintptr_t file) {}
 
-  virtual void seekSet(uintptr_t file, uint32_t pos) = 0;
-  virtual void seekCur(uintptr_t file, int32_t pos) = 0;
+  virtual void seekSet(uintptr_t file, size_t pos) = 0;
+  virtual void seekCur(uintptr_t file, ptrdiff_t pos) = 0;
 
-  virtual uint32_t getPos(uintptr_t file) const = 0;
-  virtual uint32_t getSize(uintptr_t file) const = 0;
+  virtual size_t getPos(uintptr_t file) const = 0;
+  virtual size_t getSize(uintptr_t file) const = 0;
   virtual const char* getPath(uintptr_t file) const = 0;
 };
 

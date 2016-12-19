@@ -41,26 +41,26 @@ class ExternalFiles : public Archive {
   uintptr_t getFile(const char *fname, const char* mode);
   void releaseFile(uintptr_t file);
 
-  uint32_t readByte(uintptr_t file, uint8_t *databuf, uint32_t numBytes);
-  uint32_t readWord(uintptr_t file, uint16_t *databuf, uint32_t numWords);
-  uint32_t readDWord(uintptr_t file, uint32_t *databuf, uint32_t numDWords);
+  size_t readByte(uintptr_t file, uint8_t *databuf, size_t numBytes);
+  size_t readWord(uintptr_t file, uint16_t *databuf, size_t numWords);
+  size_t readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords);
 	 /**
     * Read a line of file.
     */
-  char* readLine(uintptr_t file, char *databuf, uint32_t buflen);
+  char* readLine(uintptr_t file, char *databuf, size_t buflen);
 
-  uint32_t writeByte(uintptr_t file, const uint8_t *databuf, uint32_t numBytes);
-  uint32_t writeWord(uintptr_t file, const uint16_t *databuf, uint32_t numWords);
-  uint32_t writeDWord(uintptr_t file, const uint32_t *databuf, uint32_t numDWords);
+  size_t writeByte(uintptr_t file, const uint8_t *databuf, size_t numBytes);
+  size_t writeWord(uintptr_t file, const uint16_t *databuf, size_t numWords);
+  size_t writeDWord(uintptr_t file, const uint32_t *databuf, size_t numDWords);
   void writeLine(uintptr_t file, const char *databuf);
   int vfs_printf(uintptr_t file, const char* fmt, va_list ap);
   void flush(uintptr_t file);
 
-  void seekSet(uintptr_t file, uint32_t pos);
-  void seekCur(uintptr_t file, int32_t pos);
+  void seekSet(uintptr_t file, size_t pos);
+  void seekCur(uintptr_t file, ptrdiff_t pos);
 
-  uint32_t getPos(uintptr_t file) const;
-  uint32_t getSize(uintptr_t file) const;
+  size_t getPos(uintptr_t file) const;
+  size_t getSize(uintptr_t file) const;
   const char* getPath(uintptr_t file) const;
 
   static const uintptr_t ErrorLoadingFile = (uintptr_t)-1;			///<returned in case file could not be loaded

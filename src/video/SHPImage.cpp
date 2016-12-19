@@ -88,7 +88,7 @@ SHPImage::SHPImage(const char *fname, Sint8 scaleq) : SHPBase(fname, scaleq)
 
     // "Offsets"
     unsigned int j = 14;
-    for (unsigned int i = 0; i < lnkHeader->NumImages + 2; i++)
+    for (int i = 0; i < lnkHeader->NumImages + 2; i++)
     {
         lnkHeader->Offset[i] = shpdata[j] + (shpdata[j+1] << 8) + (shpdata[j+2] << 16) + (0 << 24);
         j += 3;
@@ -260,9 +260,7 @@ void SHPImage::getImageAsAlpha(Uint16 imgnum, SDL_Surface **img)
     // Use the Red value as the alpha value for each pixel
     Uint32 *p = (Uint32 *)alphaimg->pixels;
     for (Uint16 i = 0; i < lnkHeader->Width * lnkHeader->Height; ++i) {
-        #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-        *p = SDL_Swap32(*p);
-        #endif
+        *p = le32toh(*p);
         *p = *p<<fmt.Rshift;
         *p &= fmt.Amask;
         ++p;

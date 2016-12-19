@@ -148,14 +148,14 @@ void ExternalFiles::releaseFile(uintptr_t file)
   openfiles.erase(file);
 }
 
-uint32_t ExternalFiles::readByte(uintptr_t file, uint8_t *databuf, uint32_t numBytes)
+size_t ExternalFiles::readByte(uintptr_t file, uint8_t *databuf, size_t numBytes)
 {
   return fread(databuf, 1, numBytes, openfiles[file].file);
 }
 
-uint32_t ExternalFiles::readWord(uintptr_t file, uint16_t *databuf, uint32_t numWords)
+size_t ExternalFiles::readWord(uintptr_t file, uint16_t *databuf, size_t numWords)
 {
-  uint32_t numRead;
+  size_t numRead;
 
   numRead = fread(databuf, 2, numWords, openfiles[file].file);
 
@@ -168,9 +168,9 @@ uint32_t ExternalFiles::readWord(uintptr_t file, uint16_t *databuf, uint32_t num
   return numRead;
 }
 
-uint32_t ExternalFiles::readDWord(uintptr_t file, uint32_t *databuf, uint32_t numDWords)
+size_t ExternalFiles::readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords)
 {
-  uint32_t numRead = fread(databuf, 4, numDWords, openfiles[file].file);
+  size_t numRead = fread(databuf, 4, numDWords, openfiles[file].file);
 
 #ifdef WORDS_BIGENDIAN
   for (uint32_t i = 0; i < numRead; i++ ) {
@@ -181,22 +181,22 @@ uint32_t ExternalFiles::readDWord(uintptr_t file, uint32_t *databuf, uint32_t nu
   return numRead;
 }
 
-char* ExternalFiles::readLine(uintptr_t file, char *databuf, uint32_t buflen)
+char* ExternalFiles::readLine(uintptr_t file, char *databuf, size_t buflen)
 {
 
   return fgets(databuf, buflen, openfiles[file].file);
 }
 
-uint32_t ExternalFiles::writeByte(uintptr_t file, const uint8_t* databuf, uint32_t numBytes)
+size_t ExternalFiles::writeByte(uintptr_t file, const uint8_t* databuf, size_t numBytes)
 {
   return fwrite(databuf, 1, numBytes, openfiles[file].file);
 }
 
 /**
  */
-uint32_t ExternalFiles::writeWord(uintptr_t file, const uint16_t *databuf, uint32_t numWords)
+size_t ExternalFiles::writeWord(uintptr_t file, const uint16_t *databuf, size_t numWords)
 {
-  uint32_t numWrote;
+  size_t numWrote;
 #ifdef WORDS_BIGENDIAN
   Uint16* tmp = new Uint16[numWords];
   uint32_t i;
@@ -218,9 +218,9 @@ uint32_t ExternalFiles::writeWord(uintptr_t file, const uint16_t *databuf, uint3
   return numWrote;
 }
 
-uint32_t ExternalFiles::writeDWord(uintptr_t file, const uint32_t *databuf, uint32_t numDWords)
+size_t ExternalFiles::writeDWord(uintptr_t file, const uint32_t *databuf, size_t numDWords)
 {
-  uint32_t numWrote;
+  size_t numWrote;
 
 #ifdef WORDS_BIGENDIAN
   Uint32 i;
@@ -259,17 +259,17 @@ void ExternalFiles::flush(uintptr_t file)
   fflush(openfiles[file].file);
 }
 
-void ExternalFiles::seekSet(uintptr_t file, uint32_t pos)
+void ExternalFiles::seekSet(uintptr_t file, size_t pos)
 {
   fseek(openfiles[file].file, pos, SEEK_SET);
 }
 
-void ExternalFiles::seekCur(uintptr_t file, int32_t pos)
+void ExternalFiles::seekCur(uintptr_t file, ptrdiff_t pos)
 {
   fseek(openfiles[file].file, pos, SEEK_CUR);
 }
 
-uint32_t ExternalFiles::getPos(uintptr_t file) const {
+size_t ExternalFiles::getPos(uintptr_t file) const {
   // @todo Abstract this const implementation of operator[].
   openfiles_t::const_iterator i = openfiles.find(file);
   if (openfiles.end() != i) {
@@ -279,7 +279,7 @@ uint32_t ExternalFiles::getPos(uintptr_t file) const {
   return 0;
 }
 
-uint32_t ExternalFiles::getSize(uintptr_t file) const {
+size_t ExternalFiles::getSize(uintptr_t file) const {
   // @todo Abstract this const implementation of operator[].
   openfiles_t::const_iterator i = openfiles.find(file);
   if (openfiles.end() != i) {

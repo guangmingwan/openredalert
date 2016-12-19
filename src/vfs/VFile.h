@@ -21,46 +21,6 @@
 #include <cstdint>
 #include <string>
 
-class VFolder;
-
-class VFileBase {
- public:
-  virtual ~VFileBase() {}
-
-  virtual size_t read(void *buffer, size_t buflen) = 0;
-  virtual std::string readLine() = 0;
-
-  virtual size_t write(void *buffer, size_t buflen) = 0;
-  virtual void writeLine(const std::string &string) = 0;
-
-  virtual void flush() = 0;
-
-  virtual void seekSet(size_t pos) = 0;
-  virtual void seekCur(ptrdiff_t offset) = 0;
-  virtual size_t fileSize() = 0;
-  virtual size_t tell() = 0;
-
-  virtual std::string getPath() = 0;
-};
-
-class VFileInfo {
- public:
-  virtual ~VFileInfo() {};
-
-  virtual std::string getName() const = 0;
-  virtual size_t getSize() const = 0;
-
-  virtual VFileBase *open() const = 0;
-};
-
-class VFolder {
- public:
-  virtual ~VFolder() {}
-
-  virtual VFileBase *openFile(const std::string &name) = 0;
-  virtual bool append(VFolder *folder) = 0;
-};
-
 class Archive;
 
 /**
@@ -87,8 +47,8 @@ class VFile {
 
   void flush();
 
-  void seekSet(uint32_t pos);
-  void seekCur(int32_t offset);
+  void seekSet(size_t pos);
+  void seekCur(ptrdiff_t offset);
   size_t fileSize();
   size_t tell();
 

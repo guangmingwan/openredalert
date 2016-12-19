@@ -43,6 +43,7 @@ namespace MIXPriv {
   }
 
   /** Information about size and hash of a packed file in mix archive */
+#pragma pack(push, 1)
   struct MixHeader
   {
     /** =hash ?? =calculated id ??? */
@@ -66,8 +67,9 @@ namespace MIXPriv {
 
   struct OpenFile {
     uint32_t id;
-    uint32_t pos;
+    size_t pos;
   };
+#pragma pack(pop)
 
   enum tscheck_ {check_ts, nocheck_ts};
 
@@ -88,16 +90,16 @@ class MIXFiles : public Archive {
   uintptr_t getFile(const char *fname);
   void releaseFile(uintptr_t file);
 
-  uint32_t readByte(uintptr_t file, uint8_t *databuf, uint32_t numBytes);
-  uint32_t readWord(uintptr_t file, uint16_t *databuf, uint32_t numWords);
-  uint32_t readDWord(uintptr_t file, uint32_t *databuf, uint32_t numDWords);
-  char *readLine(uintptr_t file, char *databuf, uint32_t buflen);
+  size_t readByte(uintptr_t file, uint8_t *databuf, size_t numBytes);
+  size_t readWord(uintptr_t file, uint16_t *databuf, size_t numWords);
+  size_t readDWord(uintptr_t file, uint32_t *databuf, size_t numDWords);
+  char *readLine(uintptr_t file, char *databuf, size_t buflen);
 
-  void seekSet(uintptr_t file, uint32_t pos);
-  void seekCur(uintptr_t file, int32_t pos);
+  void seekSet(uintptr_t file, size_t pos);
+  void seekCur(uintptr_t file, ptrdiff_t pos);
 
-  uint32_t getPos(uintptr_t file) const;
-  uint32_t getSize(uintptr_t file) const;
+  size_t getPos(uintptr_t file) const;
+  size_t getSize(uintptr_t file) const;
 
   const char* getPath(uintptr_t file) const;
 

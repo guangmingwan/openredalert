@@ -18,7 +18,7 @@
 
 #include <cstring>
 
-#include "fcnc_endian.h"
+#include "include/fcnc_endian.h"
 
 const t_bf_p bfp = {
   0x243f6a88, 0x85a308d3, 0x13198a2e, 0x03707344,

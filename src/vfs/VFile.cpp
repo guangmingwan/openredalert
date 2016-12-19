@@ -63,11 +63,11 @@ void VFile::flush() {
   archive->flush(filenum);
 }
 
-void VFile::seekSet(uint32_t pos) {
+void VFile::seekSet(size_t pos) {
   archive->seekSet(filenum, pos);
 }
 
-void VFile::seekCur(int32_t offset) {
+void VFile::seekCur(ptrdiff_t offset) {
   archive->seekCur(filenum, offset);
 }
 

@@ -26,7 +26,7 @@
 
 #include <cstring>
 
-#include "fcnc_endian.h"
+#include "include/fcnc_endian.h"
 
 const char* pubkey_str = "AihRvNoIbTn85FZRYNZRcT+i6KpU+maCsEqr3Q5q+LDB5tH7Tz2qQ38V";
 
