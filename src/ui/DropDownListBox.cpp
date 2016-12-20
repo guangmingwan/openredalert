@@ -18,8 +18,6 @@
 
 #include <math.h>
 
-#include "SDL_video.h"
-
 #include "RA_Label.h"
 #include "Font.h"
 #include "video/CPSImage.h"
@@ -31,6 +29,8 @@
 #include "RaWindow.h"
 #include "TTextBox.h"
 #include "video/ImageNotFound.h"
+
+#include "SDL.h"
 
 namespace pc {
   extern ImageCache* imgcache;

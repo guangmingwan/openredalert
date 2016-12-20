@@ -51,19 +51,19 @@
 class WSAHeader {
  public:
   /** Number of frames in the movie */
-  Uint16 NumFrames;
+  uint16_t NumFrames;
   /** Position on screen of the upper left corner (absciss X) */
-  Uint16 xpos;
+  uint16_t xpos;
   /** Position on screen of the upper left corner (absciss Y) */
-  Uint16 ypos;
+  uint16_t ypos;
   /** Width of frames in the movie */
-  Uint16 width;
+  uint16_t width;
   /** Height of frames in the movie */
-  Uint16 height;
+  uint16_t height;
   /** Frames/Sec = Delta/(2^10) */
-  Uint32 delta;
+  uint32_t delta;
   /** Offsets of images in the file */
-  Uint32* offsets;
+  uint32_t* offsets;
 };
 
 #endif //WSAHEADER_H

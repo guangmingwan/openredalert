@@ -19,9 +19,6 @@
 
 #include <string>
 
-#include "SDL_events.h"
-#include "SDL_timer.h"
-
 #include "Cursor.h"
 #include "Selection.h"
 #include "Sidebar.h"
@@ -45,6 +42,8 @@
 #include "game/BQueue.h"
 #include "game/UnitAndStructurePool.h"
 #include "game/UnitType.h"
+
+#include "SDL.h"
 
 using Sound::SoundEngine;
 

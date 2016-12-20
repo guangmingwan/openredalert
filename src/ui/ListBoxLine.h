@@ -1,6 +1,5 @@
 // ListBoxLine.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,12 +17,13 @@
 #ifndef LISTBOXLINE_H
 #define LISTBOXLINE_H
 
+#include "SDL.h"
+
 /**
  */
-typedef struct ListBoxLine
-{
-    SDL_Surface *Line;
-    SDL_Surface *SelectedLine;
+typedef struct ListBoxLine {
+  SDL_Surface *Line;
+  SDL_Surface *SelectedLine;
 } ListBoxLine;
 
 #endif //LISTBOXLINE_H

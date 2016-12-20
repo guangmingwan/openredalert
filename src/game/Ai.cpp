@@ -20,8 +20,6 @@
 #include <cmath>
 #include <sstream>
 
-#include "SDL_timer.h"
-
 #include "Logger.hpp"
 #include "ActionEventQueue.h"
 #include "CnCMap.h"
@@ -40,6 +38,8 @@
 #include "video/Renderer.h"
 #include "UnitType.h"
 #include "StructureType.h"
+
+#include "SDL.h"
 
 #define DEBUG_AI
 
@@ -156,8 +156,7 @@ Ai::Ai()
 
 /**
  */
-Ai::~Ai()
-{
+Ai::~Ai() {
   // Free ai rules
   delete Rules;
 }
@@ -165,10 +164,8 @@ Ai::~Ai()
 /**
  * @param diff Difficulty
  */
-void Ai::SetDifficulty(int diff)
-{
-  if (diff > 0 && diff <= 4)
-  {
+void Ai::SetDifficulty(int diff) {
+  if (diff > 0 && diff <= 4) {
     this->Difficulty = diff;
   }
 }
@@ -176,8 +173,7 @@ void Ai::SetDifficulty(int diff)
 /**
  *
  */
-void Ai::DefendUnits(Player* pPlayer, int pPlayerNumb)
-{
+void Ai::DefendUnits(Player* pPlayer, int pPlayerNumb) {
   size_t              lNumbUnits;
   std::vector<Unit*>       lUnitpool;
   Unit                *lUnit;

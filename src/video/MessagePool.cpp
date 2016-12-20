@@ -20,13 +20,12 @@
 #include <functional>
 #include <algorithm>
 
-#include "SDL_video.h"
-#include "SDL_timer.h"
-
 #include "video/Renderer.h"
 #include "ui/RA_Label.h"
 #include "video/drawmessage.h"
 #include "Message.h"
+
+#include "SDL.h"
 
 /**
  */

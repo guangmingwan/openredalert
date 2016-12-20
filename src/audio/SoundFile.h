@@ -19,9 +19,9 @@
 
 #include <string>
 
-#include "SDL_audio.h"
-
 #include "SoundBuffer.h"
+
+#include "SDL.h"
 
 class VFile;
 

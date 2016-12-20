@@ -17,9 +17,9 @@
 #ifndef SIDEBARBUTTON_H
 #define SIDEBARBUTTON_H
 
-#include "SDL_video.h"
-
 #include "RA_Label.h"
+
+#include "SDL.h"
 
 #define LEFT_SIDE_BUTTON 1
 #define RIGHT_SIDE_BUTTON 2

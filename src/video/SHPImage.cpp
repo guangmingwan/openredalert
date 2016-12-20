@@ -23,8 +23,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "SDL_video.h"
-
 #include "Logger.hpp"
 #include "misc/Compression.hpp"
 #include "include/fcnc_endian.h"
@@ -35,6 +33,8 @@
 #include "headerformats.h"
 #include "ImageNotFound.h"
 #include "SHPHeader.h"
+
+#include "SDL.h"
 
 /**
  * Constructor, loads a shpfile.

@@ -17,14 +17,16 @@
 #ifndef DUNE2HEADER_H
 #define DUNE2HEADER_H
 
+#include <cstdint>
+
 class Dune2Header {
  public:
-  Uint16 compression;
-  Uint8  cy;
-  Uint16 cx;
-  Uint8  cy2;
-  Uint16 size_in;
-  Uint16 size_out;
+  uint16_t compression;
+  uint8_t  cy;
+  uint16_t cx;
+  uint8_t  cy2;
+  uint16_t size_in;
+  uint16_t size_out;
 };
 
 #endif //DUNE2HEADER_H

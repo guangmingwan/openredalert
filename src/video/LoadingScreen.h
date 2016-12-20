@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "SDL_thread.h"
+#include "SDL.h"
 
 class GraphicsEngine;
 class CPSImage;

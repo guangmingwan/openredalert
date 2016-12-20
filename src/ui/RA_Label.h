@@ -21,9 +21,9 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "Font.h"
+
+#include "SDL.h"
 
 class RaWindow;
 

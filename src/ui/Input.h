@@ -17,7 +17,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class Player;
 class StructureType;

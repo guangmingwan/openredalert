@@ -16,15 +16,14 @@
 
 #include "LoadingScreen.h"
 
-#include "SDL_timer.h"
-#include "SDL_events.h"
-
 #include "video/CPSImage.h"
 #include "video/GraphicsEngine.h"
 #include "Logger.hpp"
 #include "CPSImage.h"
 #include "video/ImageNotFound.h"
 #include "video/MessagePool.h"
+
+#include "SDL.h"
 
 namespace pc {
   extern GraphicsEngine * gfxeng;

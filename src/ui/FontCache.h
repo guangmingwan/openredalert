@@ -20,9 +20,9 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "TFontImage.h"
+
+#include "SDL.h"
 
 class FontCache {
  public:

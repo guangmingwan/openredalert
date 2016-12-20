@@ -21,7 +21,7 @@
 
 #include "SHPBase.h"
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class VFile;
 

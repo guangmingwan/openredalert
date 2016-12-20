@@ -17,7 +17,7 @@
 #ifndef PCXHEADER_H
 #define PCXHEADER_H
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 /**
  * Header of a .pcx file

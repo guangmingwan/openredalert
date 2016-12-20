@@ -22,9 +22,6 @@
 #include <vector>
 #include <cmath>
 
-#include "SDL_timer.h"
-#include "SDL_video.h"
-
 #include "misc/common.h"
 #include "misc/config.h"
 #include "Logger.hpp"
@@ -45,6 +42,8 @@
 #include "ImageCache.h"
 #include "ImageCacheEntry.h"
 #include "Dune2Image.h"
+
+#include "SDL.h"
 
 #ifndef VERSION
 #define VERSION "6xx"

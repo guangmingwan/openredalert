@@ -21,7 +21,7 @@
 
 #include "SDL_mixer.h"
 
-typedef std::vector<Uint8> SampleBuffer;
+typedef std::vector<uint8_t> SampleBuffer;
 
 /**
  */

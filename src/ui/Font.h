@@ -20,10 +20,10 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "FontOptions.h"
 #include "video/SHPBase.h"
+
+#include "SDL.h"
 
 class FontOptions;
 

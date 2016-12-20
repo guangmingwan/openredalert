@@ -18,11 +18,9 @@
 #ifndef VQAMOVIE_H
 #define VQAMOVIE_H
 
-#include "SDL_audio.h"
-#include "SDL_mutex.h"
-#include "SDL_video.h"
-
 #include "VQAHeader.h"
+
+#include "SDL.h"
 
 class VFile;
 class VQAHeader;

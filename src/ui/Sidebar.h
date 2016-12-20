@@ -22,11 +22,11 @@
 
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "RA_Label.h"
 #include "SidebarGeometry.h"
 #include "createmode_t.h"
+
+#include "SDL.h"
 
 class RadarAnimEvent;
 class SidebarButton;

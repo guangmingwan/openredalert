@@ -20,15 +20,15 @@
 /**  */
 class MiniMapClipping {
  public:
-  Uint16 x;
-  Uint16 y;
-  Uint16 w;
-  Uint16 h;
-  Uint16 sidew;
-  Uint16 sideh;
-  Uint8 tilew;
-  Uint8 tileh;
-  Uint8 pixsize;
+  uint16_t x;
+  uint16_t y;
+  uint16_t w;
+  uint16_t h;
+  uint16_t sidew;
+  uint16_t sideh;
+  uint8_t tilew;
+  uint8_t tileh;
+  uint8_t pixsize;
 };
 
 #endif //MINIMAPCLIPPING_H

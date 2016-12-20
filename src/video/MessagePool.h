@@ -20,9 +20,9 @@
 #include <list>
 #include <string>
 
-#include "SDL_video.h"
-
 #include "ui/RA_Label.h"
+
+#include "SDL.h"
 
 class Message;
 

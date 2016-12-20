@@ -100,7 +100,6 @@ extern bool parse(int argc, char **argv)
   config.width = freecnc_ini->readInt("Video", "Width", 640);
   config.height = freecnc_ini->readInt("Video", "Height", 480);
   config.bpp = freecnc_ini->readInt("Video", "Bpp", 16);
-  config.use_opengl = freecnc_ini->readInt("Video","OpenGL",0);
   fullscreen = freecnc_ini->readInt("Video","fullscreen",0);
   config.intro = freecnc_ini->readInt("Options", "PlayIntro", 1);
   config.gamenum = (gametypes)freecnc_ini->readInt("Options", "Game", GAME_TD);
@@ -289,13 +288,7 @@ extern bool parse(int argc, char **argv)
     return false;
   }
   // @todo FULLSCREEN
-  config.videoflags |= (fullscreen?SDL_FULLSCREEN:0);
-#ifndef _WIN32
-  if (config.use_opengl){
-    // @todo DEBUG
-    //config.videoflags |= SDL_GLSDL;
-  }
-#endif
+//  config.videoflags |= (fullscreen?SDL_FULLSCREEN:0);
 
   return true;
 }

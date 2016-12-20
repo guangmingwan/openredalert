@@ -19,10 +19,10 @@
 
 #include <string>
 
-#include "SDL_video.h"
-
 #include "include/imageproc.h"
 #include "CPSHeader.h"
+
+#include "SDL.h"
 
 /**
  * Image in .CPS format

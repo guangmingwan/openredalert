@@ -17,9 +17,9 @@
 
 #include "TCheckBox.h"
 
-#include "SDL_video.h"
-
 #include "video/GraphicsEngine.h"
+
+#include "SDL.h"
 
 namespace pc
 {

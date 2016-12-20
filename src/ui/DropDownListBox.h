@@ -21,8 +21,9 @@
 #include <string>
 #include <vector>
 
-#include "SDL_events.h"
 #include "RA_Label.h"
+
+#include "SDL.h"
 
 /**
  *

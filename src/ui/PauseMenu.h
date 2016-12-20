@@ -18,7 +18,7 @@
 #ifndef PAUSEMENU_H
 #define PAUSEMENU_H
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class Button;
 class Dune2Image;

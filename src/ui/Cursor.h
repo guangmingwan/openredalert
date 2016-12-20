@@ -20,9 +20,9 @@
 
 #include <string>
 
-#include "SDL_video.h"
-
 #include "RA_Label.h"
+
+#include "SDL.h"
 
 /// @todo Move these hardcoded values
 #define MAX_CURS_IN_ANIM 24

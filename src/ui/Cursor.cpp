@@ -18,8 +18,6 @@
 
 #include <string>
 
-#include "SDL_timer.h"
-
 #include "video/GraphicsEngine.h"
 #include "include/sdllayer.h"
 #include "CursorPool.h"
@@ -29,6 +27,8 @@
 #include "video/Dune2Image.h"
 #include "video/TemplateImage.h"
 #include "misc/gametypes.h"
+
+#include "SDL.h"
 
 namespace pc {
   extern GraphicsEngine * gfxeng;

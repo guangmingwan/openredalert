@@ -21,14 +21,14 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "triggers.h"
 #include "MiniMapClipping.h"
 #include "misc/INIFile.h"
 #include "misc/gametypes.h"
 #include "video/SHPImage.h"
 #include "Trigger.hpp"
+
+#include "SDL.h"
 
 class CellTrigger;
 class LoadingScreen;

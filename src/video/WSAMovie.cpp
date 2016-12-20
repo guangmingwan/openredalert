@@ -20,9 +20,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "SDL_timer.h"
-#include "SDL_video.h"
-
 #include "Renderer.h"
 #include "misc/config.h"
 #include "misc/Compression.hpp"
@@ -35,6 +32,8 @@
 #include "WSAError.h"
 #include "WSAHeader.h"
 #include "GraphicsEngine.h"
+
+#include "SDL.h"
 
 /**
  */

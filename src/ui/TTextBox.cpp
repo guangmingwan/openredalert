@@ -21,13 +21,14 @@
 
 #include "RA_Label.h"
 #include "TTextBox.h"
-#include "SDL_video.h"
 #include "Font.h"
 #include "video/CPSImage.h"
 #include "misc/common.h"
 #include "video/GraphicsEngine.h"
 #include "video/ImageCache.h"
 #include "RaWindow.h"
+
+#include "SDL.h"
 
 namespace pc {
 	extern GraphicsEngine * gfxeng;

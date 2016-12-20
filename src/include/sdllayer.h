@@ -1,7 +1,7 @@
 #ifndef SDLLAYER_H
 #define SDLLAYER_H
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class SDLLayer {
  public:

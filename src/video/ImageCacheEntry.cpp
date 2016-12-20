@@ -17,14 +17,13 @@
 
 #include "ImageCacheEntry.h"
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 /** 
  * Ensure that the pointers start off pointing somewhere that's safe to
  * delete.
  */
-ImageCacheEntry::ImageCacheEntry()
-{
+ImageCacheEntry::ImageCacheEntry() {
 	// Set pointer to NULL
 	image = 0;
 	// Set pointer to NULL
@@ -36,19 +35,16 @@ ImageCacheEntry::ImageCacheEntry()
  * a copy of the main instance, the program will most likely
  * crash or otherwise mess up horribly.
  */
-ImageCacheEntry::~ImageCacheEntry()
-{
+ImageCacheEntry::~ImageCacheEntry() {
 	// If pointer are not NULL
-	if (image != 0)
-	{
+	if (image != 0) {
 		// Free surface
 		SDL_FreeSurface(image);
 		// Set pointer to NULL
 		image = NULL;
 	}
 	// If pointer are not NULL
-	if (shadow != 0)
-	{
+	if (shadow != 0) {
 		// Free surface
 		SDL_FreeSurface(shadow);
 		// Set pointer to NULL
@@ -59,8 +55,7 @@ ImageCacheEntry::~ImageCacheEntry()
 /**
  * This function exists because we don't have shared pointers.
  */
-void ImageCacheEntry::clear()
-{
+void ImageCacheEntry::clear() {
 	image = 0;
 	shadow = 0;
 }

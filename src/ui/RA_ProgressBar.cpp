@@ -23,13 +23,11 @@
 #include <cmath>
 #include <string>
 
-
-#include "SDL_mouse.h"
-#include "SDL_video.h"
-
 #include "misc/common.h"
 #include "video/GraphicsEngine.h"
 #include "RaWindow.h"
+
+#include "SDL.h"
 
 namespace pc {
 	extern GraphicsEngine * gfxeng;

@@ -20,8 +20,6 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
-
 #include "RA_Label.h"
 #include "Font.h"
 #include "video/GraphicsEngine.h"
@@ -33,6 +31,8 @@
 #include "video/ImageNotFound.h"
 #include "video/CPSImage.h"
 #include "video/SHPImage.h"
+
+#include "SDL.h"
 
 namespace pc {
 	extern GraphicsEngine * gfxeng;

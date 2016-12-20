@@ -22,10 +22,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "SDL_audio.h"
-#include "SDL_events.h"
-#include "SDL_mutex.h"
-
 #include "misc/config.h"
 #include "misc/Compression.hpp"
 #include "include/fcnc_endian.h"
@@ -38,6 +34,8 @@
 #include "audio/SoundUtils.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
+
+#include "SDL.h"
 
 namespace pc {
 	extern GraphicsEngine * gfxeng;

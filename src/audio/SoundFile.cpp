@@ -22,14 +22,14 @@
 #include <memory>
 #include <string>
 
-#include "SDL_audio.h"
-
 #include "SOUND_DECODE_STATE.h"
 #include "SoundCommon.h"
 #include "SoundUtils.h"
 #include "Logger.hpp"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
+
+#include "SDL.h"
 
 /**
  */

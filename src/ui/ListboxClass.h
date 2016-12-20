@@ -20,9 +20,9 @@
 #include <vector>
 #include <string>
 
-#include "SDL_events.h"
-#include "SDL_video.h"
 #include "ListBoxLine.h"
+
+#include "SDL.h"
 
 // Listbox defines
 #define LISTBOX_SCROLLBAR_WITH 		15

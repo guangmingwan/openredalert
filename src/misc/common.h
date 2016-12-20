@@ -45,9 +45,9 @@ void CleanConfig (void);
 #include "config.h"
 
 /** Bounded by colours.  This will change later */
-const Uint8 MAXPLAYERS = 6;
+const uint8_t MAXPLAYERS = 6;
 
-const Uint16 FULLHEALTH = 256;
+const uint16_t FULLHEALTH = 256;
 
 extern int mapscaleq;
 

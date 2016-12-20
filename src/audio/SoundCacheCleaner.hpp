@@ -18,10 +18,10 @@
 
 #include <algorithm>
 
-#include "SDL_mixer.h"
-
 #include "SoundCache.h"
 #include "SoundBuffer.h"
+
+#include "SDL_mixer.h"
 
 namespace OpenRedAlert {
   namespace Sound {

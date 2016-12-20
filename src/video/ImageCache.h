@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class ImageCacheEntry;
 class SHPImage;

@@ -3,11 +3,11 @@
 
 #include <string>
 
-#include "SDL_video.h"
-#include "SDL_keysym.h"
-
 #include "misc/common.h"
 #include "misc/gametypes.h"
+
+#include "SDL.h"
+#include "SDL.h"
 
 namespace {
   const Uint8 NUMBINDABLE = 3;
@@ -48,7 +48,6 @@ typedef struct _ConfigType {
   demo;
   /** Enable/disable the fog of war */
   bool UseFogOfWar;
-  bool use_opengl;
 
   gametypes gamenum;
 

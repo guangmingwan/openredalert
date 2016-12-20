@@ -17,7 +17,7 @@
 #ifndef TCHECKBOX_H
 #define TCHECKBOX_H
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 /**
  * Component of the interface which represent a checkbox

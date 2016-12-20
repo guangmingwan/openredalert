@@ -17,9 +17,6 @@
 
 #include "PauseMenu.h"
 
-#include "SDL_video.h"
-#include "SDL_events.h"
-
 #include "Button.h"
 #include "RA_Label.h"
 #include "RaWindow.h"
@@ -34,6 +31,8 @@
 #include "video/Dune2Image.h"
 #include "misc/StringTableFile.h"
 #include "game/CnCMap.h"
+
+#include "SDL.h"
 
 #ifndef VERSION
 #define VERSION "6xx"

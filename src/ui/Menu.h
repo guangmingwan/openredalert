@@ -19,15 +19,14 @@
 
 #include <string>
 
-#include "SDL_video.h"
-#include "SDL_thread.h"
-
 #include "RA_ProgressBar.h"
 #include "RA_Label.h"
 #include "Button.h"
 #include "TTextBox.h"
 #include "RaWindow.h"
 #include "DropDownListBox.h"
+
+#include "SDL.h"
 
 #define MENUSTATE_MAIN_MENU	1
 #define MENUSTATE_MISSION_1	2

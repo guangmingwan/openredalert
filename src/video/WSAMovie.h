@@ -19,10 +19,10 @@
 
 #include <string>
 
-#include "SDL_video.h"
-
 #include "WSAHeader.h"
 #include "GraphicsEngine.h"
+
+#include "SDL.h"
 
 /**
  * Movie in .WSA format

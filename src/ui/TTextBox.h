@@ -18,10 +18,9 @@
 #ifndef TTEXTBOX_H
 #define TTEXTBOX_H
 
-#include "SDL_events.h"
-#include "SDL_video.h"
-
 #include "RA_Label.h"
+
+#include "SDL.h"
 
 class RaWindow;
 

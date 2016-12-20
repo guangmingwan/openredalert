@@ -1076,7 +1076,7 @@ void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
 
 
   // check min X
-  if ((pos % p::ccmap->getWidth() - sight) < 0)
+  if (((int)pos % (int)p::ccmap->getWidth() - (int)sight) < 0)
   {
     initX = 0;
   } else {
@@ -1093,7 +1093,7 @@ void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
 
 
   // check min Y
-  if ((pos / p::ccmap->getWidth() - sight) < 0)
+  if (((int)pos / (int)p::ccmap->getWidth() - (int)sight) < 0)
   {
     initY = 0;
   } else {
@@ -1114,15 +1114,12 @@ void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
   Uint32 xtiles = 0;
   Uint32 ytiles = 0;
   Uint32 xpos, ypos;
-  for (ypos = initY; ypos < endY; ypos++)
-  {
-    for (xpos = initX; xpos < endX; xpos++)
-    {
+  for (ypos = initY; ypos < endY; ypos++) {
+    for (xpos = initX; xpos < endX; xpos++) {
       curpos = xpos + ypos * p::ccmap->getWidth();
 
       // x
-      if (pos % p::ccmap->getWidth() > curpos % p::ccmap->getWidth())
-      {
+      if (pos % p::ccmap->getWidth() > curpos % p::ccmap->getWidth()) {
         xtiles = pos % p::ccmap->getWidth() - curpos % p::ccmap->getWidth();
       } else {
         xtiles = curpos % p::ccmap->getWidth() - pos % p::ccmap->getWidth();
@@ -1142,12 +1139,9 @@ void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
       //printf("x=%d y=%d xt=%d yt=%d  distance=%d\n", xpos, ypos, xtiles, ytiles, distance);
       //double dSight = sight;
 
-      if (distance <= (sight*sight))
-      {
-        if (curpos>=0 && curpos<sightMatrix->size() && curpos < buildMatrix->size()&& curpos <mapVoB->size())
-        {
-          if (mode == SOB_SIGHT)
-          {
+      if (distance <= (sight*sight)) {
+        if (curpos<sightMatrix->size() && curpos < buildMatrix->size()&& curpos <mapVoB->size()) {
+          if (mode == SOB_SIGHT) {
             sightMatrix->at(curpos) += 1;
           } else {
             buildMatrix->at(curpos) += 1;
@@ -1163,8 +1157,7 @@ void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
 
 #else
 
-void Player::addSoB(Uint32 pos, Uint8 width, Uint8 height, Uint8 sight, SOB_update mode)
-{
+void Player::addSoB(Uint32 pos, Uint8 width, Uint8 height, Uint8 sight, SOB_update mode) {
   Uint32 curpos, xsize, ysize, cpos;
   Sint32 xstart, ystart;
   vector<bool>* mapVoB = 0;

@@ -19,8 +19,6 @@
 #include <string>
 #include <vector>
 
-#include "SDL_timer.h"
-
 #include "misc/common.h"
 #include "CnCMap.h"
 #include "misc/INIFile.h"
@@ -40,6 +38,8 @@
 #include "GameMode.h"
 #include "TalkbackType.h"
 #include "Weapon.h"
+
+#include "SDL.h"
 
 namespace pc {
   extern ImageCache* imgcache;

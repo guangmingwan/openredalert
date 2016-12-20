@@ -23,8 +23,6 @@
 #include <sstream>
 #include <algorithm>
 
-#include "SDL_video.h"
-
 #include "Input.h"
 #include "Cursor.h"
 #include "SidebarButton.h"
@@ -49,6 +47,8 @@
 #include "vfs/vfs.h"
 #include "game/UnitType.h"
 #include "game/StructureType.h"
+
+#include "SDL.h"
 
 /// @todo Move this into config file(s)
 static const char* radarnames[] =

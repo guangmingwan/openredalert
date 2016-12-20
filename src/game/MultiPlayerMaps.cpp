@@ -72,12 +72,11 @@ bool MultiPlayerMaps::getMapName(unsigned int Index, std::string & Name)
 /**
  * Read information of Multi-Player maps from file "missions.pkt" in mix archives
  */
-void MultiPlayerMaps::readMapData()
-{
+void MultiPlayerMaps::readMapData() {
   char    Line[255];
   std::string  tmpString;
-  Uint32  pos;
-  Uint32  pos1;
+  size_t  pos;
+  size_t  pos1;
 
   // Try to load file in /data/maps/
   loadMapsFolder();
@@ -86,13 +85,10 @@ void MultiPlayerMaps::readMapData()
   MACRO_LOG_DEBUG("Loading ABANDON1.INI maps")
   VFile* MapFile = VFSUtils::VFS_Open("ABANDON1.INI");
   // Return with error
-  if (MapFile == 0)
-  {
+  if (MapFile == 0) {
     // Logg it
     Logger::getInstance()->Error("Unable to locate ABANDON1.INI file!\n");
-  }
-  else
-  {
+  } else {
     Logger::getInstance()->Info("Load ABANDON1.INI file\n");
     MapNames.push_back(std::string("ABANDON1"));
     MapDescriptions.push_back(std::string("Abandoned Battlefield (Med)"));
@@ -130,7 +126,7 @@ void MultiPlayerMaps::readMapData()
     }
 
     // Save MP map Name
-    if ((pos = tmpString.find (".INI",0)) != std::string::npos){
+    if ((pos = tmpString.find(".INI",0)) != std::string::npos){
       //tmpString.erase (pos, pos+3);
       if (pos < tmpString.size()){
         MapNames.push_back (tmpString.substr (0, pos));

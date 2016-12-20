@@ -20,9 +20,9 @@
 #include <vector>
 #include <string>
 
-#include "SDL_mixer.h"
-
 #include "SoundCache.h"
+
+#include "SDL_mixer.h"
 
 namespace Sound {
 
@@ -60,9 +60,9 @@ namespace Sound {
     /** Selects the previous track in the playlist */
     void PrevTrack();
 
-    static void MusicHook(void* userdata, Uint8* stream, int len);
+    static void MusicHook(void* userdata, uint8_t* stream, int len);
 
-    typedef void (*MixFunc)(void*, Uint8*, int);
+    typedef void (*MixFunc)(void*, uint8_t*, int);
 
     void SetMusicHook(MixFunc mixfunc, void *arg);
 

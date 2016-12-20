@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "SDL_video.h"
+#include "SDL.h"
 
 class VFile;
 class ImageProc;

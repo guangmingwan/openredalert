@@ -19,8 +19,6 @@
 #include <string>
 #include <math.h>
 
-#include "SDL_timer.h"
-
 #include "Logger.hpp"
 #include "CnCMap.h"
 #include "weaponspool.h"
@@ -29,6 +27,8 @@
 #include "audio/SoundEngine.h"
 #include "UnitAndStructurePool.h"
 #include "Unit.hpp"
+
+#include "SDL.h"
 
 InfantryGroup::InfantryGroup() {
   //logger->debug("Setting up infgroup %p\n", this);
@@ -53,17 +53,14 @@ const Sint8 InfantryGroup::unitoffsets[10] = {
   -3, -7, -7, 1, 1
 };
 
-bool InfantryGroup::AddInfantry(Unit* inf, Uint8 subpos)
-{
+bool InfantryGroup::AddInfantry(Unit* inf, Uint8 subpos) {
   // Check that sub-position in beetween 0 and 4
-  if (subpos > 4)
-  {
+  if (subpos > 4) {
     Logger::getInstance()->Error("[InfantryGroup::AddInfantry] subpos is not 0,1,2,3 or 4");
     return false;
   }
   // Check that their are not already 5 infantry
-  if (numinfantry > 4)
-  {
+  if (numinfantry > 4) {
     Logger::getInstance()->Error("[InfantryGroup::AddInfantry] numinfantry is not 0,1,2,3 or 4");
     return false;
   }
@@ -73,17 +70,14 @@ bool InfantryGroup::AddInfantry(Unit* inf, Uint8 subpos)
   return true;
 }
 
-bool InfantryGroup::RemoveInfantry(unsigned int subpos)
-{
+bool InfantryGroup::RemoveInfantry(unsigned int subpos) {
   // Check that sub-position in beetween 0 and 4
-  if (subpos < 0 || subpos > 4)
-  {
+  if (subpos > 4) {
     Logger::getInstance()->Error("[InfantryGroup::RemoveInfantry] subpos is not 0,1,2,3 or 4");
     return false;
   }
   // Check that their are at least 1 infantry
-  if (!(numinfantry > 0))
-  {
+  if (!(numinfantry > 0)) {
     Logger::getInstance()->Error("[InfantryGroup::RemoveInfantry] their are no infantry to remove");
     return false;
   }

@@ -20,12 +20,12 @@
 #include <map>
 #include <vector>
 
-#include "SDL_audio.h"
-#include "SDL_mixer.h"
-
 #include "SoundCache.h"
 #include "SoundBuffer.h"
 #include "SoundFile.h"
+
+#include "SDL.h"
+#include "SDL_mixer.h"
 
 #define SOUND_FORMAT    AUDIO_S16SYS
 #define SOUND_CHANNELS  2
@@ -41,8 +41,8 @@ namespace {
 
   bool initconv = false;
 
-  Uint8 chunk[SOUND_MAX_CHUNK_SIZE];
-  Uint8 tmpbuff[SOUND_MAX_UNCOMPRESSED_SIZE * 4];
+  uint8_t chunk[SOUND_MAX_CHUNK_SIZE];
+  uint8_t tmpbuff[SOUND_MAX_UNCOMPRESSED_SIZE * 4];
 }
 
 namespace {

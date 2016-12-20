@@ -16,8 +16,6 @@
 
 #include "Structure.h"
 
-#include "SDL_timer.h"
-
 #include "CnCMap.h"
 #include "PlayerPool.h"
 #include "Player.h"
@@ -51,6 +49,8 @@
 #include "ActionEventQueue.h"
 #include "BarrelExplosionActionEvent.h"
 #include "UnitType.h"
+
+#include "SDL.h"
 
 using Sound::SoundEngine;
 

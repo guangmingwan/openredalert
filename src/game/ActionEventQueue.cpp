@@ -16,10 +16,10 @@
 
 #include "ActionEventQueue.h"
 
-#include "SDL_timer.h"
-
 #include "ActionEvent.h"
 #include "Comp.h"
+
+#include "SDL.h"
 
 /**
  * Constructor, starts the timer

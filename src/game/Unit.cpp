@@ -19,8 +19,6 @@
 #include <string>
 #include <math.h>
 
-#include "SDL_timer.h"
-
 #include "Ai.h"
 #include "ActionEventQueue.h"
 #include "GameMode.h"
@@ -44,6 +42,8 @@
 #include "UInfiltrateAnimEvent.h"
 #include "UnitType.h"
 #include "StructureType.h"
+
+#include "SDL.h"
 
 namespace p {
   extern ActionEventQueue * aequeue;

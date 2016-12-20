@@ -44,7 +44,6 @@ BuildingAnimEvent::BuildingAnimEvent(Uint32 p, Structure* str, Uint8 mode) :
 {
 	this->strct = str;
 	this->strct->referTo();
-	this->strct = strct;
 
 	anim_data.done = false;
 	anim_data.mode = mode;

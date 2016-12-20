@@ -17,10 +17,10 @@
 #ifndef PCXIMAGE_H
 #define PCXIMAGE_H
 
-#include "SDL_video.h"
-
 #include "PCXHeader.h"
 #include "include/imageproc.h"
+
+#include "SDL.h"
 
 class VFile;
 
