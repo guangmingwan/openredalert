@@ -36,7 +36,6 @@
 #include "TextTriggerAction.h"
 #include "RawTriggerAction.h"
 #include "misc/Compression.hpp"
-#include "misc/KeyNotFound.h"
 #include "misc/INIFile.h"
 #include "misc/StringTableFile.h"
 #include "vfs/vfs.h"
@@ -53,8 +52,6 @@
 #include "triggers.h"
 #include "AiCommand.h"
 #include "Trigger.hpp"
-
-using INI::KeyNotFound;
 
 namespace pc {
   extern ImageCache* imgcache;
@@ -1609,9 +1606,7 @@ void CnCMap::simpleSections(INIFile *inifile)
     } else {
       missionData->endOfGame = false;
     }
-  }
-  catch (KeyNotFound& ex)
-  {
+  } catch (INIFile::KeyNotFound& ex) {
     Logger::getInstance()->Error(__FILE__ , __LINE__, "Error loading map");
     Logger::getInstance()->Error(__FILE__ , __LINE__, ex.what());
     throw LoadMapError("Error loading map: " + std::string (ex.what()));
@@ -1950,17 +1945,12 @@ void CnCMap::advancedSections(INIFile *inifile) {
     xsize = arts->readInt(nameTerrain, "XSIZE", 1);
     ysize = arts->readInt(nameTerrain, "YSIZE", 1);
 
-    for (ywalk = 0; ywalk < ysize && ywalk + posY < height + y; ywalk++)
-    {
-      for (xwalk = 0; xwalk < xsize && xwalk + posX < width + x; xwalk++)
-      {
+    for (ywalk = 0; ywalk < ysize && ywalk + posY < height + y; ywalk++) {
+      for (xwalk = 0; xwalk < xsize && xwalk + posX < width + x; xwalk++) {
         sprintf(type, "NOTBLOCKED%d", ywalk * xsize + xwalk);
-        try
-        {
+        try {
           arts->readInt(nameTerrain, type);
-        }
-        catch (INI::KeyNotFound&)
-        {
+        } catch (INIFile::KeyNotFound&) {
           terraintypes[(ywalk + posY - y) * width + xwalk + posX - x] = ttype;
         }
       }

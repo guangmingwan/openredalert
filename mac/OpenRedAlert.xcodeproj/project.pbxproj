@@ -95,7 +95,6 @@
 		7BE755891DFFF0DC006C3DE2 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B52401F1DFFE90B00EB265F /* Compression.cpp */; };
 		7BE7558A1DFFF0DC006C3DE2 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5240221DFFE90B00EB265F /* fibheap.cpp */; };
 		7BE7558B1DFFF0DC006C3DE2 /* INIFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5240251DFFE90B00EB265F /* INIFile.cpp */; };
-		7BE7558C1DFFF0DC006C3DE2 /* KeyNotFound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5240281DFFE90B00EB265F /* KeyNotFound.cpp */; };
 		7BE7558D1DFFF0DC006C3DE2 /* StringTableFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B52402A1DFFE90B00EB265F /* StringTableFile.cpp */; };
 		7BE7558E1DFFF0DC006C3DE2 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5240341DFFE94100EB265F /* Button.cpp */; };
 		7BE7558F1DFFF0DC006C3DE2 /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5240371DFFE94100EB265F /* Cursor.cpp */; };
@@ -366,12 +365,8 @@
 		7B5240211DFFE90B00EB265F /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../src/misc/config.h; sourceTree = "<group>"; };
 		7B5240221DFFE90B00EB265F /* fibheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fibheap.cpp; path = ../src/misc/fibheap.cpp; sourceTree = "<group>"; };
 		7B5240231DFFE90B00EB265F /* gametypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gametypes.h; path = ../src/misc/gametypes.h; sourceTree = "<group>"; };
-		7B5240241DFFE90B00EB265F /* IniEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IniEntry.h; path = ../src/misc/IniEntry.h; sourceTree = "<group>"; };
 		7B5240251DFFE90B00EB265F /* INIFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = INIFile.cpp; path = ../src/misc/INIFile.cpp; sourceTree = "<group>"; };
 		7B5240261DFFE90B00EB265F /* INIFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = INIFile.h; path = ../src/misc/INIFile.h; sourceTree = "<group>"; };
-		7B5240271DFFE90B00EB265F /* INISection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = INISection.h; path = ../src/misc/INISection.h; sourceTree = "<group>"; };
-		7B5240281DFFE90B00EB265F /* KeyNotFound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KeyNotFound.cpp; path = ../src/misc/KeyNotFound.cpp; sourceTree = "<group>"; };
-		7B5240291DFFE90B00EB265F /* KeyNotFound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyNotFound.h; path = ../src/misc/KeyNotFound.h; sourceTree = "<group>"; };
 		7B52402A1DFFE90B00EB265F /* StringTableFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringTableFile.cpp; path = ../src/misc/StringTableFile.cpp; sourceTree = "<group>"; };
 		7B52402B1DFFE90B00EB265F /* StringTableFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringTableFile.h; path = ../src/misc/StringTableFile.h; sourceTree = "<group>"; };
 		7B5240341DFFE94100EB265F /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../src/ui/Button.cpp; sourceTree = "<group>"; };
@@ -762,12 +757,8 @@
 				7B5240211DFFE90B00EB265F /* config.h */,
 				7B5240221DFFE90B00EB265F /* fibheap.cpp */,
 				7B5240231DFFE90B00EB265F /* gametypes.h */,
-				7B5240241DFFE90B00EB265F /* IniEntry.h */,
 				7B5240251DFFE90B00EB265F /* INIFile.cpp */,
 				7B5240261DFFE90B00EB265F /* INIFile.h */,
-				7B5240271DFFE90B00EB265F /* INISection.h */,
-				7B5240281DFFE90B00EB265F /* KeyNotFound.cpp */,
-				7B5240291DFFE90B00EB265F /* KeyNotFound.h */,
 				7B52402A1DFFE90B00EB265F /* StringTableFile.cpp */,
 				7B52402B1DFFE90B00EB265F /* StringTableFile.h */,
 			);
@@ -1056,7 +1047,6 @@
 				7BE755891DFFF0DC006C3DE2 /* Compression.cpp in Sources */,
 				7BE7558A1DFFF0DC006C3DE2 /* fibheap.cpp in Sources */,
 				7BE7558B1DFFF0DC006C3DE2 /* INIFile.cpp in Sources */,
-				7BE7558C1DFFF0DC006C3DE2 /* KeyNotFound.cpp in Sources */,
 				7BE7558D1DFFF0DC006C3DE2 /* StringTableFile.cpp in Sources */,
 				7BE7558E1DFFF0DC006C3DE2 /* Button.cpp in Sources */,
 				7BE7558F1DFFF0DC006C3DE2 /* Cursor.cpp in Sources */,
