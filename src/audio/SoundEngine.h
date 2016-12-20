@@ -1,6 +1,5 @@
 // SoundEngine.h
 // 1.3
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,39 +20,28 @@
 #include <vector>
 #include <string>
 
-#include "SDL_types.h"
-
 #include "SDL_mixer.h"
 
 #include "SoundCache.h"
 
+namespace Sound {
 
-using std::vector;
-using std::string;
-
-namespace Sound
-{
-
-//class SoundBuffer;
-
-
-/**
- * Manager of all sounds in OpenRedAlert
- *
- * This object provide function to load/start/stop all music/sounds in the game
- */
-class SoundEngine
-{
-public:
+  /**
+   * Manager of all sounds in OpenRedAlert
+   *
+   * This object provide function to load/start/stop all music/sounds in the game
+   */
+  class SoundEngine {
+   public:
     SoundEngine(bool disableSound = false);
     ~SoundEngine();
 
-    void LoadSound(const string& sound);
+    void LoadSound(const std::string& sound);
 
     /** Set the volume in the range of 0-128 of all sounds */
     void SetSoundVolume(int volume);
-    void PlaySound(const string& sound);
-    int  PlayLoopedSound(const string& sound, unsigned int loops);
+    void PlaySound(const std::string& sound);
+    int  PlayLoopedSound(const std::string& sound, unsigned int loops);
     void StopLoopedSound(int id);
     void PauseLoopedSound(int id);
     void ResumeLoopedSound(int id);
@@ -66,7 +54,7 @@ public:
     void PauseMusic();
     void StopMusic();
     /** Plays a specific track */
-    void PlayTrack(const string& sound);
+    void PlayTrack(const std::string& sound);
     /** Selects the next track in the playlist */
     void NextTrack();
     /** Selects the previous track in the playlist */
@@ -80,10 +68,10 @@ public:
 
     bool NoSound() const;
 
-private:
-    typedef vector<string> Playlist;
+   private:
+    typedef std::vector<std::string> Playlist;
 
-    SoundBuffer* LoadSoundImpl(const string& sound);
+    SoundBuffer* LoadSoundImpl(const std::string& sound);
 
     bool nosound;
     bool mutesound;
@@ -94,8 +82,8 @@ private:
 
     Playlist playlist;
     Playlist::iterator currentTrack;
-};
-
+  };
+  
 }
 
 #endif //SOUNDENGINE_H

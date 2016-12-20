@@ -1,6 +1,5 @@
 // DoorAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -30,28 +29,27 @@ class Structure;
  * @version 1.0
  * @since r375
  */
-class DoorAnimEvent : public BuildingAnimEvent 
-{
-public:
-    /**
-     * @param p the priority of this event
-     * @param str the structure to which this animation is to be applied
-     * @param opening whether the door is opening or closing
-     */
-    DoorAnimEvent(Uint32 p, Structure* str, bool opening);
-	~DoorAnimEvent ();
+class DoorAnimEvent : public BuildingAnimEvent {
+ public:
+  /**
+   * @param p the priority of this event
+   * @param str the structure to which this animation is to be applied
+   * @param opening whether the door is opening or closing
+   */
+  DoorAnimEvent(uint32_t p, Structure* str, bool opening);
+  ~DoorAnimEvent ();
 
-    void anim_func(anim_nfo* data);
-    void updateDamaged();
+  void anim_func(anim_nfo* data);
+  void updateDamaged();
 
-private:
-    Structure* strct;
-	Uint32 delayCounter;
-    Uint8 frame;
-    Uint8 framend;
-    Uint8 framestart;
-    Uint8 frame0;
-    bool opening;
+ private:
+  Structure* strct;
+  uint32_t delayCounter;
+  uint8_t frame;
+  uint8_t framend;
+  uint8_t framestart;
+  uint8_t frame0;
+  bool opening;
 };
 
 #endif //DOORANIMEVENT_H

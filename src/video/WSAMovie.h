@@ -1,6 +1,5 @@
 // WSAMovie.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -25,45 +24,42 @@
 #include "WSAHeader.h"
 #include "GraphicsEngine.h"
 
-using std::string;
-
 /**
  * Movie in .WSA format
- * 
+ *
  * WSA files contain short animations and can be found in the GENERAL.MIX files.
  * They are basically a series of Format40 images, that are then compressed with
  * Format80.
- * 
+ *
  * The images are in Format40 but are then compressed with Format80.
- * That means that you first have to uncompress the Format80 and then decode 
+ * That means that you first have to uncompress the Format80 and then decode
  * the Format40 image you obtain.
- * The first frame should be xor-ed over a black image (filled with zeros), 
+ * The first frame should be xor-ed over a black image (filled with zeros),
  * all the other are xor-ed over the previous one.
  */
-class WSAMovie
-{
-public:
-    /** Constructor */
-    WSAMovie(const string& fname);
-    ~WSAMovie();
+class WSAMovie {
+ public:
+  /** Constructor */
+  WSAMovie(const std::string& fname);
+  ~WSAMovie();
 
-    /** Launch the animation rendering */
-    void animate(GraphicsEngine& grafEngine);
+  /** Launch the animation rendering */
+  void animate(GraphicsEngine& grafEngine);
 
-private:
-    /** Decode one frame */
-    SDL_Surface* decodeFrame(unsigned int framenum);
-    
-    /** Internal Data */
-    Uint8* wsadata;
-    Uint8* framedata;
-    
-    /** Palette of the video (for frame) */
-    SDL_Color palette[256];
-    /** Whether WSA loops or not */
-    bool loop;
-    /** Header of the video */
-    WSAHeader header;
+ private:
+  /** Decode one frame */
+  SDL_Surface* decodeFrame(unsigned int framenum);
+
+  /** Internal Data */
+  Uint8* wsadata;
+  Uint8* framedata;
+
+  /** Palette of the video (for frame) */
+  SDL_Color palette[256];
+  /** Whether WSA loops or not */
+  bool loop;
+  /** Header of the video */
+  WSAHeader header;
 };
 
 #endif //WSAMOVIE_H

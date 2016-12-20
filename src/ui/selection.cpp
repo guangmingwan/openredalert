@@ -38,16 +38,6 @@ namespace p {
 	extern CnCMap* ccmap;
 }
 
-using std::map;
-using std::list;
-using std::mem_fun;
-using std::bind2nd;
-using std::ptr_fun;
-using std::unary_function;
-using std::find_if;
-using std::find;
-using std::exception;
-
 /** @todo Some stuff still uses the "for (i = begin; i != end; ++i)" pattern.
  * @todo Some of the functions in the namespace can be replaced by further STL
  * magic.
@@ -62,7 +52,7 @@ namespace {
 //std::mem_fun_t<void, UnitOrStructure> refer = mem_fun(&UnitOrStructure::referTo);
 //std::mem_fun_t<void, UnitOrStructure> select = mem_fun(&UnitOrStructure::select);
 
-struct canAttackWalls : unary_function<UnitOrStructure*, bool> {
+struct canAttackWalls : std::unary_function<UnitOrStructure*, bool> {
     bool operator()(UnitOrStructure* uos) {
         UnitOrStructureType* type = uos->getType();
         if (type->getWeapon(true) == 0) {
@@ -78,11 +68,11 @@ void domove(Unit* un, Uint32 pos)
 }
 
 template<class T>
-struct doattack : unary_function<T*, void> {
+struct doattack : std::unary_function<T*, void> {
 };
 
 template<>
-struct doattack<Unit> : unary_function<Unit*, void> {
+struct doattack<Unit> : std::unary_function<Unit*, void> {
     doattack(UnitOrStructure* target, bool target_is_unit) : target(target), target_is_unit(target_is_unit) {}
     void operator()(Unit* un) {
         if (un->canAttack() && (!target->getType()->isWall() || un->getType()->getWeapon(true)->getWall())) {
@@ -94,7 +84,7 @@ struct doattack<Unit> : unary_function<Unit*, void> {
 };
 
 template<>
-struct doattack<Structure> : unary_function<Structure*, void> {
+struct doattack<Structure> : std::unary_function<Structure*, void> {
     doattack(UnitOrStructure* target, bool target_is_unit) : target(target), target_is_unit(target_is_unit) {}
     void operator()(Structure* st) {
         /// @todo: when power checking is done, check if structure selected
@@ -108,7 +98,7 @@ struct doattack<Structure> : unary_function<Structure*, void> {
 };
 
 template<class T>
-struct postloadproc : unary_function<T*, void> {
+struct postloadproc : std::unary_function<T*, void> {
     postloadproc(Uint8 lplayernum, bool* enemysel, Uint32* numatk) :
         lplayernum(lplayernum), enemysel(*enemysel), numattacking(*numatk) {}
     void operator()(T* uos) {
@@ -124,11 +114,11 @@ struct postloadproc : unary_function<T*, void> {
     Uint8 lplayernum; bool& enemysel; Uint32& numattacking;
 };
 
-void copySelection(const list<Unit*>& src_un, const list<Structure*>& src_st,
-    list<Unit*>& trg_un, list<Structure*>& trg_st)
+void copySelection(const std::list<Unit*>& src_un, const std::list<Structure*>& src_st,
+    std::list<Unit*>& trg_un, std::list<Structure*>& trg_st)
 {
-	list<Unit*>::iterator iter_un;
-	list<Structure*>::iterator iter_st;
+	std::list<Unit*>::iterator iter_un;
+	std::list<Structure*>::iterator iter_st;
 
 	for (iter_un=trg_un.begin(); iter_un != trg_un.end(); iter_un++){
 		Unit *Unitp = *iter_un;
@@ -161,10 +151,10 @@ void copySelection(const list<Unit*>& src_un, const list<Structure*>& src_st,
 }
 
 /** Remove all traces of a unit or structure in all selections*/
-template<class T> void purgeImpl(T* sel, list<T*> (&saved)[10])
+template<class T> void purgeImpl(T* sel, std::list<T*> (&saved)[10])
 {
     Uint8 i;
-    typename list<T*>::iterator r;
+    typename std::list<T*>::iterator r;
 
     for (i=0; i<10; ++i)
     {
@@ -184,8 +174,8 @@ Selection::Selection() : numattacking(0), enemy_selected(false)
 
 Selection::~Selection()
 {
-	list<Unit*>::iterator iter_un;
-	list<Structure*>::iterator iter_st;
+	std::list<Unit*>::iterator iter_un;
+	std::list<Structure*>::iterator iter_st;
 
 	for (iter_un=sel_units.begin(); iter_un != sel_units.end(); iter_un++){
 		Unit *Unitp = *iter_un;
@@ -300,8 +290,8 @@ void Selection::purge(Structure* sel)
 
 void Selection::clearSelection()
 {
-	list<Unit*>::iterator iter_un;
-	list<Structure*>::iterator iter_st;
+	std::list<Unit*>::iterator iter_un;
+	std::list<Structure*>::iterator iter_st;
 
     numattacking = 0;
 
@@ -340,7 +330,7 @@ void Selection::clearSelection()
 void Selection::moveUnits(Uint32 pos)
 {
     checkSelection();
-    for_each(sel_units.begin(), sel_units.end(), bind2nd(ptr_fun(domove), pos));
+    for_each(sel_units.begin(), sel_units.end(), bind2nd(std::ptr_fun(domove), pos));
 }
 
 void Selection::attackUnit(Unit *target)
@@ -362,7 +352,7 @@ void Selection::checkSelection()
 	
     //remove_if(sel_units.begin(), sel_units.end(), logical_not(mem_fun(&UnitOrStructure::isAlive)));
 
-    for (list<Unit*>::iterator it = sel_units.begin(); it != sel_units.end(); ++it) 
+    for (std::list<Unit*>::iterator it = sel_units.begin(); it != sel_units.end(); ++it)
     {
         if (*it == 0)
         {
@@ -383,7 +373,7 @@ void Selection::checkSelection()
             Logger::getInstance()->Warning ("%s line %i: %02i:%02i:%02i removeUnit (Selection)\n");//, __FILE__, __LINE__, Tm->tm_hour, Tm->tm_min, Tm->tm_sec);
         }
     }
-    for (list<Structure*>::iterator it = sel_structs.begin(); it != sel_structs.end(); ++it) {
+    for (std::list<Structure*>::iterator it = sel_structs.begin(); it != sel_structs.end(); ++it) {
         if (!(*it)->isAlive()) {
             Structure* struc = *it--;
             purge(struc);
@@ -398,7 +388,7 @@ Unit* Selection::getRandomUnit()
     sze = static_cast<Uint8>(sel_units.size());
     if (sze > 0) {
         rnd = (int) ((double)sze*rand()/(RAND_MAX+1.0));
-        list<Unit*>::const_iterator i = sel_units.begin();
+        std::list<Unit*>::const_iterator i = sel_units.begin();
         advance(i, rnd);
         return *i;
     } else {
@@ -433,8 +423,8 @@ bool Selection::loadSelection(Uint8 savepos)
         return false;
     }
     clearSelection();
-    list<Unit*>& targetsel_units = saved_unitsel[savepos];
-    list<Structure*>& targetsel_structs = saved_structsel[savepos];
+    std::list<Unit*>& targetsel_units = saved_unitsel[savepos];
+    std::list<Structure*>& targetsel_structs = saved_structsel[savepos];
 
     if (targetsel_units.empty() && targetsel_structs.empty()) {
         return false;
@@ -451,8 +441,8 @@ bool Selection::loadSelection(Uint8 savepos)
 
 void Selection::stop()
 {
-    for_each(sel_units.begin(), sel_units.end(), mem_fun(&Unit::stop));
-    for_each(sel_structs.begin(), sel_structs.end(), mem_fun(&Structure::stop));
+    for_each(sel_units.begin(), sel_units.end(), std::mem_fun(&Unit::stop));
+    for_each(sel_structs.begin(), sel_structs.end(), std::mem_fun(&Structure::stop));
 }
 
 bool Selection::mergeSelection(Uint8 loadpos)
@@ -460,8 +450,8 @@ bool Selection::mergeSelection(Uint8 loadpos)
     if (enemy_selected) {
         return false;
     }
-    list<Unit*> tmp_units; tmp_units.swap(sel_units);
-    list<Structure*> tmp_structs; tmp_structs.swap(sel_structs);
+    std::list<Unit*> tmp_units; tmp_units.swap(sel_units);
+    std::list<Structure*> tmp_structs; tmp_structs.swap(sel_structs);
     if (!loadSelection(loadpos)) {
         sel_units.swap(tmp_units);
         sel_structs.swap(tmp_structs);
@@ -485,7 +475,7 @@ Uint8 Selection::getOwner() const
         if (sel_structs.empty())
         {
             Logger::getInstance()->Error("[Selection::getOwner()] sel_units and sel_structs internal lists are empty !");
-            throw new exception();
+            throw new std::exception();
         }
         
         return (*sel_structs.begin())->getOwner();
@@ -507,7 +497,7 @@ bool Selection::areWaterBound()
         return false;
     }
 
-    for (list<Unit*>::iterator UnitIt = sel_units.begin(); UnitIt != sel_units.end(); ++UnitIt)
+    for (std::list<Unit*>::iterator UnitIt = sel_units.begin(); UnitIt != sel_units.end(); ++UnitIt)
     {
         //assert(*UnitIt != 0);
         if (!(*UnitIt)->isAlive())
@@ -540,7 +530,7 @@ Unit* Selection::getUnit(Uint32 UnitNumb)
 {
 	if (UnitNumb < sel_units.size())
 	{
-		list<Unit*>::const_iterator i = sel_units.begin();
+		std::list<Unit*>::const_iterator i = sel_units.begin();
 		advance(i, UnitNumb);
 		return *i;
 	}
@@ -551,7 +541,7 @@ Structure* Selection::getStructure(Uint32 structureNumber)
 {
 	if (structureNumber < this->sel_structs.size())
 	{
-		list<Structure*>::const_iterator i = sel_structs.begin();
+		std::list<Structure*>::const_iterator i = sel_structs.begin();
 		advance(i, structureNumber);
 		return *i;
 	}

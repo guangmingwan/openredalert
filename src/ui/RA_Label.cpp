@@ -23,8 +23,6 @@
 #include "Font.h"
 #include "RaWindow.h"
 
-using std::string;
-
 namespace pc {
 	extern GraphicsEngine * gfxeng;
 }
@@ -83,11 +81,11 @@ Uint32 RA_Label::getWidth()
 	return LabelFont.calcTextWidth(LabelText);
 }
 
-Uint32 RA_Label::getWidth(const string text){
+Uint32 RA_Label::getWidth(const std::string text){
 	return LabelFont.calcTextWidth(text);
 }
 
-string RA_Label::getText(){
+std::string RA_Label::getText(){
 	return LabelText;
 }
 
@@ -205,14 +203,14 @@ void RA_Label::Draw(SDL_Surface *DrawingSurface, int X, int Y)
 	Draw(X, Y);
 }
 
-void RA_Label::Draw(const string& text, SDL_Surface *DrawingSurface, int X, int Y)
+void RA_Label::Draw(const std::string& text, SDL_Surface *DrawingSurface, int X, int Y)
 {
 	setText(text);
 	SetDrawingSurface(DrawingSurface);
 	Draw(X, Y);
 }
 
-void RA_Label::Draw(const string& text, SDL_Surface *DrawingSurface, SDL_Color Fcolor, int X, int Y)
+void RA_Label::Draw(const std::string& text, SDL_Surface *DrawingSurface, SDL_Color Fcolor, int X, int Y)
 {
 	setText(text);
 	setColor(Fcolor);
@@ -275,12 +273,9 @@ void RA_Label::Create()
 	recreate = false;
 }
 
-void RA_Label::setText(const string text)
-{
-	if (LabelText != text)
-	{
-		if (BackgroundBackup != NULL && DrawingWindow != NULL)
-		{
+void RA_Label::setText(const std::string text) {
+	if (LabelText != text) {
+		if (BackgroundBackup != NULL && DrawingWindow != NULL) {
 			SDL_BlitSurface(BackgroundBackup, NULL, DrawingWindow->GetWindowSurface (), &LabelDest);
 			SDL_FreeSurface(BackgroundBackup);
 			BackgroundBackup = NULL;
@@ -293,8 +288,7 @@ void RA_Label::setText(const string text)
 /**
  * Set the font of the Label
  */
-void RA_Label::SetFont(const string FontName)
-{
+void RA_Label::SetFont(const std::string FontName) {
 	LabelFont.Load(FontName);
 	recreate = true;
 }

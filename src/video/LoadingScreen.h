@@ -1,6 +1,5 @@
 // LoadingScreen.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -25,27 +24,25 @@
 class GraphicsEngine;
 class CPSImage;
 
-using std::string;
+class LoadingScreen {
+ public:
+  LoadingScreen();
+  ~LoadingScreen();
+  void setCurrentTask(const std::string& task);
+  const std::string& getCurrentTask() const;
 
-class LoadingScreen
-{
-public:
-    LoadingScreen();
-    ~LoadingScreen();
-    void setCurrentTask(const string& task);
-    const std::string& getCurrentTask() const ;
-private:
-    // Non-copyable
-    LoadingScreen(const LoadingScreen&) ;
-    LoadingScreen& operator=(const LoadingScreen&) ;
+ private:
+  // Non-copyable
+  LoadingScreen(const LoadingScreen&);
+  LoadingScreen& operator=(const LoadingScreen&);
 
-    static int runRenderThread(void *inst);
-    SDL_Thread *renderThread;
-    SDL_mutex *lsmutex;
-    CPSImage* logo;
-    bool done;
-    std::string task_;
-    Uint32 oldwidth;
+  static int runRenderThread(void *inst);
+  SDL_Thread *renderThread;
+  SDL_mutex *lsmutex;
+  CPSImage* logo;
+  bool done;
+  std::string task_;
+  Uint32 oldwidth;
 };
 
 #endif //LOADINGSCREEN_H

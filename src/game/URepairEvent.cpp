@@ -33,10 +33,9 @@ namespace p {
 	extern ActionEventQueue* aequeue;
 }
 
-URepairEvent::URepairEvent(Uint32 p, Unit *un) : UnitAnimEvent(p,un)
-{
+URepairEvent::URepairEvent(uint32_t p, Unit *un) : UnitAnimEvent(p,un) {
 	int		un_cost;
-	Sint16	health;
+	int16_t	health;
 
 	this->un	= un;
 	stopping	= false;
@@ -49,9 +48,9 @@ URepairEvent::URepairEvent(Uint32 p, Unit *un) : UnitAnimEvent(p,un)
 	health = un->getHealth();
 	un_cost = un->getType()->getCost();
 	if (health > 0)
-		dmg_cost = (Uint16)(((double)un_cost/(double)un->getType()->getMaxHealth()) * ((double)un->getType()->getMaxHealth() - (double)health));
+		dmg_cost = (uint16_t)(((double)un_cost/(double)un->getType()->getMaxHealth()) * ((double)un->getType()->getMaxHealth() - (double)health));
 	else
-		dmg_cost = (Uint16)un_cost;
+		dmg_cost = (uint16_t)un_cost;
 
 	moveCounter = 0;
 }

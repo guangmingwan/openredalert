@@ -1,6 +1,5 @@
 // CnCMap.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,7 +21,6 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "triggers.h"
@@ -41,96 +39,87 @@ class PlayerPool;
 class AiCommand;
 class Unit;
 
-
 using OpenRedAlert::Game::Trigger;
-namespace OpenRedAlert
-{
-namespace Game
-{
-class Trigger;
+namespace OpenRedAlert {
+  namespace Game {
+    class Trigger;
+  }
 }
-}
-
-using std::string;
 
 /**
  * Information about terrain placement
  */
-struct TerrainEntry
-{
-    Uint32 shpnum;
-    Sint16 xoffset;
-    Sint16 yoffset;
+struct TerrainEntry {
+  Uint32 shpnum;
+  Sint16 xoffset;
+  Sint16 yoffset;
 };
 
-struct TileList
-{
-    Uint16 templateNum;
-    Uint8 tileNum;
+struct TileList {
+  Uint16 templateNum;
+  Uint8 tileNum;
 };
 
 
-class RA_TeamUnits
-{
-public:
-	/** type name of the unit */
-    string	tname;
-    /** Number of units of this type */
-    int     numb;
+class RA_TeamUnits {
+ public:
+  /** type name of the unit */
+  std::string	tname;
+  /** Number of units of this type */
+  int     numb;
 };
 
-class RA_Teamtype
-{
-public:
-    string                 	tname;
-    int            			country;
-    int                     props;
-    int                     unknown1;
-    int                     unknown2;
-    int                     maxteams;
-    int                     waypoint;
-    /** Number of the trigger to set at all unit of the group */
-    int                     trigger;
-    /** Number of unit in the team */
-    int                     numb_teamtypes;
-    vector<RA_TeamUnits>	Units;
+class RA_Teamtype {
+ public:
+  std::string                 	tname;
+  int            			country;
+  int                     props;
+  int                     unknown1;
+  int                     unknown2;
+  int                     maxteams;
+  int                     waypoint;
+  /** Number of the trigger to set at all unit of the group */
+  int                     trigger;
+  /** Number of unit in the team */
+  int                     numb_teamtypes;
+  std::vector<RA_TeamUnits>	Units;
 
-    /** List of command during Ai management */
-    vector<AiCommand*> aiCommandList;
+  /** List of command during Ai management */
+  std::vector<AiCommand*> aiCommandList;
 };
 
 
 struct ScrollVector {
-    Sint8 x;
-    Sint8 y;
-    Uint8 t;
+  Sint8 x;
+  Sint8 y;
+  Uint8 t;
 };
 
 struct ScrollBookmark {
-    Uint16 x;
-    Uint16 y;
-    Uint16 xtile;
-    Uint16 ytile;
+  Uint16 x;
+  Uint16 y;
+  Uint16 xtile;
+  Uint16 ytile;
 };
 
 struct ScrollData {
-    Uint16 maxx;
-    Uint16 maxy;
-    Uint16 curx;
-    Uint16 cury;
-    Uint16 maxxtileoffs;
-    Uint16 maxytileoffs;
-    Uint16 curxtileoffs;
-    Uint16 curytileoffs;
-    Uint16 tilewidth;
+  Uint16 maxx;
+  Uint16 maxy;
+  Uint16 curx;
+  Uint16 cury;
+  Uint16 maxxtileoffs;
+  Uint16 maxytileoffs;
+  Uint16 curxtileoffs;
+  Uint16 curytileoffs;
+  Uint16 tilewidth;
 };
 
 
 struct TemplateTilePair {
-	/** Template for Theater */
-    TemplateImage *theater;
-    /** Tile number in this Theater */
-    Uint8 tile;
+  /** Template for Theater */
+  TemplateImage *theater;
+  /** Tile number in this Theater */
+  Uint8 tile;
 };
 
 typedef std::map<std::string, TemplateImage*> TemplateCache;
@@ -139,300 +128,298 @@ typedef std::vector<TemplateTilePair* > TemplateTileCache;
 /**
  * Map in Red Alert
  */
-class CnCMap 
-{
-public:
-    CnCMap();
-    ~CnCMap();
+class CnCMap {
+ public:
+  CnCMap();
+  ~CnCMap();
 
-    void Init(gametypes gameNumber, Uint8 gameMode);
-    // old proto :: void InitCnCMap();
+  void Init(gametypes gameNumber, Uint8 gameMode);
+  // old proto :: void InitCnCMap();
 
-    // Comments with "C/S:" at the start are to do with the client/server split.
-    // C/S: Members used in both client and server
-    void loadMap(const string& mapname, LoadingScreen* lscreen);
+  // Comments with "C/S:" at the start are to do with the client/server split.
+  // C/S: Members used in both client and server
+  void loadMap(const std::string& mapname, LoadingScreen* lscreen);
 
-    const MissionData& getMissionData() const;
+  const MissionData& getMissionData() const;
 
-    bool isLoading() const ;
+  bool isLoading() const ;
 
-	bool canSpawnAt(Uint16 pos) const;
-	bool isBuildableAt( Uint32 PlayerNumb, Uint16 pos, bool WaterBound ) const;
-    bool isBuildableAt(Uint16 pos, Unit* excpUn = NULL) const;
-    bool isBuildableAt(Uint32 PlayerNumb, Uint16 pos, Unit* excpUn = NULL) const;
-    Uint16 getCost(Uint16 pos, Unit* excpUn = 0) const;
-    Uint16 getWidth() const ;
-    Uint16 getHeight() const ;
-    Uint32 getSize() const ;
-    Uint32 translateToPos(Uint16 x, Uint16 y) const;
-    void translateFromPos(Uint32 pos, Uint16 *x, Uint16 *y) const;
+  bool canSpawnAt(Uint16 pos) const;
+  bool isBuildableAt( Uint32 PlayerNumb, Uint16 pos, bool WaterBound ) const;
+  bool isBuildableAt(Uint16 pos, Unit* excpUn = NULL) const;
+  bool isBuildableAt(Uint32 PlayerNumb, Uint16 pos, Unit* excpUn = NULL) const;
+  Uint16 getCost(Uint16 pos, Unit* excpUn = 0) const;
+  Uint16 getWidth() const ;
+  Uint16 getHeight() const ;
+  Uint32 getSize() const ;
+  Uint32 translateToPos(Uint16 x, Uint16 y) const;
+  void translateFromPos(Uint32 pos, Uint16 *x, Uint16 *y) const;
 
-    enum TerrainType {
-        t_land=0,
-        t_water=1,
-        t_road=2,
-        t_rock=3,
-        t_tree=4,
-        t_water_blocked=5,
-        t_other_nonpass=7
-    };
+  enum TerrainType {
+    t_land=0,
+    t_water=1,
+    t_road=2,
+    t_rock=3,
+    t_tree=4,
+    t_water_blocked=5,
+    t_other_nonpass=7
+  };
 
-    enum ScrollDirection {s_none = 0, s_up = 1, s_right = 2, s_down = 4, s_left = 8,
-        s_upright = 3, s_downright = 6, s_downleft = 12, s_upleft = 9, s_all = 15};
+  enum ScrollDirection {s_none = 0, s_up = 1, s_right = 2, s_down = 4, s_left = 8,
+    s_upright = 3, s_downright = 6, s_downleft = 12, s_upleft = 9, s_all = 15};
 
-    // C/S: Not sure about this one
-    Uint8 getGameMode() const ;
+  // C/S: Not sure about this one
+  Uint8 getGameMode() const ;
 
-	/** C/S: These functions are client only*/
-	void setTerrainOverlay( Uint32 pos, Uint32 ImgNum, Uint16 Frame ) ;
+  /** C/S: These functions are client only*/
+  void setTerrainOverlay( Uint32 pos, Uint32 ImgNum, Uint16 Frame ) ;
 
-	/** C/S: These functions are client only*/
-	Uint32 getTerrainOverlay( Uint32 pos ) ;
+  /** C/S: These functions are client only*/
+  Uint32 getTerrainOverlay( Uint32 pos ) ;
 
-    /** Return true if this map is in snow theme */
-    bool SnowTheme() const;
+  /** Return true if this map is in snow theme */
+  bool SnowTheme() const;
 
-    SDL_Surface *getMapTile( Uint32 pos );
-    SDL_Surface *getShadowTile(Uint8 shadownum);
+  SDL_Surface *getMapTile( Uint32 pos );
+  SDL_Surface *getShadowTile(Uint8 shadownum);
 
-    RA_Teamtype* getTeamtypeByName(string TeamName);
+  RA_Teamtype* getTeamtypeByName(std::string TeamName);
 
-    RA_Teamtype* getTeamtypeByNumb(unsigned int TeamNumb);
+  RA_Teamtype* getTeamtypeByNumb(unsigned int TeamNumb);
 
-	RA_Tiggers* getTriggerByName(string TriggerName);
+  RA_Tiggers* getTriggerByName(std::string TriggerName);
 
-	void setTriggerByName(string TriggerName, RA_Tiggers *Trig);
+  void setTriggerByName(std::string TriggerName, RA_Tiggers *Trig);
 
-    RA_Tiggers* getTriggerByNumb(int TriggerNumb);
+  RA_Tiggers* getTriggerByNumb(int TriggerNumb);
 
-    /** Return the trigger pool */
-    vector<Trigger*>* getTriggerPool();
+  /** Return the trigger pool */
+  std::vector<Trigger*>* getTriggerPool();
 
-    /**
-     * In red alert when type is bigger the 4 it is normal ore,
-     * when type is smaller or equal to 4 the resource is christal :)
-     */
-    bool getResource(Uint32 pos, Uint8* type, Uint8* amount) const ;
+  /**
+   * In red alert when type is bigger the 4 it is normal ore,
+   * when type is smaller or equal to 4 the resource is christal :)
+   */
+  bool getResource(Uint32 pos, Uint8* type, Uint8* amount) const ;
 
-    void decreaseResource(Uint32 pos, Uint8 amount);
+  void decreaseResource(Uint32 pos, Uint8 amount);
 
-    /**
-     * @return the resource data in a form best understood
-     * by the imagecache/renderer
-     */
-    Uint32 getResourceFrame(Uint32 pos) const ;
+  /**
+   * @return the resource data in a form best understood
+   * by the imagecache/renderer
+   */
+  Uint32 getResourceFrame(Uint32 pos) const ;
 
-    Uint32 getTiberium(Uint32 pos) const ;
+  Uint32 getTiberium(Uint32 pos) const ;
 
-    Uint32 getSmudge(Uint32 pos) const ;
-    Uint32 setSmudge(Uint32 pos, Uint8 value) ;
-    Uint32 setTiberium(Uint32 pos, Uint8 value) ;
-    Uint32 getOverlay(Uint32 pos);
-    Uint32 getTerrain(Uint32 pos, Sint16* xoff, Sint16* yoff);
-    Uint8 getTerrainType(Uint32 pos) const ;
+  Uint32 getSmudge(Uint32 pos) const ;
+  Uint32 setSmudge(Uint32 pos, Uint8 value) ;
+  Uint32 setTiberium(Uint32 pos, Uint8 value) ;
+  Uint32 getOverlay(Uint32 pos);
+  Uint32 getTerrain(Uint32 pos, Sint16* xoff, Sint16* yoff);
+  Uint8 getTerrainType(Uint32 pos) const ;
 
-    /** Reloads all the tiles SDL_Images */
-    void reloadTiles();
+  /** Reloads all the tiles SDL_Images */
+  void reloadTiles();
 
-    Uint8 accScroll(Uint8 direction);
-    Uint8 absScroll(Sint16 dx, Sint16 dy, Uint8 border);
-    void doscroll();
-    void setMaxScroll(Uint32 x, Uint32 y, Uint32 xtile, Uint32 ytile, Uint32 tilew);
-    void setValidScroll();
+  Uint8 accScroll(Uint8 direction);
+  Uint8 absScroll(Sint16 dx, Sint16 dy, Uint8 border);
+  void doscroll();
+  void setMaxScroll(Uint32 x, Uint32 y, Uint32 xtile, Uint32 ytile, Uint32 tilew);
+  void setValidScroll();
 
-    void setScrollPos(Uint32 x, Uint32 y) ;
+  void setScrollPos(Uint32 x, Uint32 y) ;
 
-    Uint32 getScrollPos() const ;
-    Uint16 getXScroll() const ;
-    Uint16 getYScroll() const ;
-    Uint16 getXTileScroll() const ;
-    Uint16 getYTileScroll() const ;
+  Uint32 getScrollPos() const ;
+  Uint16 getXScroll() const ;
+  Uint16 getYScroll() const ;
+  Uint16 getXTileScroll() const ;
+  Uint16 getYTileScroll() const ;
 
-    SDL_Surface* getMiniMap(Uint8 pixside);
-    void prepMiniClip(Uint16 sidew, Uint16 sideh) ;
-    const MiniMapClipping& getMiniMapClipping() const ;
+  SDL_Surface* getMiniMap(Uint8 pixside);
+  void prepMiniClip(Uint16 sidew, Uint16 sideh) ;
+  const MiniMapClipping& getMiniMapClipping() const ;
 
-    bool toScroll() ;
-    void storeLocation(Uint8 loc);
-    void restoreLocation(Uint8 loc);
+  bool toScroll() ;
+  void storeLocation(Uint8 loc);
+  void restoreLocation(Uint8 loc);
 
-    Uint32 getWaypoint(Uint8 pointnr);
+  Uint32 getWaypoint(Uint8 pointnr);
 
-    void setWaypoint (Uint8 pointnr, Uint32 mappos);
-    SHPImage* getPips() ;
-    Uint32 getPipsNum() const ;
-    SHPImage* getMoveFlash() ;
-    Uint32 getMoveFlashNum() const ;
-    /** X offset of viewing map
-     * C/S: Client only? */
-    Uint16 getX() const ;
-    /** Y offset of viewing map
-     * C/S: Client only? */
-    Uint16 getY() const ;
+  void setWaypoint (Uint8 pointnr, Uint32 mappos);
+  SHPImage* getPips() ;
+  Uint32 getPipsNum() const ;
+  SHPImage* getMoveFlash() ;
+  Uint32 getMoveFlashNum() const ;
+  /** X offset of viewing map
+   * C/S: Client only? */
+  Uint16 getX() const ;
+  /** Y offset of viewing map
+   * C/S: Client only? */
+  Uint16 getY() const ;
 
-    /** Checks the WW coord is valid */
-    bool validCoord(Uint16 tx, Uint16 ty) const;
-    /** Converts a WW coord into a more flexible coord */
-    unsigned int normaliseCoord(unsigned int linenum) const;
-    /** Converts a WW coord into a more flexible coord */
-    unsigned int normaliseCoord(unsigned int tx, unsigned int ty) const;
-    /** Translate coordinate */
-    void translateCoord(unsigned int linenum, unsigned int* tx, unsigned int* ty) const;
+  /** Checks the WW coord is valid */
+  bool validCoord(Uint16 tx, Uint16 ty) const;
+  /** Converts a WW coord into a more flexible coord */
+  unsigned int normaliseCoord(unsigned int linenum) const;
+  /** Converts a WW coord into a more flexible coord */
+  unsigned int normaliseCoord(unsigned int tx, unsigned int ty) const;
+  /** Translate coordinate */
+  void translateCoord(unsigned int linenum, unsigned int* tx, unsigned int* ty) const;
 
-    /** Return the number with string of a COMMAND */
-    Uint8 UnitActionToNr(const string action);
+  /** Return the number with string of a COMMAND */
+  Uint8 UnitActionToNr(const std::string action);
 
-    /** Return true if it's the last mission of the game */
-    bool isEndOfGame();
-    
-    /** Return the PlayerPool of the map */
-    PlayerPool* getPlayerPool() const;
-    
+  /** Return true if it's the last mission of the game */
+  bool isEndOfGame();
+
+  /** Return the PlayerPool of the map */
+  PlayerPool* getPlayerPool() const;
+
 private:
-    vector<Trigger*>* triggerPool;
-    
-    enum {
-    	HAS_OVERLAY=0x100,
-    	HAS_TERRAIN=0x200
-    };
+  std::vector<Trigger*>* triggerPool;
+
+  enum {
+    HAS_OVERLAY=0x100,
+    HAS_TERRAIN=0x200
+  };
 #if _MSC_VER && _MSC_VER < 1300
 #define NUMMARKS ((Uint8)5)
 #else
-    static const Uint8 NUMMARKS=5;
+  static const Uint8 NUMMARKS=5;
 #endif
-    MissionData* missionData;
+  MissionData* missionData;
 
-    /** Load the ini part of the map */
-    void loadIni(INIFile* inifile);
+  /** Load the ini part of the map */
+  void loadIni(INIFile* inifile);
 
-    /** The map section of the ini */
-    void simpleSections(INIFile* inifile);
+  /** The map section of the ini */
+  void simpleSections(INIFile* inifile);
 
-    /** The advanced section of the ini*/
-    void advancedSections(INIFile* inifile);
+  /** The advanced section of the ini*/
+  void advancedSections(INIFile* inifile);
 
-    /** Load the bin part of the map (TD)*/
-    void loadBin();
+  /** Load the bin part of the map (TD)*/
+  void loadBin();
 
-    /** Load the overlay section of the map (TD)*/
-    void loadOverlay(INIFile* inifile);
+  /** Load the overlay section of the map (TD)*/
+  void loadOverlay(INIFile* inifile);
 
-    /** Extract RA map data*/
-    void unMapPack(INIFile* inifile);
+  /** Extract RA map data*/
+  void unMapPack(INIFile* inifile);
 
-    /** Extract RA overlay data*/
-    void unOverlayPack(INIFile* inifile);
+  /** Extract RA overlay data*/
+  void unOverlayPack(INIFile* inifile);
 
-    /** Load RA TeamTypes */
-    void loadTeamTypes(INIFile* fileIni);
+  /** Load RA TeamTypes */
+  void loadTeamTypes(INIFile* fileIni);
 
-    /**
-     * load the palette
-     *
-     * The only thing map specific about this function is the
-     *  theatre (whose palette is then loaded into SHPBase).
-     */
-    void loadPal(const string& paln, SDL_Color *palette);
+  /**
+   * load the palette
+   *
+   * The only thing map specific about this function is the
+   *  theatre (whose palette is then loaded into SHPBase).
+   */
+  void loadPal(const std::string& paln, SDL_Color *palette);
 
-    /** Parse the BIN part of the map (RA or TD)*/
-    void parseBin(TileList *bindata);
+  /** Parse the BIN part of the map (RA or TD)*/
+  void parseBin(TileList *bindata);
 
-    /** Parse the overlay part of the map */
-    void parseOverlay(const Uint32& linenum, const string& name);
+  /** Parse the overlay part of the map */
+  void parseOverlay(const Uint32& linenum, const std::string& name);
 
-    /** load a specified tile*/
-    SDL_Surface *loadTile(INIFile *templini, Uint16 templ, Uint8 tile,
-            Uint32* tiletype);
+  /** load a specified tile*/
+  SDL_Surface *loadTile(INIFile *templini, Uint16 templ, Uint8 tile,
+                        Uint32* tiletype);
 
-    /** width of map in tiles */
-    Uint16 width;
-    /** height of map in tiles */
-    Uint16 height;
-    /** X coordinate for the first tile (inner map) */
-    Uint16 x;
-    /** Y coordinate for the first tile (inner map) */
-    Uint16 y;
+  /** width of map in tiles */
+  Uint16 width;
+  /** height of map in tiles */
+  Uint16 height;
+  /** X coordinate for the first tile (inner map) */
+  Uint16 x;
+  /** Y coordinate for the first tile (inner map) */
+  Uint16 y;
 
-    /** Are we loading the map?*/
-    bool loading;
+  /** Are we loading the map?*/
+  bool loading;
 
-    /** Have we loaded the map?*/
-    bool loaded;
+  /** Have we loaded the map?*/
+  bool loaded;
 
-    ScrollData scrollpos;
-    /* A array of tiles and a vector containing the images for the tiles
-     * The matrix used to store terrain information.*/
-    vector<Uint16> tilematrix;
-    /* A array of tiles and a vector containing the images for the tiles
-     * The matrix used to store terrain information.*/
-    vector<Uint32> terrainoverlay;
+  ScrollData scrollpos;
+  /* A array of tiles and a vector containing the images for the tiles
+   * The matrix used to store terrain information.*/
+  std::vector<Uint16> tilematrix;
+  /* A array of tiles and a vector containing the images for the tiles
+   * The matrix used to store terrain information.*/
+  std::vector<Uint32> terrainoverlay;
 
-    // Client only
-    TemplateCache templateCache; //Holds cache of TemplateImage*s
+  // Client only
+  TemplateCache templateCache; //Holds cache of TemplateImage*s
 
-    vector<SDL_Surface*> tileimages; //Holds the SDL_Surfaces of the TemplateImage
-    vector<SDL_Surface*> tileimages_backup; //Holds the SDL_Surfaces of the TemplateImage
-    TemplateTileCache templateTileCache; //Stores the TemplateImage* and Tile# of each SDL_Surface in tileimages
+  std::vector<SDL_Surface*> tileimages; //Holds the SDL_Surfaces of the TemplateImage
+  std::vector<SDL_Surface*> tileimages_backup; //Holds the SDL_Surfaces of the TemplateImage
+  TemplateTileCache templateTileCache; //Stores the TemplateImage* and Tile# of each SDL_Surface in tileimages
 
-    Uint16 numShadowImg;
-    vector<SDL_Surface*> shadowimages;
+  Uint16 numShadowImg;
+  std::vector<SDL_Surface*> shadowimages;
 
+  /** These come from the WAYPOINTS section of the inifile, and contain start
+   * locations for multiplayer maps.*/
+  Uint32 waypoints[100];
 
-    /** These come from the WAYPOINTS section of the inifile, and contain start
-     * locations for multiplayer maps.*/
-    Uint32 waypoints[100];
+  std::vector<Uint32> overlaymatrix;
 
-    vector<Uint32> overlaymatrix;
+  std::vector<RA_Tiggers*> RaTriggers;
 
-    vector<RA_Tiggers*> RaTriggers;
+  std::vector<RA_Teamtype> RaTeamtypes;
 
-    vector<RA_Teamtype> RaTeamtypes;
+  std::vector<CellTrigger> CellTriggers;
 
-    vector<CellTrigger> CellTriggers;
+  std::vector<Uint16> resourcematrix;
+  std::vector<Uint32> resourcebases;
+  std::map<std::string, Uint8> resourcenames;
 
-    vector<Uint16> resourcematrix;
-    vector<Uint32> resourcebases;
-    map<string, Uint8> resourcenames;
+  std::vector<Uint8> terraintypes;
 
-    vector<Uint8> terraintypes;
+  std::map<Uint32, TerrainEntry> terrains;
+  std::map<Uint32, Uint16> overlays;
 
-    map<Uint32, TerrainEntry> terrains;
-    map<Uint32, Uint16> overlays;
+  /// @todo We get this from the game loader part, investigate if there's a better approach.
+  Uint8 maptype;
+  Uint8 gamemode; // 0 - single player, 1 - skirmish, 2 - multiplayer
 
-    /// @todo We get this from the game loader part, investigate if there's a better approach.
-    Uint8 maptype;
-    Uint8 gamemode; // 0 - single player, 1 - skirmish, 2 - multiplayer
+  /** @todo These need a better (client side only) home, (ui related)*/
+  SDL_Surface *minimap, *oldmmap;
+  MiniMapClipping miniclip;
 
-    /** @todo These need a better (client side only) home, (ui related)*/
-    SDL_Surface *minimap, *oldmmap;
-    MiniMapClipping miniclip;
+  /// @todo These need a better (client side only) home (ui related)
+  ScrollVector scrollvec;
+  bool toscroll;
+  /** stores which directions can be scrolled */
+  Uint8 valscroll;
+  /** stores certain map locations*/
+  ScrollBookmark scrollbookmarks[NUMMARKS];
+  Uint8 scrollstep, maxscroll, scrolltime;
 
-    /// @todo These need a better (client side only) home (ui related)
-    ScrollVector scrollvec;
-    bool toscroll;
-    /** stores which directions can be scrolled */
-    Uint8 valscroll;
-    /** stores certain map locations*/
-    ScrollBookmark scrollbookmarks[NUMMARKS];
-    Uint8 scrollstep, maxscroll, scrolltime;
+  /// @todo These need a better (client side only) home (ui/gfx related)
+  Uint32 pipsnum;
+  SHPImage* pips;
+  Uint32 flashnum;
+  SHPImage* moveflash;
 
-    /// @todo These need a better (client side only) home (ui/gfx related)
-    Uint32 pipsnum;
-    SHPImage* pips;
-    Uint32 flashnum;
-    SHPImage* moveflash;
+  /** RA ->  translate_64 = false
+   * TD -> translate_64 = true
+   * When converting WW style linenum values, do we use 64 or 128
+   * as our modulus/divisor? */
+  bool translate_64;
 
-    /** RA ->  translate_64 = false
-     * TD -> translate_64 = true
-     * When converting WW style linenum values, do we use 64 or 128
-     * as our modulus/divisor? */
-    bool translate_64;
+  /** only used in: Uint8 CnCMap::absScroll(Sint16 dx, Sint16 dy, Uint8 border)*/
+  double fmax;
 
-	/** only used in: Uint8 CnCMap::absScroll(Sint16 dx, Sint16 dy, Uint8 border)*/
-    double fmax;
-    
-    /** Pool of the player of the map */
-    PlayerPool* playerPool;
+  /** Pool of the player of the map */
+  PlayerPool* playerPool;
 };
 
 #endif //CNCMAP_H

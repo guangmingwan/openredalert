@@ -29,8 +29,6 @@
 #include "video/ImageCache.h"
 #include "RaWindow.h"
 
-using std::string;
-
 namespace pc {
 	extern GraphicsEngine * gfxeng;
 }

@@ -1,6 +1,5 @@
 // CursorInfo.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,22 +16,18 @@
 
 #include "CursorInfo.h"
 
-Uint16 CursorInfo::getAnStart()
-{
-	return anStart; 
+uint16_t CursorInfo::getAnStart() {
+  return anStart;
 }
 
-void CursorInfo::setAnStart(Uint16 anStart)
-{
-	this->anStart = anStart; 
+void CursorInfo::setAnStart(uint16_t anStart) {
+  this->anStart = anStart;
 }
 
-Uint16 CursorInfo::getAnEnd()
-{
-	return anEnd; 
+uint16_t CursorInfo::getAnEnd() {
+  return anEnd;
 }
 
-void CursorInfo::setAnEnd(Uint16 anEnd)
-{
-	this->anEnd = anEnd; 
+void CursorInfo::setAnEnd(uint16_t anEnd) {
+  this->anEnd = anEnd;
 }

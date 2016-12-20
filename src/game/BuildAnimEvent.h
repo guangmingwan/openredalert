@@ -1,6 +1,5 @@
 // BuildAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,8 +17,6 @@
 #ifndef BUILDANIMEVENT_H
 #define BUILDANIMEVENT_H
 
-#include "SDL_types.h"
-
 #include "BuildingAnimEvent.h"
 #include "anim_nfo.h"
 
@@ -28,24 +25,23 @@ class Structure;
 /**
  * The animation that is shown when a structure is either built or sold.
  */
-class BuildAnimEvent : public BuildingAnimEvent
-{
-public:
-    /**
-     * @param p the priority of this event
-     * @param str pointer to the structure being built/sold
-     * @param sell whether the structure is being built or sold (true if sold)
-     */
-    BuildAnimEvent(Uint32 p, Structure * str, bool sell);
-    ~BuildAnimEvent();
-    
-    void anim_func(anim_nfo * data);
+class BuildAnimEvent : public BuildingAnimEvent {
+ public:
+  /**
+   * @param p the priority of this event
+   * @param str pointer to the structure being built/sold
+   * @param sell whether the structure is being built or sold (true if sold)
+   */
+  BuildAnimEvent(uint32_t p, Structure * str, bool sell);
+  ~BuildAnimEvent();
 
-private:
-    Structure * structure;
-    Uint8 frame;
-    Uint8 framend;
-    bool sell;
+  void anim_func(anim_nfo * data);
+
+ private:
+  Structure * structure;
+  uint8_t frame;
+  uint8_t framend;
+  bool sell;
 };
 
 #endif //BUILDANIMEVENT_H

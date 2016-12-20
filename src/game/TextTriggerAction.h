@@ -1,6 +1,5 @@
 // TextTriggerAction.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -24,26 +23,24 @@
 
 class MessagePool;
 
-using std::string;
-
 /**
  * Action that display a text to the screen
  * @author Damien Carol (OpenRedAlert)
  * @version 1.0
  */
-class TextTriggerAction: public TriggerAction
-{
-public:
+class TextTriggerAction: public TriggerAction {
+ public:
 	/** Build a TextTriggerAction with a specified message and a MessagePool */
-	TextTriggerAction(const string& message, MessagePool* pool);
+	TextTriggerAction(const std::string& message, MessagePool* pool);
 	/** Destructor */
 	virtual ~TextTriggerAction();
 
 	/** Execute this Action */
 	void execute();
-private:
+
+ private:
 	/** Message to display */
-	string message;
+	std::string message;
 	/** Message Pool */
 	MessagePool* pool;
 };

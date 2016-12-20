@@ -21,46 +21,40 @@
 #include <string>
 #include <fstream>
 
-using std::string;
-using std::fstream;
-
-
 #define MACRO_LOG_DEBUG(ARG) Logger::getInstance()->Debug(__FILE__, __LINE__, ARG );
 
-
 /** Logger class */
-class Logger
-{
-private:
-    fstream logFile; //Our log file
+class Logger {
+ private:
+  std::fstream logFile; //Our log file
 
 
-    //The singleton to return
-    static Logger* instanceLog;
+  //The singleton to return
+  static Logger* instanceLog;
 
-public:
-    //Constructor and destructor
-    Logger();
-    ~Logger();
+ public:
+  //Constructor and destructor
+  Logger();
+  ~Logger();
 
-    //Get an instance of our singleton
-    static Logger* getInstance();
+  //Get an instance of our singleton
+  static Logger* getInstance();
 
-    //Free up our singleton.
-    static void freeSingleton();
+  //Free up our singleton.
+  static void freeSingleton();
 
-    //Log somthing...
-    void Info(string str);
-    void Info(string filename, int lignenumber, string str);
-    
-    void Debug(string str);
-    void Debug(string filename, int lignenumber, string str);
-    
-    void Error(string str);
-    void Error(string filename, int lignenumber, string str);
-    
-    void Warning(string str);
-    void Warning(string filename, int lignenumber, string str);    
+  //Log somthing...
+  void Info(std::string str);
+  void Info(std::string filename, int lignenumber, std::string str);
+
+  void Debug(std::string str);
+  void Debug(std::string filename, int lignenumber, std::string str);
+
+  void Error(std::string str);
+  void Error(std::string filename, int lignenumber, std::string str);
+
+  void Warning(std::string str);
+  void Warning(std::string filename, int lignenumber, std::string str);
 };
 
 #endif //LOGGER_HPP

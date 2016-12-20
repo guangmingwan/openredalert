@@ -25,45 +25,37 @@
 #include "SOUND_DECODE_STATE.h"
 #include "Logger.hpp"
 
-using std::string;
 using OpenRedAlert::Sound::SoundCacheCleaner;
-//using Sound::SoundBuffer;
-using std::for_each;
 
-namespace Sound
-{
+namespace Sound {
 
-/**
- */
-SoundEngine::SoundEngine(bool disableSound) :
-    nosound(disableSound),
-    mutesound(false),
-    musicFinished(true),
-    currentTrack(playlist.begin())
-{
+  /**
+   */
+  SoundEngine::SoundEngine(bool disableSound) :
+  nosound(disableSound),
+  mutesound(false),
+  musicFinished(true),
+  currentTrack(playlist.begin()) {
     if (nosound){
-        return;
+      return;
     }
-
 
     // Warning the Mix_OpenAudio uses libmikmod witch seems to create the music.raw file
     if (Mix_OpenAudio(SOUND_FREQUENCY, SOUND_FORMAT, SOUND_CHANNELS, 1024 /*4096*/) < 0) {
-        Logger::getInstance()->Error(__FILE__, __LINE__, "Unable to open sound: " + string(Mix_GetError()));
-        nosound = true;
+      Logger::getInstance()->Error(__FILE__, __LINE__, "Unable to open sound: " + std::string(Mix_GetError()));
+      nosound = true;
     }
 
     // Set volumes to half of max by default; this should be a fallback, real setting should be read from config
     SetSoundVolume(MIX_MAX_VOLUME / 2);
     SetMusicVolume(MIX_MAX_VOLUME / 2);
-}
+  }
 
-/**
- */
-SoundEngine::~SoundEngine()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  SoundEngine::~SoundEngine() {
+    if (nosound) {
+      return;
     }
 
     // Stop all playback
@@ -74,15 +66,14 @@ SoundEngine::~SoundEngine()
     for_each(soundCache.begin(), soundCache.end(), SoundCacheCleaner());
 
     Mix_CloseAudio();
-}
+  }
 
-/**
- */
-bool SoundEngine::CreatePlaylist()
-{
+  /**
+   */
+  bool SoundEngine::CreatePlaylist() {
     // If no sound needed create nothing
-    if (nosound){
-        return true;
+    if (nosound) {
+      return true;
     }
 
     // Clear the list
@@ -114,24 +105,23 @@ bool SoundEngine::CreatePlaylist()
 
     // Return true to indicate success in playlist loading
     return true;
-}
+  }
 
-/**
- * @param volume Volume wanted between 0 and 128
- */
-void SoundEngine::SetSoundVolume(int volume)
-{
-    if (nosound){
-        return;
+  /**
+   * @param volume Volume wanted between 0 and 128
+   */
+  void SoundEngine::SetSoundVolume(int volume) {
+    if (nosound) {
+      return;
     }
 
     // standard control
     // if the sound volume asked is > to the sound volume MAX
     // from the SDL_mixer constantes then the sound is set to max :)
     if (volume > MIX_MAX_VOLUME) {
-        volume = MIX_MAX_VOLUME;
+      volume = MIX_MAX_VOLUME;
     } else if (volume < 0) {
-        volume = 0;
+      volume = 0;
     }
 
     // Set the volume of all channel (-1)
@@ -139,38 +129,33 @@ void SoundEngine::SetSoundVolume(int volume)
 
     soundVolume = volume;
     mutesound = volume == 0;
-}
+  }
 
-/**
- */
-void SoundEngine::PlaySound(const string& sound)
-{
-    if (sound.empty()){
-        return;
+  /**
+   */
+  void SoundEngine::PlaySound(const std::string& sound) {
+    if (sound.empty()) {
+      return;
     }
 
     // Play this sound looped just 1 time
     PlayLoopedSound(sound, 1);
-}
+  }
 
-/**
- */
-int SoundEngine::PlayLoopedSound(const string& sound, unsigned int loops)
-{
-    if (nosound || mutesound || sound.empty())
-    {
-        return -1;
+  /**
+   */
+  int SoundEngine::PlayLoopedSound(const std::string& sound, unsigned int loops) {
+    if (nosound || mutesound || sound.empty()) {
+      return -1;
     }
 
     SoundBuffer* snd = LoadSoundImpl(sound);
-    if (snd == 0)
-    {
-        return -1;
+    if (snd == 0) {
+      return -1;
     }
 
-    if (Mix_Paused (-1))
-    {
-        Mix_Resume(-1);
+    if (Mix_Paused (-1)) {
+      Mix_Resume(-1);
     }
 
     int channel = 0;
@@ -178,226 +163,199 @@ int SoundEngine::PlayLoopedSound(const string& sound, unsigned int loops)
     Mix_Volume(channel, soundVolume);
 
     return channel;
-}
+  }
 
-/**
- */
-void SoundEngine::StopLoopedSound(int id)
-{
-    if (nosound){
-        return;
+  /**
+   */
+  void SoundEngine::StopLoopedSound(int id) {
+    if (nosound) {
+      return;
     }
 
     Mix_HaltChannel(id);
-}
+  }
 
-/**
- */
-void SoundEngine::PauseLoopedSound(int id)
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::PauseLoopedSound(int id) {
+    if (nosound) {
+      return;
     }
 
     Mix_Pause(id);
-}
+  }
 
-/**
- */
-void SoundEngine::ResumeLoopedSound(int id)
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::ResumeLoopedSound(int id) {
+    if (nosound) {
+      return;
     }
 
     Mix_Resume(id);
-}
+  }
 
-void SoundEngine::SetMusicVolume(int volume)
-{
-    if (nosound)
-    {
-        return;
+  void SoundEngine::SetMusicVolume(int volume) {
+    if (nosound) {
+      return;
     }
 
     // standard control
     // if the sound volume asked is > to the sound volume MAX
     // from the SDL_mixer constantes then the sound is set to max :)
     if (volume > MIX_MAX_VOLUME) {
-        volume = MIX_MAX_VOLUME;
+      volume = MIX_MAX_VOLUME;
     }
 
     Mix_VolumeMusic(volume);
-}
+  }
 
-/**
- */
-void SoundEngine::PlayMusic()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::PlayMusic() {
+    if (nosound) {
+      return;
     }
     if (!Mix_PlayingMusic()) {
-        if (Mix_PausedMusic()) {
-            Mix_ResumeMusic();
-        } else {
-            PlayTrack(*currentTrack);
-        }
+      if (Mix_PausedMusic()) {
+        Mix_ResumeMusic();
+      } else {
+        PlayTrack(*currentTrack);
+      }
     }
-}
+  }
 
-/**
- */
-void SoundEngine::PauseMusic()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::PauseMusic() {
+    if (nosound) {
+      return;
     }
     Mix_PauseMusic();
-}
+  }
 
-/**
- */
-void SoundEngine::StopMusic()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::StopMusic() {
+    if (nosound) {
+      return;
     }
     Mix_HookMusic(NULL, NULL);
     musicDecoder.Close();
-}
+  }
 
-/**
- * @param sound The soundtrack to play
- */
-void SoundEngine::PlayTrack(const string& sound)
-{
-    if (nosound == true)
-    {
-        return;
+  /**
+   * @param sound The soundtrack to play
+   */
+  void SoundEngine::PlayTrack(const std::string& sound) {
+    if (nosound == true) {
+      return;
     }
 
     StopMusic();
 
     if (sound == "No theme")
     {
-        PlayMusic();
-        return;
+      PlayMusic();
+      return;
     }
 
     if (musicDecoder.Open(sound))
     {
-        musicFinished = false;
-        Mix_HookMusic(MusicHook, reinterpret_cast<void*>(&musicFinished));
+      musicFinished = false;
+      Mix_HookMusic(MusicHook, reinterpret_cast<void*>(&musicFinished));
     }
-}
+  }
 
-/**
- */
-void SoundEngine::NextTrack()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::NextTrack() {
+    if (nosound) {
+      return;
     }
 
-    if (++currentTrack == playlist.end())
-    {
-        currentTrack = playlist.begin();
+    if (++currentTrack == playlist.end()) {
+      currentTrack = playlist.begin();
     }
 
     PlayTrack(*currentTrack);
-}
+  }
 
-/**
- */
-void SoundEngine::PrevTrack()
-{
-    if (nosound)
-    {
-        return;
+  /**
+   */
+  void SoundEngine::PrevTrack() {
+    if (nosound) {
+      return;
     }
 
-    if (currentTrack == playlist.begin())
-    {
-        currentTrack = playlist.end();
+    if (currentTrack == playlist.begin()) {
+      currentTrack = playlist.end();
     }
     --currentTrack;
     PlayTrack(*currentTrack);
-}
+  }
 
-/**
- *
- */
-void SoundEngine::MusicHook(void* userdata, Uint8* stream, int len)
-{
+  /**
+   *
+   */
+  void SoundEngine::MusicHook(void* userdata, Uint8* stream, int len) {
     bool* musicFinishedPtr = reinterpret_cast<bool*>(userdata);
-    if (!*musicFinishedPtr)
-    {
-        vector<Uint8> buffer;
-        Uint32 ret = musicDecoder.Decode(buffer, len);
-        if (ret == SOUND_DECODE_COMPLETED) {
-            musicDecoder.Close();
-            *musicFinishedPtr = true;
-        } else if (ret == SOUND_DECODE_ERROR) {
-            Logger::getInstance()->Error(__FILE__, __LINE__, "Sound: Error during music decoding, stopping playback of current track.");
-            *musicFinishedPtr = true;
-            return;
-        }
-        memcpy(stream, &buffer[0], buffer.size());
+    if (!*musicFinishedPtr) {
+      std::vector<Uint8> buffer;
+      Uint32 ret = musicDecoder.Decode(buffer, len);
+      if (ret == SOUND_DECODE_COMPLETED) {
+        musicDecoder.Close();
+        *musicFinishedPtr = true;
+      } else if (ret == SOUND_DECODE_ERROR) {
+        Logger::getInstance()->Error(__FILE__, __LINE__, "Sound: Error during music decoding, stopping playback of current track.");
+        *musicFinishedPtr = true;
+        return;
+      }
+      memcpy(stream, &buffer[0], buffer.size());
     }
-}
+  }
 
-/**
- */
-void SoundEngine::SetMusicHook(MixFunc mixfunc, void* arg)
-{
+  /**
+   */
+  void SoundEngine::SetMusicHook(MixFunc mixfunc, void* arg) {
     Mix_HookMusic(mixfunc, arg);
-}
+  }
 
-void SoundEngine::LoadSound(const string& sound)
-{
+  void SoundEngine::LoadSound(const std::string& sound) {
     LoadSoundImpl(sound);
-}
+  }
 
-SoundBuffer* SoundEngine::LoadSoundImpl(const string& sound)
-{
+  SoundBuffer* SoundEngine::LoadSoundImpl(const std::string& sound) {
     SoundBuffer* buffer = 0;
 
     // Check if sound is already loaded and cached
     SoundCache::iterator cachedSound = soundCache.find(sound);
     if (cachedSound != soundCache.end()) {
-       buffer = cachedSound->second;
+      buffer = cachedSound->second;
     } else {
-        // Load and cache sound
-        if (soundDecoder.Open(sound)) {
-            buffer = new SoundBuffer();
-            // length = 0 because we don't know the size
-            if (soundDecoder.Decode(buffer->data, 0) == SOUND_DECODE_COMPLETED)
-            {
-                buffer->chunk = Mix_QuickLoad_RAW(&buffer->data[0], static_cast<Uint32>(buffer->data.size()));
-                soundCache.insert(SoundCache::value_type(sound, buffer));
-            } else {
-                delete buffer;
-                buffer = 0;
-            }
-            soundDecoder.Close();
+      // Load and cache sound
+      if (soundDecoder.Open(sound)) {
+        buffer = new SoundBuffer();
+        // length = 0 because we don't know the size
+        if (soundDecoder.Decode(buffer->data, 0) == SOUND_DECODE_COMPLETED)
+        {
+          buffer->chunk = Mix_QuickLoad_RAW(&buffer->data[0], static_cast<Uint32>(buffer->data.size()));
+          soundCache.insert(SoundCache::value_type(sound, buffer));
+        } else {
+          delete buffer;
+          buffer = 0;
         }
+        soundDecoder.Close();
+      }
     }
     return buffer;
-}
-
-/**
- * Return true if there are no sound.
- */
-bool SoundEngine::NoSound() const
-{
+  }
+  
+  /**
+   * Return true if there are no sound.
+   */
+  bool SoundEngine::NoSound() const {
     return nosound;
-}
-
+  }
+  
 }

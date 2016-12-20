@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-using std::vector;
-
 class CnCMap;
 class UnitAndStructurePool;
 class WeaponsPool;
@@ -46,14 +44,8 @@ void CleanConfig (void);
 
 #include "config.h"
 
-using std::max;
-using std::min;
-using std::string;
-
 /** Bounded by colours.  This will change later */
 const Uint8 MAXPLAYERS = 6;
-
-
 
 const Uint16 FULLHEALTH = 256;
 
@@ -96,7 +88,7 @@ inline bool isRelativePath(const char *p) {
 }
 
 /// @todo Stringify this funciton
-std::vector<char*> splitList(const string& line, char delim);
+std::vector<char*> splitList(const std::string& line, char delim);
 
 /// @todo Stringify this funciton
 char* stripNumbers(const char* src);
@@ -105,6 +97,6 @@ const std::string& determineBinaryLocation(const std::string& launchcmd);
 
 const std::string& getBinaryLocation();
 
-int Split(vector<string>& vecteur, string chaine, char separateur);
+int Split(std::vector<std::string>& vecteur, std::string chaine, char separateur);
 
 #endif /* COMMON_H */

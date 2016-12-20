@@ -22,8 +22,6 @@
 
 #include "video/MessagePool.h"
 
-using std::string;
-
 /**
  * Build a TextTriggerAction with a message in string
  * and a reference to the Message Pool
@@ -31,7 +29,7 @@ using std::string;
  * @param message Message to show
  * @param pool The MessagePool to use
  */
-TextTriggerAction::TextTriggerAction(const string& message, MessagePool* pool) :
+TextTriggerAction::TextTriggerAction(const std::string& message, MessagePool* pool) :
 	TriggerAction(TriggerAction::TEXT)
 {
 	// Set the message

@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "SDL_events.h"
-#include "SDL_types.h"
 
 #define BUTTON_TYPE_DEFAULT	1
 #define BUTTON_TYPE_LOCK_UNLOCK	2
@@ -37,8 +36,6 @@
 
 class RA_Label;
 class RaWindow;
-
-using std::string;
 
 /**
  * Button in windows in RedAlertMenus
@@ -62,14 +59,14 @@ public:
 	Uint32 GetColor();
 	void setposition(int x, int y);
 	void setsize(int w, int h);
-	void setText(const string buff);
+	void setText(const std::string buff);
 	void setButtonState(int state);
 	int getButtonState();
 	void drawbutton();
 	bool MouseOver();
 	bool NeedsRedraw();
 	void CreateSurface();
-	void CreateSurface(const string& ButtonText, int Xpos, int Ypos, int Width, int Heigth);
+	void CreateSurface(const std::string& ButtonText, int Xpos, int Ypos, int Width, int Heigth);
 
 private:
 	RaWindow* WindowToDrawOn;
@@ -88,7 +85,7 @@ private:
 	RA_Label ButtonUpLabel;
 	RA_Label ButtonDownLabel;
 	
-	string ButtonText;
+	std::string ButtonText;
 	/**
 	 * Button state tells the class if the button is up,
 	 *  down or the mouse is  over the button

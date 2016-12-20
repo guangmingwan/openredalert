@@ -1,6 +1,5 @@
 // SidebarError.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,16 +20,12 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
 /**
  * Error occurs during sidebar manipulation
  */
-class SidebarError : public runtime_error
-{
-public:
-	SidebarError(const string& msg) ;
+class SidebarError : public std::runtime_error {
+ public:
+	SidebarError(const std::string& msg) ;
 };
 
 #endif //SIDEBARERROR_H

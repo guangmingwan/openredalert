@@ -21,14 +21,10 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
+class ImageNotFound : public std::runtime_error {
+ public:
 
-class ImageNotFound : public runtime_error
-{
-public:
-
-	ImageNotFound(const string& msg) ;
+  ImageNotFound(const std::string& msg) ;
 };
 
 #endif

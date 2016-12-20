@@ -19,75 +19,67 @@
 
 #include <iostream>
 
-#include "SDL_types.h"
-
 #include "misc/common.h"
 #include "misc/INIFile.h"
 
-
-using std::cout;
-using std::endl;
-
-
 ProjectileData::ProjectileData(){
 	// by defaut "none" indicates no image
-	setImage(string("none"));
+	setImage(std::string("none"));
 }
 
-Uint32 ProjectileData::getAA()
-{
+Uint32 ProjectileData::getAA() {
 	return AA;
 }
-void ProjectileData::setAA(Uint32 AA)
-{
+
+void ProjectileData::setAA(Uint32 AA) {
 	this->AA = AA;
 }
-Uint32 ProjectileData::getAG()
-{
+
+Uint32 ProjectileData::getAG() {
 	return AG;
 }
-void ProjectileData::setAG(Uint32 AG)
-{
+
+void ProjectileData::setAG(Uint32 AG) {
 	this->AG = AG;
 }
-int ProjectileData::getASW()
-{
+
+int ProjectileData::getASW() {
 	return ASW;
 }
-void ProjectileData::setASW(int ASW)
-{
+
+void ProjectileData::setASW(int ASW) {
 	this->ASW = ASW;
 }
-int ProjectileData::getAnimates()
-{
+
+int ProjectileData::getAnimates() {
 	return animates;
 }
-void ProjectileData::setAnimates(int animates)
-{
+
+void ProjectileData::setAnimates(int animates) {
 	this->animates = animates;
 }
-int ProjectileData::getArcing()
-{
+
+int ProjectileData::getArcing() {
 	return arcing;
 }
-void ProjectileData::setArcing(int arcing)
-{
+
+void ProjectileData::setArcing(int arcing) {
 	this->arcing = arcing;
 }
-int ProjectileData::getArm()
-{
+
+int ProjectileData::getArm() {
 	return arm;
 }
-void ProjectileData::setArm(int arm)
-{
+
+void ProjectileData::setArm(int arm) {
 	this->arm = arm;
 }
-int ProjectileData::getDegenerates()
-{
+
+int ProjectileData::getDegenerates() {
 	return degenerates;
 }
-void ProjectileData::setDegenerates(int degenerates)
-{
+
+void ProjectileData::setDegenerates(int degenerates) {
 	this->degenerates = degenerates;
 }
 int ProjectileData::getDropping()
@@ -122,31 +114,31 @@ void ProjectileData::setHigh(int high)
 {
 	this->high = high;
 }
-string ProjectileData::getImage()
-{
+
+std::string ProjectileData::getImage() {
 	return image;
 }
 
-void ProjectileData::setImage(string image)
-{
+void ProjectileData::setImage(std::string image) {
 	this->image = image;
 }
-int ProjectileData::getInaccurate()
-{
+
+int ProjectileData::getInaccurate() {
 	return inaccurate;
 }
-void ProjectileData::setInaccurate(int inaccurate)
-{
+
+void ProjectileData::setInaccurate(int inaccurate) {
 	this->inaccurate = inaccurate;
 }
-int ProjectileData::getInviso()
-{
+
+int ProjectileData::getInviso() {
 	return inviso;
 }
-void ProjectileData::setInviso(int inviso)
-{
+
+void ProjectileData::setInviso(int inviso) {
 	this->inviso = inviso;
 }
+
 int ProjectileData::getProximity()
 {
 	return proximity;
@@ -212,8 +204,7 @@ void ProjectileData::setUnderWater(int underWater)
 	this->underWater = underWater;
 }
 
-ProjectileData* ProjectileData::loadProjectileData(INIFile * file, string name)
-{
+ProjectileData* ProjectileData::loadProjectileData(INIFile * file, std::string name) {
     ProjectileData* lProjectileData;
 
     // Create the ProjectileData object
@@ -292,28 +283,27 @@ ProjectileData* ProjectileData::loadProjectileData(INIFile * file, string name)
 /**
  * Print the Data
  */
-void ProjectileData::print()
-{
-	cout << "AA=" << getAA() << endl;
-	cout << "AG=" << getAG() << endl;
-	cout << "ASW=" << getASW() << endl;
-	cout << "Animates=" << getAnimates() << endl;
-	cout << "Arcing=" << getArcing() << endl;
-	cout << "Arm=" << getArm() << endl;
-	cout << "Degenerates=" << getDegenerates() << endl;
-	cout << "Dropping=" << getDropping() << endl;
-	cout << "Frames=" << getFrames() << endl;
-	cout << "Gigundo=" << getGigundo() << endl;
-	cout << "High=" << getHigh() << endl;
-	cout << "Image=" << getImage() << endl;
-	cout << "Inaccurate=" << getInaccurate() << endl;
-	cout << "Inviso=" << getInviso() << endl;
-	cout << "Parachuted=" << getParachuted() << endl;
-	cout << "Proximity=" << getProximity() << endl;
-	cout << "ROT=" << getROT() << endl;
-	cout << "Ranged=" << getRanged() << endl;
-	cout << "Rotates=" << getRotates() << endl;
-	cout << "Shadow=" << getShadow() << endl;
-	cout << "Translucent=" << getTranslucent() << endl;
-	cout << "UnderWater=" << getUnderWater() << endl;
+void ProjectileData::print() {
+  std::cout << "AA=" << getAA() << std::endl;
+	std::cout << "AG=" << getAG() << std::endl;
+	std::cout << "ASW=" << getASW() << std::endl;
+	std::cout << "Animates=" << getAnimates() << std::endl;
+	std::cout << "Arcing=" << getArcing() << std::endl;
+	std::cout << "Arm=" << getArm() << std::endl;
+	std::cout << "Degenerates=" << getDegenerates() << std::endl;
+	std::cout << "Dropping=" << getDropping() << std::endl;
+	std::cout << "Frames=" << getFrames() << std::endl;
+	std::cout << "Gigundo=" << getGigundo() << std::endl;
+	std::cout << "High=" << getHigh() << std::endl;
+	std::cout << "Image=" << getImage() << std::endl;
+	std::cout << "Inaccurate=" << getInaccurate() << std::endl;
+	std::cout << "Inviso=" << getInviso() << std::endl;
+	std::cout << "Parachuted=" << getParachuted() << std::endl;
+	std::cout << "Proximity=" << getProximity() << std::endl;
+	std::cout << "ROT=" << getROT() << std::endl;
+	std::cout << "Ranged=" << getRanged() << std::endl;
+	std::cout << "Rotates=" << getRotates() << std::endl;
+	std::cout << "Shadow=" << getShadow() << std::endl;
+	std::cout << "Translucent=" << getTranslucent() << std::endl;
+	std::cout << "UnderWater=" << getUnderWater() << std::endl;
 }

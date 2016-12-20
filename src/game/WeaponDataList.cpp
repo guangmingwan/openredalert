@@ -25,11 +25,7 @@
 #include "WarheadDataList.h"
 #include "WeaponData.h"
 
-using std::string;
-using std::map;
-using std::iterator;
-
-void WeaponDataList::loadWeapon(INIFile* file, string name, WarheadDataList* warheadList, ProjectileDataList* projectileList)
+void WeaponDataList::loadWeapon(INIFile* file, std::string name, WarheadDataList* warheadList, ProjectileDataList* projectileList)
 {
 	WeaponData* ptrWeaponData;
 	
@@ -41,11 +37,11 @@ void WeaponDataList::loadWeapon(INIFile* file, string name, WarheadDataList* war
 	
 	
 	// Get the linked Warhead
-	string ptr = ptrWeaponData->getWarhead();
+	std::string ptr = ptrWeaponData->getWarhead();
 	// Load the linked warhead
 	if (ptr.size() > 0) {
 		// Get the warhead
-		string nameWarhead = ptrWeaponData->getWarhead();
+		std::string nameWarhead = ptrWeaponData->getWarhead();
 		
 		// Load the Warhead
 		warheadList->loadWarheadData(file, nameWarhead);

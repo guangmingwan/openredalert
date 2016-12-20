@@ -26,7 +26,6 @@
 #include "FibHeapEntry.h"
 #include "TileRef.h"
 #include "Unit.hpp"
-using std::min;
 
 namespace p 
 {
@@ -92,7 +91,7 @@ Path::Path(Unit *Unit, Uint32 crBeg, Uint32 crEnd, Uint8 max_dist) : std::stack<
     cellTempU->g = 0;
     diffx = abs( startposx - stopposx );
     diffy = abs( startposy - stopposy );
-    cellTempU->h = min(diffx, diffy)*14 + abs( diffx - diffy )*10;
+    cellTempU->h = std::min(diffx, diffy)*14 + abs( diffx - diffy )*10;
 
     Nodes[crBeg] = pU = new FibHeapEntry(cellTempU, cellTempU->h);
 
@@ -239,7 +238,7 @@ Path::Path(Unit *Unit, Uint32 crBeg, Uint32 crEnd, Uint8 max_dist) : std::stack<
 				cellTempV->g = dwCost;
 				diffx = abs( ncrX - stopposx );
 				diffy = abs( ncrY - stopposy );
-				cellTempV->h = min(diffx, diffy)*14 + abs( diffx - diffy )*10;
+				cellTempV->h = std::min(diffx, diffy)*14 + abs( diffx - diffy )*10;
 
 				pV->setKey(cellTempV->g + cellTempV->h);
 

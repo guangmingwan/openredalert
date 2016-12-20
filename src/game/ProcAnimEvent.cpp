@@ -1,6 +1,5 @@
 // ProcAnimEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,31 +19,28 @@
 #include "anim_nfo.h"
 #include "Structure.h"
 
-ProcAnimEvent::ProcAnimEvent(Uint32 delay, Structure* str) : BuildingAnimEvent(delay, str, 4)
-{
-    updateDamaged();
-    framend = getaniminfo().loopend;
-    frame = 0;
+ProcAnimEvent::ProcAnimEvent(uint32_t delay, Structure* str) : BuildingAnimEvent(delay, str, 4) {
+  updateDamaged();
+  framend = getaniminfo().loopend;
+  frame = 0;
 }
 
-void ProcAnimEvent::anim_func(anim_nfo* data)
-{
-    updateDamaged();
-    data->frame0 = frame;
-    ++frame;
-    if ((frame-data->damagedelta) > framend) {
-        frame = data->damagedelta;
-    }
+void ProcAnimEvent::anim_func(anim_nfo* data) {
+  updateDamaged();
+  data->frame0 = frame;
+  ++frame;
+  if ((frame-data->damagedelta) > framend) {
+    frame = data->damagedelta;
+  }
 }
 
-void ProcAnimEvent::updateDamaged()
-{
-    BuildingAnimEvent::updateDamaged();
-    
-    if (anim_data.damaged) {
-        anim_data.damagedelta = 30; // fixme: remove magic numbers
-        if (frame < 30) {
-            frame += 30;
-        }
+void ProcAnimEvent::updateDamaged() {
+  BuildingAnimEvent::updateDamaged();
+
+  if (anim_data.damaged) {
+    anim_data.damagedelta = 30; // fixme: remove magic numbers
+    if (frame < 30) {
+      frame += 30;
     }
+  }
 }

@@ -1,6 +1,5 @@
 // Structure.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,11 +19,7 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
 #include "UnitOrStructure.h"
-
-using std::string;
 
 class StructureType;
 class UnitType;
@@ -36,135 +31,134 @@ class DoorAnimEvent;
 /**
  * Building in game
  */
-class Structure : public UnitOrStructure
-{
-public:
-	friend class BuildingAnimEvent;
-	friend class BAttackAnimEvent;
-	friend class BRepairUnitAnimEvent;
-	friend class DoorAnimEvent;
+class Structure : public UnitOrStructure {
+ public:
+  friend class BuildingAnimEvent;
+  friend class BAttackAnimEvent;
+  friend class BRepairUnitAnimEvent;
+  friend class DoorAnimEvent;
 
-	Structure(StructureType *type, Uint16 cellpos, unsigned int owner, Uint16 rhealth,
-			Uint8 facing, string trigger_name);
-	~Structure();
+  Structure(StructureType *type, uint16_t cellpos, unsigned int owner, uint16_t rhealth,
+            uint8_t facing, std::string trigger_name);
+  ~Structure();
 
-	Uint8 getImageNums(Uint32 **inums, Sint8 **xoffsets, Sint8 **yoffsets);
-	Uint16* getImageNums() const;
-	void changeImage(Uint8 layer, Sint16 imagechange);
-	/** Return the actual current image number (without side color etc)*/
-	Uint32 getRealImageNum(Uint8 layer);
-	Uint32 getImageNum(Uint8 layer) const;
-	Uint16 getNumbImages(Uint8 layer);
-	void setImageNum(Uint32 num, Uint8 layer);
-	UnitOrStructureType* getType();
-	void setStructnum(Uint32 stn);
-	Uint32 getNum() const;
-	Uint16 getBPos(Uint16 curpos) const;
-	Uint16 getFreePos(Uint8* subpos, bool findsubpos);
-	void remove();
+  uint8_t getImageNums(uint32_t **inums, int8_t **xoffsets, int8_t **yoffsets);
+  uint16_t* getImageNums() const;
+  void changeImage(uint8_t layer, int16_t imagechange);
+  /** Return the actual current image number (without side color etc)*/
+  uint32_t getRealImageNum(uint8_t layer);
+  uint32_t getImageNum(uint8_t layer) const;
+  uint16_t getNumbImages(uint8_t layer);
+  void setImageNum(uint32_t num, uint8_t layer);
+  UnitOrStructureType* getType();
+  void setStructnum(uint32_t stn);
+  uint32_t getNum() const;
+  uint16_t getBPos(uint16_t curpos) const;
+  uint16_t getFreePos(uint8_t* subpos, bool findsubpos);
+  void remove();
 
-	unsigned int getPos() const;
-	unsigned int getSubpos() const;
+  unsigned int getPos() const;
+  unsigned int getSubpos() const;
 
-	void applyDamage(Sint16 amount, Weapon* weap, UnitOrStructure* attacker);
-	void runAnim(Uint32 mode);
-	void runSecAnim(Uint32 param, bool extraParam = false);
-	void stopAnim();
-	void stop();
-	Uint8 getOwner() const;
-	void setOwner(Uint8 newowner);
-	bool canAttack() const;
+  void applyDamage(int16_t amount, Weapon* weap, UnitOrStructure* attacker);
+  void runAnim(uint32_t mode);
+  void runSecAnim(uint32_t param, bool extraParam = false);
+  void stopAnim();
+  void stop();
+  uint8_t getOwner() const;
+  void setOwner(uint8_t newowner);
+  bool canAttack() const;
 
-	bool IsAttacking();
-	bool IsBuilding();
+  bool IsAttacking();
+  bool IsBuilding();
 
-	void attack(UnitOrStructure* target);
+  void attack(UnitOrStructure* target);
 
-	Uint16 getHealth() const;
-	void ChangeHealth(Sint16 amount);
+  uint16_t getHealth() const;
+  void ChangeHealth(int16_t amount);
 
-	Sint8 getXoffset() const;
-	Sint8 getYoffset() const;
+  int8_t getXoffset() const;
+  int8_t getYoffset() const;
 
-	bool isPowered();
+  bool isPowered();
 
-	bool isRefinery(void);
+  bool isRefinery(void);
 
-	bool CreateUnitAnimation(UnitType* UnType, Uint8 owner);
+  bool CreateUnitAnimation(UnitType* UnType, uint8_t owner);
 
-	double getRatio() const;
-	bool isPrimary() const;
-	void setPrimary(bool pri);
-	bool RepairUnint(Unit *Un);
+  double getRatio() const;
+  bool isPrimary() const;
+  void setPrimary(bool pri);
+  bool RepairUnint(Unit *Un);
 
-	Uint32 getExitCell() const;
-	void resetLoadState(bool runsec, Uint32 param);
-	bool checkdamage();
-	Uint16 getTargetCell() const;
+  uint32_t getExitCell() const;
+  void resetLoadState(bool runsec, uint32_t param);
+  bool checkdamage();
+  uint16_t getTargetCell() const;
 
-	bool is(string Name);
+  bool is(std::string Name);
 
-	void sell();
+  void sell();
 
-	void repair();
-	bool isRepairing();
-	void repairDone();
+  void repair();
+  bool isRepairing();
+  void repairDone();
 
-	/** Use to bomb a structure */
-	void bomb();
-	/** Get if the C4 is here :( */
-	bool isBombing();
-	/** */
-	void bombingDone();
+  /** Use to bomb a structure */
+  void bomb();
+  /** Get if the C4 is here :( */
+  bool isBombing();
+  /** */
+  void bombingDone();
 
-	bool underAttack();
-	Uint16 getAttackerPosition();
+  bool underAttack();
+  uint16_t getAttackerPosition();
 
-	string getTriggerName();
+  std::string getTriggerName();
 
-	static bool valid_pos(StructureType *type, Uint8 PlayerNr, Uint16 pos,
-			Uint8*);
-	static bool valid_possubpos(StructureType *type, Uint8 PlayerNr,
-			Uint16 pos, Uint8* subpos);
+  static bool valid_pos(StructureType *type, uint8_t PlayerNr, uint16_t pos,
+                        uint8_t*);
+  static bool valid_possubpos(StructureType *type, uint8_t PlayerNr,
+                              uint16_t pos, uint8_t* subpos);
 
-private:
-	string TriggerName;
-	StructureType *type;
-	Uint32 structnum;
-	Uint16 *imagenumbers;
+ private:
+  std::string TriggerName;
+  StructureType *type;
+  uint32_t structnum;
+  uint16_t *imagenumbers;
 
-	unsigned int cellpos;
-	Uint16 bcellpos;
-	Uint16 health;
+  unsigned int cellpos;
+  uint16_t bcellpos;
+  uint16_t health;
 
-	unsigned int owner;
+  unsigned int owner;
 
-	bool damaged;
-	bool animating;
-	bool usemakeimgs;
-	bool exploding;
-	bool primary;
+  bool damaged;
+  bool animating;
+  bool usemakeimgs;
+  bool exploding;
+  bool primary;
 
-	/** health/maxhealth */
-	double ratio;
-	/** If we stop a loop animation because of a repair animation
-	 we use this var to start the loop animation again */
-	Uint8 backup_anim_mode;
+  /** health/maxhealth */
+  double ratio;
+  /** If we stop a loop animation because of a repair animation
+   we use this var to start the loop animation again */
+  uint8_t backup_anim_mode;
 
-	bool retry_sell;
-	bool retry_repair;
-	bool retry_bombing;
-	bool repairing;
-	bool bombing;
+  bool retry_sell;
+  bool retry_repair;
+  bool retry_bombing;
+  bool repairing;
+  bool bombing;
 
-	UnitType* CreateUnitType;
-	unsigned int CreateUnitOwner;
-	Uint32 UnitToRepairPos;
-	Uint32 LastAttackTick;
-
-	BuildingAnimEvent* buildAnim;
-	BAttackAnimEvent* attackAnim;
-	BRepairUnitAnimEvent* repairunitAnim;
+  UnitType* CreateUnitType;
+  unsigned int CreateUnitOwner;
+  uint32_t UnitToRepairPos;
+  uint32_t LastAttackTick;
+  
+  BuildingAnimEvent* buildAnim;
+  BAttackAnimEvent* attackAnim;
+  BRepairUnitAnimEvent* repairunitAnim;
 };
 
 #endif //STRUCTURE_H

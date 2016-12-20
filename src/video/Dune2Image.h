@@ -1,6 +1,5 @@
 // Dune2Image.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,26 +17,24 @@
 #ifndef DUNE2IMAGE_H
 #define DUNE2IMAGE_H
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "Dune2Header.h"
 #include "SHPBase.h"
 
-class Dune2Image : SHPBase
-{
-public:
-    Dune2Image(const char *fname, Sint8 scaleq);
-    ~Dune2Image();
+class Dune2Image : SHPBase {
+ public:
+  Dune2Image(const char *fname, Sint8 scaleq);
+  ~Dune2Image();
 
-    SDL_Surface* getImage(Uint16 imgnum);
+  SDL_Surface* getImage(Uint16 imgnum);
 
-private:
-    Uint32 getD2Header(Uint16 imgnum);
-    Uint8* shpdata;
+ private:
+  Uint32 getD2Header(Uint16 imgnum);
+  Uint8* shpdata;
 
-    /** @link aggregationByValue*/
-    Dune2Header lnkHeader;
+  /** @link aggregationByValue*/
+  Dune2Header lnkHeader;
 };
 
 #endif

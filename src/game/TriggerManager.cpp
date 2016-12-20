@@ -22,8 +22,6 @@
 #include "CnCMap.h"
 #include "Trigger.hpp"
 
-using std::vector;
-
 namespace OpenRedAlert
 {
 namespace Game
@@ -61,7 +59,7 @@ void TriggerManager::handle()
     for (int i = 0; i < numberOfTrigger; i++)
     {
         // Get the Trigger
-        vector<OpenRedAlert::Game::Trigger*>* theTriggerPool = this->cncMap->getTriggerPool();
+        std::vector<OpenRedAlert::Game::Trigger*>* theTriggerPool = this->cncMap->getTriggerPool();
         OpenRedAlert::Game::Trigger* theTrigger = (*theTriggerPool)[i];
 
         // Some stuff ...

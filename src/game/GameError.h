@@ -1,6 +1,5 @@
 // GameError.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,14 +20,9 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-
-class GameError : public runtime_error 
-{
-public:
-    GameError(const string& msg) ;
+class GameError : public std::runtime_error {
+ public:
+  GameError(const std::string& msg) ;
 };
 
 #endif //GAMEERROR_H

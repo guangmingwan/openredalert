@@ -1,6 +1,5 @@
 // TurnAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,20 +21,21 @@
 #include "Unit.hpp"
 
 class TurnAnimEvent : public UnitAnimEvent {
-public:
-    TurnAnimEvent(Uint32 p, Unit *un, Uint8 dir, Uint8 layer);
-    virtual ~TurnAnimEvent();
-    virtual void run();
-    virtual void stop() ;
-    void update() ;
-    virtual void changedir(Uint8 ndir) ;
-private:
-    bool stopping;
-    bool runonce;
-    Sint8 turnmod;
-    Unit * un;
-    Uint8 dir;
-    Uint8 layer;
+ public:
+  TurnAnimEvent(uint32_t p, Unit *un, uint8_t dir, uint8_t layer);
+  virtual ~TurnAnimEvent();
+  virtual void run();
+  virtual void stop() ;
+  void update() ;
+  virtual void changedir(uint8_t ndir);
+
+ private:
+  bool stopping;
+  bool runonce;
+  int8_t turnmod;
+  Unit * un;
+  uint8_t dir;
+  uint8_t layer;
 };
 
 #endif //TURNANIMEVENT_H

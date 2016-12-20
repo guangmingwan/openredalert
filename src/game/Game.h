@@ -20,11 +20,7 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
-#include "misc/config.h" 
-
-using std::string;
+#include "misc/config.h"
 
 /**
  * This object represent a game session
@@ -35,7 +31,7 @@ public:
 	Game();
 	~Game();
 
-	void InitializeMap(string MapName);
+	void InitializeMap(std::string MapName);
 	/** Initialize some object of the game */
 	void InitializeGameClasses();
 	void FreeMemory();

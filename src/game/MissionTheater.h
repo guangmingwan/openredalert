@@ -1,6 +1,5 @@
 // MissionTheater.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,8 +19,6 @@
 
 #include <string>
 
-using std::string;
-
 /**
  * Theater of a map
  * 
@@ -29,23 +26,22 @@ using std::string;
  * @version 1.0
  * @since r340
  */
-class MissionTheater
-{
-public:
+class MissionTheater {
+ public:
 	/** Return the name of the theater */
-	string getName();
+	std::string getName();
 	
 	/** Return true if it's interior */
 	bool isInterior();
 
-private:
+ private:
 	MissionTheater();
 	/** Name of the theater */
-	string name;
+	std::string name;
 	bool interior;
 	
-protected:
-	MissionTheater(string name);
+ protected:
+	MissionTheater(std::string name);
 };
 
 #endif //MISSIONTHEATER_H

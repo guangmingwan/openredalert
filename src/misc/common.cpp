@@ -31,186 +31,178 @@
 #include "game/RedAlertDataLoader.h"
 #include "game/Dispatcher.h"
 
-using std::cout; 
-using std::map; 
-using std::string;
-
 using Sound::SoundEngine;
 
 typedef struct TiniFile
 {
-	string filename;
-	INIFile *inifile;
+  std::string filename;
+  INIFile *inifile;
 } TiniFile;
 
 
 namespace {
-	string binloc;
+  std::string binloc;
 }
 
 /** In game objects */
 namespace p {
-	/** Action event queue in game */
-	ActionEventQueue	*aequeue = 0;
-	/** Current map in game */
-	CnCMap			*ccmap = 0;
-	/** Unit and structure pool in gmae */
-	UnitAndStructurePool	*uspool = 0;
-	/** Pool of weapon data */
-	WeaponsPool*	weappool = 0;
-	/** Dispatcher of the game */
-	Dispatcher* 	dispatcher = 0;
-	/** */
-	vector<TiniFile>	Setting;
-	/** Custom loader for loading weapons data in originals archives files */
-	RedAlertDataLoader * raLoader;
+  /** Action event queue in game */
+  ActionEventQueue	*aequeue = 0;
+  /** Current map in game */
+  CnCMap			*ccmap = 0;
+  /** Unit and structure pool in gmae */
+  UnitAndStructurePool	*uspool = 0;
+  /** Pool of weapon data */
+  WeaponsPool*	weappool = 0;
+  /** Dispatcher of the game */
+  Dispatcher* 	dispatcher = 0;
+  /** */
+  std::vector<TiniFile>	Setting;
+  /** Custom loader for loading weapons data in originals archives files */
+  RedAlertDataLoader * raLoader;
 }
 
-/** 
+/**
  * Check if a inifile was already loaded in the p::Setting list
- * 
+ *
  * if not this function loads it in the list
  * We pass by value because we could copy anyway
  */
-INIFile* GetConfig(string name) 
-{
-	TiniFile TempIniFile;
+INIFile* GetConfig(std::string name) {
+  TiniFile TempIniFile;
 
-	// transform all lettres from capitals to lower caracteres
-	// ex : "XYZ" -> "xyz"
-	transform(name.begin(), name.end(), name.begin(), tolower);
+  // transform all lettres from capitals to lower caracteres
+  // ex : "XYZ" -> "xyz"
+  transform(name.begin(), name.end(), name.begin(), tolower);
 
-	for (Uint32 i = 0; i < p::Setting.size(); i++){
-		if (p::Setting[i].filename == name){
-			return p::Setting[i].inifile;
-		}
-	}
+  for (Uint32 i = 0; i < p::Setting.size(); i++){
+    if (p::Setting[i].filename == name){
+      return p::Setting[i].inifile;
+    }
+  }
 
-	// Not found, read new inifile
-	TempIniFile.inifile = new INIFile(name.c_str());
-	TempIniFile.filename = name;
-	p::Setting.push_back (TempIniFile);
-	return TempIniFile.inifile;
+  // Not found, read new inifile
+  TempIniFile.inifile = new INIFile(name.c_str());
+  TempIniFile.filename = name;
+  p::Setting.push_back (TempIniFile);
+  return TempIniFile.inifile;
 }
 
 /**
  */
 void CleanConfig()
 {
-	
-	for (Uint32 i = 0; i < p::Setting.size(); i++)
-	{
-		delete p::Setting[i].inifile;
-	}
-	p::Setting.clear();
+
+  for (Uint32 i = 0; i < p::Setting.size(); i++)
+  {
+    delete p::Setting[i].inifile;
+  }
+  p::Setting.clear();
 }
 
 
-/** 
+/**
  * Client only
  */
 namespace pc {
-	Renderer		*renderer;
-	/** SoundEngine of the game */
-	SoundEngine		*sfxeng = 0;
-	GraphicsEngine	*gfxeng = 0;
-	MessagePool		*msg = 0;
-	vector<SHPImage *>	*imagepool = 0;
-	ImageCache		*imgcache = 0;
-	Sidebar			*sidebar = 0;
-	Cursor			*cursor = 0;
-	Input			*input = 0;
-	//MissionMapsClass	*MissionsMapdata = 0;
-	bool 			quit = false;
-	ConfigType		Config;
-	Ai				*ai;	
+  Renderer		*renderer;
+  /** SoundEngine of the game */
+  SoundEngine		*sfxeng = 0;
+  GraphicsEngine	*gfxeng = 0;
+  MessagePool		*msg = 0;
+  std::vector<SHPImage *>	*imagepool = 0;
+  ImageCache		*imgcache = 0;
+  Sidebar			*sidebar = 0;
+  Cursor			*cursor = 0;
+  Input			*input = 0;
+  //MissionMapsClass	*MissionsMapdata = 0;
+  bool 			quit = false;
+  ConfigType		Config;
+  Ai				*ai;
 }
 
 // Server only
-std::vector<char*> splitList(const string& line, char delim)
-{
-    vector<char*> retval;
-    char* tmp;
-    Uint32 i,i2;
-    tmp = NULL;
-    
-    if (line.size() > 0) 
-    {
+std::vector<char*> splitList(const std::string& line, char delim) {
+  std::vector<char*> retval;
+  char* tmp;
+  Uint32 i,i2;
+  tmp = NULL;
+
+  if (line.size() > 0)
+  {
+    tmp = new char[16];
+    memset(tmp,0,16);
+    for (i=0,i2=0;line[i]!=0x0;++i) {
+      if ( (i2>=16) || (tmp != NULL && (line[i] == delim)) ) {
+        retval.push_back(tmp);
         tmp = new char[16];
         memset(tmp,0,16);
-        for (i=0,i2=0;line[i]!=0x0;++i) {
-            if ( (i2>=16) || (tmp != NULL && (line[i] == delim)) ) {
-                retval.push_back(tmp);
-                tmp = new char[16];
-                memset(tmp,0,16);
-                i2 = 0;
-            } else {
-                tmp[i2] = line[i];
-                ++i2;
-            }
-        }
-        retval.push_back(tmp);
+        i2 = 0;
+      } else {
+        tmp[i2] = line[i];
+        ++i2;
+      }
     }
-    return retval;
+    retval.push_back(tmp);
+  }
+  return retval;
 }
 
 /**
  * Change "foo123" to "foo"
  */
-char* stripNumbers(const char* src)
-{
-    char* dest;
-    Uint16 i;
-    for (i=0;i<strlen(src);++i) {
-        if (src[i] <= '9') {
-            break;
-        }
+char* stripNumbers(const char* src) {
+  char* dest;
+  Uint16 i;
+  for (i=0;i<strlen(src);++i) {
+    if (src[i] <= '9') {
+      break;
     }
-    dest = new char[i+1];
-    strncpy(dest,src,i);
-    dest[i] = 0;
-    return dest;
+  }
+  dest = new char[i+1];
+  strncpy(dest,src,i);
+  dest[i] = 0;
+  return dest;
 }
 
 char normalise_delim(char c) {
-    if ('\\' == c) {
-        return '/';
-    }
-    return c;
+  if ('\\' == c) {
+    return '/';
+  }
+  return c;
 }
 
 /**
  * @todo Something's not right, but this works better.
  */
-const string& determineBinaryLocation(const string& launchcmd) {
-    string path(launchcmd);
+const std::string& determineBinaryLocation(const std::string& launchcmd) {
+  std::string path(launchcmd);
 
-    transform(path.begin(), path.end(), path.begin(), normalise_delim);
-    string::size_type delim = path.find_last_of('/');
+  transform(path.begin(), path.end(), path.begin(), normalise_delim);
+  std::string::size_type delim = path.find_last_of('/');
 
-    if (string::npos == delim) {
-        return binloc = ".";
-    }
-    return binloc = path.substr(0, delim);
+  if (std::string::npos == delim) {
+    return binloc = ".";
+  }
+  return binloc = path.substr(0, delim);
 }
 
-const string& getBinaryLocation() {
-    return binloc;
+const std::string& getBinaryLocation() {
+  return binloc;
 }
 
 /**
  */
-int Split(vector<string>& vecteur, string chaine, char separateur)
-{
-	vecteur.clear();
-	string::size_type stTemp = chaine.find(separateur); 
-	while(stTemp != string::npos)
-	{
-		vecteur.push_back(chaine.substr(0, stTemp));
-		chaine = chaine.substr(stTemp + 1);
-		stTemp = chaine.find(separateur);
-	}
-	
-	vecteur.push_back(chaine);
-	return vecteur.size();
+int Split(std::vector<std::string>& vecteur, std::string chaine, char separateur) {
+  vecteur.clear();
+  std::string::size_type stTemp = chaine.find(separateur);
+  while(stTemp != std::string::npos)
+  {
+    vecteur.push_back(chaine.substr(0, stTemp));
+    chaine = chaine.substr(stTemp + 1);
+    stTemp = chaine.find(separateur);
+  }
+
+  vecteur.push_back(chaine);
+  return vecteur.size();
 }

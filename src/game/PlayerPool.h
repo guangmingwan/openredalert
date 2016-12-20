@@ -1,6 +1,5 @@
 // PlayerPool.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,85 +20,80 @@
 #include <vector>
 #include <string>
 
-#include "SDL_types.h"
 #include "misc/INIFile.h"
 
 class Player;
-
-using std::vector;
-using std::string;
 
 /**
  * @todo Currently the player starts are shuffled randomly without
  * any way of accepting a preshuffled list.
  */
-class PlayerPool
-{
-public:
-	explicit PlayerPool();
-    ~PlayerPool();
-    
-    /** Get the number of a color in string */
-    const int MultiColourStringToNumb(const string& colour);
-    
-    /** */
-    void LoadIni(INIFile *inifile);
-    
-    /** */
-    void Init(Uint8 gamemode);
+class PlayerPool {
+ public:
+  explicit PlayerPool();
+  ~PlayerPool();
 
-    Uint8 getNumPlayers() const ;
-    Uint8 getLPlayerNum() const ;
-    Player *getLPlayer();
-    void setLPlayer(const string& pname);
-    //void setLPlayer(Uint8 number, const char* nick, const char* colour, const char* mside);
-    void setPlayer(Uint8 number, const char* nick, const int colour, const char* mside);
-    Player* getPlayer(int player) const;
-    Player* getPlayer(const string& playerName);
-    
-    int getPlayerNum(const string& pname);
-    Player* getPlayerByName(const char* pname);
+  /** Get the number of a color in string */
+  const int MultiColourStringToNumb(const std::string& colour);
 
-    int getPlayerNumByHouseNum(int House) const;
-    int getHouseNumByPlayerNum(unsigned int Player) const;
+  /** */
+  void LoadIni(INIFile *inifile);
 
-    Uint8 getUnitpalNum(Uint8 player) const ;
-    Uint8 getStructpalNum(Uint8 player) const ;
-    vector<Player*> getOpponents(Player* pl);
-    /*void playerDefeated(Player * pl);
-    void playerUndefeated(Player * pl);*/
-   // bool hasWon() const ;
-   // bool hasLost() const ;
-    void setAlliances(INIFile* mapini);
-    //void placeMultiUnits();
-    //INIFile * getMapINI();
-    Uint16 getAStart();
-    void setPlayerStarts(Uint8 pos, Uint32 start);
+  /** */
+  void Init(uint8_t gamemode);
 
-    /** Called by input to see if sidebar needs updating*/
-    bool pollSidebar();
+  uint8_t getNumPlayers() const;
+  uint8_t getLPlayerNum() const;
+  Player *getLPlayer();
+  void setLPlayer(const std::string& pname);
+  //void setLPlayer(Uint8 number, const char* nick, const char* colour, const char* mside);
+  void setPlayer(uint8_t number, const char* nick, const int colour, const char* mside);
+  Player* getPlayer(int player) const;
+  Player* getPlayer(const std::string& playerName);
 
-    /** Called by the local player when sidebar is to be updated*/
-    void updateSidebar();
+  int getPlayerNum(const std::string& pname);
+  Player* getPlayerByName(const char* pname);
 
-    /** Called by input to see if radar status has changed.*/
-    Uint8 statRadar();
+  int getPlayerNumByHouseNum(int House) const;
+  int getHouseNumByPlayerNum(unsigned int Player) const;
 
-private:
-    explicit PlayerPool(INIFile *inifile, Uint8 gamemode);
-    PlayerPool(const PlayerPool&);
+  uint8_t getUnitpalNum(uint8_t player) const ;
+  uint8_t getStructpalNum(uint8_t player) const ;
+  std::vector<Player*> getOpponents(Player* pl);
+  /*void playerDefeated(Player * pl);
+   void playerUndefeated(Player * pl);*/
+  // bool hasWon() const ;
+  // bool hasLost() const ;
+  void setAlliances(INIFile* mapini);
+  //void placeMultiUnits();
+  //INIFile * getMapINI();
+  uint16_t getAStart();
+  void setPlayerStarts(uint8_t pos, uint32_t start);
 
-    Uint32 playerstarts[10];
+  /** Called by input to see if sidebar needs updating*/
+  bool pollSidebar();
 
-    vector< Player *> playerpool;
-    vector< Uint16 > player_starts;
+  /** Called by the local player when sidebar is to be updated*/
+  void updateSidebar();
 
-    Uint8 localPlayer;
-    Uint8 gamemode;
-    bool won;
-    bool lost;
-    bool updatesidebar;
-    //INIFile * mapini;
+  /** Called by input to see if radar status has changed.*/
+  uint8_t statRadar();
+
+ private:
+  explicit PlayerPool(INIFile *inifile, uint8_t gamemode);
+  PlayerPool(const PlayerPool&);
+
+  uint32_t playerstarts[10];
+
+  std::vector<Player*> playerpool;
+  std::vector<uint16_t> player_starts;
+
+  uint8_t localPlayer;
+  uint8_t gamemode;
+  bool won;
+  bool lost;
+  bool updatesidebar;
+  //INIFile * mapini;
 };
 
 #endif //PLAYERPOOL_H

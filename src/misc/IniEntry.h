@@ -1,6 +1,5 @@
 // INIEntry.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,12 +19,10 @@
 
 #include <string>
 
-using std::string;
-
 class IniEntry {
-public:
-    string first;
-    string second;
+ public:
+  std::string first;
+  std::string second;
 };
 
 #endif //INIENTRY_H

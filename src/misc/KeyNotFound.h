@@ -1,6 +1,5 @@
 // KeyNotFound.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,17 +20,12 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
+namespace INI {
 
-namespace INI
-{
-
-class KeyNotFound : public std::runtime_error
-{
-public:
-	KeyNotFound(const string& msg);
-};
+  class KeyNotFound : public std::runtime_error {
+   public:
+    KeyNotFound(const std::string& msg);
+  };
 
 }
 

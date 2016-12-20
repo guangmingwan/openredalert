@@ -1,6 +1,5 @@
 // SoundError.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,26 +20,15 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-namespace OpenRedAlert
-{
-
-namespace Sound
-{
-
-/**
- */
-class SoundError : public runtime_error
-{
-public:    
-
-    SoundError(const string& msg) ;
-};
-
-}
-
+namespace OpenRedAlert {
+  namespace Sound {
+    /**
+     */
+    class SoundError : public std::runtime_error {
+     public:
+      SoundError(const std::string& msg) ;
+    };
+  }
 }
 
 #endif //SOUNDERROR_H

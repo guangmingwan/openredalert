@@ -1,6 +1,5 @@
 // RA_Label.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,64 +21,60 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "Font.h"
 
 class RaWindow;
 
-using std::string;
-
 /**
- * 
+ *
  */
-class RA_Label
-{
-public:
-    RA_Label();
-    ~RA_Label();
+class RA_Label {
+ public:
+  RA_Label();
+  ~RA_Label();
 
-    Uint32 getHeight();
-    Uint32 getWidth();
-    Uint32 getWidth(const string text);
+  Uint32 getHeight();
+  Uint32 getWidth();
+  Uint32 getWidth(const std::string text);
 
-    void setText(const string text);
-    string getText(void);
+  void setText(const std::string text);
+  std::string getText(void);
 
-    void setColor(SDL_Color RGBcolor);
-    void setColor(Uint32 color);
-    void setColor(Uint8 r, Uint8 g, Uint8 b);
+  void setColor(SDL_Color RGBcolor);
+  void setColor(Uint32 color);
+  void setColor(Uint8 r, Uint8 g, Uint8 b);
 
-    void SetDrawingSurface(SDL_Surface * DwgSurface);
-    void SetDrawingWindow(RaWindow* Window);
+  void SetDrawingSurface(SDL_Surface * DwgSurface);
+  void SetDrawingWindow(RaWindow* Window);
 
-    void SetFont(const string FontName);
-    void UseAntiAliasing(bool status);
-    void underline(bool status);
+  void SetFont(const std::string FontName);
+  void UseAntiAliasing(bool status);
+  void underline(bool status);
 
-    void Draw(int X, int Y);
-    void Draw(SDL_Surface * DrawingSurface, int X, int Y);
-    void Draw(const string & text, SDL_Surface * DrawingSurface, int X, int Y);
-    void Draw(const string & text, SDL_Surface * DrawingSurface, SDL_Color Fcolor, int X, int Y);
-    void Redraw();
+  void Draw(int X, int Y);
+  void Draw(SDL_Surface * DrawingSurface, int X, int Y);
+  void Draw(const std::string & text, SDL_Surface * DrawingSurface, int X, int Y);
+  void Draw(const std::string & text, SDL_Surface * DrawingSurface, SDL_Color Fcolor, int X, int Y);
+  void Redraw();
 
-private:
-	void Create();
-	
-	string LabelText;
-    bool Checked;
-    bool recreate;
-    int Width;
-    int Heigth;
-    SDL_Color LabelFontColor;
-    SDL_Color ColorKeyColor;
-    SDL_Surface* LabelSurface;
-    SDL_Surface* DrawingSurface;
-    SDL_Surface* BackgroundBackup;
-    RaWindow* DrawingWindow;
-    Font LabelFont;
-    SDL_Rect LabelDest;
+ private:
+  void Create();
+
+  std::string LabelText;
+  bool Checked;
+  bool recreate;
+  int Width;
+  int Heigth;
+  SDL_Color LabelFontColor;
+  SDL_Color ColorKeyColor;
+  SDL_Surface* LabelSurface;
+  SDL_Surface* DrawingSurface;
+  SDL_Surface* BackgroundBackup;
+  RaWindow* DrawingWindow;
+  Font LabelFont;
+  SDL_Rect LabelDest;
 };
 
 #endif //RA_LABEL_H

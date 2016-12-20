@@ -1,6 +1,5 @@
 // RefineAnimEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,8 +16,6 @@
 
 #include "RefineAnimEvent.h"
 
-#include "SDL_types.h"
-
 #include "PlayerPool.h"
 #include "ProjectileAnim.h"
 #include "audio/SoundEngine.h"
@@ -29,50 +26,47 @@
 #include "CnCMap.h"
 
 namespace p {
-    extern CnCMap* ccmap;
+  extern CnCMap* ccmap;
 }
 
-RefineAnimEvent::RefineAnimEvent(Uint32 p, Structure* str, Uint8 bails) : BuildingAnimEvent(p, str, 7)
-{
-    updateDamaged();
+RefineAnimEvent::RefineAnimEvent(Uint32 p, Structure* str, Uint8 bails) : BuildingAnimEvent(p, str, 7) {
+  updateDamaged();
 
-    this->bails = bails;
-    this->str = str;
-    frame = framestart;
-    
-    //logger->error ("%s line %i: Start refine animation\n", __FILE__, __LINE__);
+  this->bails = bails;
+  this->str = str;
+  frame = framestart;
+
+  //logger->error ("%s line %i: Start refine animation\n", __FILE__, __LINE__);
 }
 
-void RefineAnimEvent::anim_func(anim_nfo* data)
-{
-    updateDamaged();
-    
-    if(bails>0) {
-        if (frame < framend) {
-            ++frame;
-        } else {
-            frame = framestart;
-            --bails;
-            // @todo CHANGE IT TO GET FROM STRUCTURE
-            p::ccmap->getPlayerPool()->getPlayer(str->getOwner())->changeMoney(100);
-        }
+void RefineAnimEvent::anim_func(anim_nfo* data) {
+  updateDamaged();
+
+  if(bails>0) {
+    if (frame < framend) {
+      ++frame;
     } else {
-        data->done = true;
+      frame = framestart;
+      --bails;
+      // @todo CHANGE IT TO GET FROM STRUCTURE
+      p::ccmap->getPlayerPool()->getPlayer(str->getOwner())->changeMoney(100);
     }
-    data->frame0 = frame;
+  } else {
+    data->done = true;
+  }
+  data->frame0 = frame;
 }
 
-void RefineAnimEvent::updateDamaged()
-{
-    BuildingAnimEvent::updateDamaged();
-    
-    if (anim_data.damaged) {
-        if (frame < getaniminfo().dmgoff) {
-            frame += getaniminfo().dmgoff;
-        }
+void RefineAnimEvent::updateDamaged() {
+  BuildingAnimEvent::updateDamaged();
+
+  if (anim_data.damaged) {
+    if (frame < getaniminfo().dmgoff) {
+      frame += getaniminfo().dmgoff;
     }
-    
-    // @todo fixme: avoid hardcoded values
-    framestart = getaniminfo().loopend+1+anim_data.damagedelta;
-    framend = framestart + 17; 
+  }
+
+  // @todo fixme: avoid hardcoded values
+  framestart = getaniminfo().loopend+1+anim_data.damagedelta;
+  framend = framestart + 17;
 }

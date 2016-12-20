@@ -30,9 +30,6 @@
 #include "video/headerformats.h"
 #include "Palettes.h"
 
-using std::string;
-using std::runtime_error;
-
 //-----------------------------------------------------------------------------
 // SHPBase
 //-----------------------------------------------------------------------------
@@ -43,7 +40,7 @@ SDL_Color SHPBase::palette[32][256];
 /**
  * Base class for all image based on shp file in archives
  */
-SHPBase::SHPBase(const string& fname, Sint8 scaleq) :
+SHPBase::SHPBase(const std::string& fname, Sint8 scaleq) :
 	name(fname), 
     scaleq(scaleq), 
     scaler(new ImageProc()) 
@@ -108,28 +105,23 @@ void SHPBase::calculatePalettes()
 	}*/
 }
 
-SDL_Surface* SHPBase::scale(SDL_Surface *input, int quality) 
-{
+SDL_Surface* SHPBase::scale(SDL_Surface *input, int quality) {
 	return scaler->scale(input, quality);
 }
 
-SDL_Color* SHPBase::getPalette(Uint8 palnum) 
-{
+SDL_Color* SHPBase::getPalette(Uint8 palnum) {
 	return palette[palnum];
 }
 
-Uint8 SHPBase::numPalettes()
-{
+Uint8 SHPBase::numPalettes() {
 	return numpals;
 }
 
-const string& SHPBase::getFileName() const 
-{
+const std::string& SHPBase::getFileName() const {
 	return name;
 }
 
-Uint32 SHPBase::getColour(SDL_PixelFormat* fmt, Uint8 palnum, Uint16 index)
-{
+Uint32 SHPBase::getColour(SDL_PixelFormat* fmt, Uint8 palnum, Uint16 index) {
 	SDL_Color p = palette[palnum][index];
 	return SDL_MapRGB(fmt, p.r, p.g, p.b);
 }

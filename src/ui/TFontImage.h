@@ -1,6 +1,5 @@
 // TFontImage.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,19 +20,13 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
-using std::string;
-using std::vector;
-
-class TFontImage
-{
+class TFontImage {
 public:
-    vector<SDL_Rect> chrdest;
-    string fontname;
-    SDL_Surface* fontimg;
+  std::vector<SDL_Rect> chrdest;
+  std::string fontname;
+  SDL_Surface* fontimg;
 };
 
 #endif
-

@@ -1,6 +1,5 @@
 // WarheadData.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,184 +18,175 @@
 
 #include <iostream>
 
-#include "SDL_types.h"
-
 #include "misc/INIFile.h"
 #include "misc/common.h"
 
 #include "misc/INIFile.h"
 
-using std::cout;
-using std::endl;
-
-Uint32 WarheadData::getSpread()
-{
-	return spread;
+Uint32 WarheadData::getSpread() {
+  return spread;
 }
 void WarheadData::setSpread(Uint32 spread)
 {
-	this->spread = spread;
+  this->spread = spread;
 }
 Uint32 WarheadData::getWall()
 {
-	return wall;
+  return wall;
 }
 void WarheadData::setWall(Uint32 wall)
 {
-	this->wall = wall;
+  this->wall = wall;
 }
 Uint32 WarheadData::getWood()
 {
-	return wood;
+  return wood;
 }
 void WarheadData::setWood(Uint32 wood)
 {
-	this->wood = wood;
+  this->wood = wood;
 }
 Uint32 WarheadData::getOre()
 {
-	return ore;
+  return ore;
 }
 void WarheadData::setOre(Uint32 ore)
 {
-	this->ore = ore;
+  this->ore = ore;
 }
 Uint32 WarheadData::getVersusNone()
 {
-	return versusNone;
+  return versusNone;
 }
 void WarheadData::setVersusNone(Uint32 versusNone)
 {
-	this->versusNone = versusNone;
+  this->versusNone = versusNone;
 }
 Uint32 WarheadData::getVersusWood()
 {
-	return versusWood;
+  return versusWood;
 }
 void WarheadData::setVersusWood(Uint32 versusWood)
 {
-	this->versusWood = versusWood;
+  this->versusWood = versusWood;
 }
 Uint32 WarheadData::getVersusLight()
 {
-	return versusLight;
+  return versusLight;
 }
 void WarheadData::setVersusLight(Uint32 versusLight)
 {
-	this->versusLight = versusLight;
+  this->versusLight = versusLight;
 }
 Uint32 WarheadData::getVersusHeavy()
 {
-	return versusHeavy;
+  return versusHeavy;
 }
 void WarheadData::setVersusHeavy(Uint32 versusHeavy)
 {
-	this->versusHeavy = versusHeavy;
-}
-Uint32 WarheadData::getVersusConcrete()
-{
-	return versusConcrete;
-}
-void WarheadData::setVersusConcrete(Uint32 versusConcrete)
-{
-	this->versusConcrete = versusConcrete;
-}
-Uint32 WarheadData::getExplosion()
-{
-	return explosion;
-}
-void WarheadData::setExplosion(Uint32 explosion)
-{
-	this->explosion = explosion;
-}
-Uint32 WarheadData::getInfDeath()
-{
-	return infDeath;
-}
-void WarheadData::setInfDeath(Uint32 infDeath)
-{
-	this->infDeath = infDeath;
+  this->versusHeavy = versusHeavy;
 }
 
-WarheadData* WarheadData::loadWarheadData(INIFile * file, string name)
-{
-	WarheadData* ptrWarheadData;
+Uint32 WarheadData::getVersusConcrete() {
+  return versusConcrete;
+}
 
-	// Create the WarheadData object
-	ptrWarheadData = new WarheadData();
+void WarheadData::setVersusConcrete(Uint32 versusConcrete) {
+  this->versusConcrete = versusConcrete;
+}
 
-	// Spread = damage spread factor [larger means greater spread] (def=1)
-	//  [A value of 1 means the damage is halved every pixel distant from
-	// center point.
-	//   a value of 2 means damage is halved every 2 pixels, etc.]
-	Uint32 tmpSpread = file->readInt(name, "Spread", 1);
-	ptrWarheadData->setSpread(tmpSpread);
+Uint32 WarheadData::getExplosion() {
+  return explosion;
+}
 
-	// Wall = Does this warhead damage concrete walls (def=no)?
-	ptrWarheadData->setWall(file->readYesNo(name, "Wall", 0));
+void WarheadData::setExplosion(Uint32 explosion) {
+  this->explosion = explosion;
+}
 
-	// Ore = Does this warhead destroy ore (def=no)?
-	ptrWarheadData->setOre(file->readYesNo(name, "Ore", 0));
-		
-	// Verses = damage value verses various armor types (as percentage 
-	// of full damage)...
-	// -vs- none, wood (buildings), light armor, heavy armor, concrete
-        // @todo REFACTOR THAT
-	string tmpPtVerses = file->readString(name, "Verses", "");
-	if (tmpPtVerses != "")
-        {
-		Uint32 versus[5];
-		
-		versus[0] = 100;
-		versus[1] = 100;
-		versus[2] = 100;
-		versus[3] = 100;
-		versus[4] = 100;
-		
-                vector<char*> toto = splitList(tmpPtVerses.c_str(), ',');
-                
-		sscanf(toto[0], "%u", &versus[0]);
-		sscanf(toto[1], "%u", &versus[1]);
-		sscanf(toto[2], "%u", &versus[2]);
-		sscanf(toto[3], "%u", &versus[3]);
-		sscanf(toto[4], "%u", &versus[4]);
-				
-		ptrWarheadData->setVersusNone(versus[0]);
-		ptrWarheadData->setVersusWood(versus[1]);
-		ptrWarheadData->setVersusLight(versus[2]);
-		ptrWarheadData->setVersusHeavy(versus[3]);
-		ptrWarheadData->setVersusConcrete(versus[4]);				
-	}
-	
-	// Explosion = which explosion set to use when warhead of this
-	// type impacts (def=0)
-	// 0=none, 1=piff, 2=piffs, 3=fire, 4=frags, 5=pops, 6=nuke
-	Uint32 tmpExplosion = file->readInt(name.c_str(), "Explosion", 0);
-	ptrWarheadData->setExplosion(tmpExplosion);
+Uint32 WarheadData::getInfDeath() {
+  return infDeath;
+}
 
-	// InfDeath = which infantry death animation to use (def=0)
-	// 0=instant die, 1=twirl die, 2=explodes, 3=flying death, 
-	// 4=burn death, 5=electro
-	Uint32 tmpInfDeath = file->readInt(name.c_str(), "InfDeath", 0);
-	ptrWarheadData->setInfDeath(tmpInfDeath);
+void WarheadData::setInfDeath(Uint32 infDeath) {
+  this->infDeath = infDeath;
+}
 
-	// Returns the constructed object
-	return ptrWarheadData;
+WarheadData* WarheadData::loadWarheadData(INIFile * file, std::string name) {
+  WarheadData* ptrWarheadData;
+
+  // Create the WarheadData object
+  ptrWarheadData = new WarheadData();
+
+  // Spread = damage spread factor [larger means greater spread] (def=1)
+  //  [A value of 1 means the damage is halved every pixel distant from
+  // center point.
+  //   a value of 2 means damage is halved every 2 pixels, etc.]
+  Uint32 tmpSpread = file->readInt(name, "Spread", 1);
+  ptrWarheadData->setSpread(tmpSpread);
+
+  // Wall = Does this warhead damage concrete walls (def=no)?
+  ptrWarheadData->setWall(file->readYesNo(name, "Wall", 0));
+
+  // Ore = Does this warhead destroy ore (def=no)?
+  ptrWarheadData->setOre(file->readYesNo(name, "Ore", 0));
+
+  // Verses = damage value verses various armor types (as percentage
+  // of full damage)...
+  // -vs- none, wood (buildings), light armor, heavy armor, concrete
+  // @todo REFACTOR THAT
+  std::string tmpPtVerses = file->readString(name, "Verses", "");
+  if (tmpPtVerses != "") {
+    Uint32 versus[5];
+
+    versus[0] = 100;
+    versus[1] = 100;
+    versus[2] = 100;
+    versus[3] = 100;
+    versus[4] = 100;
+
+    std::vector<char*> toto = splitList(tmpPtVerses.c_str(), ',');
+
+    sscanf(toto[0], "%u", &versus[0]);
+    sscanf(toto[1], "%u", &versus[1]);
+    sscanf(toto[2], "%u", &versus[2]);
+    sscanf(toto[3], "%u", &versus[3]);
+    sscanf(toto[4], "%u", &versus[4]);
+
+    ptrWarheadData->setVersusNone(versus[0]);
+    ptrWarheadData->setVersusWood(versus[1]);
+    ptrWarheadData->setVersusLight(versus[2]);
+    ptrWarheadData->setVersusHeavy(versus[3]);
+    ptrWarheadData->setVersusConcrete(versus[4]);
+  }
+
+  // Explosion = which explosion set to use when warhead of this
+  // type impacts (def=0)
+  // 0=none, 1=piff, 2=piffs, 3=fire, 4=frags, 5=pops, 6=nuke
+  Uint32 tmpExplosion = file->readInt(name.c_str(), "Explosion", 0);
+  ptrWarheadData->setExplosion(tmpExplosion);
+
+  // InfDeath = which infantry death animation to use (def=0)
+  // 0=instant die, 1=twirl die, 2=explodes, 3=flying death,
+  // 4=burn death, 5=electro
+  Uint32 tmpInfDeath = file->readInt(name.c_str(), "InfDeath", 0);
+  ptrWarheadData->setInfDeath(tmpInfDeath);
+
+  // Returns the constructed object
+  return ptrWarheadData;
 }
 
 /**
  * Print the Data
  */
-void WarheadData::print()
-{
-	cout << "Spread=" << getSpread() << endl;
-	cout << "Wall=" << getWall() << endl;
-	cout << "Wood=" << getWood() << endl;
-	cout << "Ore=" << getOre() << endl;
-	cout << "Verses=" << getVersusNone() << "%," << getVersusWood() << "%,"
-			<< getVersusLight() << "%," << getVersusHeavy() << "%,"
-			<< getVersusConcrete() << "%" << endl;
-	cout << "Explosion=" << getExplosion() << endl;
-	cout << "InfDeath=" << getInfDeath() << endl;
+void WarheadData::print() {
+  std::cout << "Spread=" << getSpread() << std::endl;
+  std::cout << "Wall=" << getWall() << std::endl;
+  std::cout << "Wood=" << getWood() << std::endl;
+  std::cout << "Ore=" << getOre() << std::endl;
+  std::cout << "Verses=" << getVersusNone() << "%," << getVersusWood() << "%,"
+  << getVersusLight() << "%," << getVersusHeavy() << "%,"
+  << getVersusConcrete() << "%" << std::endl;
+  std::cout << "Explosion=" << getExplosion() << std::endl;
+  std::cout << "InfDeath=" << getInfDeath() << std::endl;
 }
 

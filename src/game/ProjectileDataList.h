@@ -1,6 +1,5 @@
 // ProjectileDataList.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -24,27 +23,23 @@
 class ProjectileData;
 class INIFile;
 
-using std::string;
-using std::map;
-
 /**
  * List of data of projectiles
  */
-class ProjectileDataList
-{
-public:
+class ProjectileDataList {
+ public:
 	/** Load data of projectile from .ini file */
-	void loadProjectileData(INIFile* file, string name);
+	void loadProjectileData(INIFile* file, std::string name);
 	/** Get projectile data of a loaded projectile */
-	ProjectileData* getData(string name);
+	ProjectileData* getData(std::string name);
 	/** Print all the projectile data in the list */
 	void print();
 	/** @link association */
 	/*# ProjectileData * lnkProjectileData; */
 	
-private:
+ private:
 	/** List of internal data loaded */ 
-	map < string, ProjectileData *> data;
+	std::map<std::string, ProjectileData*> data;
 };
 
 #endif //PROJECTILEDATALIST_H

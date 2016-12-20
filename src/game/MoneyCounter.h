@@ -1,6 +1,5 @@
 // MoneyCounter.h
 // 1.4
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,46 +17,44 @@
 #ifndef MONEYCOUNTER_H
 #define MONEYCOUNTER_H
 
-#include "SDL_types.h"
-
 #include "ActionEvent.h"
 
 class Player;
 
 /**
- * 
+ *
  */
 class MoneyCounter : public ActionEvent {
-public:
-    MoneyCounter(Sint32* money, Player* player, MoneyCounter * * backref);
-    ~MoneyCounter();
-    void run();
+ public:
+  MoneyCounter(int32_t* money, Player* player, MoneyCounter * * backref);
+  ~MoneyCounter();
+  void run();
 
-    Uint16 getDebt() const { return debtleft; }
+  uint16_t getDebt() const { return debtleft; }
 
-    void addCredit(Uint16 amount, Uint8 PlayerNumb);
-    void addDebt(Uint16 amount, Uint8 PlayerNumb);
+  void addCredit(uint16_t amount, uint8_t PlayerNumb);
+  void addDebt(uint16_t amount, uint8_t PlayerNumb);
 
-    bool isScheduled() const { return queued; }
+  bool isScheduled() const { return queued; }
 
-private:
-    static const Uint8 delta = 5;
+ private:
+  static const uint8_t delta = 5;
 
-    Sint32& money;
-    Player * player;
-    bool queued;
-    // Seperate because we want both credit and debit sounds being played
-    Uint16 creditleft;
-    Uint16 debtleft;
-    Sint32 creditsound;
-    Sint32 debitsound;
+  int32_t& money;
+  Player * player;
+  bool queued;
+  // Seperate because we want both credit and debit sounds being played
+  uint16_t creditleft;
+  uint16_t debtleft;
+  int32_t creditsound;
+  int32_t debitsound;
 
-    Uint8 step(Uint16 & value);
-    bool sound;
+  uint8_t step(uint16_t & value);
+  bool sound;
 
-    MoneyCounter * * backref;
+  MoneyCounter **backref;
 
-    void reshedule();
+  void reshedule();
 };
 
 #endif //MONEYCOUNTER_H

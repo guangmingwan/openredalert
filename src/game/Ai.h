@@ -1,6 +1,5 @@
 // Ai.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,8 +19,6 @@
 
 #include <vector>
 
-#include "SDL_types.h"
-
 #define DIFFICUTY_EASY		1
 #define DIFFICUTY_MEDIUM	2
 #define DIFFICUTY_HARD		3
@@ -38,55 +35,52 @@ class AiRules;
 class Unit;
 class UnitOrStructure;
 
-using std::vector;
-
 /**
  * Artificial Intelligence that manage Units of a Player during game
  */
-class Ai
-{
-public:
-    Ai();
-    ~Ai();
+class Ai {
+ public:
+  Ai();
+  ~Ai();
 
-    /** Set the difficulty of the AI */
-    void SetDifficulty(int Diff);
-    void DefendUnits(Player* Player, int PlayerNumb);
-    void DefendComputerPlayerBaseUnderAttack(Player* Player, int PlayerNumb, UnitOrStructure * Enimy, Structure* StructureUnderAttack);
-    void DefendComputerPlayerUnitUnderAttack(Player* Player, int PlayerNumb, UnitOrStructure * Enimy, Unit* UnitUnderAttack);
-    void handle();
+  /** Set the difficulty of the AI */
+  void SetDifficulty(int Diff);
+  void DefendUnits(Player* Player, int PlayerNumb);
+  void DefendComputerPlayerBaseUnderAttack(Player* Player, int PlayerNumb, UnitOrStructure * Enimy, Structure* StructureUnderAttack);
+  void DefendComputerPlayerUnitUnderAttack(Player* Player, int PlayerNumb, UnitOrStructure * Enimy, Unit* UnitUnderAttack);
+  void handle();
 
-private:
-    vector<Uint32> LastHarvestTickCount;
-    vector<Uint32> LastDefendTickCount;
-    vector<Uint32> LastAttackTickCount;
-    vector<Uint32> LastBuildTickCount;
-    vector<Uint32> LastGuideGatherTickCount;
-    unsigned int NumbPlayers;
-    int HumanPlayerNumb;
-    int Difficulty;
-    vector<Uint32> LastGuideTickCount;
-    vector<Uint32> RetryDeploy;
-    Uint32 LplayerBasePos;
-    vector<Uint16> UnitBuildMultiplexer;
-    bool guide;
-    AiRules * Rules;
-    vector<UnitOrStructure*> player_targets;
+ private:
+  std::vector<uint32_t> LastHarvestTickCount;
+  std::vector<uint32_t> LastDefendTickCount;
+  std::vector<uint32_t> LastAttackTickCount;
+  std::vector<uint32_t> LastBuildTickCount;
+  std::vector<uint32_t> LastGuideGatherTickCount;
+  unsigned int NumbPlayers;
+  int HumanPlayerNumb;
+  int Difficulty;
+  std::vector<uint32_t> LastGuideTickCount;
+  std::vector<uint32_t> RetryDeploy;
+  uint32_t LplayerBasePos;
+  std::vector<uint16_t> UnitBuildMultiplexer;
+  bool guide;
+  AiRules * Rules;
+  std::vector<UnitOrStructure*> player_targets;
 
-    // Uint16 getDist(Uint16 pos1, Uint16 pos2);
-    void guideAttack(Player * Player, int PlayerNumb);
-    Uint32 getDist(Uint32 pos1, Uint32 pos2);
-    bool CanBuildAt(Uint8 PlayerNumb, const char * structname, Uint32 pos);
-    bool BuildStructure(Player * Player, int PlayerNumb, const char * structname, Uint32 ConstYardPos);
-    unsigned int FindClosesedTiberium(Unit * Unit);
-    void DefendStructures(Player * Player, int PlayerNumb);
-    void Build(Player * Player, int PlayerNumb);
-    Unit* EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange = -1);
-    Unit* EnemyUnitInRange(int MyPlayerNumb, Structure* MyStructure, int AttackRange = -1);
-    Structure * EnemyStructureInRange(int MyPlayerNumb, Unit * MyUnit, int AttackRange = -1);
-    void Harvest(Player * Player, int PlayerNumb);
+  // Uint16 getDist(Uint16 pos1, Uint16 pos2);
+  void guideAttack(Player * Player, int PlayerNumb);
+  uint32_t getDist(uint32_t pos1, uint32_t pos2);
+  bool CanBuildAt(uint8_t PlayerNumb, const char * structname, uint32_t pos);
+  bool BuildStructure(Player * Player, int PlayerNumb, const char * structname, uint32_t ConstYardPos);
+  unsigned int FindClosesedTiberium(Unit * Unit);
+  void DefendStructures(Player * Player, int PlayerNumb);
+  void Build(Player * Player, int PlayerNumb);
+  Unit* EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange = -1);
+  Unit* EnemyUnitInRange(int MyPlayerNumb, Structure* MyStructure, int AttackRange = -1);
+  Structure * EnemyStructureInRange(int MyPlayerNumb, Unit * MyUnit, int AttackRange = -1);
+  void Harvest(Player * Player, int PlayerNumb);
 
-    void patrolAndAttack(Player * Player, int PlayerNumb);
+  void patrolAndAttack(Player * Player, int PlayerNumb);
 };
 
 #endif //AI_H

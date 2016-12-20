@@ -20,7 +20,6 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "RA_Label.h"
@@ -34,9 +33,6 @@
 #include "video/ImageNotFound.h"
 #include "video/CPSImage.h"
 #include "video/SHPImage.h"
-
-using std::string;
-using std::vector;
 
 namespace pc {
 	extern GraphicsEngine * gfxeng;
@@ -281,7 +277,7 @@ int MouseXpos, MouseYpos;
 	return false;
 }
 
-void ListboxClass::AddString(const string String)
+void ListboxClass::AddString(const std::string String)
 {
 	// Add the text to the list
 	MessageList.push_back (String);

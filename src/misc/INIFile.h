@@ -22,56 +22,52 @@
 
 #include "INISection.h"
 
-using std::string;
-using std::map;
-
 /**
  * Parses inifiles.
  *
  */
-class INIFile
-{
-public:
-    explicit INIFile(const string& filename);
-    ~INIFile();
+class INIFile {
+ public:
+  explicit INIFile(const std::string& filename);
+  ~INIFile();
 
-    /** Read a String */
-    string readString(const string& section, const string& key) const;
-    /** Read a string and return the default value if the key not exist */
-    string readString(const string& section, const string& key, const string& defaultValue) const;
+  /** Read a String */
+  std::string readString(const std::string& section, const std::string& key) const;
+  /** Read a string and return the default value if the key not exist */
+  std::string readString(const std::string& section, const std::string& key, const std::string& defaultValue) const;
 
-    /** Read an integer */
-    int readInt(const string& section, const string& key) const;
-    /** Read an integer and return the default value if the key not exist */
-    int readInt(const string& section, const string& key, const int defaultValue) const;
-    
-    float readFloat(const string& section, const string& key);
-    float readFloat(const string& section, const string& key, const float defaultValue);
+  /** Read an integer */
+  int readInt(const std::string& section, const std::string& key) const;
+  /** Read an integer and return the default value if the key not exist */
+  int readInt(const std::string& section, const std::string& key, const int defaultValue) const;
 
-    INISection::const_iterator readKeyValue(const char* section, unsigned int keynum);
-    INISection::const_iterator readIndexedKeyValue(const char* section, unsigned int keynum, const char* prefix=0);
-    string readSection(unsigned int secnum);
+  float readFloat(const std::string& section, const std::string& key);
+  float readFloat(const std::string& section, const std::string& key, const float defaultValue);
 
-    /** Read a Key with value equal 'yes' or 'no' */
-    int readYesNo(const string& section, const string& value, const int defaultValue) const;
+  INISection::const_iterator readKeyValue(const char* section, unsigned int keynum);
+  INISection::const_iterator readIndexedKeyValue(const char* section, unsigned int keynum, const char* prefix=0);
+  std::string readSection(unsigned int secnum);
 
-    /** Function to test if a section is in the inifile */
-    bool isSection(const string& section) const;
-    /** Function to test if a key is in a section in the inifile */
-    bool isKeyInSection(const string& section, const string& keyString) const;
+  /** Read a Key with value equal 'yes' or 'no' */
+  int readYesNo(const std::string& section, const std::string& value, const int defaultValue) const;
 
-    /** Function to get number of key/value per section */
-    int getNumberOfKeysInSection(const string& section) const;
-    
-    /** Get the file name of the ini file */
-    string getFileName() const;
+  /** Function to test if a section is in the inifile */
+  bool isSection(const std::string& section) const;
+  /** Function to test if a key is in a section in the inifile */
+  bool isKeyInSection(const std::string& section, const std::string& keyString) const;
 
-private:
-	/** File name of the inifile loaded */
-	string filename;
-	
-    /** Internal data */
-    map<string, INISection> Inidata;
+  /** Function to get number of key/value per section */
+  int getNumberOfKeysInSection(const std::string& section) const;
+
+  /** Get the file name of the ini file */
+  std::string getFileName() const;
+
+ private:
+  /** File name of the inifile loaded */
+  std::string filename;
+
+  /** Internal data */
+  std::map<std::string, INISection> Inidata;
 };
 
 #endif //INIFILE_H

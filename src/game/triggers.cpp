@@ -336,11 +336,9 @@ bool CheckSecondTriggerEvent(int TriggerNumb, RA_Tiggers  *Trigger)
  * @param UnitOrStructure the unit or structure that has the event happening
  * @param Event the event that was caused for this unit or structure
  * @param param this is a event parameter ( doesn't have to be used )
- * @returns void
  */
-void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param)
-{
-	string AssociatedTriggerName = "None";
+void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param) {
+	std::string AssociatedTriggerName = "None";
 	RA_Tiggers* AssociatedTrigger = 0;
 	//int			value = 0;
 	
@@ -509,8 +507,7 @@ void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param)
  * @Handle global triggers
  * 
  * @param Event the event that was caused for this unit or structure
- * @param param the parameter that goes with the event (example time eleapsed)
- * @returns void
+ * @param value the parameter that goes with the event (example time eleapsed)
  */
 void HandleGlobalTrigger(int Event, int value)
 {
@@ -1017,9 +1014,8 @@ void InitializeTriggers() {
 /**
  * Return the name of a trigger with this number
  */
-string getTriggerEventNameByNumber(Uint8 number)
-{
-	string str;
+std::string getTriggerEventNameByNumber(Uint8 number) {
+	std::string str;
 	switch(number){
 	case 0:	str = "TRIGGER_EVENT_NO_EVENT";	break;
 	case 1:	str = "TRIGGER_EVENT_ENTERED_BY"; break;

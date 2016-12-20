@@ -1,6 +1,5 @@
 // ProcAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,8 +17,6 @@
 #ifndef PROCANIMEVENT_H
 #define PROCANIMEVENT_H
 
-#include "SDL_types.h"
-
 #include "BuildingAnimEvent.h"
 #include "anim_nfo.h"
 
@@ -29,12 +26,14 @@ class Structure;
  * Modifed LoopAnimEvent to account for when the damaged frames do not concurrently follow the normal frames.
  */
 class ProcAnimEvent : public BuildingAnimEvent {
-public:
-    ProcAnimEvent(Uint32 delay, Structure* str);
-    void anim_func(anim_nfo* data);
-    void updateDamaged();
-private:
-    Uint8 frame;Uint8 framend;
+ public:
+  ProcAnimEvent(uint32_t delay, Structure* str);
+  void anim_func(anim_nfo* data);
+  void updateDamaged();
+
+ private:
+  uint8_t frame;
+  uint8_t framend;
 };
 
 

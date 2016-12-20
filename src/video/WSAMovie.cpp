@@ -36,9 +36,6 @@
 #include "WSAHeader.h"
 #include "GraphicsEngine.h"
 
-using std::string;
-using std::runtime_error;
-
 /**
  */
 WSAMovie::~WSAMovie()
@@ -125,9 +122,9 @@ SDL_Surface* WSAMovie::decodeFrame(unsigned int framenum)
 /**
  * @param movieFileName File name of the WSA movie
  */
-WSAMovie::WSAMovie(const string& movieFileName)
+WSAMovie::WSAMovie(const std::string& movieFileName)
 {
-    string fname = movieFileName;
+    std::string fname = movieFileName;
     
     //transform(movieFileName.begin(), movieFileName.end(), )
     

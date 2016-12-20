@@ -1,6 +1,5 @@
 // Trigger.hpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,32 +19,25 @@
 
 #include <string>
 
-using std::string;
-
-namespace OpenRedAlert
-{
-
-namespace Game
-{
-
-/**
- * Trigger of maps in game.
- */
-class Trigger
-{
-public:
-    /** Set name of the Trigger */
-    void setName(const string& pName);
-    /** 
-     * Return name of the Trigger
-     * @return name
+namespace OpenRedAlert {
+  namespace Game {
+    /**
+     * Trigger of maps in game.
      */
-    string getName() const;
+    class Trigger {
+     public:
+      /** Set name of the Trigger */
+      void setName(const std::string& pName);
+      /**
+       * Return name of the Trigger
+       * @return name
+       */
+      std::string getName() const;
 
-private:
-    string name;
-};
-}
+     private:
+      std::string name;
+    };
+  }
 }
 
 #endif	//TRIGGER_HPP

@@ -1,6 +1,5 @@
 // InfantryGroup.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,7 +17,7 @@
 #ifndef INFANTRYGROUP_H
 #define INFANTRYGROUP_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
 class Unit;
 
@@ -29,27 +28,26 @@ class Unit;
  * @todo: Implement group reuse, or just scrap this in favour of something that
  * won't cause lots of allocations and deallocations whilst moving infantry.
  */
-class InfantryGroup 
-{
-public:
-    InfantryGroup();
-    ~InfantryGroup();
-    bool AddInfantry(Unit* inf, Uint8 subpos);
-    bool RemoveInfantry(unsigned int subpos);
-    bool IsClear(Uint8 subpos);
-    Uint8 GetNumInfantry() const;
-    bool IsAvailable() const;
-    Uint8 GetFreePos() const;
-    Unit * UnitAt(Uint8 subpos);
+class InfantryGroup {
+ public:
+  InfantryGroup();
+  ~InfantryGroup();
+  bool AddInfantry(Unit* inf, uint8_t subpos);
+  bool RemoveInfantry(unsigned int subpos);
+  bool IsClear(uint8_t subpos);
+  uint8_t GetNumInfantry() const;
+  bool IsAvailable() const;
+  uint8_t GetFreePos() const;
+  Unit * UnitAt(uint8_t subpos);
 
-    Uint8 GetImageNums(Uint32 * * inums, Sint8 * * xoffsets, Sint8 * * yoffsets);
-    void GetSubposOffsets(Uint8 oldsp, Uint8 newsp, Sint8 * xoffs, Sint8 * yoffs);
-    static const Sint8 * GetUnitOffsets();
-    Unit * GetNearest(Uint8 subpos);
-private:
-    Unit* positions[5];
-    Uint8 numinfantry;
-    static const Sint8 unitoffsets[];
+  uint8_t GetImageNums(uint32_t **inums, int8_t **xoffsets, int8_t **yoffsets);
+  void GetSubposOffsets(uint8_t oldsp, uint8_t newsp, int8_t *xoffs, int8_t *yoffs);
+  static const int8_t *GetUnitOffsets();
+  Unit *GetNearest(uint8_t subpos);
+ private:
+  Unit* positions[5];
+  uint8_t numinfantry;
+  static const int8_t unitoffsets[];
 };
 
 #endif //INFANTRYGROUP_H

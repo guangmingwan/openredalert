@@ -21,15 +21,11 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
-
 #include "game/RA_Tigger.h"
 
 #define TRIGGER_NON_REPEATING                   0   // Fires when the events happen and destroys the trigger
 #define TRIGGER_REPEAT_ONCE_ALL                 1   // Fires when all instances of the trigger (e.g. celltriggers, triggers on units, etc.) have their events happen, then destroys the trigger.
 #define TRIGGER_FREE_REPEAT                     2   // Fires every time the events happen; Never destroys itself
-
-
 
 //
 // Available Trigger Events
@@ -242,71 +238,65 @@
 class TriggerAction;
 class UnitOrStructure;
 
-using std::string;
-using std::vector;
-
 /**
  * Trigger in RedAlert missions
  */
-class RA_Tiggers
-{
-private:
-     /** Make the constructor private to avoid it **/
-    RA_Tiggers(){
-        // Nothing
-    }
-    /** Make the constructor by copy private to avoid it **/
-    RA_Tiggers(const RA_Tiggers&){
-        
-    }
+class RA_Tiggers {
+ private:
+  /** Make the constructor private to avoid it **/
+  RA_Tiggers(){
+    // Nothing
+  }
+  /** Make the constructor by copy private to avoid it **/
+  RA_Tiggers(const RA_Tiggers&){
 
-public:
-    /** **/
-    RA_Tiggers(string pName){
-        // Set the Name
-        this->name = pName;
-    }
-    
-    /** Name of this trigger **/
-    string name;
-    int repeatable;
-    /** which country trigger applies to */
-    int                 country;
-    /**
-     * When to activate trigger
-     * 0 = Only trigger event 1 must be true
-     * 1 = Triggger event one and two must be true
-     * 2 = Either the first or the second trigger event
-     *      must be true (activate all associated action on trigger1
-     *      or trigger2)
-     * 3 = Either the first or the second trigger event must be true
-     *      (activate action 1 for trigger1, activate action2 for
-     *      trigger2)
-     */
-    int                 activate;
-    /** which actions are triggered,
-     * 0 == only one trigger action,
-     * 1 == both trigger actions are activated
-     */
-    int                 actions;
-    /** first trigger */
-    RA_Tigger           trigger1;
-    /** second trigger */
-    RA_Tigger trigger2;
-    /** first trigger action */
-    TriggerAction* action1;
-    /** second trigger action,  If this trigger has more than
-     * one trigger action associated with an event, then the
-     * second trigger action is held here.*/
-    TriggerAction* action2;
-    /** var to remember if the trigger has already been exectured */
-    bool hasexecuted;
-    
-    /** List of Unit or Structure linked */
-    vector<UnitOrStructure*> references;
+  }
+
+ public:
+  /** **/
+  RA_Tiggers(std::string pName){
+    // Set the Name
+    this->name = pName;
+  }
+
+  /** Name of this trigger **/
+  std::string name;
+  int repeatable;
+  /** which country trigger applies to */
+  int                 country;
+  /**
+   * When to activate trigger
+   * 0 = Only trigger event 1 must be true
+   * 1 = Triggger event one and two must be true
+   * 2 = Either the first or the second trigger event
+   *      must be true (activate all associated action on trigger1
+   *      or trigger2)
+   * 3 = Either the first or the second trigger event must be true
+   *      (activate action 1 for trigger1, activate action2 for
+   *      trigger2)
+   */
+  int                 activate;
+  /** which actions are triggered,
+   * 0 == only one trigger action,
+   * 1 == both trigger actions are activated
+   */
+  int                 actions;
+  /** first trigger */
+  RA_Tigger           trigger1;
+  /** second trigger */
+  RA_Tigger trigger2;
+  /** first trigger action */
+  TriggerAction* action1;
+  /** second trigger action,  If this trigger has more than
+   * one trigger action associated with an event, then the
+   * second trigger action is held here.*/
+  TriggerAction* action2;
+  /** var to remember if the trigger has already been exectured */
+  bool hasexecuted;
+
+  /** List of Unit or Structure linked */
+  std::vector<UnitOrStructure*> references;
 };
-
-
 
 //
 // Forward declarations
@@ -318,6 +308,6 @@ void CheckCellTriggers(unsigned int pos);
 //void ExecuteTriggerAction ( unsigned int Event, Uint8 ActionNr, RA_Tiggers *Trigger );
 
 void ExecuteTriggerAction(TriggerAction* action);
-string getTriggerEventNameByNumber(Uint8 number);
+std::string getTriggerEventNameByNumber(uint8_t number);
 
 #endif //TRIGGERS_H

@@ -39,9 +39,6 @@
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 
-using std::runtime_error;
-using std::string;
-
 namespace pc {
 	extern GraphicsEngine * gfxeng;
 	extern Sound::SoundEngine* sfxeng;
@@ -53,7 +50,7 @@ namespace pc {
 VQA::VQAMovie::VQAMovie(const char* filename) : vqafile(0), CBF_LookUp(0),
         CBP_LookUp(0), VPT_Table(0), offsets(0), sndbuf(0)
 {
-    string fname(filename);
+    std::string fname(filename);
 
 
     if (toupper(filename[0]) != 'X') {
@@ -63,13 +60,13 @@ VQA::VQAMovie::VQAMovie(const char* filename) : vqafile(0), CBF_LookUp(0),
 
     if (vqafile == 0) {
         Logger::getInstance()->Error ("Failed to load vqa movie '" + fname + "'");
-        throw runtime_error("No VQA file");
+        throw std::runtime_error("No VQA file");
     }
     // Get header information for the vqa.  If the header is corrupt, we can die now.
     vqafile->seekSet(0);
     if (!DecodeFORMChunk()) {
         Logger::getInstance()->Error("VQA: Invalid FORM chunk\n");
-        throw runtime_error("VQA: Invalid FORM chunk\n");
+        throw std::runtime_error("VQA: Invalid FORM chunk\n");
     }
 
 #ifdef DEBUG_VQA
@@ -99,7 +96,7 @@ VQA::VQAMovie::VQAMovie(const char* filename) : vqafile(0), CBF_LookUp(0),
     if (!DecodeFINFChunk()) {
         delete[] offsets;
         Logger::getInstance()->Error("VQA: Invalid FINF chunk\n");
-        throw runtime_error("VQA: Invalid FINF chunk\n");
+        throw std::runtime_error("VQA: Invalid FINF chunk\n");
     }
 
     CBF_LookUp = new Uint8[0x0ff00 << 4];	// (0x0ff00 * 8)
@@ -423,7 +420,7 @@ bool VQA::VQAMovie::DecodeFINFChunk()
 /**
  * Decodes SND Chunk
  *
- * @param pointer to store the decoded chunk
+ * @param outbuf pointer to store the decoded chunk
  * @return length of chunk
  */
 Uint32 VQA::VQAMovie::DecodeSNDChunk(Uint8 *outbuf)
@@ -495,8 +492,7 @@ Uint32 VQA::VQAMovie::DecodeSNDChunk(Uint8 *outbuf)
 /**
  * Decodes VQFR Chunk into one frame(?)
  *
- * @param pointer to decoded frame
- * @param Current Frame to decode
+ * @param frame pointer to decoded frame
  */
 bool VQA::VQAMovie::DecodeVQFRChunk(SDL_Surface *frame)
 {
@@ -705,7 +701,7 @@ void VQA::VQAMovie::AudioHook(void* udata, Uint8* stream, int len)
     vqa->cvt.len = len;
 
     if (SDL_ConvertAudio(&vqa->cvt) < 0) {
-        Logger::getInstance()->Warning("Could not run conversion filter: " + string(SDL_GetError()));
+        Logger::getInstance()->Warning("Could not run conversion filter: " + std::string(SDL_GetError()));
         return;
     }
 

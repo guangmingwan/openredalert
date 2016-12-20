@@ -1,6 +1,5 @@
 // Message.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,24 +19,19 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
-using std::string;
-
-/** 
+/**
  * @todo Replace this class with a std::pair<string, Uint32>
  */
-class Message
-{
-public:
-    Message(string msg, Uint32 deltime);
-    
-    const char* getMessage() const;
-    bool expired(Uint32 time) const;
-    
-private:
-    string message;
-    Uint32 deltime;
+class Message {
+ public:
+  Message(std::string msg, uint32_t deltime);
+
+  const char* getMessage() const;
+  bool expired(uint32_t time) const;
+
+ private:
+  std::string message;
+  uint32_t deltime;
 };
 
 #endif //MESSAGE_H

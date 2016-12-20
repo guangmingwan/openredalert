@@ -30,182 +30,180 @@
 #include "UnitOrStructure.h"
 #include "Structure.h"
 
-using std::string;
-
 namespace p {
-    extern UnitAndStructurePool* uspool;
-    extern CnCMap* ccmap; 
+  extern UnitAndStructurePool* uspool;
+  extern CnCMap* ccmap;
 }
 
-/** 
+/**
  * @note I've stripped out the sections related to logging and playback as that
  * part isn't as stable as the rest (basically need to fix a horrible synch
  * issue with the playback)
  */
 Dispatcher::Dispatcher() :
-    logstate(NORMAL),
-    localPlayer(p::ccmap->getPlayerPool()->getLPlayerNum())
+logstate(NORMAL),
+localPlayer(p::ccmap->getPlayerPool()->getLPlayerNum())
 {
 }
 
 Dispatcher::~Dispatcher()
 {
-    switch (logstate) {
+  switch (logstate) {
     case RECORDING:
-        break;
+      break;
     case PLAYING:
-        break;
+      break;
     case NORMAL:
     default:
-        break;
-    }
+      break;
+  }
 }
 
 void Dispatcher::unitMove(Unit* un, Uint32 dest)
 {
-    if (un == 0) {
-        return;
-    }
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            un->move(dest);
-            break;
-        case PLAYING:
-        default:
-            break;
-    }
+  if (un == 0) {
+    return;
+  }
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      un->move(dest);
+      break;
+    case PLAYING:
+    default:
+      break;
+  }
 }
 
 void Dispatcher::unitAttack(Unit* un, UnitOrStructure* target, bool tisunit)
 {
-    if (un == 0) {
-        return;
-    }
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            un->attack(target);
-            break;
-        case PLAYING:
-        default:
-            break;
-    }
+  if (un == 0) {
+    return;
+  }
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      un->attack(target);
+      break;
+    case PLAYING:
+    default:
+      break;
+  }
 }
 
 void Dispatcher::unitDeploy(Unit* un)
 {
-    if (un == 0) {
-        return;
-    }
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            un->deploy();
-            break;
-        case PLAYING:
-        default:
-            break;
-    }
+  if (un == 0) {
+    return;
+  }
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      un->deploy();
+      break;
+    case PLAYING:
+    default:
+      break;
+  }
 }
 
 void Dispatcher::structureAttack(Structure* st, UnitOrStructure* target, bool tisunit)
 {
-    if (st == 0) {
-        return;
-    }
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            st->attack(target);
-            break;
-        case PLAYING:
-        default:
-            break;
-    }
+  if (st == 0) {
+    return;
+  }
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      st->attack(target);
+      break;
+    case PLAYING:
+    default:
+      break;
+  }
 }
 
-bool Dispatcher::structurePlace(const StructureType* type, Uint32 pos, Uint8 owner) 
+bool Dispatcher::structurePlace(const StructureType* type, Uint32 pos, Uint8 owner)
 {
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            /// XXX TEMP HACK!
-            return p::uspool->createStructure(const_cast<StructureType*>(type), pos, owner, FULLHEALTH, 0, true, "None");
-            break;
-        case PLAYING:
-        default:
-            break;
-    };
-    /// XXX This won't always be true.
-    return true;
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      /// XXX TEMP HACK!
+      return p::uspool->createStructure(const_cast<StructureType*>(type), pos, owner, FULLHEALTH, 0, true, "None");
+      break;
+    case PLAYING:
+    default:
+      break;
+  };
+  /// XXX This won't always be true.
+  return true;
 }
 
 bool Dispatcher::structurePlace(const char* tname, Uint32 pos, Uint8 owner)
 {
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            return p::uspool->createStructure(tname, pos, owner, FULLHEALTH, 0, true, "None");
-            break;
-        case PLAYING:
-        default:
-            break;
-    };
-    /// XXX This won't always be true.
-    return true;
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      return p::uspool->createStructure(tname, pos, owner, FULLHEALTH, 0, true, "None");
+      break;
+    case PLAYING:
+    default:
+      break;
+  };
+  /// XXX This won't always be true.
+  return true;
 }
 
-bool Dispatcher::unitSpawn(UnitType* type, Uint8 owner) 
+bool Dispatcher::unitSpawn(UnitType* type, Uint8 owner)
 {
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            return p::uspool->spawnUnit(type,owner);
-            break;
-        case PLAYING:
-        default:
-            break;
-    };
-    /// XXX This won't always be true.
-    return true;
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      return p::uspool->spawnUnit(type,owner);
+      break;
+    case PLAYING:
+    default:
+      break;
+  };
+  /// XXX This won't always be true.
+  return true;
 }
 
 bool Dispatcher::unitSpawn(const char* tname, Uint8 owner) {
-    switch (logstate) {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            return p::uspool->spawnUnit(tname,owner);
-            break;
-        case PLAYING:
-        default:
-            break;
-    };
-    /// XXX This won't always be true.
-    return true;
+  switch (logstate) {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      return p::uspool->spawnUnit(tname,owner);
+      break;
+    case PLAYING:
+    default:
+      break;
+  };
+  /// XXX This won't always be true.
+  return true;
 }
 
-bool Dispatcher::unitCreate(const char* tname, Uint32 pos, Uint8 subpos, unsigned int owner) 
+bool Dispatcher::unitCreate(const char* tname, Uint32 pos, Uint8 subpos, unsigned int owner)
 {
-    switch (logstate) 
-    {
-        case RECORDING:
-            // deliberate fallthrough
-        case NORMAL:
-            return p::uspool->createUnit(tname, pos, subpos, owner, FULLHEALTH, 0, 0, "None");
-            break;
-        case PLAYING:
-        default:
-            break;
-    };
-    /// XXX This won't always be true.
-    return true;
+  switch (logstate)
+  {
+    case RECORDING:
+      // deliberate fallthrough
+    case NORMAL:
+      return p::uspool->createUnit(tname, pos, subpos, owner, FULLHEALTH, 0, 0, "None");
+      break;
+    case PLAYING:
+    default:
+      break;
+  };
+  /// XXX This won't always be true.
+  return true;
 }

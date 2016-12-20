@@ -21,12 +21,9 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-class VideoError : public runtime_error {
-public:    
-    VideoError(const string& msg);
+class VideoError : public std::runtime_error {
+ public:    
+    VideoError(const std::string& msg);
 };
 
 #endif //VIDEOERROR_H

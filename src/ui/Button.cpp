@@ -23,8 +23,6 @@
 #include "RaWindow.h"
 #include "video/GraphicsEngine.h"
 
-using std::string;
-
 namespace pc {
 	extern GraphicsEngine * gfxeng;
 }
@@ -258,16 +256,14 @@ bool Button::NeedsRedraw()
 	return false;
 }
 
-void Button::CreateSurface(const string& ButtonText, int Xpos, int Ypos, int Width, int Heigth )
-{
+void Button::CreateSurface(const std::string& ButtonText, int Xpos, int Ypos, int Width, int Heigth ) {
 	this->setText(ButtonText);
 	this->setposition(Xpos, Ypos);
 	this->setsize(Width, Heigth);
 	this->CreateSurface();
 }
 
-void Button::CreateSurface()
-{
+void Button::CreateSurface() {
 	SDL_Rect		dest;
 	SDL_Surface * 	tmp;
 
@@ -451,8 +447,7 @@ void Button::CreateSurface()
 	//printf ("%s line %i: End create surfaces\n", __FILE__, __LINE__);
 }
 
-void Button::setText(const string text)
-{
+void Button::setText(const std::string text) {
 	ButtonText = text;
 
 	ButtonUpLabel.setText(text);

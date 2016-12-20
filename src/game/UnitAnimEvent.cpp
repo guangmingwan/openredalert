@@ -1,6 +1,5 @@
 // UnitAnimEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,50 +18,44 @@
 
 #include <cmath>
 
-#include "SDL_types.h"
 #include "UnitOrStructure.h"
 #include "ActionEventQueue.h"
 #include "game/Unit.hpp"
 #include "Unit.hpp"
 
 namespace p {
-	extern ActionEventQueue * aequeue;
+  extern ActionEventQueue * aequeue;
 }
 
-UnitAnimEvent::UnitAnimEvent(Uint32 p, Unit* un) : ActionEvent(p)
-{
-    //logger->debug("UAE cons: this:%p un:%p\n",this,un);
-    this->un = un;
-    un->referTo();
-    scheduled = NULL;
+UnitAnimEvent::UnitAnimEvent(uint32_t p, Unit* un) : ActionEvent(p) {
+  //logger->debug("UAE cons: this:%p un:%p\n",this,un);
+  this->un = un;
+  un->referTo();
+  scheduled = NULL;
 }
 
-UnitAnimEvent::~UnitAnimEvent()
-{
-    //logger->debug("UAE dest: this:%p un:%p sch:%p\n",this,un,scheduled);
-    if (scheduled != NULL) {
-        p::aequeue->scheduleEvent(scheduled);
-    }
-    un->unrefer();
+UnitAnimEvent::~UnitAnimEvent() {
+  //logger->debug("UAE dest: this:%p un:%p sch:%p\n",this,un,scheduled);
+  if (scheduled != NULL) {
+    p::aequeue->scheduleEvent(scheduled);
+  }
+  un->unrefer();
 }
 
-void UnitAnimEvent::setSchedule(UnitAnimEvent* e)
-{
-    //logger->debug("Scheduling an event. (this: %p, e: %p)\n",this,e);
-    if (scheduled != NULL) {
-        scheduled->setSchedule(NULL);
-        scheduled->stop();
-    }
-    scheduled = e;
+void UnitAnimEvent::setSchedule(UnitAnimEvent* e) {
+  //logger->debug("Scheduling an event. (this: %p, e: %p)\n",this,e);
+  if (scheduled != NULL) {
+    scheduled->setSchedule(NULL);
+    scheduled->stop();
+  }
+  scheduled = e;
 }
 
-void UnitAnimEvent::stopScheduled()
-{
-    if (scheduled != NULL) {
-        scheduled->stop();
-    }
+void UnitAnimEvent::stopScheduled() {
+  if (scheduled != NULL) {
+    scheduled->stop();
+  }
 }
 
-void UnitAnimEvent::update()
-{
+void UnitAnimEvent::update() {
 }

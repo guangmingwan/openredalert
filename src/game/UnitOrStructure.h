@@ -1,6 +1,5 @@
 // UnitOrStructure.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,8 +18,6 @@
 #define UNITORSTRUCTURE_H
 
 #include <string>
-
-#include "SDL_types.h"
 
 //
 //  Commands that tell us what the unit or structure should be doing
@@ -56,8 +53,6 @@ class Structure;
 class UnitAndStructurePool;
 class UnitOrStructureType;
 
-using std::string;
-
 /**
  * Like UnitOrStructureType, UnitOrStructure is a way of referring to
  * either units or structures (but only when it is either not possible
@@ -66,103 +61,104 @@ using std::string;
  * ensure one does not call a pure virtual method by mistake.
  */
 class UnitOrStructure {
-//private:
-protected:
-    /* using protected data members to make the code cleaner:
-     * referTo, unrefer, select and unselect are common to both Units
-     * and structures, so rather than duplicate code, we handle them
-     * here.
-     */
-    Uint8 references;
-    bool deleted; 
-    bool selected;
-    Uint16 targetcell;
-    UnitOrStructure* target;
-    Uint8 showorder_timer;
-public:
-    UnitOrStructure() ;
+  //private:
+ protected:
+  /* using protected data members to make the code cleaner:
+   * referTo, unrefer, select and unselect are common to both Units
+   * and structures, so rather than duplicate code, we handle them
+   * here.
+   */
+  uint8_t references;
+  bool deleted;
+  bool selected;
+  uint16_t targetcell;
+  UnitOrStructure* target;
+  uint8_t showorder_timer;
 
-    virtual ~UnitOrStructure();
+ public:
+  UnitOrStructure() ;
 
-    virtual Uint32 getNum() const = 0;
+  virtual ~UnitOrStructure();
 
-    virtual Sint8 getXoffset() const = 0;
+  virtual uint32_t getNum() const = 0;
 
-    virtual Sint8 getYoffset() const = 0;
+  virtual int8_t getXoffset() const = 0;
 
-    virtual void setXoffset(Sint8 xo) ;
+  virtual int8_t getYoffset() const = 0;
 
-    virtual void setYoffset(Sint8 yo) ;
+  virtual void setXoffset(int8_t xo);
 
-private:
-    Uint16 health;
-    
-    /** Number of the player who is the owner of this unit */
-    unsigned int owner;
-    
-public:
-    Uint16 getHealth() const;
+  virtual void setYoffset(int8_t yo);
 
-    void setHealth(Uint16 health);
+ private:
+  uint16_t health;
 
-    unsigned int getOwner() const;
+  /** Number of the player who is the owner of this unit */
+  unsigned int owner;
+
+ public:
+  uint16_t getHealth() const;
+
+  void setHealth(uint16_t health);
+
+  unsigned int getOwner() const;
 
 
-    virtual unsigned int getPos() const = 0;
+  virtual unsigned int getPos() const = 0;
 
-    virtual unsigned int getSubpos() const = 0;
+  virtual unsigned int getSubpos() const = 0;
 
-    /** 
-     * get the first blocked cell in structure.
-     *
-     * Normally the first blocked cell is the top-left most cell.
-     * However, certain structures, such as the repair bay, do not have
-     * this cell blocked, so the original targetting code could not hit
-     * that structure.  There is no overhead in calculating the first
-     * blocked cell as it is done at the same time as the blocked matrix
-     * is first created.
-     */
-    virtual Uint16 getBPos(Uint16 pos) const = 0;
+  /**
+   * get the first blocked cell in structure.
+   *
+   * Normally the first blocked cell is the top-left most cell.
+   * However, certain structures, such as the repair bay, do not have
+   * this cell blocked, so the original targetting code could not hit
+   * that structure.  There is no overhead in calculating the first
+   * blocked cell as it is done at the same time as the blocked matrix
+   * is first created.
+   */
+  virtual uint16_t getBPos(uint16_t pos) const = 0;
 
-    /**
-     * Type of the Structure/Unit
-     */
-    virtual UnitOrStructureType* getType() = 0;
+  /**
+   * Type of the Structure/Unit
+   */
+  virtual UnitOrStructureType* getType() = 0;
 
-    virtual Uint32 getImageNum(Uint8 layer) const = 0;
+  virtual uint32_t getImageNum(uint8_t layer) const = 0;
 
-    virtual void setImageNum(Uint32 num, Uint8 layer) = 0;
+  virtual void setImageNum(uint32_t num, uint8_t layer) = 0;
 
-    void referTo() ;
+  void referTo() ;
 
-    void unrefer();
+  void unrefer();
 
-    void remove();
+  void remove();
 
-    bool isAlive() ;
+  bool isAlive() ;
 
-    void select() ;
+  void select() ;
 
-    void unSelect() ;
+  void unSelect() ;
 
-    bool isSelected() ;
+  bool isSelected() ;
 
-    virtual void attack(UnitOrStructure* target) = 0;
+  virtual void attack(UnitOrStructure* target) = 0;
 
-    virtual void applyDamage(Sint16 amount, Weapon * weap, UnitOrStructure* attacker) = 0;
+  virtual void applyDamage(int16_t amount, Weapon *weap, UnitOrStructure* attacker) = 0;
 
-    /** @returns ratio of actual health over maximum health for type. */
-    virtual double getRatio() const = 0;
+  /** @returns ratio of actual health over maximum health for type. */
+  virtual double getRatio() const = 0;
 
-    virtual Uint32 getExitCell() const ;
+  virtual uint32_t getExitCell() const ;
 
-    virtual Uint16 getTargetCell() const ;
+  virtual uint16_t getTargetCell() const ;
 
-    virtual UnitOrStructure * getTarget() ;
+  virtual UnitOrStructure * getTarget() ;
 
-    virtual string getTriggerName (void)  = 0;
-       
-    void setOwner(unsigned int newOwner);
+  virtual std::string getTriggerName (void)  = 0;
+
+  void setOwner(unsigned int newOwner);
 };
 
 #endif

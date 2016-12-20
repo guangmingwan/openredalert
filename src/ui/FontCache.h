@@ -1,6 +1,5 @@
 // FontCache.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,24 +20,20 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "TFontImage.h"
 
-using std::string;
-using std::vector;
-
 class FontCache {
-public:
-    FontCache(void);
-    ~FontCache(void);
-    void Add(TFontImage Image);
-    void Add(std::string fontname, SDL_Surface * img, std::vector < SDL_Rect > chrdest);
-    bool Get(std::string fontname, SDL_Surface * * fontimg, std::vector < SDL_Rect > & chrdest);
+ public:
+  FontCache(void);
+  ~FontCache(void);
+  void Add(TFontImage Image);
+  void Add(std::string fontname, SDL_Surface * img, std::vector < SDL_Rect > chrdest);
+  bool Get(std::string fontname, SDL_Surface * * fontimg, std::vector < SDL_Rect > & chrdest);
 
-private:
-    std::vector < TFontImage > font_cache;
+ private:
+  std::vector<TFontImage> font_cache;
 };
 
 #endif //FONTCACHE_H

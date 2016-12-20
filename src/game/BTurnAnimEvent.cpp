@@ -1,6 +1,5 @@
 // BTurnAnimEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,6 +16,7 @@
 
 #include "BTurnAnimEvent.h"
 
+#include <cstdlib>
 #include <cmath>
 
 #include "anim_nfo.h"
@@ -24,40 +24,38 @@
 
 /**
  */
-BTurnAnimEvent::BTurnAnimEvent(Uint32 p, Structure* str, Uint8 face) : BuildingAnimEvent(p,str,6)
-{
-    Uint8 layerface;
-    updateDamaged();
-    targetface = face;
+BTurnAnimEvent::BTurnAnimEvent(uint32_t p, Structure* str, uint8_t face) : BuildingAnimEvent(p,str,6) {
+  uint8_t layerface;
+  updateDamaged();
+  targetface = face;
 
-    // layerface = (str->getImageNums()[0]&0x1f);
-    layerface = str->getRealImageNum(0);
-    if (layerface == face) {
-        delete this;
-        return;
-    }
-    if( ((layerface-face)&0x1f) < ((face-layerface)&0x1f) ) {
-        turnmod = -1;
-    } else {
-        turnmod = 1;
-    }
-    this->str = str;
+  // layerface = (str->getImageNums()[0]&0x1f);
+  layerface = str->getRealImageNum(0);
+  if (layerface == face) {
+    delete this;
+    return;
+  }
+  if( ((layerface-face)&0x1f) < ((face-layerface)&0x1f) ) {
+    turnmod = -1;
+  } else {
+    turnmod = 1;
+  }
+  this->str = str;
 }
 
 /**
  */
-void BTurnAnimEvent::anim_func(anim_nfo* data)
-{
-    Uint8 layerface;
-    layerface = (str->getImageNums()[0]&0x1f);
-    if( abs((layerface-targetface)&0x1f) > abs(turnmod) ) {
-        layerface += turnmod;
-        layerface &= 0x1f;
-    } else {
-        layerface = targetface;
-    }
-    data->frame0 = layerface+data->damagedelta;
-    if( layerface == targetface) {
-        data->done = true;
-    }
+void BTurnAnimEvent::anim_func(anim_nfo* data) {
+  uint8_t layerface;
+  layerface = (str->getImageNums()[0]&0x1f);
+  if ( abs((layerface-targetface)&0x1f) > abs(turnmod) ) {
+    layerface += turnmod;
+    layerface &= 0x1f;
+  } else {
+    layerface = targetface;
+  }
+  data->frame0 = layerface+data->damagedelta;
+  if (layerface == targetface) {
+    data->done = true;
+  }
 }

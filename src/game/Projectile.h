@@ -1,6 +1,5 @@
 // Projectille.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,38 +20,31 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
-
 class ProjectileData;
 class ProjectileDataList;
 class SHPImage;
 
-using std::string;
-using std::vector;
-
 /**
  * Projectille in game
  */
-class Projectile
-{
-public:
-    Projectile(string pname, ProjectileDataList* weapini, vector<SHPImage*>*imagePool);
-    ~Projectile();
-    Uint32 getImageNum()    ;
-    //Uint8 getSpeed(){return speed;}
-    bool doesRotate();
-	bool AntiAir();
-	bool AntiGround();
-	bool AntiSubmarine();
-	bool getInaccurate();
+class Projectile {
+ public:
+  Projectile(std::string pname, ProjectileDataList* weapini, std::vector<SHPImage*>*imagePool);
+  ~Projectile();
+  uint32_t getImageNum();
+  //uint8_t getSpeed(){return speed;}
+  bool doesRotate();
+  bool AntiAir();
+  bool AntiGround();
+  bool AntiSubmarine();
+  bool getInaccurate();
 
-private:
-    Uint32 imagenum;
-    Uint8 rotationimgs;
+ private:
+  uint32_t imagenum;
+  uint8_t rotationimgs;
 
-
-    /** @link aggregation */
-    ProjectileData* lnkProjectileData;
+  /** @link aggregation */
+  ProjectileData* lnkProjectileData;
 };
 
 

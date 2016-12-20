@@ -1,6 +1,5 @@
 // SHPImage.h
 // 1.1
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,40 +19,36 @@
 
 #include <string>
 
-#include "SDL_types.h"
-#include "SDL_video.h"
-
 #include "SHPBase.h"
 
-class SHPHeader;
+#include "SDL_video.h"
 
-using std::string;
+class SHPHeader;
 
 /**
  * shpimage - code to load/decode shp files
  */
-class SHPImage : SHPBase
-{
-public:
-	SHPImage(const char * fname, Sint8 scaleq);
-	~SHPImage();
+class SHPImage : SHPBase {
+ public:
+  SHPImage(const char * fname, Sint8 scaleq);
+  ~SHPImage();
 
-	void getImage(Uint16 imgnum, SDL_Surface * * img, SDL_Surface * * shadow,
-			Uint8 palnum);
-	void getImageAsAlpha(Uint16 imgnum, SDL_Surface * * img);
+  void getImage(Uint16 imgnum, SDL_Surface * * img, SDL_Surface * * shadow,
+                Uint8 palnum);
+  void getImageAsAlpha(Uint16 imgnum, SDL_Surface * * img);
 
-	Uint32 getWidth() const;
-	Uint32 getHeight() const;
-	Uint16 getNumImg() const;
-	string getFileName() const;
+  Uint32 getWidth() const;
+  Uint32 getHeight() const;
+  Uint16 getNumImg() const;
+  std::string getFileName() const;
 
-private:
-	static SDL_Color shadowpal[2];
-	static SDL_Color alphapal[6];
+ private:
+  static SDL_Color shadowpal[2];
+  static SDL_Color alphapal[6];
 
-	void DecodeSprite(Uint8 * imgdst, Uint16 imgnum);
-	Uint8* shpdata;
-	SHPHeader* lnkHeader;
+  void DecodeSprite(Uint8 * imgdst, Uint16 imgnum);
+  Uint8* shpdata;
+  SHPHeader* lnkHeader;
 };
 
 #endif //SHPIMAGE_H

@@ -28,9 +28,8 @@ class RaWindow;
 /**
  * 
  */
-class TTextBox 
-{
-public:
+class TTextBox {
+ public:
 	TTextBox();
 	~TTextBox();
 	
@@ -47,10 +46,10 @@ public:
 	void setColor(Uint32 Color);
 	Uint32 getWidth();
 
-private:
+ private:
 	bool AddChar(char AddChar);
 	
-	string TextBoxString;
+	std::string TextBoxString;
 	RaWindow* WindowToDrawOn;
 	RA_Label TextBoxLabel;
 	volatile bool Selected;

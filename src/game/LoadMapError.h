@@ -21,13 +21,9 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-class LoadMapError : public runtime_error
-{
-public:
-	LoadMapError(const string& msg) ;
+class LoadMapError : public std::runtime_error {
+ public:
+	LoadMapError(const std::string& msg) ;
 };
 
 #endif //LOADMAPERROR_H

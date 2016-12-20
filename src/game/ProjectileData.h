@@ -1,6 +1,5 @@
 // ProjectileData.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,130 +19,126 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
 #include "misc/INIFile.h"
 
-
-using std::string;
-
 class ProjectileData {
-public:
-	ProjectileData();
+ public:
+  ProjectileData();
 
-    Uint32 getAA();
+  uint32_t getAA();
 
-    void setAA(Uint32 AA);
+  void setAA(uint32_t AA);
 
-    Uint32 getAG();
+  uint32_t getAG();
 
-    void setAG(Uint32 AG);
+  void setAG(uint32_t AG);
 
-    int getASW();
+  int getASW();
 
-    void setASW(int ASW);
+  void setASW(int ASW);
 
-    int getAnimates();
+  int getAnimates();
 
-    void setAnimates(int animates);
+  void setAnimates(int animates);
 
-    int getArcing();
+  int getArcing();
 
-    void setArcing(int arcing);
+  void setArcing(int arcing);
 
-    int getArm();
+  int getArm();
 
-    void setArm(int arm);
+  void setArm(int arm);
 
-    int getDegenerates();
+  int getDegenerates();
 
-    void setDegenerates(int degenerates);
+  void setDegenerates(int degenerates);
 
-    int getDropping();
+  int getDropping();
 
-    void setDropping(int dropping);
+  void setDropping(int dropping);
 
-    int getFrames();
+  int getFrames();
 
-    void setFrames(int frames);
+  void setFrames(int frames);
 
-    int getGigundo();
+  int getGigundo();
 
-    void setGigundo(int gigundo);
+  void setGigundo(int gigundo);
 
-    int getHigh();
+  int getHigh();
 
-    void setHigh(int high);
+  void setHigh(int high);
 
-    string getImage();
+  std::string getImage();
 
-    void setImage(string image);
+  void setImage(std::string image);
 
-    int getInaccurate();
+  int getInaccurate();
 
-    void setInaccurate(int inaccurate);
+  void setInaccurate(int inaccurate);
 
-    int getInviso();
+  int getInviso();
 
-    void setInviso(int inviso);
+  void setInviso(int inviso);
 
-    int getProximity();
+  int getProximity();
 
-    void setProximity(int proximity);
+  void setProximity(int proximity);
 
-    int getROT();
+  int getROT();
 
-    void setROT(int ROT);
+  void setROT(int ROT);
 
-    int getRanged();
+  int getRanged();
 
-    void setRanged(int ranged);
+  void setRanged(int ranged);
 
-    int getRotates();
+  int getRotates();
 
-    void setRotates(int rotates);
+  void setRotates(int rotates);
 
-    int getShadow();
+  int getShadow();
 
-    void setShadow(int shadow);
+  void setShadow(int shadow);
 
-    int getTranslucent();
+  int getTranslucent();
 
-    void setTranslucent(int translucent);
+  void setTranslucent(int translucent);
 
-    int getParachuted();
+  int getParachuted();
 
-    void setParachuted(int parachuted);
+  void setParachuted(int parachuted);
 
-    int getUnderWater();
+  int getUnderWater();
 
-    void setUnderWater(int underWater);
+  void setUnderWater(int underWater);
 
-    static ProjectileData* loadProjectileData(INIFile * file, string name);
-    void print();
-private:
-    Uint32 AA;
-    Uint32 AG;
-    int ASW;
-    int animates;
-    int arcing;
-    int arm;
-    int degenerates;
-    int dropping;
-    int frames;
-    int gigundo;
-    int high;
-    string image;
-    int inaccurate;
-    int inviso;
-    int proximity;
-    int ROT;
-    int ranged;
-    int rotates;
-    int shadow;
-    int translucent;
-    int parachuted;
-    int underWater;
+  static ProjectileData* loadProjectileData(INIFile * file, std::string name);
+  void print();
+
+ private:
+  uint32_t AA;
+  uint32_t AG;
+  int ASW;
+  int animates;
+  int arcing;
+  int arm;
+  int degenerates;
+  int dropping;
+  int frames;
+  int gigundo;
+  int high;
+  std::string image;
+  int inaccurate;
+  int inviso;
+  int proximity;
+  int ROT;
+  int ranged;
+  int rotates;
+  int shadow;
+  int translucent;
+  int parachuted;
+  int underWater;
 };
 
 #endif //PROJECTILEDATA_H

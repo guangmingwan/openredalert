@@ -1,6 +1,5 @@
 // SidebarGeometry.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,19 +17,17 @@
 #ifndef SIDEBARGEOMETRY_H
 #define SIDEBARGEOMETRY_H
 
-#include "SDL_types.h"
-
 /**
  * Information about Height and Width to manage drawing of sidebar buttons
- * 
+ *
  * @todo complete documentation about this class
  */
 class SidebarGeometry {
-public:   
-	/** Width of sidebar buttons in the sidebar */
-	Uint16 bw;
-	/** Height of all sidebar buttons in the sidebar */
-    Uint16 bh;
+ public:
+  /** Width of sidebar buttons in the sidebar */
+  Uint16 bw;
+  /** Height of all sidebar buttons in the sidebar */
+  Uint16 bh;
 };
 
 #endif //SIDEBARGEOMETRY_H

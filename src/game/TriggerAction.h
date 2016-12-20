@@ -1,6 +1,5 @@
 // TriggerAction.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,8 +18,6 @@
 #define TRIGGERACTION_H
 
 #include <string>
-
-#include "SDL_types.h"
 
 /**
  * Action that execute triggers

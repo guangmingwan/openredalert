@@ -29,8 +29,6 @@
 #include "RA_ProgressBar.h"
 #include "video/ImageNotFound.h"
 
-using std::string;
-
 namespace pc {
     extern GraphicsEngine * gfxeng;
     extern ImageCache* imgcache;

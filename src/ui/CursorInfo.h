@@ -1,6 +1,5 @@
 // CursorInfo.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,22 +17,21 @@
 #ifndef CURSORINFO_H
 #define CURSORINFO_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
 /**
- * All Data of a cursor 
+ * All Data of a cursor
  */
-class CursorInfo
-{
-public:
-    Uint16 getAnStart();
-    void setAnStart(Uint16 anStart);
-    Uint16 getAnEnd();
-    void setAnEnd(Uint16 anEnd);
+class CursorInfo {
+ public:
+  uint16_t getAnStart();
+  void setAnStart(uint16_t anStart);
+  uint16_t getAnEnd();
+  void setAnEnd(uint16_t anEnd);
 
-private:
-    Uint16 anStart;
-    Uint16 anEnd;
+ private:
+  uint16_t anStart;
+  uint16_t anEnd;
 };
 
 #endif //CURSORINFO_H

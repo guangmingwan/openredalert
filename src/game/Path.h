@@ -1,6 +1,5 @@
 // Path.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,20 +19,15 @@
 
 #include <stack>
 
-#include "SDL_types.h"
-
 class Unit;
 
-using std::stack;
-
 /**
- * 
+ *
  */
-class Path : public stack<Uint8>
-{
-public:
-    Path(Unit* unit, Uint32 crBeg, Uint32 crEnd, Uint8 max_dist);
-    ~Path();
+class Path : public std::stack<uint8_t> {
+ public:
+  Path(Unit* unit, uint32_t crBeg, uint32_t crEnd, uint8_t max_dist);
+  ~Path();
 };
 
 #endif //PATH_H

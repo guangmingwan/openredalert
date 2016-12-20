@@ -274,8 +274,8 @@ void ImageProc::scaleLinear8bppsrc(SDL_Surface *src, SDL_Surface *dest)
 /** 
  * Scale the incoming image
  * 
- * @param the image to process
- * @param quality. Selects the interpolation method.  Currently unused.
+ * @param input the image to process
+ * @param quality Selects the interpolation method.  Currently unused.
  */
 
 SDL_Surface* ImageProc::scale(SDL_Surface* input, Sint8 quality)
@@ -325,7 +325,7 @@ SDL_Surface* ImageProc::scale(SDL_Surface* input, Sint32 Width, Sint32 Heigth)
 
 
 /** Scales down the map to a much smaller image which will be placed in the radar screen as the "minimap". Needs only to be called once per map load
- * @param the image to process
+ * @param input the image to process
  */
 SDL_Surface* ImageProc::minimapScale(SDL_Surface *input, Uint8 pixsize)
 {

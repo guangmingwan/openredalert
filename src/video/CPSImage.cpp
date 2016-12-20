@@ -24,13 +24,11 @@
 #include "vfs/VFile.h" // to use VFile
 #include "video/ImageNotFound.h" // to use ImageNotFound
 
-using std::string;
-
 /**
  * @param fname Name of the file to load
  * @param scaleq Scale factor, if caleq = -1 there are no scale factor
  */
-CPSImage::CPSImage(string fname, int scaleq) :
+CPSImage::CPSImage(std::string fname, int scaleq) :
 cpsdata(0), image(0) 
 {
     

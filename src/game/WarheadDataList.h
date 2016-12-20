@@ -1,6 +1,5 @@
 // WarheadDataList.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,20 +21,19 @@
 
 class WarheadData;
 
-class WarheadDataList
-{
-public:
+class WarheadDataList {
+ public:
+  void loadWarheadData(INIFile* file, std::string name);
 
-    void loadWarheadData(INIFile* file, string name);
+  WarheadData* getData(std::string name);
+  int size();
+  void print();
 
-    WarheadData* getData(string name);
-    int size();
-    void print();
-private:
-    map < string, WarheadData * > data;
+ private:
+  std::map<std::string, WarheadData *> data;
 
-    /** @link association */
-    /*# WarheadData * lnkWarheadData; */
+  /** @link association */
+  /*# WarheadData * lnkWarheadData; */
 };
 
 #endif //WARHEADDATALIST_H

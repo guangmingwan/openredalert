@@ -1,6 +1,5 @@
 // L2Overlay.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,25 +19,20 @@
 
 #include <vector>
 
-#include "SDL_types.h"
-
-using std::vector;
-
 /**
  */
-class L2Overlay
-{
-public:
-	/** Create and size an overlay with a fixed number of images */
-    L2Overlay(Uint8 numimages);
-    /** Get all images in the overlay */
-    Uint8 getImages(Uint32** images, Sint8** xoffs, Sint8** yoffs);
-    
-    Uint16 cellpos;
-    vector<Uint32> imagenums;
-    vector<Sint8> xoffsets;
-    vector<Sint8> yoffsets;
-    Uint8 numimages;
+class L2Overlay {
+ public:
+  /** Create and size an overlay with a fixed number of images */
+  L2Overlay(uint8_t numimages);
+  /** Get all images in the overlay */
+  uint8_t getImages(uint32_t** images, int8_t** xoffs, int8_t** yoffs);
+
+  uint16_t cellpos;
+  std::vector<uint32_t> imagenums;
+  std::vector<int8_t> xoffsets;
+  std::vector<int8_t> yoffsets;
+  uint8_t numimages;
 };
 
 #endif //L2OVERLAY_H

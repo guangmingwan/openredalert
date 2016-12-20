@@ -1,6 +1,5 @@
 // WeaponDataList.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -23,26 +22,19 @@
 
 #include "misc/INIFile.h"
 
-#include "misc/INIFile.h"
-
 class WarheadDataList;
 class ProjectileDataList;
 class WeaponData;
 
-using std::string;
-using std::map;
+class WeaponDataList {
+ public:
+  void loadWeapon(INIFile* file, std::string name, WarheadDataList* warheadList, ProjectileDataList* projectileList);
 
-class WeaponDataList
-{
-public:
-    void loadWeapon(INIFile* file, string name, WarheadDataList* warheadList, ProjectileDataList* projectileList);
+ private:
+  std::map<std::string, WeaponData*> data;
 
-private:
-
-    map < string, WeaponData * > data;
-
-    /** @link association */
-    /*# WeaponData * lnkWeaponData; */
+  /** @link association */
+  /*# WeaponData * lnkWeaponData; */
 };
 
 #endif //WEAPONDATALIST_H

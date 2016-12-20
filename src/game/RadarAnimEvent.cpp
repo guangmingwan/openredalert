@@ -28,9 +28,6 @@
 #include "game/pside.h"
 #include "game/Player.h"
 
-using std::string;
-using std::runtime_error;
-
 namespace p {
 	extern ActionEventQueue* aequeue;
 }

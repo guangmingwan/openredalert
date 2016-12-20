@@ -1,6 +1,5 @@
 // anim_nfo.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,8 +17,6 @@
 #ifndef ANIM_NFO_H
 #define ANIM_NFO_H
 
-#include "SDL_types.h"
-
 /**
  * Rather than have each derived class be a friend of the Structure
  * class, all changes to the structure are made in the BuildingAnimEvent::run
@@ -27,22 +24,22 @@
  * class's anim_func function)
  */
 struct anim_nfo {
-    /** layer zero of the structure will be set to this value */
-    Uint16 frame0;
-    /** layer one (if it exists) will be set to this value */
-    Uint16 frame1;
-    /** 
-     * offset in the loop animation for layer zero if structure is damaged
-     */
-    Uint16 damagedelta;
-    /** offset in the loop animation for layer one if structure is damaged */
-    Uint16 damagedelta2;
-    /** has the animation finished */
-    bool done;
-    /** is the structure damaged */
-    bool damaged;
-    /** identifying constant for the animation type */
-    Uint8 mode;
+  /** layer zero of the structure will be set to this value */
+  uint16_t frame0;
+  /** layer one (if it exists) will be set to this value */
+  uint16_t frame1;
+  /**
+   * offset in the loop animation for layer zero if structure is damaged
+   */
+  uint16_t damagedelta;
+  /** offset in the loop animation for layer one if structure is damaged */
+  uint16_t damagedelta2;
+  /** has the animation finished */
+  bool done;
+  /** is the structure damaged */
+  bool damaged;
+  /** identifying constant for the animation type */
+  uint8_t mode;
 };
 
 #endif

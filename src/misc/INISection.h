@@ -23,14 +23,9 @@
 
 #include "IniEntry.h"
 
-using std::map;
-using std::string;
-
 /**
  * @author Damien Carol (OpenRedAlert)
  */
-class INISection : public map<string, string>
-{
-};
+class INISection : public std::map<std::string, std::string> {};
 
 #endif //INISECTION_H

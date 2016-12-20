@@ -148,13 +148,12 @@ PauseMenu::~PauseMenu()
 
 /**
  */
-int PauseMenu::HandleMenu()
-{
+int PauseMenu::HandleMenu() {
 	int mx;
 	int my;
 	int old_mx = 0;
 	int old_my = 100;
-	string		TmpString;
+	std::string		TmpString;
 	TCheckBox	CheckBox;
 
 	// Stop all sounds

@@ -1,6 +1,5 @@
 // Dispatcher.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,7 +17,7 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
 #include "DispatchLogState.h"
 #include "ConStatus.h"
@@ -32,48 +31,47 @@ class UnitOrStructureType;
 
 /**
  * Dispatcher a the game
- * 
+ *
  * Use to future client/server architecture
  */
-class Dispatcher
-{
-public:
-    Dispatcher();
-    ~Dispatcher();
+class Dispatcher {
+ public:
+  Dispatcher();
+  ~Dispatcher();
 
-    void unitMove(Unit* un, Uint32 dest);
-    void unitAttack(Unit* un, UnitOrStructure* target, bool tisunit);
-    void unitDeploy(Unit* un);
+  void unitMove(Unit* un, uint32_t dest);
+  void unitAttack(Unit* un, UnitOrStructure* target, bool tisunit);
+  void unitDeploy(Unit* un);
 
-    void structureAttack(Structure* st, UnitOrStructure* target, bool tisunit);
+  void structureAttack(Structure* st, UnitOrStructure* target, bool tisunit);
 
-    /// @todo Implement these
-    bool constructionStart(const UnitOrStructureType* type);
-    void constructionPause(const UnitOrStructureType* type);
-    void constructionPause(Uint8 ptype);
-    void constructionResume(const UnitOrStructureType* type);
-    void constructionResume(Uint8 ptype);
-    void constructionCancel(const UnitOrStructureType* type);
-    void constructionCancel(Uint8 ptype);
+  /// @todo Implement these
+  bool constructionStart(const UnitOrStructureType* type);
+  void constructionPause(const UnitOrStructureType* type);
+  void constructionPause(uint8_t ptype);
+  void constructionResume(const UnitOrStructureType* type);
+  void constructionResume(uint8_t ptype);
+  void constructionCancel(const UnitOrStructureType* type);
+  void constructionCancel(uint8_t ptype);
 
-    ConStatus constructionQuery(const UnitOrStructureType* type);
-    ConStatus constructionQuery(Uint8 ptype);
+  ConStatus constructionQuery(const UnitOrStructureType* type);
+  ConStatus constructionQuery(uint8_t ptype);
 
-    /** @return true if structure was placed at given location. */
-    bool structurePlace(const StructureType* type, Uint32 pos, Uint8 owner);
-    bool structurePlace(const char* typen, Uint32 pos, Uint8 owner);
-    /** Spawns a unit at the player's appropriate primary building */
-    bool unitSpawn(UnitType* type, Uint8 owner);
-    bool unitSpawn(const char* tname, Uint8 owner);
-    /** Temporary function to place a unit directly on the map */
-    bool unitCreate(const char* tname, Uint32 pos, Uint8 subpos, unsigned int owner);
+  /** @return true if structure was placed at given location. */
+  bool structurePlace(const StructureType* type, uint32_t pos, uint8_t owner);
+  bool structurePlace(const char* typen, uint32_t pos, uint8_t owner);
+  /** Spawns a unit at the player's appropriate primary building */
+  bool unitSpawn(UnitType* type, uint8_t owner);
+  bool unitSpawn(const char* tname, uint8_t owner);
+  /** Temporary function to place a unit directly on the map */
+  bool unitCreate(const char* tname, uint32_t pos, uint8_t subpos, unsigned int owner);
 
-    Uint16 getExitCell(const UnitOrStructureType* type);
-    Uint16 getExitCell(Uint8 ptype);
+  uint16_t getExitCell(const UnitOrStructureType* type);
+  uint16_t getExitCell(uint8_t ptype);
 
-private:
-    DispatchLogState logstate;
-    Uint8 localPlayer;
+ private:
+  DispatchLogState logstate;
+  uint8_t localPlayer;
 };
 
 #endif //DISPATCHER_H

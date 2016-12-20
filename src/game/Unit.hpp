@@ -1,6 +1,5 @@
 // Unit.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -26,8 +25,6 @@
 #include <stack>
 #include <time.h>
 
-#include "SDL_types.h"
-
 #include "game/TalkbackType.h"
 #include "UnitOrStructure.h"
 #include "Weapon.h"
@@ -49,170 +46,166 @@ class INIFile;
 class WeaponsPool;
 class InfantryGroup;
 
-using std::string;
-using std::multimap;
-
 //namespace OpenRedAlert { namespace Game { class UnitType; }}
 //namespace OpenRedAlert { namespace Game { class UnitOrStructureType; }}
 
 /**
  * Unit in game
  */
-class Unit : public UnitOrStructure 
-{
-public:
-    friend class MoveAnimEvent;
-    friend class UAttackAnimEvent;
-    friend class TurnAnimEvent;
-    friend class WalkAnimEvent;
-    friend class UHarvestEvent;
-    friend class URepairEvent;
-    friend class UInfiltrateAnimEvent;
+class Unit : public UnitOrStructure {
+ public:
+  friend class MoveAnimEvent;
+  friend class UAttackAnimEvent;
+  friend class TurnAnimEvent;
+  friend class WalkAnimEvent;
+  friend class UHarvestEvent;
+  friend class URepairEvent;
+  friend class UInfiltrateAnimEvent;
 
-    Unit(UnitType *type, Uint16 cellpos, Uint8 subpos, InfantryGroup *group,
-            unsigned int owner, Uint16 rhealth, Uint8 facing, Uint8 action,
-            string trigger_name);
-    ~Unit();
+  Unit(UnitType *type, uint16_t cellpos, uint8_t subpos, InfantryGroup *group,
+       unsigned int owner, uint16_t rhealth, uint8_t facing, uint8_t action,
+       std::string trigger_name);
+  ~Unit();
 
-    Uint8 getImageNums(Uint32 **inums, Sint8 **xoffsets, Sint8 **yoffsets);
-    InfantryGroup * getInfantryGroup();
-    void setInfantryGroup(InfantryGroup *ig);
-    Uint32 getImageNum(Uint8 layer) const;
-    Uint16 getNumbImages(Uint8 layer);
+  uint8_t getImageNums(uint32_t **inums, int8_t **xoffsets, int8_t **yoffsets);
+  InfantryGroup * getInfantryGroup();
+  void setInfantryGroup(InfantryGroup *ig);
+  uint32_t getImageNum(uint8_t layer) const;
+  uint16_t getNumbImages(uint8_t layer);
 
-    /** Set the number of the image in a layer */
-    void setImageNum(Uint32 num, Uint8 layer);
-    Sint8 getXoffset() const; // return xoffset-type->getOffset();
-    Sint8 getYoffset() const; // return yoffset-type->getOffset();
-    void setXoffset(Sint8 xo);
-    void setYoffset(Sint8 yo);
-    UnitOrStructureType * getType();
+  /** Set the number of the image in a layer */
+  void setImageNum(uint32_t num, uint8_t layer);
+  int8_t getXoffset() const; // return xoffset-type->getOffset();
+  int8_t getYoffset() const; // return yoffset-type->getOffset();
+  void setXoffset(int8_t xo);
+  void setYoffset(int8_t yo);
+  UnitOrStructureType * getType();
 
-    unsigned int getPos() const;
-    unsigned int getSubpos() const;
-    
-    Uint16 getBPos(Uint16 pos) const;
-    Uint32 getNum() const;
-    void setUnitnum(Uint32 unum);
+  unsigned int getPos() const;
+  unsigned int getSubpos() const;
 
-    void ChangeHealth(Sint16 amount);
+  uint16_t getBPos(uint16_t pos) const;
+  uint32_t getNum() const;
+  void setUnitnum(uint32_t unum);
 
-    /** Command to the Unit to move at a destination */
-    void move(Uint16 dest);
-    void move(Uint16 dest, bool needStop);
-    bool IsMoving(void);
-    bool IsAttacking(void);
-    bool canAttack(bool primary = true);
-    bool UnderAttack(void);
-    void attack(UnitOrStructure* target);
-    void attack(UnitOrStructure* target, bool stop);
-    void turn(Uint8 facing, Uint8 layer);
-    void stop();
+  void ChangeHealth(int16_t amount);
 
-    void remove();
-    void applyDamage(Sint16 amount, Weapon* weap, UnitOrStructure* attacker);
-    void updateDamaged();
+  /** Command to the Unit to move at a destination */
+  void move(uint16_t dest);
+  void move(uint16_t dest, bool needStop);
+  bool IsMoving(void);
+  bool IsAttacking(void);
+  bool canAttack(bool primary = true);
+  bool UnderAttack(void);
+  void attack(UnitOrStructure* target);
+  void attack(UnitOrStructure* target, bool stop);
+  void turn(uint8_t facing, uint8_t layer);
+  void stop();
 
-    bool IsHarvester();
-    bool IsHarvesting();
-    Uint32 FindTiberium();
-    void Harvest(Uint32 pos, Structure *Struct);
-    bool Repair(Structure *str);
+  void remove();
+  void applyDamage(int16_t amount, Weapon* weap, UnitOrStructure* attacker);
+  void updateDamaged();
 
-    void doRandTalk(TalkbackType ttype);
-    /** Command deploy to Unit */
-    bool deploy();
-    /** Check if the unit can deploy */
-    bool canDeploy(CnCMap* theMap);
-    /** Check if the position in this map is ok to deploy for the unit deploy type */
-    bool checkDeployTarget(CnCMap* theMap, Uint32 pos);
-    Uint32 calcDeployPos() const;
-    Uint32 calcDeployPos(Uint32 pos) const;
-    Uint32 getExitCell() const;
-    double getRatio() const;
-    Uint16 getDist(Uint16 pos);
-    Uint16 getTargetCell();
+  bool IsHarvester();
+  bool IsHarvesting();
+  uint32_t FindTiberium();
+  void Harvest(uint32_t pos, Structure *Struct);
+  bool Repair(Structure *str);
 
-    Structure *GetBaseRefinery();
-    void SetBaseRefinery(Structure *Bref);
+  void doRandTalk(TalkbackType ttype);
+  /** Command deploy to Unit */
+  bool deploy();
+  /** Check if the unit can deploy */
+  bool canDeploy(CnCMap* theMap);
+  /** Check if the position in this map is ok to deploy for the unit deploy type */
+  bool checkDeployTarget(CnCMap* theMap, uint32_t pos);
+  uint32_t calcDeployPos() const;
+  uint32_t calcDeployPos(uint32_t pos) const;
+  uint32_t getExitCell() const;
+  double getRatio() const;
+  uint16_t getDist(uint16_t pos);
+  uint16_t getTargetCell();
 
-    void AddResource(Uint8 ResourceType);
+  Structure *GetBaseRefinery();
+  void SetBaseRefinery(Structure *Bref);
 
-    void EmptyResources(void);
+  void AddResource(uint8_t ResourceType);
 
-    Uint8 GetNumResources(void);
+  void EmptyResources(void);
 
-    bool GetResourceType(Uint8 Numb, Uint8 *Type);
+  uint8_t GetNumResources(void);
 
-    Uint32 GetFixStr(void);
+  bool GetResourceType(uint8_t Numb, uint8_t *Type);
 
-    Uint16 GetFixPos(void);
+  uint32_t GetFixStr(void);
 
-    bool IsAirBound(void);
+  uint16_t GetFixPos(void);
 
-    bool IsWaterBound(void);
+  bool IsAirBound(void);
 
-    // The folowing var's are used by the AI
-    Uint8 AI_Mission; // This tells the AI if this unit has a mission and what mission it is...
-    /** The location whitch needs garding */
-    Uint32 AI_GuardLocation;
-    /** List of command during Ai management */
-    vector<AiCommand*> aiCommandList;
+  bool IsWaterBound(void);
 
-    string getTriggerName();
+  // The folowing var's are used by the AI
+  uint8_t AI_Mission; // This tells the AI if this unit has a mission and what mission it is...
+  /** The location whitch needs garding */
+  uint32_t AI_GuardLocation;
+  /** List of command during Ai management */
+  std::vector<AiCommand*> aiCommandList;
 
-    /** Get the infiltrate Animation */
-    UInfiltrateAnimEvent* getInfianim();
-    /** Set the infiltrate Animation */
-    void setInfianim(UInfiltrateAnimEvent* anim);
+  std::string getTriggerName();
 
-    /** Action to infiltrate */
-    void Infiltrate(Structure* target);
+  /** Get the infiltrate Animation */
+  UInfiltrateAnimEvent* getInfianim();
+  /** Set the infiltrate Animation */
+  void setInfianim(UInfiltrateAnimEvent* anim);
 
-private:
-    Sint8 yoffset;
-    string TriggerName;
-    UnitType* type;
-    Uint32 unitnum;
-    /** Then structure number of fix (for repairing this unit) */
-    Uint32 fix_str_num;
-    Uint16 fix_str_pos;
-    Uint16 *imagenumbers;
-    Uint16 cellpos;
-    Uint16 palettenum;
+  /** Action to infiltrate */
+  void Infiltrate(Structure* target);
 
-    Uint8 subpos;
-    Sint8 xoffset;
-    bool deployed;
-    double ratio;
+ private:
+  int8_t yoffset;
+  std::string TriggerName;
+  UnitType* type;
+  uint32_t unitnum;
+  /** Then structure number of fix (for repairing this unit) */
+  uint32_t fix_str_num;
+  uint16_t fix_str_pos;
+  uint16_t *imagenumbers;
+  uint16_t cellpos;
+  uint16_t palettenum;
 
-    Uint32 LastDamageTick;
+  uint8_t subpos;
+  int8_t xoffset;
+  bool deployed;
+  double ratio;
 
-    L2Overlay* l2o;
-    multimap<Uint16, L2Overlay*>::iterator l2entry;
+  uint32_t LastDamageTick;
 
-    InfantryGroup* infgrp;
+  L2Overlay* l2o;
+  std::multimap<uint16_t, L2Overlay*>::iterator l2entry;
 
-    MoveAnimEvent* moveanim;
-    URepairEvent* repairanim;
-    UAttackAnimEvent* attackanim;
-    UHarvestEvent* harvestanim;
-    WalkAnimEvent* walkanim;
-    TurnAnimEvent* turnanim1;
-    TurnAnimEvent* turnanim2;
+  InfantryGroup* infgrp;
 
-    UInfiltrateAnimEvent* infianim;
+  MoveAnimEvent* moveanim;
+  URepairEvent* repairanim;
+  UAttackAnimEvent* attackanim;
+  UHarvestEvent* harvestanim;
+  WalkAnimEvent* walkanim;
+  TurnAnimEvent* turnanim1;
+  TurnAnimEvent* turnanim2;
 
-    Structure* BaseRefinery;
+  UInfiltrateAnimEvent* infianim;
 
-    /** Number of pieces resource in harvester */
-    Uint8 NumbResources;
-    /** Resource type in harvester */
-    Uint8 ResourceTypes[10];
+  Structure* BaseRefinery;
 
-    /** The command this unit should execute */
-    Uint8 Command;
-    Uint32 LastAttackTick;
+  /** Number of pieces resource in harvester */
+  uint8_t NumbResources;
+  /** Resource type in harvester */
+  uint8_t ResourceTypes[10];
+
+  /** The command this unit should execute */
+  uint8_t Command;
+  uint32_t LastAttackTick;
 };
 
 #endif //UNIT_H

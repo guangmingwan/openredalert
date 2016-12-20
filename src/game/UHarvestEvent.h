@@ -1,6 +1,5 @@
 // UHarvestEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,8 +17,6 @@
 #ifndef UHARVESTEVENT_H
 #define UHARVESTEVENT_H
 
-#include "SDL_types.h"
-
 #include "UnitAnimEvent.h"
 
 #define HARVEST_RETURN_STEP_1	1
@@ -33,38 +30,37 @@ class UnitOrStructure;
 /**
  * Animation played when harvester is harvesting
  */
-class UHarvestEvent : public UnitAnimEvent
-{
-public:
-	UHarvestEvent(Uint32 p, Unit * un);
-	virtual ~UHarvestEvent();
+class UHarvestEvent : public UnitAnimEvent {
+ public:
+  UHarvestEvent(uint32_t p, Unit * un);
+  virtual ~UHarvestEvent();
 
-	void stop();
-	void setHarvestingPos(Uint32 pos);
-	virtual void update();
-	virtual void run();
+  void stop();
+  void setHarvestingPos(uint32_t pos);
+  virtual void update();
+  virtual void run();
 
-private:
-	int GetBaseRefineryPos();
+ private:
+  int GetBaseRefineryPos();
 
-	Uint16 RetryMoveCounter;
-	/** this is used to empty the truck when it is not full jet. */
-	bool ForceEmpty;
-	Uint8 ReturnStep;
-	bool new_orgimage;
-	Unit* un;
-	bool stopping;
-	bool manual_pauze;
-	UnitOrStructure * target;
-	int index;
-	int delay;
-	int facing;
-	Uint32 MoveTargePos;
-	Uint32 OrgImage;
-	/** Number of pieces resource in harvester */
-	Uint8 NumbResources;
-	/** Resource type in harvester */
-	Uint8 ResourceTypes[10];
+  uint16_t RetryMoveCounter;
+  /** this is used to empty the truck when it is not full jet. */
+  bool ForceEmpty;
+  uint8_t ReturnStep;
+  bool new_orgimage;
+  Unit* un;
+  bool stopping;
+  bool manual_pauze;
+  UnitOrStructure * target;
+  int index;
+  int delay;
+  int facing;
+  uint32_t MoveTargePos;
+  uint32_t OrgImage;
+  /** Number of pieces resource in harvester */
+  uint8_t NumbResources;
+  /** Resource type in harvester */
+  uint8_t ResourceTypes[10];
 };
 
 #endif //UHARVESTEVENT_H

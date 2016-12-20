@@ -20,7 +20,6 @@
 
 #include <string>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "RA_Label.h"
@@ -50,14 +49,11 @@ class Dune2Image;
 class TemplateImage;
 class RA_Label;
 
-using std::string;
-
 /**
  * Cursor 
  */
-class Cursor
-{
-public:
+class Cursor {
+ public:
 	Cursor();
 	~Cursor();
 		
@@ -75,9 +71,9 @@ public:
 	void reloadImages();
 
 	SDL_Surface* getTooltip();
-	void setTooltip(string TipText);
+	void setTooltip(std::string TipText);
 
-private:
+ private:
 	Uint16 currentcursor;
 	Uint16 x;
 	Uint16 y;

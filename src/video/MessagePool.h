@@ -1,6 +1,5 @@
 // MessagePool.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,39 +20,34 @@
 #include <list>
 #include <string>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "ui/RA_Label.h"
 
 class Message;
 
-using std::list;
-using std::string;
-
 /**
- * Object which manage all in-game message 
+ * Object which manage all in-game message
  */
-class MessagePool
-{
-public:
-	MessagePool();
-	~MessagePool();
+class MessagePool {
+ public:
+  MessagePool();
+  ~MessagePool();
 
-	void setWidth(Uint32 width);
-	Uint32 getWidth() const;
-	SDL_Surface *getMessages();
-	void postMessage(string msg);
-	void clear();
-	void refresh();
+  void setWidth(Uint32 width);
+  Uint32 getWidth() const;
+  SDL_Surface *getMessages();
+  void postMessage(std::string msg);
+  void clear();
+  void refresh();
 
-private:
-	list<Message> msglist;
-	bool updated;
-	SDL_Surface* textimg;
-	/** Current Label */
-	RA_Label* msglabel;
-	Uint32 width;
+ private:
+  std::list<Message> msglist;
+  bool updated;
+  SDL_Surface* textimg;
+  /** Current Label */
+  RA_Label* msglabel;
+  Uint32 width;
 };
 
 #endif //MESSAGEPOOL_H

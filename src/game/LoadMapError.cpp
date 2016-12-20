@@ -20,10 +20,7 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-LoadMapError::LoadMapError(const string& msg) :
+LoadMapError::LoadMapError(const std::string& msg) :
 	std::runtime_error(msg)
 {
 }

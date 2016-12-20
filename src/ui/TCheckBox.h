@@ -1,6 +1,5 @@
 // TCheckBox.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,30 +17,28 @@
 #ifndef TCHECKBOX_H
 #define TCHECKBOX_H
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 /**
  * Component of the interface which represent a checkbox
  */
-class TCheckBox 
-{
-public:
-	TCheckBox();
-	~TCheckBox();
-	
-	void Draw(int X, int Y);
+class TCheckBox {
+ public:
+  TCheckBox();
+  ~TCheckBox();
 
-private:
-	void Create();
-	
-	bool Checked;
-	int Width;
-	int Heigth;
-	Uint32 CheckboxColor;
-	Uint32 CheckboxBackgroundColor;
-	SDL_Surface* CheckBoxSurface;
-	SDL_Surface* DisplaySurface;
+  void Draw(int X, int Y);
+
+ private:
+  void Create();
+
+  bool Checked;
+  int Width;
+  int Heigth;
+  Uint32 CheckboxColor;
+  Uint32 CheckboxBackgroundColor;
+  SDL_Surface* CheckBoxSurface;
+  SDL_Surface* DisplaySurface;
 };
 
 #endif //TCHECKBOX_H

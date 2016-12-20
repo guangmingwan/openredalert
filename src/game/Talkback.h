@@ -1,6 +1,5 @@
 // Talkback.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -26,33 +25,28 @@
 
 class INIFile;
 
-using std::string;
-using std::map;
-using std::vector;
-
 /**
- * Object that manage talkback 
+ * Object that manage talkback
  */
-class Talkback
-{
-public:
-    Talkback();
-    void load(string talkback, INIFile* tbini);
-    const char* getRandTalk(TalkbackType type);
-    
-private:
-    Talkback(const Talkback&);
-    Talkback& operator=(const Talkback&);
+class Talkback {
+ public:
+  Talkback();
+  void load(std::string talkback, INIFile* tbini);
+  const char* getRandTalk(TalkbackType type);
 
-    static map<string, TalkbackType> talktype;
-    static bool talktype_init;
+ private:
+  Talkback(const Talkback&);
+  Talkback& operator=(const Talkback&);
 
-    typedef map<TalkbackType, vector<string> > t_talkstore;
-    t_talkstore talkstore;
+  static std::map<std::string, TalkbackType> talktype;
+  static bool talktype_init;
 
-    void merge(Talkback* mergee);
-    vector<string>& getTypeVector(TalkbackType type);
-    TalkbackType getTypeNum(string name);
+  typedef std::map<TalkbackType, std::vector<std::string> > t_talkstore;
+  t_talkstore talkstore;
+
+  void merge(Talkback* mergee);
+  std::vector<std::string>& getTypeVector(TalkbackType type);
+  TalkbackType getTypeNum(std::string name);
 };
 
 #endif //TALKBACK_H

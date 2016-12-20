@@ -1,6 +1,5 @@
 // RadarAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,38 +17,35 @@
 #ifndef RADARANIMEVENT_H
 #define RADARANIMEVENT_H
 
-#include "SDL_types.h"
-
 #include "ActionEvent.h"
 
 class SHPImage;
 class Sidebar;
 
 /**
- * 
+ *
  */
-class RadarAnimEvent : public ActionEvent
-{
-public:
-    /**
-     * if mode = 0 => RADAR ON
-     * if mode = 1 => RADAR OFF
-     */
-    RadarAnimEvent(Uint8 mode, Sidebar* sidebar);
-    void run();
+class RadarAnimEvent : public ActionEvent {
+ public:
+  /**
+   * if mode = 0 => RADAR ON
+   * if mode = 1 => RADAR OFF
+   */
+  RadarAnimEvent(uint8_t mode, Sidebar* sidebar);
+  void run();
 
-private:
-    Uint8 mode;
-    Uint8 frame;
-    Uint8 framend;
+ private:
+  uint8_t mode;
+  uint8_t frame;
+  uint8_t framend;
 
-    Sidebar* sidebar;
+  Sidebar* sidebar;
 
-    SHPImage* animImagesBad;
-    SHPImage* logoRadarBad;
+  SHPImage* animImagesBad;
+  SHPImage* logoRadarBad;
 
-    SHPImage* animImagesGood;
-    SHPImage* logoRadarGood;
+  SHPImage* animImagesGood;
+  SHPImage* logoRadarGood;
 };
 
 #endif //RADARANIMEVENT_H

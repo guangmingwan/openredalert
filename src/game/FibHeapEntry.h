@@ -1,6 +1,5 @@
 // FibHeapEntry.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,20 +17,21 @@
 #ifndef FIBHEAPENTRY_H
 #define FIBHEAPENTRY_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
 class TileRef;
 
-class FibHeapEntry {	
-public:
-    FibHeapEntry(TileRef * val, Uint32 k);
-    TileRef * getValue();
+class FibHeapEntry {
+ public:
+  FibHeapEntry(TileRef * val, uint32_t k);
+  TileRef * getValue();
 
-    Uint32& getKey();
+  uint32_t& getKey();
 
-    void setKey(Uint32 k);
-private:
-    TileRef * lnkTileRef;
-    Uint32 key;
+  void setKey(uint32_t k);
+
+ private:
+  TileRef * lnkTileRef;
+  uint32_t key;
 };
 #endif //FIBHEAPENTRY_H

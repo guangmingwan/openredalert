@@ -1,6 +1,5 @@
 // RepairAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,34 +17,31 @@
 #ifndef REPAIRANIMEVENT_H
 #define REPAIRANIMEVENT_H
 
-#include "SDL_types.h"
-
 #include "BuildingAnimEvent.h"
 #include "anim_nfo.h"
 
 class Structure;
 
-/** 
+/**
  * The animation that is shown when a structure is either built or sold
  */
-class RepairAnimEvent : public BuildingAnimEvent 
-{
-public:
-    /**
-     * @param p the priority of this event
-     * @param str pointer to the structure being built/sold
-     */
-    RepairAnimEvent(Uint32 p, Structure* str);
-    ~RepairAnimEvent();
-    
-    void anim_func(anim_nfo* data);
-    
-private:
-	Structure* structure;
-	Uint8 frame;
-	Uint8 framend;
-    /**  Total cost of damage remaining */
-	Uint16 dmg_cost;
+class RepairAnimEvent : public BuildingAnimEvent {
+ public:
+  /**
+   * @param p the priority of this event
+   * @param str pointer to the structure being built/sold
+   */
+  RepairAnimEvent(uint32_t p, Structure* str);
+  ~RepairAnimEvent();
+
+  void anim_func(anim_nfo* data);
+
+ private:
+  Structure* structure;
+  uint8_t frame;
+  uint8_t framend;
+  /**  Total cost of damage remaining */
+  uint16_t dmg_cost;
 };
 
 #endif //REPAIRANIMEVENT_H

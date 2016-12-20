@@ -1,6 +1,5 @@
 // L2Overlay.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,34 +18,28 @@
 
 #include <vector>
 
-#include "SDL_types.h"
-
-using std::vector;
-
 /**
  * Create and size an overlay with a fixed number of images
  */
-L2Overlay::L2Overlay(Uint8 numimages) 
-{
-	this->numimages = numimages;
-	this->imagenums.resize(numimages);
-	this->xoffsets.resize(numimages);
-	this->yoffsets.resize(numimages);
+L2Overlay::L2Overlay(uint8_t numimages) {
+  this->numimages = numimages;
+  this->imagenums.resize(numimages);
+  this->xoffsets.resize(numimages);
+  this->yoffsets.resize(numimages);
 }
 
 /**
  * Get all images in the overlay
  */
-Uint8 L2Overlay::getImages(Uint32** images, Sint8** xoffs, Sint8** yoffs) 
-{
-	Uint8 i;
-	*images = new Uint32[numimages];
-	*xoffs = new Sint8[numimages];
-	*yoffs = new Sint8[numimages];
-	for (i=0; i<numimages; ++i) {
-		(*images)[i] = imagenums[i];
-		(*xoffs)[i] = xoffsets[i];
-		(*yoffs)[i] = yoffsets[i];
-	}
-	return numimages;
+uint8_t L2Overlay::getImages(uint32_t **images, int8_t **xoffs, int8_t **yoffs) {
+  uint8_t i;
+  *images = new uint32_t[numimages];
+  *xoffs = new int8_t[numimages];
+  *yoffs = new int8_t[numimages];
+  for (i=0; i<numimages; ++i) {
+    (*images)[i] = imagenums[i];
+    (*xoffs)[i] = xoffsets[i];
+    (*yoffs)[i] = yoffsets[i];
+  }
+  return numimages;
 }

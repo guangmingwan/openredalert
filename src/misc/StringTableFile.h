@@ -1,6 +1,5 @@
 // StringTableFile.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,31 +20,27 @@
 #include <string>
 #include <vector>
 
-using std::string;
-using std::vector;
-
 /**
  * Utility Class to read located strings in the original mix archives files
  *
  * @author Damien Carol (OpenRedAlert)
  * @version 1.0
  */
-class StringTableFile
-{
-public:
-    /** Create a StringTableFile object and load all strings in the file specified */
-    StringTableFile(const string& filename);
-    /** Destructor */
-    ~StringTableFile();
+class StringTableFile {
+ public:
+  /** Create a StringTableFile object and load all strings in the file specified */
+  StringTableFile(const std::string& filename);
+  /** Destructor */
+  ~StringTableFile();
 
-    /** Get the string by this id number */
-    string getString(unsigned int id) const;
-private:
-    /** Load all strings in a file from mix archive */
-    void loadStringFile(const char* filename);
+  /** Get the string by this id number */
+  std::string getString(unsigned int id) const;
+ private:
+  /** Load all strings in a file from mix archive */
+  void loadStringFile(const char* filename);
 
-    /** List of string loaded from the file */
-    vector<string> data;
+  /** List of string loaded from the file */
+  std::vector<std::string> data;
 };
 
 #endif //STRINGTABLEFILE_H

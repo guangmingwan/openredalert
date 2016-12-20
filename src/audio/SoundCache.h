@@ -1,6 +1,5 @@
 // SoundCache.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -23,14 +22,10 @@
 
 class SoundBuffer;
 
-using std::string;
-using std::map;
-
 /**
  * Cache for all buffer (sounds)
  */
-class SoundCache : public map<string, SoundBuffer*>
-{
+class SoundCache : public std::map<std::string, SoundBuffer*> {
 };
 
 #endif //SOUNDCACHE_H

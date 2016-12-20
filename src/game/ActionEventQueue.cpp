@@ -1,6 +1,5 @@
 // ActionEventQueue.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -25,27 +24,24 @@
 /**
  * Constructor, starts the timer
  */
-ActionEventQueue::ActionEventQueue()
-{
-    // Save the current time
-    starttick = SDL_GetTicks();
+ActionEventQueue::ActionEventQueue() {
+  // Save the current time
+  starttick = SDL_GetTicks();
 }
 
 /**
  * Destructor, removes the timer and empties the ActionEventQueue
  */
-ActionEventQueue::~ActionEventQueue()
-{
-    ActionEvent *ev;
-    // Free all action event
-    while (!eventqueue.empty())
-    {
-        ev = eventqueue.top();
-        eventqueue.pop();
-        if (ev != 0)
-            delete ev;
-        ev = 0;
-    }
+ActionEventQueue::~ActionEventQueue() {
+  ActionEvent *ev;
+  // Free all action event
+  while (!eventqueue.empty()) {
+    ev = eventqueue.top();
+    eventqueue.pop();
+    if (ev != 0)
+      delete ev;
+    ev = 0;
+  }
 }
 
 /**
@@ -53,41 +49,35 @@ ActionEventQueue::~ActionEventQueue()
  *
  * @param event ActionEvent object to run.
  */
-void ActionEventQueue::scheduleEvent(ActionEvent* event)
-{
-    // Check if event != 0
-    if (event == 0)
-    {
-        // Return to avoid error
-        return;
-    }
+void ActionEventQueue::scheduleEvent(ActionEvent* event) {
+  // Check if event != 0
+  if (event == 0) {
+    // Return to avoid error
+    return;
+  }
 
-    event->addCurtick(getCurtick());
+  event->addCurtick(getCurtick());
 
-    eventqueue.push(event);
+  eventqueue.push(event);
 }
 
 /**
  * Run all events in the actionqueue.
  */
-void ActionEventQueue::runEvents()
-{
-    Uint32 curtick = getCurtick();
+void ActionEventQueue::runEvents() {
+  uint32_t curtick = getCurtick();
 
-    // run all events in the queue with a prio lower than curtick
-    while( !eventqueue.empty() && eventqueue.top()->getPrio() <= curtick ) 
-    {
-        eventqueue.top()->run();
-        eventqueue.pop();
-    }
+  // run all events in the queue with a prio lower than curtick
+  while (!eventqueue.empty() && eventqueue.top()->getPrio() <= curtick) {
+    eventqueue.top()->run();
+    eventqueue.pop();
+  }
 }
 
-Uint32 ActionEventQueue::getElapsedTime()
-{
-    return SDL_GetTicks() - starttick;
+uint32_t ActionEventQueue::getElapsedTime() {
+  return SDL_GetTicks() - starttick;
 }
 
-Uint32 ActionEventQueue::getCurtick()
-{
-    return (SDL_GetTicks() - starttick) >> 5;
+uint32_t ActionEventQueue::getCurtick() {
+  return (SDL_GetTicks() - starttick) >> 5;
 }

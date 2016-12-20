@@ -1,6 +1,5 @@
 // PowerInfo.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,20 +17,17 @@
 #ifndef POWERINFO_H
 #define POWERINFO_H
 
-#include "SDL_types.h"
-
 /**
  * Power information of a structure
  */
-class PowerInfo
-{
-public:	
-	/** How much power the structure provide */
-    Uint16 power;
-    /** How much power the structure drain */
-    Uint16 drain;
-    /** Does this structure needs power to works ? (if yes the structure doesn't works when there are not enought power) */
-    bool powered;
+class PowerInfo {
+ public:
+  /** How much power the structure provide */
+  uint16_t power;
+  /** How much power the structure drain */
+  uint16_t drain;
+  /** Does this structure needs power to works ? (if yes the structure doesn't works when there are not enought power) */
+  bool powered;
 };
 
 #endif //POWERINFO_H

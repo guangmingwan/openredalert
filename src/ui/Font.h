@@ -1,6 +1,5 @@
 // Font.h
 // 1.4
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,15 +20,12 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "FontOptions.h"
 #include "video/SHPBase.h"
 
 class FontOptions;
-
-using std::vector;
 
 /**
  * The font class
@@ -59,41 +55,40 @@ using std::vector;
  *
  *
  */
-class Font : SHPBase
-{
-public:
-	Font(const string& fontname);
-	~Font();
+class Font : SHPBase {
+ public:
+  Font(const std::string& fontname);
+  ~Font();
 
-	/** Get Height of the Font */
-	unsigned int getHeight() const;
+  /** Get Height of the Font */
+  unsigned int getHeight() const;
 
-	Uint32 calcTextWidth(const string& text) const;
-	bool GetFontColor(SDL_Color FColor, SDL_Color OrgFntColor,
-			SDL_Color &FntColor);
-	bool GetFontColor(SDL_Color FColor, SDL_Color BColor,
-			SDL_Color OrgFntColor, SDL_Color &FntColor);
-	void drawCHAR(const char Character);
+  Uint32 calcTextWidth(const std::string& text) const;
+  bool GetFontColor(SDL_Color FColor, SDL_Color OrgFntColor,
+                    SDL_Color &FntColor);
+  bool GetFontColor(SDL_Color FColor, SDL_Color BColor,
+                    SDL_Color OrgFntColor, SDL_Color &FntColor);
+  void drawCHAR(const char Character);
 
-	/** Draw a colored text to a surface */
-	void drawText(const string& text, SDL_Surface* SrcSurf,
-			Uint32 SrcStartx, Uint32 SrcStarty, SDL_Surface* DestSurf,
-			SDL_Color FGcolor, Uint32 DestStartx, Uint32 DestStarty);
+  /** Draw a colored text to a surface */
+  void drawText(const std::string& text, SDL_Surface* SrcSurf,
+                Uint32 SrcStartx, Uint32 SrcStarty, SDL_Surface* DestSurf,
+                SDL_Color FGcolor, Uint32 DestStartx, Uint32 DestStarty);
 
-	void UseAntiAliasing(bool status);
-	void underline(bool status);
-	void double_underline(bool status);
+  void UseAntiAliasing(bool status);
+  void underline(bool status);
+  void double_underline(bool status);
 
-	/** Load the specific font */
-	void Load(string FontName);
-	void reload();
+  /** Load the specific font */
+  void Load(std::string FontName);
+  void reload();
 
-private:
-	SDL_Color FontPal[15];
-	SDL_Surface *fontimg;
-	vector<SDL_Rect> chrdest;
-	string fontname;
-	FontOptions lnkOptions;
+ private:
+  SDL_Color FontPal[15];
+  SDL_Surface *fontimg;
+  std::vector<SDL_Rect> chrdest;
+  std::string fontname;
+  FontOptions lnkOptions;
 };
 
 #endif //FONT_H

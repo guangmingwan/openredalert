@@ -42,14 +42,6 @@
 #define VERSION "6xx"
 #endif
 
-using std::abort;
-using std::map;
-using std::set_terminate;
-using std::string;
-using std::runtime_error;
-using std::cout;
-using std::endl;
-
 using Sound::SoundEngine;
 
 /** Logger for the application */
@@ -64,7 +56,7 @@ void fcnc_terminate_handler();
 
 namespace pc {
     extern ConfigType Config;
-    extern vector<SHPImage *> *imagepool;
+    extern std::vector<SHPImage *> *imagepool;
     extern GraphicsEngine * gfxeng;
     /** SoundEngine of the game */
     extern Sound::SoundEngine* sfxeng;
@@ -72,33 +64,32 @@ namespace pc {
 
 using VQA::VQAMovie;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     // Log to the console the GPL license
-    cout << "OpenRedAlert  Copyright (C) 2008-2010  Damien Carol" << endl;
-    cout << "This program comes with ABSOLUTELY NO WARRANTY;" << endl;
-    cout << "This is free software, and you are welcome to redistribute it" << endl;
-    cout << "under certain conditions; see 'COPYING' for details." << endl;
-    cout.flush();
+    std::cout << "OpenRedAlert  Copyright (C) 2008-2010  Damien Carol" << std::endl;
+    std::cout << "This program comes with ABSOLUTELY NO WARRANTY;" << std::endl;
+    std::cout << "This is free software, and you are welcome to redistribute it" << std::endl;
+    std::cout << "under certain conditions; see 'COPYING' for details." << std::endl;
+    std::cout.flush();
 
     // Register end functions
     atexit(cleanup);
-    set_terminate(fcnc_terminate_handler);
+    std::set_terminate(fcnc_terminate_handler);
 
     // Correct the way that floats are readed
     setlocale(LC_ALL, "C");
 
     // Check if help wanted
-    if ((argc > 1) && ( string(argv[1]) == "-h" ||
-            string(argv[1]) == "--help" || string(argv[1]) == "-?"))
+    if ((argc > 1) && ( std::string(argv[1]) == "-h" ||
+            std::string(argv[1]) == "--help" || std::string(argv[1]) == "-?"))
     {
         PrintUsage();
         return EXIT_SUCCESS;
     }
     
     // Check if version wanted
-    if ((argc > 1) && ( string(argv[1]) == "-v" ||
-            string(argv[1]) == "--version" ))
+    if ((argc > 1) && ( std::string(argv[1]) == "-v" ||
+            std::string(argv[1]) == "--version" ))
     {
         // Print version
         printf("openredalert %s", VERSION);
@@ -106,8 +97,8 @@ int main(int argc, char** argv)
     }
 
     
-    const string& binpath = determineBinaryLocation(argv[0]);
-    string lf(binpath);
+    const std::string& binpath = determineBinaryLocation(argv[0]);
+    std::string lf(binpath);
     lf += "/debug.log";
 
     // Initialize the Virtual File System
@@ -135,11 +126,11 @@ int main(int argc, char** argv)
 
 
     // Load the start
-    Logger::getInstance()->Info("Please wait, OpenRedAlert " + string(VERSION) + " is starting\n");
+    Logger::getInstance()->Info("Please wait, OpenRedAlert " + std::string(VERSION) + " is starting\n");
 
     try {
         if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER) < 0) {
-            Logger::getInstance()->Error("Couldn't initialize SDL: " + string(SDL_GetError()));
+            Logger::getInstance()->Error("Couldn't initialize SDL: " + std::string(SDL_GetError()));
             exit(1);
         }
 
@@ -162,7 +153,7 @@ int main(int argc, char** argv)
         catch (VideoError& ex) {
             Logger::getInstance()->Error("Failed.");
             Logger::getInstance()->Error(ex.what());
-            throw runtime_error("Unable to Initialize the graphics engine");
+            throw std::runtime_error("Unable to Initialize the graphics engine");
         }
 
         // Initialize Sound
@@ -172,12 +163,12 @@ int main(int argc, char** argv)
 
         // "Standalone" VQA Player
         if (pc::Config.playvqa) {
-            Logger::getInstance()->Info(string("Now playing ") + pc::Config.vqamovie);
+            Logger::getInstance()->Info(std::string("Now playing ") + pc::Config.vqamovie);
             try {
                 VQA::VQAMovie mov(pc::Config.vqamovie.c_str());
                 mov.play();
             }
-            catch (runtime_error&) {
+            catch (std::runtime_error&) {
                 Logger::getInstance()->Info("Failed to play movie: " + pc::Config.vqamovie);
             }
         }
@@ -189,7 +180,7 @@ int main(int argc, char** argv)
                 VQAMovie mov("logo");
                 mov.play();
             }
-            catch (runtime_error&) {
+            catch (std::runtime_error&) {
             }
 
             try {
@@ -207,14 +198,14 @@ int main(int argc, char** argv)
                 VQAMovie mov("english");
                 mov.play();
             }
-            catch (runtime_error&) {
+            catch (std::runtime_error&) {
                 // Oke, failed to read the redalert intro, try the demo intro
                 Logger::getInstance()->Info("%s line %i: Failed to play movie: english.vqa --> trying redintro.vqa\n");
                 try {
                     VQAMovie mov("redintro.vqa");
                     mov.play();
                 }
-                catch (runtime_error&) {
+                catch (std::runtime_error&) {
                     Logger::getInstance()->Info("%s line %i: Failed to play movie: redintro.vqa\n");
                 }
             }
@@ -250,7 +241,7 @@ int main(int argc, char** argv)
         }
        
     }
-    catch (runtime_error& e) {
+    catch (std::runtime_error& e) {
         Logger::getInstance()->Error(e.what());
         //#if _WIN32
         //MessageBox(0, e.what(), "Fatal error", MB_ICONERROR|MB_OK);

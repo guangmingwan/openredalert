@@ -1,6 +1,5 @@
 // SoundUtils.h
 // 0.4
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,21 +17,24 @@
 #ifndef SOUNDUTILS_H
 #define SOUNDUTILS_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
 /**
- * 
+ *
  */
 class SoundUtils {
-public:
+ public:
+  static uint8_t Clip(int parameter0);
 
-    static Uint8 Clip(int parameter0);
+  static uint8_t Clip(int, int, int);
 
-    static Uint8 Clip(int, int, int);
+  static void IMADecode(uint8_t *output, uint8_t *input,
+                        uint16_t compressed_size, int32_t& sample,
+                        int32_t& index);
 
-    static void IMADecode(Uint8 *output, Uint8 *input, Uint16 compressed_size, Sint32& sample, Sint32& index);
-
-    static void WSADPCM_Decode(Uint8 *output, Uint8 *input, Uint16 compressed_size, Uint16 uncompressed_size);
+  static void WSADPCM_Decode(uint8_t *output, uint8_t *input,
+                             uint16_t compressed_size,
+                             uint16_t uncompressed_size);
 };
 
 #endif //SOUNDUTILS_H

@@ -1,6 +1,5 @@
 // TileRef.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,18 +17,15 @@
 #ifndef TILEREF_H
 #define TILEREF_H
 
-#include "SDL_types.h"
-
 /**
  * Reference to a tile
  */
-class TileRef 
-{
-public:    
-    Uint16 crx;
-    Uint16 cry;
-    Uint32 g;
-    Uint32 h;
+class TileRef {
+ public:
+  uint16_t crx;
+  uint16_t cry;
+  uint32_t g;
+  uint32_t h;
 };
 
 #endif //TILEREF_H

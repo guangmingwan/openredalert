@@ -47,7 +47,7 @@ void VFSUtils::VFS_PreInit(const char* binpath)
  *
  * @param binpath Directory to parse the files
  */
-void VFSUtils::VFS_Init(const string& binpath)
+void VFSUtils::VFS_Init(const std::string& binpath)
 {
   if (binpath != ".")
   {
@@ -55,7 +55,7 @@ void VFSUtils::VFS_Init(const string& binpath)
   }
 
   // Try to load in the binary path
-  externals->loadArchive(string(binpath + "/").c_str());
+  externals->loadArchive(std::string(binpath + "/").c_str());
 
   INIFile* filesini = 0;
   try
@@ -80,7 +80,7 @@ void VFSUtils::VFS_Init(const string& binpath)
       //logger->error("Unenable to read [GENERAL]-PATH\n");
       //break;
     }
-    string defpath = key->second;
+    std::string defpath = key->second;
     if (defpath[defpath.length() - 1] != '/' && defpath[defpath.length() - 1] != '\\')
     {
       defpath += "/";
@@ -144,11 +144,11 @@ void VFSUtils::VFS_Init(const string& binpath)
     {
       std::stringstream deco;
       deco << keynum;
-      string keyName = "optional" + deco.str();
+      std::string keyName = "optional" + deco.str();
 
-      if (filesini->isKeyInSection(string("RedAlert"), keyName) == true)
+      if (filesini->isKeyInSection(std::string("RedAlert"), keyName) == true)
       {
-        string mixFileName = filesini->readString("RedAlert", keyName.c_str());
+        std::string mixFileName = filesini->readString("RedAlert", keyName.c_str());
         mixfiles->loadArchive(mixFileName.c_str());
       }
     }

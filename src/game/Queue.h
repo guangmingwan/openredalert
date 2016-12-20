@@ -22,10 +22,7 @@
 
 class UnitOrStructureType;
 
-using std::list;
-
-class Queue : public list<const UnitOrStructureType*>
-{
+class Queue : public std::list<const UnitOrStructureType*> {
 };
 
 #endif //QUEUE_H

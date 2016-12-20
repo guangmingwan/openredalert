@@ -33,17 +33,14 @@
 #include "CnCMap.h"
 
 namespace p {
-	extern ActionEventQueue* aequeue;
-	extern UnitAndStructurePool* uspool;
-	extern CnCMap* ccmap;
+  extern ActionEventQueue* aequeue;
+  extern UnitAndStructurePool* uspool;
+  extern CnCMap* ccmap;
 }
 namespace pc {
-    //extern ConfigType Config;
-    extern Sound::SoundEngine* sfxeng;
+  //extern ConfigType Config;
+  extern Sound::SoundEngine* sfxeng;
 }
-
-using std::stringstream;
-
 
 /**
  * @param p the priority of this event
@@ -51,101 +48,101 @@ using std::stringstream;
  */
 BRepairUnitAnimEvent::BRepairUnitAnimEvent(uint32_t p, Structure *str) : BuildingAnimEvent(p,str,8)
 {
-    int     un_cost;
-    Sint16  health;
-    Unit    *UnitToFix = NULL;
+  int     un_cost;
+  Sint16  health;
+  Unit    *UnitToFix = NULL;
 
-    // The Anim is not finished
-    done = false;
-    // Structure to Apply
-    this->strct = str;
+  // The Anim is not finished
+  done = false;
+  // Structure to Apply
+  this->strct = str;
 
-    StartFrame  = 0;
-    frame       = 0;
+  StartFrame  = 0;
+  frame       = 0;
 
-    UnitToFix = p::uspool->getUnitAt(strct->UnitToRepairPos);
+  UnitToFix = p::uspool->getUnitAt(strct->UnitToRepairPos);
 
-    if (UnitToFix == 0)
-    {
-        //logger->error ("%s line %i: Structure anim unit not found\n", __FILE__, __LINE__);
-        stop();
-        return;
-    }
+  if (UnitToFix == 0)
+  {
+    //logger->error ("%s line %i: Structure anim unit not found\n", __FILE__, __LINE__);
+    stop();
+    return;
+  }
 
-    health = UnitToFix->getHealth();
-    un_cost = UnitToFix->getType()->getCost();
-    if (health > 0) {
-        dmg_cost = (Uint16)(((double)un_cost/(double)UnitToFix->getType()->getMaxHealth()) * ((double)UnitToFix->getType()->getMaxHealth() - (double)health));
-    } else {
-        dmg_cost = (Uint16)un_cost;
-    }
+  health = UnitToFix->getHealth();
+  un_cost = UnitToFix->getType()->getCost();
+  if (health > 0) {
+    dmg_cost = (Uint16)(((double)un_cost/(double)UnitToFix->getType()->getMaxHealth()) * ((double)UnitToFix->getType()->getMaxHealth() - (double)health));
+  } else {
+    dmg_cost = (Uint16)un_cost;
+  }
 
-    setDelay(1);
+  setDelay(1);
 }
 
 BRepairUnitAnimEvent::~BRepairUnitAnimEvent()
 {
-    strct->setImageNum(StartFrame, 0);
-    // Set repairunitAnim of the structure to NULL
-    strct->repairunitAnim = 0;
+  strct->setImageNum(StartFrame, 0);
+  // Set repairunitAnim of the structure to NULL
+  strct->repairunitAnim = 0;
 }
 
 void BRepairUnitAnimEvent::run()
 {
-    Unit* UnitToFix = 0;
-    Sint16 health;
-    uint16_t cost;
+  Unit* UnitToFix = 0;
+  Sint16 health;
+  uint16_t cost;
 
-//	updateDamaged();
+  //	updateDamaged();
 
-    if( !strct->isAlive() || done ) {
-        delete this;
-        return;
+  if( !strct->isAlive() || done ) {
+    delete this;
+    return;
+  }
+
+  UnitToFix = p::uspool->getUnitAt(strct->UnitToRepairPos);
+
+  if (UnitToFix == NULL){
+    delete this;
+    return;
+  }
+
+  health = UnitToFix->getHealth();
+
+  if (health < UnitToFix->getType()->getMaxHealth()){
+    cost = (Uint16)((double)dmg_cost/((double)UnitToFix->getType()->getMaxHealth() - (double)health));
+    Player* Owner = p::ccmap->getPlayerPool()->getPlayer(UnitToFix->getOwner());
+    if (Owner->getMoney() > cost){
+      Owner->changeMoney(-1 * cost);
+      dmg_cost -= cost;
+      UnitToFix->ChangeHealth (1);
+      UnitToFix->updateDamaged();
     }
+  }else{
+    //printf ("%s line %i: Unit repaired\n", __FILE__, __LINE__);
+    // @todo ADD "Unit repaired" sound
+    //pc::sfxeng->PlaySound(pc::Config.UnitRepaired);
+    stop();
+  }
 
-    UnitToFix = p::uspool->getUnitAt(strct->UnitToRepairPos);
+  if (frame < 6){
+    frame++;
+  }else{
+    frame = 0;
+  }
 
-    if (UnitToFix == NULL){
-        delete this;
-        return;
-    }
+  if (strct->getNumbImages (0) > frame){
+    strct->setImageNum(frame,0);
+  }
+  else
+  {
+    std::stringstream message;
+    message << "Failed to set frame" << frame;
+    Logger::getInstance()->Error(__FILE__ , __LINE__, message.str());
+  }
 
-    health = UnitToFix->getHealth();
-
-    if (health < UnitToFix->getType()->getMaxHealth()){
-        cost = (Uint16)((double)dmg_cost/((double)UnitToFix->getType()->getMaxHealth() - (double)health));
-        Player* Owner = p::ccmap->getPlayerPool()->getPlayer(UnitToFix->getOwner());
-        if (Owner->getMoney() > cost){
-            Owner->changeMoney(-1 * cost);
-            dmg_cost -= cost;
-            UnitToFix->ChangeHealth (1);
-            UnitToFix->updateDamaged();
-        }
-    }else{
-        //printf ("%s line %i: Unit repaired\n", __FILE__, __LINE__);
-        // @todo ADD "Unit repaired" sound
-        //pc::sfxeng->PlaySound(pc::Config.UnitRepaired);
-        stop();
-    }
-
-    if (frame < 6){
-        frame++;
-    }else{
-        frame = 0;
-    }
-
-    if (strct->getNumbImages (0) > frame){
-        strct->setImageNum(frame,0);
-    }
-    else
-    {
-        stringstream message;
-        message << "Failed to set frame" << frame;
-        Logger::getInstance()->Error(__FILE__ , __LINE__, message.str());
-    }
-
-    setDelay(3);
-    p::aequeue->scheduleEvent(this);
+  setDelay(3);
+  p::aequeue->scheduleEvent(this);
 }
 
 /**
@@ -153,7 +150,7 @@ void BRepairUnitAnimEvent::run()
  */
 void BRepairUnitAnimEvent::stop()
 {
-    done = true;
+  done = true;
 }
 
 void BRepairUnitAnimEvent::update()

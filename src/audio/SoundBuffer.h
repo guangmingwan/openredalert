@@ -1,6 +1,5 @@
 // SoundBuffer.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,21 +19,16 @@
 
 #include <vector>
 
-#include "SDL_types.h"
-
 #include "SDL_mixer.h"
 
-using std::vector;
-
-typedef vector<Uint8> SampleBuffer;
+typedef std::vector<Uint8> SampleBuffer;
 
 /**
  */
-class SoundBuffer
-{
-public:
-    SampleBuffer data;
-    Mix_Chunk * chunk;
+class SoundBuffer {
+ public:
+  SampleBuffer data;
+  Mix_Chunk * chunk;
 };
 
 #endif //SOUNDBUFFER_H

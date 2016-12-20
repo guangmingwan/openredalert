@@ -1,6 +1,5 @@
 // CPSImage.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -25,8 +24,6 @@
 #include "include/imageproc.h"
 #include "CPSHeader.h"
 
-using std::string;
-
 /**
  * Image in .CPS format
  *
@@ -49,35 +46,34 @@ using std::string;
  * The image that follows the palette (or the Header) is in Format80 which is
  * explained above.
  */
-class CPSImage
-{
-public:
-    CPSImage(string fname, int scaleq);
-    ~CPSImage();
-    
-    /** Get a SDL_Surface of the image */
-    SDL_Surface* getImage();
-    
-private:
-    /** Read the image and store in a surface */
-    void loadImage();
-    /** Read the palette in data */
-    void readPalette();
-    
-    /** Size of the image */
-    Uint32 imgsize;
-    /** Offset in file to the image */
-    Uint32 offset;
-    /** Raw data of the file loaded */
-    Uint8* cpsdata;
-    /** Internal palette of the image */
-    SDL_Color palette[256];
-    
-    /** Header of the file */
-    CPSHeader lnkHeader;
-    int scaleq;
-    ImageProc lnkScaler;
-    SDL_Surface* image;
+class CPSImage {
+ public:
+  CPSImage(std::string fname, int scaleq);
+  ~CPSImage();
+
+  /** Get a SDL_Surface of the image */
+  SDL_Surface* getImage();
+
+ private:
+  /** Read the image and store in a surface */
+  void loadImage();
+  /** Read the palette in data */
+  void readPalette();
+
+  /** Size of the image */
+  Uint32 imgsize;
+  /** Offset in file to the image */
+  Uint32 offset;
+  /** Raw data of the file loaded */
+  Uint8* cpsdata;
+  /** Internal palette of the image */
+  SDL_Color palette[256];
+
+  /** Header of the file */
+  CPSHeader lnkHeader;
+  int scaleq;
+  ImageProc lnkScaler;
+  SDL_Surface* image;
 };
 
 #endif //CPSIMAGE_H

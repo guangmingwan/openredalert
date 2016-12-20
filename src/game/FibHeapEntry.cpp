@@ -1,6 +1,5 @@
 // FibHeapEntry.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -16,28 +15,21 @@
 //    along with OpenRedAlert.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "FibHeapEntry.h"
-
-#include "SDL_types.h"
-
 #include "TileRef.h"
 
-FibHeapEntry::FibHeapEntry(TileRef* val, Uint32 k) 
-{
-	lnkTileRef = val;
-	key = k;
+FibHeapEntry::FibHeapEntry(TileRef* val, uint32_t k) {
+  lnkTileRef = val;
+  key = k;
 }
 
-TileRef* FibHeapEntry::getValue() 
-{
-	return lnkTileRef;
+TileRef* FibHeapEntry::getValue() {
+  return lnkTileRef;
 }
 
-void FibHeapEntry::setKey(Uint32 k) 
-{
-	key = k;
+void FibHeapEntry::setKey(uint32_t k) {
+  key = k;
 }
 
-Uint32& FibHeapEntry::getKey() 
-{
-	return key;
+uint32_t& FibHeapEntry::getKey() {
+  return key;
 }

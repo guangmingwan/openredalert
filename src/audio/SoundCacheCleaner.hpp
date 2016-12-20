@@ -1,5 +1,4 @@
 // SoundCacheCleaner.hpp
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -24,24 +23,18 @@
 #include "SoundCache.h"
 #include "SoundBuffer.h"
 
-using std::unary_function;
-
-namespace OpenRedAlert
-{
-
-namespace Sound
-{
-
-struct SoundCacheCleaner : public unary_function<SoundCache::value_type, void>
-{
-    void operator()(const SoundCache::value_type& p)
+namespace OpenRedAlert {
+  namespace Sound {
+    struct SoundCacheCleaner : public std::unary_function<SoundCache::value_type, void>
     {
+      void operator()(const SoundCache::value_type& p)
+      {
         Mix_FreeChunk(p.second->chunk);
         delete p.second;
-    }
-};
+      }
+    };
 
-}
+  }
 
 }
 

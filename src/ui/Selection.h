@@ -1,6 +1,5 @@
 // Selection.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,12 +19,8 @@
 
 #include <list>
 
-#include "SDL_types.h"
-
 class Structure;
 class Unit;
-
-using std::list;
 
 /**
  * Selection of Units and structure in the game
@@ -35,54 +30,53 @@ using std::list;
  * @todo Rename function names.
  * @todo (Later) Rewrite Selection to be as close to the STL Container concept as useful
  */
-class Selection
-{
-public:
-    Selection();
-    ~Selection();
+class Selection {
+ public:
+  Selection();
+  ~Selection();
 
-    bool addUnit(Unit *selunit, bool enemy);
-    void removeUnit(Unit *selunit);
-    bool addStructure(Structure *selstruct, bool enemy);
-    void removeStructure(Structure *selstruct);
+  bool addUnit(Unit *selunit, bool enemy);
+  void removeUnit(Unit *selunit);
+  bool addStructure(Structure *selstruct, bool enemy);
+  void removeStructure(Structure *selstruct);
 
-    bool saveSelection(Uint8 savepos);
-    bool loadSelection(Uint8 loadpos);
-    bool mergeSelection(Uint8 loadpos);
+  bool saveSelection(uint8_t savepos);
+  bool loadSelection(uint8_t loadpos);
+  bool mergeSelection(uint8_t loadpos);
 
-    void clearSelection();
+  void clearSelection();
 
-    void purge(Unit* sel);
-    void purge(Structure* sel);
+  void purge(Unit* sel);
+  void purge(Structure* sel);
 
-    Uint32 numbUnits() const ;
-    Unit* getUnit(Uint32 UnitNumb) ;
-    /** Return a ref to a selected structure */
-    Structure* getStructure(Uint32 structureNumber);
+  uint32_t numbUnits() const ;
+  Unit* getUnit(uint32_t UnitNumb) ;
+  /** Return a ref to a selected structure */
+  Structure* getStructure(uint32_t structureNumber);
 
-    bool canAttack() const ;
-    bool canMove() const ;
-	bool areWaterBound ();
-    bool isEnemy() const ;
-    bool empty() const ;
-    /** Returns the number of the player who owns all things selected */
-    Uint8 getOwner() const;
-    void moveUnits(Uint32 pos);
-    void attackUnit(Unit* target);
-    void attackStructure(Structure* target);
-    void checkSelection();
-    Unit* getRandomUnit();
-    bool getWall() const;
-    void stop();
+  bool canAttack() const ;
+  bool canMove() const ;
+  bool areWaterBound ();
+  bool isEnemy() const ;
+  bool empty() const ;
+  /** Returns the number of the player who owns all things selected */
+  uint8_t getOwner() const;
+  void moveUnits(uint32_t pos);
+  void attackUnit(Unit* target);
+  void attackStructure(Structure* target);
+  void checkSelection();
+  Unit* getRandomUnit();
+  bool getWall() const;
+  void stop();
 
-private:
-    list<Unit*> sel_units;
-    list<Structure*> sel_structs;
+ private:
+  std::list<Unit*> sel_units;
+  std::list<Structure*> sel_structs;
 
-    Uint32 numattacking;
-    bool enemy_selected;
-    list<Unit*>saved_unitsel[10];
-    list<Structure*>saved_structsel[10];
+  uint32_t numattacking;
+  bool enemy_selected;
+  std::list<Unit*>saved_unitsel[10];
+  std::list<Structure*>saved_structsel[10];
 };
 
 #endif //SELECTION_H

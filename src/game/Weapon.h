@@ -1,6 +1,5 @@
 // Weapon.h
 // 1.3
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,13 +21,7 @@
 #include <vector>
 #include <map>
 
-#include "SDL_types.h"
-
 #include "armour_t.h"
-
-using std::string;
-using std::vector;
-using std::map;
 
 class Projectile;
 class Warhead;
@@ -37,71 +30,70 @@ class UnitOrStructure;
 /**
  * Weapon in the game
  */
-class Weapon 
-{
-public:
-    Weapon(const char * wname);
-    ~Weapon();
-    
-    Uint8 getReloadTime() const;
-    Uint8 getRange() const;
-    Uint8 getSpeed() const;
-    Sint16 getDamage() const;
-    bool getWall() const;
-    Projectile* getProjectile();
+class Weapon {
+ public:
+  Weapon(const char * wname);
+  ~Weapon();
 
-    Warhead* getWarhead();
+  uint8_t getReloadTime() const;
+  uint8_t getRange() const;
+  uint8_t getSpeed() const;
+  int16_t getDamage() const;
+  bool getWall() const;
+  Projectile* getProjectile();
 
-    const string getChargingSound() const;
+  Warhead* getWarhead();
 
-    void fire(UnitOrStructure* owner, Uint16 target, Uint8 subtarget);
+  const std::string getChargingSound() const;
 
-    //Uint32 tmppif;
-    
-    bool isHeatseek() const;
+  void fire(UnitOrStructure* owner, uint16_t target, uint8_t subtarget);
 
-    bool isInaccurate() const;
+  //Uint32 tmppif;
 
-    double getVersus(armor_t armour) const;
+  bool isHeatseek() const;
 
-    Uint8 getFuel() const;
+  bool isInaccurate() const;
 
-    Uint8 getSeekFuel() const;
+  double getVersus(armor_t armour) const;
 
-    const char* getName() const;
+  uint8_t getFuel() const;
 
-    void Reload();
+  uint8_t getSeekFuel() const;
 
-private:
-    Projectile* projectile;
-    Warhead* whead;
-    Uint8 speed;
-    Uint8 range;
-    Uint8 reloadtime;
-    Sint16 damage;
-    Uint8 burst;
+  const char* getName() const;
 
-    /** how many ticks this projectile can move for until being removed. */
-    Uint8 fuel;
+  void Reload();
 
-    /**
-     * How many ticks can this projectile change course to track its target before falling back to flying
-     * in a straight line.
-     */
-    Uint8 seekfuel;
-    bool heatseek; 
-    bool charges;
-    
-    // @todo Implemente Anim in [Weapon]
-    //Uint32 fireimage;
-    //Uint32* fireimages;
-    //Uint8 numfireimages; 
-    //Uint8 numfiredirections;
-    
-    string report;
-    string reloadsound;
-    string chargingsound;
-    string name;
+ private:
+  Projectile* projectile;
+  Warhead* whead;
+  uint8_t speed;
+  uint8_t range;
+  uint8_t reloadtime;
+  int16_t damage;
+  uint8_t burst;
+
+  /** how many ticks this projectile can move for until being removed. */
+  uint8_t fuel;
+
+  /**
+   * How many ticks can this projectile change course to track its target before falling back to flying
+   * in a straight line.
+   */
+  uint8_t seekfuel;
+  bool heatseek;
+  bool charges;
+
+  // @todo Implemente Anim in [Weapon]
+  //Uint32 fireimage;
+  //Uint32* fireimages;
+  //Uint8 numfireimages;
+  //Uint8 numfiredirections;
+
+  std::string report;
+  std::string reloadsound;
+  std::string chargingsound;
+  std::string name;
 };
 
 #endif

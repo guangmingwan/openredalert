@@ -20,10 +20,6 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-GameError::GameError(const string& msg) :
-	std::runtime_error(msg)
+GameError::GameError(const std::string& msg) : std::runtime_error(msg)
 {
 }

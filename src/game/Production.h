@@ -20,14 +20,9 @@
 
 #include <map>
 
-#include "SDL_types.h"
-
 class UnitOrStructureType;
 
-using std::map;
-
-class Production : public map <const UnitOrStructureType*, Uint8>
-{
+class Production : public std::map<const UnitOrStructureType*, uint8_t> {
 };
 
 #endif //PRODUCTION_H

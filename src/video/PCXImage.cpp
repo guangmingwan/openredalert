@@ -38,8 +38,8 @@ PCXImage::PCXImage(const char* fname, int scaleq) : pcxdata(0), image(0)
 	this->scaleq = scaleq;
 	imgfile = VFSUtils::VFS_Open(fname);
 	if (imgfile == NULL) {
-		Logger::getInstance()->Error (__FILE__, __LINE__, "Image not found '" + string(fname) + "'");
-		throw ImageNotFound("Image [" + string(fname) + "] not found");
+		Logger::getInstance()->Error (__FILE__, __LINE__, "Image not found '" + std::string(fname) + "'");
+		throw ImageNotFound("Image [" + std::string(fname) + "] not found");
 	}
 	imgsize = imgfile->fileSize();
 

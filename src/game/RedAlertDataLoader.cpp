@@ -33,10 +33,6 @@
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 
-using std::string;
-using std::cout;
-using std::endl;
-
 void RedAlertDataLoader::load()
 {
     INIFile *rules_ini;
@@ -92,64 +88,64 @@ void RedAlertDataLoader::load()
     }
 
     // SA
-    string tempStrSA = "SA";
+    std::string tempStrSA = "SA";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrSA);
     // HE
-    string tempStrHE = "HE";
+    std::string tempStrHE = "HE";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrHE);
     // AP
-    string tempStrAP = "AP";
+    std::string tempStrAP = "AP";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrAP);
     // Fire
-    string tempStrFire = "Fire";
+    std::string tempStrFire = "Fire";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrFire);
     // HollowPoint
-    string tempStrHollowPoint = "HollowPoint";
+    std::string tempStrHollowPoint = "HollowPoint";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrHollowPoint);
     // Super
-    string tempStrSuper = "Super";
+    std::string tempStrSuper = "Super";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrSuper);
     // Organic
-    string tempStrOrganic = "Organic";
+    std::string tempStrOrganic = "Organic";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrOrganic);
     // Nuke
-    string tempStrNuke = "Nuke";
+    std::string tempStrNuke = "Nuke";
     lnkWarheadDataList->loadWarheadData(rules_ini, tempStrNuke);
 
     // Print for debug
     //lnkWarheadDataList->print();
 
     // Invisible
-    string tempStrInvisible = "Invisible";
+    std::string tempStrInvisible = "Invisible";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrInvisible);
     // LeapDog
-    string tempStrLeapDog = "LeapDog";
+    std::string tempStrLeapDog = "LeapDog";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrLeapDog);
     // Cannon
-    string tempStrCannon = "Cannon";
+    std::string tempStrCannon = "Cannon";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrCannon);
     // Ack
-    string tempStrAck = "Ack";
+    std::string tempStrAck = "Ack";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrAck);
     // Torpedo
-    string tempStrTorpedo = "Torpedo";
+    std::string tempStrTorpedo = "Torpedo";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrTorpedo);
     // FROG
-    string tempStrFROG = "FROG";
+    std::string tempStrFROG = "FROG";
     lnkProjectileDataList->loadProjectileData(rules_ini, tempStrFROG);
 
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("HeatSeeker"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("LaserGuided"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("AAMissile"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Lobbed"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Catapult"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Bomblet"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Ballistic"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Parachute"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("GPSSatellite"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("NukeUp"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("NukeDown"));
-    lnkProjectileDataList->loadProjectileData(rules_ini, string("Fireball"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("HeatSeeker"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("LaserGuided"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("AAMissile"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Lobbed"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Catapult"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Bomblet"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Ballistic"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Parachute"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("GPSSatellite"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("NukeUp"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("NukeDown"));
+    lnkProjectileDataList->loadProjectileData(rules_ini, std::string("Fireball"));
 
     // Print for debug
     //lnkProjectileDataList->print();

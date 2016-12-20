@@ -1,6 +1,5 @@
 // DropDownListBox.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -29,46 +28,46 @@
  *
  */
 class DropDownListBox {
-public:
-	DropDownListBox();
-	~DropDownListBox();
+ public:
+  DropDownListBox();
+  ~DropDownListBox();
 
-	bool need_redraw();
-	void SetDrawingWindow(RaWindow* Window);
-	void Create();
-	void AddEntry(string Entry);
-	bool MouseOver();
-	bool MouseOver_button();
-	Uint32 MouseOver_entry();
+  bool need_redraw();
+  void SetDrawingWindow(RaWindow* Window);
+  void Create();
+  void AddEntry(std::string Entry);
+  bool MouseOver();
+  bool MouseOver_button();
+  Uint32 MouseOver_entry();
 
-	/** Get the entry number that was selected */
-	unsigned int getSelected() const;
+  /** Get the entry number that was selected */
+  unsigned int getSelected() const;
 
-	void HandleInput(SDL_Event event);
-	bool Draw(int X, int Y);
+  void HandleInput(SDL_Event event);
+  bool Draw(int X, int Y);
 
-private:
-	SDL_Surface* ReadShpImage(char *Name, int ImageNumb, Uint8 palnum = 1);
+ private:
+  SDL_Surface* ReadShpImage(char *Name, int ImageNumb, Uint8 palnum = 1);
 
-	RaWindow* WindowToDrawOn;
-	RA_Label ListBoxLabel;
+  RaWindow* WindowToDrawOn;
+  RA_Label ListBoxLabel;
 
-	/** The entry number that was selected */
-	unsigned int SelectedIndex;
+  /** The entry number that was selected */
+  unsigned int SelectedIndex;
 
-	vector<string> List;
-	SDL_Surface* ListBoxSurface;
-	SDL_Surface* DisplaySurface;
-	SDL_Surface* ArrowDownImage;
-	SDL_Rect SizeAndPosition;
-	Uint32 ListBoxColor;
-	Uint32 ListBoxBackgroundColor;
-	SDL_Color TextColor;
-	volatile bool Selected;
-	volatile bool Recreate;
-	Uint16 Spacing;
-	bool button_down;
-	Uint32 ArrowDwn;
+  std::vector<std::string> List;
+  SDL_Surface* ListBoxSurface;
+  SDL_Surface* DisplaySurface;
+  SDL_Surface* ArrowDownImage;
+  SDL_Rect SizeAndPosition;
+  Uint32 ListBoxColor;
+  Uint32 ListBoxBackgroundColor;
+  SDL_Color TextColor;
+  volatile bool Selected;
+  volatile bool Recreate;
+  Uint16 Spacing;
+  bool button_down;
+  Uint32 ArrowDwn;
 };
 
 #endif //DROPDOWNLISTBOX_H

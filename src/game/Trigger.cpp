@@ -1,6 +1,5 @@
 // Trigger.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,21 +16,15 @@
 
 #include "Trigger.hpp"
 
-namespace OpenRedAlert
-{
+namespace OpenRedAlert {
+  namespace Game {
+    std::string Trigger::getName() const {
+      return this->name;
+    }
 
-namespace Game
-{
-
-string Trigger::getName() const
-{
-    return this->name;
-}
-
-void Trigger::setName(const string& pName)
-{
-    this->name = pName;
-}
-}
-
+    void Trigger::setName(const std::string& pName) {
+      this->name = pName;
+    }
+  }
+  
 }

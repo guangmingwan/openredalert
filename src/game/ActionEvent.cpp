@@ -1,6 +1,5 @@
 // ActionEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -17,36 +16,27 @@
 
 #include "ActionEvent.h"
 
-#include "SDL_types.h"
-
-void ActionEvent::stop()
-{
+void ActionEvent::stop() {
 }
 
-ActionEvent::ActionEvent(Uint32 p)
-{
-    delay = p;
+ActionEvent::ActionEvent(uint32_t p) {
+  delay = p;
 }
 
-void ActionEvent::addCurtick(Uint32 curtick)
-{
-    prio = delay + curtick;
+void ActionEvent::addCurtick(uint32_t curtick) {
+  prio = delay + curtick;
 }
 
-void ActionEvent::run()
-{
+void ActionEvent::run() {
 }
 
-ActionEvent::~ActionEvent()
-{
+ActionEvent::~ActionEvent() {
 }
 
-void ActionEvent::setDelay(Uint32 p)
-{
-    delay = p;
+void ActionEvent::setDelay(uint32_t p) {
+  delay = p;
 }
 
-Uint32 ActionEvent::getPrio()
-{
-    return prio;
+uint32_t ActionEvent::getPrio() {
+  return prio;
 }

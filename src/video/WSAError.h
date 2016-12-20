@@ -1,6 +1,5 @@
 // WSAError.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,13 +20,9 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-class WSAError : public runtime_error
-{
-public:
-    WSAError(const string& msg) ;
+class WSAError : public std::runtime_error {
+ public:
+  WSAError(const std::string& msg) ;
 };
 
 #endif //WSAERROR_H

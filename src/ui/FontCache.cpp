@@ -27,8 +27,6 @@
 #include "TFontImage.h"
 #include "Font.h"
 
-using namespace std;
-
 /** 
  * Constructor
  */

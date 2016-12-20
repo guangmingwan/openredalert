@@ -1,6 +1,5 @@
 // BTurnAnimEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,33 +17,31 @@
 #ifndef BTURNANIMEVENT_H
 #define BTURNANIMEVENT_H
 
-#include "SDL_types.h"
 #include "BuildingAnimEvent.h"
 #include "Structure.h"
 
-/** 
+/**
  * The animation that turns structures to face a given direction. This is only used when attacking.
- * 
+ *
  * @version 1.0
  * @since r378
  */
-class BTurnAnimEvent : public BuildingAnimEvent
-{
-public:
-    /**
-     * @param p the priority of this event
-     * @param str the structure to which this animation is to be applied
-     * @param face the direction the structure is to face
-     */
-    BTurnAnimEvent(Uint32 p, Structure * str, Uint8 face);
+class BTurnAnimEvent : public BuildingAnimEvent {
+ public:
+  /**
+   * @param p the priority of this event
+   * @param str the structure to which this animation is to be applied
+   * @param face the direction the structure is to face
+   */
+  BTurnAnimEvent(uint32_t p, Structure * str, uint8_t face);
 
-    void anim_func(anim_nfo * data);
+  void anim_func(anim_nfo * data);
 
-private:
-    Uint8 frame;
-    Uint8 targetface;
-    Sint8 turnmod;
-    Structure * str;
+ private:
+  uint8_t frame;
+  uint8_t targetface;
+  int8_t turnmod;
+  Structure * str;
 };
 
 #endif //BTURNANIMEVENT_H

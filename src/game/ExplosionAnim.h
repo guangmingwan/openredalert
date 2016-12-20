@@ -1,6 +1,5 @@
 // ExplosionAnim.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,35 +19,30 @@
 
 #include <map>
 
-#include "SDL_types.h"
-
 #include "ActionEvent.h"
 
 class L2Overlay;
 
-using std::multimap;
-
 /**
  * Anim to create an Explosion Animation
  */
-class ExplosionAnim : public ActionEvent
-{
-public:
-    ExplosionAnim(Uint32 p, Uint16 pos, Uint32 startimage, Uint8 animsteps,
-                  Sint8 xoff, Sint8 yoff);
-    ~ExplosionAnim();
+class ExplosionAnim : public ActionEvent {
+ public:
+  ExplosionAnim(uint32_t p, uint16_t pos, uint32_t startimage, uint8_t animsteps,
+                int8_t xoff, int8_t yoff);
+  ~ExplosionAnim();
 
-    void run();
-    
-private:
-    ExplosionAnim() ; // Declare private constructor to force parameter in constructor
+  void run();
 
-    L2Overlay* l2o;
-    /** The position of the animation */
-    Uint16 pos;
-    Uint8 animsteps;
-    /** iterator to the overlay in the multimap */
-    multimap<Uint16, L2Overlay*>::iterator l2entry;
+ private:
+  ExplosionAnim() ; // Declare private constructor to force parameter in constructor
+
+  L2Overlay* l2o;
+  /** The position of the animation */
+  uint16_t pos;
+  uint8_t animsteps;
+  /** iterator to the overlay in the multimap */
+  std::multimap<uint16_t, L2Overlay*>::iterator l2entry;
 };
 
 #endif //EXPLOSIONANIM_H

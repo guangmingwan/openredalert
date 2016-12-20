@@ -1,6 +1,5 @@
 // SoundCommon.h
 // 0.4
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,7 +20,6 @@
 #include <map>
 #include <vector>
 
-#include "SDL_types.h"
 #include "SDL_audio.h"
 #include "SDL_mixer.h"
 
@@ -37,35 +35,30 @@
 #define SOUND_MAX_UNCOMPRESSED_SIZE (SOUND_MAX_CHUNK_SIZE << 2)
 #define SOUND_MAX_COMPRESSED_SIZE   SOUND_MAX_CHUNK_SIZE
 
-
 namespace {
-    SDL_AudioCVT monoconv;
-    SDL_AudioCVT eightbitconv;
+  SDL_AudioCVT monoconv;
+  SDL_AudioCVT eightbitconv;
 
-    bool initconv = false;
+  bool initconv = false;
 
-    Uint8 chunk[SOUND_MAX_CHUNK_SIZE];
-    Uint8 tmpbuff[SOUND_MAX_UNCOMPRESSED_SIZE * 4];
+  Uint8 chunk[SOUND_MAX_CHUNK_SIZE];
+  Uint8 tmpbuff[SOUND_MAX_UNCOMPRESSED_SIZE * 4];
 }
 
 namespace {
-
-    //SoundDecoder decoder;
-    SoundFile soundDecoder;
-    SoundFile musicDecoder;
+  //SoundDecoder decoder;
+  SoundFile soundDecoder;
+  SoundFile musicDecoder;
 }
 
 namespace Sound {
+  //const int Indexes[8] = {-1,-1,-1,-1,2,4,6,8};
+  const int Indexes[16] = {
+    -1, -1, -1, -1, 2, 4, 6, 8,
+    -1, -1, -1, -1, 2, 4, 6, 8
+  };
 
-
-
-//const int Indexes[8] = {-1,-1,-1,-1,2,4,6,8};
-const int Indexes[16] = {
-        -1, -1, -1, -1, 2, 4, 6, 8,
-        -1, -1, -1, -1, 2, 4, 6, 8
-};
-
-// Decode Westwood's ADPCM format.  Original code from ws-aud.txt by Asatur V. Nazarian
+  // Decode Westwood's ADPCM format.  Original code from ws-aud.txt by Asatur V. Nazarian
 #define HIBYTE(word) ((word) >> 8)
 #define LOBYTE(word) ((word) & 0xFF)
 

@@ -27,64 +27,54 @@
 
 #include "misc/INIFile.h"
 
-using std::string;
-using std::cout;
-using std::endl;
-
 extern Logger * logger;
 
-int WarheadDataList::size()
-{
-    return data.size();
+int WarheadDataList::size() {
+  return data.size();
 }
 
-WarheadData* WarheadDataList::getData(string name)
-{
-    map < string, WarheadData * >::iterator itRecherche;
-    
-    
-    itRecherche=data.find(name);
-    if (itRecherche != data.end())
-    {
-        cout << (*itRecherche).second->getWall() << endl;
-        return (*itRecherche).second;
-    }
-    //return this->data[name];
-    Logger::getInstance()->Error("Unenable to load [" + name + "] WARHEAD !!!");
-    
-    // Return new Warhead by default
-    Logger::getInstance()->Warning("New virtual warhead was returned...");
-    return new WarheadData();
-}
-   
+WarheadData* WarheadDataList::getData(std::string name) {
+  std::map<std::string, WarheadData*>::iterator itRecherche;
 
-void WarheadDataList::loadWarheadData(INIFile* file, string name)
-{
-    // Load the Warhead
-    WarheadData* ptrWaH = WarheadData::loadWarheadData(file, name);
-    
-    // @todo DEBUG
-    if (ptrWaH == NULL) {
-        
-    }
-    
-    // Put it in the DataList
-    //this->data[name] = ptrWaH;
-    
-    //this->data.insert(map < string, WarheadData * >::value_type(name, ptrWaH));
-    data[name]=ptrWaH;
+
+  itRecherche=data.find(name);
+  if (itRecherche != data.end()) {
+    std::cout << (*itRecherche).second->getWall() << std::endl;
+    return (*itRecherche).second;
+  }
+  //return this->data[name];
+  Logger::getInstance()->Error("Unenable to load [" + name + "] WARHEAD !!!");
+
+  // Return new Warhead by default
+  Logger::getInstance()->Warning("New virtual warhead was returned...");
+  return new WarheadData();
 }
 
-void WarheadDataList::print()
-{
-    map < string, WarheadData* >::iterator itRecherche;
-    
-    itRecherche = data.begin();
-    while (itRecherche != data.end())
-    {
-        cout << "[" << (*itRecherche).first << "]" << endl;
-        (*itRecherche).second->print();
-        
-        itRecherche++;
-    }
+
+void WarheadDataList::loadWarheadData(INIFile* file, std::string name) {
+  // Load the Warhead
+  WarheadData* ptrWaH = WarheadData::loadWarheadData(file, name);
+
+  // @todo DEBUG
+  if (ptrWaH == NULL) {
+
+  }
+
+  // Put it in the DataList
+  //this->data[name] = ptrWaH;
+
+  //this->data.insert(map < string, WarheadData * >::value_type(name, ptrWaH));
+  data[name]=ptrWaH;
+}
+
+void WarheadDataList::print() {
+  std::map<std::string, WarheadData*>::iterator itRecherche;
+
+  itRecherche = data.begin();
+  while (itRecherche != data.end()) {
+    std::cout << "[" << (*itRecherche).first << "]" << std::endl;
+    (*itRecherche).second->print();
+
+    itRecherche++;
+  }
 }

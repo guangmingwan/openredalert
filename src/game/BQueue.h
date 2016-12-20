@@ -20,8 +20,6 @@
 #include <list>
 #include <map>
 
-#include "SDL_types.h"
-
 #include "ConStatus.h"
 #include "Production.h"
 #include "Queue.h"
@@ -31,49 +29,45 @@ class Player;
 class UnitOrStructureType;
 class BQTimer;
 
-using std::list;
-using std::map;
+class BQueue {
+ public:
+  BQueue(Player* pPlayer);
+  ~BQueue();
 
+  bool Add(const UnitOrStructureType* type);
+  ConStatus PauseCancel(const UnitOrStructureType* type);
 
-class BQueue
-{
-public:
-    BQueue(Player* pPlayer);
-    ~BQueue();
+  ConStatus getStatus() const;
+  ConStatus getStatus(const UnitOrStructureType* type, uint8_t *quantity, uint8_t *progress) const;
 
-    bool Add(const UnitOrStructureType* type);
-    ConStatus PauseCancel(const UnitOrStructureType* type);
+  void Placed();
 
-	ConStatus getStatus() const;
-    ConStatus getStatus(const UnitOrStructureType* type, Uint8* quantity, Uint8* progress) const;
+  void Pause();
+  void Resume();
+  bool tick();
 
-    void Placed();
+  const UnitOrStructureType* getCurrentType() const ;
+ private:
+  void next();
+  void rescheduled();
 
-	void Pause();
-	void Resume();
-	bool tick();
-    
-    const UnitOrStructureType* getCurrentType() const ;
-private:
-    void next();
-    void rescheduled();
+  RQstate requeue(const UnitOrStructureType* type);
 
-    RQstate requeue(const UnitOrStructureType* type);
+  Player* player;
+  uint32_t last;
+  uint32_t left;
+  ConStatus status;
 
-    Player* player;
-    Uint32 last; Uint32 left;
-    ConStatus status;
+  BQTimer* timer;
 
-    BQTimer* timer;
-    
-    Production production;
-    Queue queue;
+  Production production;
+  Queue queue;
 
-    /**
-     * @todo These values should be moved to a configuration file. I don't think buildspeed needs to be changed once this code is stable. 
-     */
-    static const Uint8 buildspeed;
-    static const Uint8 maxbuild;
+  /**
+   * @todo These values should be moved to a configuration file. I don't think buildspeed needs to be changed once this code is stable.
+   */
+  static const uint8_t buildspeed;
+  static const uint8_t maxbuild;
 };
 
 #endif //BQUEUE_H

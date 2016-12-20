@@ -1,6 +1,5 @@
 // SHPHeader.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,35 +17,32 @@
 #ifndef SHPHEADER_H
 #define SHPHEADER_H
 
-#include "SDL_types.h"
-
 /**
  * Header of SHP Image
- * 
+ *
  * @see SHPImage
  */
-class SHPHeader
-{
-public:
-	/** Number of images */
-	Uint16  NumImages;
-	/** Unknown */
-	Uint16	A;
-	/** Unknown */
-	Uint16	B;
-	/** Width of the images */
-	Uint16  Width;
-	/** Height of the images */
-    Uint16  Height;
-    /** Unknown */
-    long int C;
-    /** Offset of image in file */
-    Uint32* Offset;
-    /** Format of image in file */
-    Uint8*  Format;
-    /** Offset and format of image on which it is based */
-    Uint32* RefOffs;
-    Uint8*  RefFormat;
+class SHPHeader {
+ public:
+  /** Number of images */
+  Uint16  NumImages;
+  /** Unknown */
+  Uint16	A;
+  /** Unknown */
+  Uint16	B;
+  /** Width of the images */
+  Uint16  Width;
+  /** Height of the images */
+  Uint16  Height;
+  /** Unknown */
+  long int C;
+  /** Offset of image in file */
+  Uint32* Offset;
+  /** Format of image in file */
+  Uint8*  Format;
+  /** Offset and format of image on which it is based */
+  Uint32* RefOffs;
+  Uint8*  RefFormat;
 };
 
 #endif //SHPHEADER_H

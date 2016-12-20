@@ -1,6 +1,5 @@
 // Unit.cpp
 // 1.1
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,7 +19,6 @@
 #include <string>
 #include <math.h>
 
-#include "SDL_types.h"
 #include "SDL_timer.h"
 
 #include "Ai.h"
@@ -48,188 +46,186 @@
 #include "StructureType.h"
 
 namespace p {
-	extern ActionEventQueue * aequeue;
-	extern CnCMap* ccmap;
-	extern CnCMap* ccmap;
+  extern ActionEventQueue * aequeue;
+  extern CnCMap* ccmap;
+  extern CnCMap* ccmap;
 }
+
 namespace pc {
-    extern ConfigType Config;
-    extern Ai * ai;
-    extern Sound::SoundEngine* sfxeng;
+  extern ConfigType Config;
+  extern Ai * ai;
+  extern Sound::SoundEngine* sfxeng;
 }
-
-using std::string;
-using std::vector;
-
 
 /**
  * @note to self, pass owner, cellpos, facing and health to this (maybe subcellpos)
  */
 Unit::Unit(UnitType *type, Uint16 cellpos, Uint8 subpos, InfantryGroup *group,
-        unsigned int owner, Uint16 rhealth, Uint8 facing, Uint8 action, string trigger_name) : UnitOrStructure()
+           unsigned int owner, Uint16 rhealth, Uint8 facing, Uint8 action,
+           std::string trigger_name) : UnitOrStructure()
 {
-    EmptyResources ();
+  EmptyResources ();
 
-    BaseRefinery = 0;
-    targetcell = cellpos;
-    Uint32 i;
-    this->type = type;
-    imagenumbers = new Uint16[type->getNumLayers()];
-    for( i = 0; i < type->getNumLayers(); i++ )
+  BaseRefinery = 0;
+  targetcell = cellpos;
+  Uint32 i;
+  this->type = type;
+  imagenumbers = new Uint16[type->getNumLayers()];
+  for( i = 0; i < type->getNumLayers(); i++ )
+  {
+    imagenumbers[i] = facing;
+    if (owner != 0xff)
     {
-        imagenumbers[i] = facing;
-        if (owner != 0xff)
-        {
-            if (type->canDeploy() == true)
-            {
-                palettenum = (p::ccmap->getPlayerPool()->getStructpalNum(owner)<<11);
-            } else {
-                palettenum = (p::ccmap->getPlayerPool()->getUnitpalNum(owner)<<11);
-            }
-            imagenumbers[i] |= palettenum;
-        }
+      if (type->canDeploy() == true)
+      {
+        palettenum = (p::ccmap->getPlayerPool()->getStructpalNum(owner)<<11);
+      } else {
+        palettenum = (p::ccmap->getPlayerPool()->getUnitpalNum(owner)<<11);
+      }
+      imagenumbers[i] |= palettenum;
     }
-    this->setOwner(owner);
-    this->cellpos = cellpos;
-    this->subpos = subpos;
-    l2o = 0;
-    xoffset = 0;
-    yoffset = 0;
+  }
+  this->setOwner(owner);
+  this->cellpos = cellpos;
+  this->subpos = subpos;
+  l2o = 0;
+  xoffset = 0;
+  yoffset = 0;
 
-    ratio = (double)rhealth/256.0f;
-    Uint16 newHealth = (Uint16)(ratio * type->getMaxHealth());
-    // Set the Health
-    setHealth((Uint16)newHealth);
+  ratio = (double)rhealth/256.0f;
+  Uint16 newHealth = (Uint16)(ratio * type->getMaxHealth());
+  // Set the Health
+  setHealth((Uint16)newHealth);
 
-    infgrp = group;
+  infgrp = group;
 
-    if (infgrp != 0)
-    {
-        if (infgrp->IsClear(subpos)) { /* else select another subpos */
-            infgrp->AddInfantry(this, subpos);
-        }
+  if (infgrp != 0)
+  {
+    if (infgrp->IsClear(subpos)) { /* else select another subpos */
+      infgrp->AddInfantry(this, subpos);
     }
-    moveanim = 0;
-    attackanim = 0;
-    walkanim = 0;
-    harvestanim = 0;
-    repairanim = 0;
-    turnanim1 = 0;
-    turnanim2 = 0;
-    deployed = false;
-    
-    if (type->getName() == "HARV")
-    {
-        this->Harvest(0, 0);
-    }
-    
-    AI_Mission = 1;
-    
-    TriggerName = trigger_name;
-    Command     = action;
-    
-    fix_str_num = 0;
-    
-    // Init last damage tick var
-    LastDamageTick = SDL_GetTicks();
-    
-    // Initialisation
-    infianim = 0;
+  }
+  moveanim = 0;
+  attackanim = 0;
+  walkanim = 0;
+  harvestanim = 0;
+  repairanim = 0;
+  turnanim1 = 0;
+  turnanim2 = 0;
+  deployed = false;
+
+  if (type->getName() == "HARV")
+  {
+    this->Harvest(0, 0);
+  }
+
+  AI_Mission = 1;
+
+  TriggerName = trigger_name;
+  Command     = action;
+
+  fix_str_num = 0;
+
+  // Init last damage tick var
+  LastDamageTick = SDL_GetTicks();
+
+  // Initialisation
+  infianim = 0;
 }
 
 Unit::~Unit()
 {
-	tm		*Tm;
-	time_t  Now_epoch;
+  tm		*Tm;
+  time_t  Now_epoch;
 
-	Now_epoch = time(0);
-	Tm = localtime (&Now_epoch);
-//	logger->warning ("%s line %i: %02i:%02i:%02i Unit destructor, unitnr = %i\n", __FILE__, __LINE__, Tm->tm_hour, Tm->tm_min, Tm->tm_sec, unitnum);
+  Now_epoch = time(0);
+  Tm = localtime (&Now_epoch);
+  //	logger->warning ("%s line %i: %02i:%02i:%02i Unit destructor, unitnr = %i\n", __FILE__, __LINE__, Tm->tm_hour, Tm->tm_min, Tm->tm_sec, unitnum);
 
-//	if (p::uspool->getUnit(unitnum) != 0 && !pc::quit)
-//		logger->warning ("%s line %i: Unit destructor for unit = %i, unitandstructerpool not derefd\n", __FILE__, __LINE__, unitnum);
+  //	if (p::uspool->getUnit(unitnum) != 0 && !pc::quit)
+  //		logger->warning ("%s line %i: Unit destructor for unit = %i, unitandstructerpool not derefd\n", __FILE__, __LINE__, unitnum);
 
-//	if (p::uspool->getNumbUnits() != p::ccmap->getPlayerPool()->getPlayer(getOwner())->getNumUnits() && !pc::quit )
-//		logger->warning ("%s line %i: Player unit pool not the same size as unitandstructurepool unitoopl\n", __FILE__, __LINE__, unitnum);
+  //	if (p::uspool->getNumbUnits() != p::ccmap->getPlayerPool()->getPlayer(getOwner())->getNumUnits() && !pc::quit )
+  //		logger->warning ("%s line %i: Player unit pool not the same size as unitandstructurepool unitoopl\n", __FILE__, __LINE__, unitnum);
 
-    delete[] imagenumbers;
-    if (attackanim != 0 && target != 0) {
-        target->unrefer();
+  delete[] imagenumbers;
+  if (attackanim != 0 && target != 0) {
+    target->unrefer();
+  }
+  if( l2o != 0 ) {
+    p::uspool->removeL2overlay(l2entry);
+    delete l2o;
+  }
+  if (type->isInfantry() && infgrp) {
+    infgrp->RemoveInfantry(subpos);
+    //        if (infgrp->GetNumInfantry() == 0) {
+    //delete infgrp;
+    //printf ("%s line %i: Numb infantry not 0\n", __FILE__, __LINE__);
+    //        }
+  }
+
+  if (deployed) {
+    // @todo This is a client thing. Will dispatch a
+    // "play these sounds" event when the time comes.
+    if (this->getOwner() == p::ccmap->getPlayerPool()->getLPlayerNum()){
+      pc::sfxeng->PlaySound(pc::Config.UnitDeployed);
+      if (pc::Config.gamenum == GAME_TD) {
+        pc::sfxeng->PlaySound("hvydoor1.aud");
+      }
     }
-    if( l2o != 0 ) {
-        p::uspool->removeL2overlay(l2entry);
-        delete l2o;
-    }
-    if (type->isInfantry() && infgrp) {
-        infgrp->RemoveInfantry(subpos);
-//        if (infgrp->GetNumInfantry() == 0) {
-            //delete infgrp;
-			//printf ("%s line %i: Numb infantry not 0\n", __FILE__, __LINE__);
-//        }
-    }
-
-    if (deployed) {
-        // @todo This is a client thing. Will dispatch a
-    	// "play these sounds" event when the time comes.
-		if (this->getOwner() == p::ccmap->getPlayerPool()->getLPlayerNum()){
-			pc::sfxeng->PlaySound(pc::Config.UnitDeployed);
-			if (pc::Config.gamenum == GAME_TD) {
-				pc::sfxeng->PlaySound("hvydoor1.aud");
-			}
-		}
-        p::uspool->createStructure(type->getDeployType(), calcDeployPos(), this->getOwner(), (Uint16)(ratio*256.0f),0, true, "None");
-/*
-	//printf ("Deploy\n");
-	if (!pc::sidebar->getVisible()){
-		printf ("Toggle visibility\n");
-		pc::sidebar->ToggleVisible();
-	}else
-		printf ("NOTNOTNOT\n");
-*/
-    }
+    p::uspool->createStructure(type->getDeployType(), calcDeployPos(), this->getOwner(), (Uint16)(ratio*256.0f),0, true, "None");
+    /*
+     //printf ("Deploy\n");
+     if (!pc::sidebar->getVisible()){
+     printf ("Toggle visibility\n");
+     pc::sidebar->ToggleVisible();
+     }else
+     printf ("NOTNOTNOT\n");
+     */
+  }
 }
 
 Uint8 Unit::getImageNums(Uint32 **inums, Sint8 **xoffsets, Sint8 **yoffsets)
 {
-    int i;
-    Uint32 *shpnums;
+  int i;
+  Uint32 *shpnums;
 
-    shpnums = type->getSHPNums();
+  shpnums = type->getSHPNums();
 
-    *inums = new Uint32[type->getNumLayers()];
-    *xoffsets = new Sint8[type->getNumLayers()];
-    *yoffsets = new Sint8[type->getNumLayers()];
-    
-    for(i = 0; i < type->getNumLayers(); i++ ) 
-    {
-        (*inums)[i] = shpnums[i]+imagenumbers[i];
-        (*xoffsets)[i] = xoffset-type->getOffset();
-        (*yoffsets)[i] = yoffset-type->getOffset();
-    }
-    return type->getNumLayers();
+  *inums = new Uint32[type->getNumLayers()];
+  *xoffsets = new Sint8[type->getNumLayers()];
+  *yoffsets = new Sint8[type->getNumLayers()];
+
+  for(i = 0; i < type->getNumLayers(); i++ )
+  {
+    (*inums)[i] = shpnums[i]+imagenumbers[i];
+    (*xoffsets)[i] = xoffset-type->getOffset();
+    (*yoffsets)[i] = yoffset-type->getOffset();
+  }
+  return type->getNumLayers();
 }
 
 InfantryGroup* Unit::getInfantryGroup()
 {
-	return infgrp;
+  return infgrp;
 }
 
 void Unit::setInfantryGroup(InfantryGroup *ig)
 {
-	infgrp = ig;
+  infgrp = ig;
 }
 
 Uint32 Unit::getImageNum(Uint8 layer) const
 {
-    return type->getSHPNums()[layer]+imagenumbers[layer];
+  return type->getSHPNums()[layer]+imagenumbers[layer];
 }
 
 Uint16 Unit::getNumbImages(Uint8 layer)
 {
-    if (type->getSHPTNum() != 0) {
-        return type->getSHPTNum()[layer];
-    }
-    return 0;
+  if (type->getSHPTNum() != 0) {
+    return type->getSHPTNum()[layer];
+  }
+  return 0;
 }
 
 /**
@@ -238,352 +234,352 @@ Uint16 Unit::getNumbImages(Uint8 layer)
  */
 void Unit::setImageNum(Uint32 num, Uint8 layer)
 {
-	if (getNumbImages( layer ) > num)
-    {
-    	imagenumbers[layer] = num | palettenum;
-    }
-	else
-    {
-		//logger->error("%s line %i: FAILED to set imagenumb %i, numb images = %i\n", __FILE__, __LINE__, num, getNumbImages( layer ));
-    }
+  if (getNumbImages( layer ) > num)
+  {
+    imagenumbers[layer] = num | palettenum;
+  }
+  else
+  {
+    //logger->error("%s line %i: FAILED to set imagenumb %i, numb images = %i\n", __FILE__, __LINE__, num, getNumbImages( layer ));
+  }
 }
 
 Sint8 Unit::getXoffset() const
 {
-    if (l2o != 0) {
-        return l2o->xoffsets[0];
-    } else {
-        return xoffset - type->getOffset();
-    }
+  if (l2o != 0) {
+    return l2o->xoffsets[0];
+  } else {
+    return xoffset - type->getOffset();
+  }
 }
 
 Sint8 Unit::getYoffset() const
 {
-	return yoffset;
+  return yoffset;
 }
 
 void Unit::setXoffset(Sint8 xo)
 {
-    if (l2o != 0) {
-        l2o->xoffsets[0] = xo;
-    } else {
-        xoffset = xo;
-    }
+  if (l2o != 0) {
+    l2o->xoffsets[0] = xo;
+  } else {
+    xoffset = xo;
+  }
 }
 
 void Unit::setYoffset(Sint8 yo)
 {
-	this->yoffset = yo;
+  this->yoffset = yo;
 }
 
 UnitOrStructureType* Unit::getType()
 {
-    return this->type;
+  return this->type;
 }
 
 unsigned int Unit::getPos() const
 {
-	return cellpos;
+  return cellpos;
 }
 
 Uint16 Unit::getBPos(Uint16 pos) const
 {
-	return cellpos;
+  return cellpos;
 }
 
 unsigned int Unit::getSubpos() const
 {
-	return subpos;
+  return subpos;
 }
 
 Uint32 Unit::getNum() const
 {
-	return unitnum;
+  return unitnum;
 }
 
 void Unit::setUnitnum(Uint32 unum)
 {
-	unitnum = unum;
+  unitnum = unum;
 }
 
 void Unit::ChangeHealth(Sint16 amount)
 {
-	Uint16 oldHealth = getHealth();
+  Uint16 oldHealth = getHealth();
 
-	if (oldHealth + amount > type->getMaxHealth()){
-		setHealth(type->getMaxHealth());
-	} else if (oldHealth + amount < 0){
-		setHealth((Uint16)0);
-	} else {
-		setHealth(oldHealth + amount);
-	}
+  if (oldHealth + amount > type->getMaxHealth()){
+    setHealth(type->getMaxHealth());
+  } else if (oldHealth + amount < 0){
+    setHealth((Uint16)0);
+  } else {
+    setHealth(oldHealth + amount);
+  }
 }
 
 void Unit::move(Uint16 dest)
 {
-    move(dest, true);
+  move(dest, true);
 }
 
 void Unit::move(Uint16 dest, bool needStop)
 {
-    targetcell = dest;
+  targetcell = dest;
 
-    if (needStop && (attackanim != 0)) {
-        attackanim->stop();
-        if (target != 0) {
-            target->unrefer();
-            target = 0;
-        }
+  if (needStop && (attackanim != 0)) {
+    attackanim->stop();
+    if (target != 0) {
+      target->unrefer();
+      target = 0;
     }
+  }
 
-	if (needStop && harvestanim != 0){
-		harvestanim->stop();
-	}
+  if (needStop && harvestanim != 0){
+    harvestanim->stop();
+  }
 
-	if (needStop && infianim != 0){
-		infianim->stop();
-	}
+  if (needStop && infianim != 0){
+    infianim->stop();
+  }
 
-    if (moveanim == 0)
-    {
-        moveanim = new MoveAnimEvent(type->getSpeed(), this);
-        p::aequeue->scheduleEvent(moveanim);
-    } else {
-        moveanim->update();
-    }
+  if (moveanim == 0)
+  {
+    moveanim = new MoveAnimEvent(type->getSpeed(), this);
+    p::aequeue->scheduleEvent(moveanim);
+  } else {
+    moveanim->update();
+  }
 }
 
 bool Unit::IsMoving()
 {
-    if (moveanim != 0){
-        return true;
-    }
-    return false;
+  if (moveanim != 0){
+    return true;
+  }
+  return false;
 }
 
 bool Unit::IsAttacking()
 {
-    if (attackanim == 0){
-        return false;
-    }
-    return true;
+  if (attackanim == 0){
+    return false;
+  }
+  return true;
 }
 
 bool Unit::canAttack(bool primary) {
-	return type->getWeapon(primary)!=0;
+  return type->getWeapon(primary)!=0;
 }
 
 bool Unit::UnderAttack()
 {
-	// We have never been attacked if we still have all health
-	if (getHealth() == getType()->getMaxHealth())
-		return false;
+  // We have never been attacked if we still have all health
+  if (getHealth() == getType()->getMaxHealth())
+    return false;
 
-	// If the last damage is longer than 10 sec ago we are no longer under attack
-	if ((SDL_GetTicks() - LastDamageTick) > 1000*10)
-		return false;
+  // If the last damage is longer than 10 sec ago we are no longer under attack
+  if ((SDL_GetTicks() - LastDamageTick) > 1000*10)
+    return false;
 
-	return true;
+  return true;
 }
 
 void Unit::attack(UnitOrStructure* target)
 {
-	if (!this->canAttack()){
-		return;
-	}
-    attack(target, true);
+  if (!this->canAttack()){
+    return;
+  }
+  attack(target, true);
 }
 
 void Unit::attack(UnitOrStructure* target, bool stop)
 {
-	Weapon *Weap;
+  Weapon *Weap;
 
-	if (!this->canAttack())
-		return;
+  if (!this->canAttack())
+    return;
 
-	if (!target->getType()->isStructure())
-	{
-		switch (((Unit*)target)->getType()->getPType()){
-			case UN_INFANTRY:
-			case UN_VEHICLE:
-				Weap = type->getWeapon();
-				if (Weap != 0){
-					if (!Weap->getProjectile()->AntiGround()){
-						Weap = type->getWeapon(false);
-						if (Weap != 0){
-							if (!Weap->getProjectile()->AntiGround())
-								return;
-						}else
-							return;
-					}
-				}else
-					return;
-				break;
-			case UN_BOAT:
-				Weap = type->getWeapon();
-				if (Weap != 0){
-					if (!Weap->getProjectile()->AntiGround()){
-						Weap = type->getWeapon(false);
-						if (Weap != 0){
-							if (!Weap->getProjectile()->AntiGround())
-								return;
-						}else
-							return;
-					}
-				}else
-					return;
-				break;
-			case UN_PLANE:
-			case UN_HELICOPTER:
-				Weap = type->getWeapon();
-				if (Weap != 0){
-					if (!Weap->getProjectile()->AntiAir()){
-						Weap = type->getWeapon(false);
-						if (Weap != 0){
-							if (!Weap->getProjectile()->AntiAir())
-								return;
-						}else
-							return;
-					}
-				}else
-					return;
-				break;
-			default:
-				printf ("%s line %i: ERROR unknown unit type\n", __FILE__, __LINE__);
-				break;
+  if (!target->getType()->isStructure())
+  {
+    switch (((Unit*)target)->getType()->getPType()){
+      case UN_INFANTRY:
+      case UN_VEHICLE:
+        Weap = type->getWeapon();
+        if (Weap != 0){
+          if (!Weap->getProjectile()->AntiGround()){
+            Weap = type->getWeapon(false);
+            if (Weap != 0){
+              if (!Weap->getProjectile()->AntiGround())
+                return;
+            }else
+              return;
+          }
+        }else
+          return;
+        break;
+      case UN_BOAT:
+        Weap = type->getWeapon();
+        if (Weap != 0){
+          if (!Weap->getProjectile()->AntiGround()){
+            Weap = type->getWeapon(false);
+            if (Weap != 0){
+              if (!Weap->getProjectile()->AntiGround())
+                return;
+            }else
+              return;
+          }
+        }else
+          return;
+        break;
+      case UN_PLANE:
+      case UN_HELICOPTER:
+        Weap = type->getWeapon();
+        if (Weap != 0){
+          if (!Weap->getProjectile()->AntiAir()){
+            Weap = type->getWeapon(false);
+            if (Weap != 0){
+              if (!Weap->getProjectile()->AntiAir())
+                return;
+            }else
+              return;
+          }
+        }else
+          return;
+        break;
+      default:
+        printf ("%s line %i: ERROR unknown unit type\n", __FILE__, __LINE__);
+        break;
 
-		}
-	} else {
-		Weap = type->getWeapon();
-		if (Weap != 0){
-			if (!Weap->getProjectile()->AntiGround()){
-				Weap = type->getWeapon(false);
-				if (Weap != 0){
-					if (!Weap->getProjectile()->AntiGround())
-						return;
-				}else
-					return;
-			}
-		}else
-			return;
-	}
-
-    if (stop && (moveanim != 0)) {
-        moveanim->stop();
     }
-    if (this->target != 0) {
-        this->target->unrefer();
-    }
-    this->target = target;
-    target->referTo();
-    targetcell = target->getBPos(cellpos);
-    if (attackanim == 0) {
-        attackanim = new UAttackAnimEvent(0, this);
-        p::aequeue->scheduleEvent(attackanim);
-    } else {
-        attackanim->update();
-    }
+  } else {
+    Weap = type->getWeapon();
+    if (Weap != 0){
+      if (!Weap->getProjectile()->AntiGround()){
+        Weap = type->getWeapon(false);
+        if (Weap != 0){
+          if (!Weap->getProjectile()->AntiGround())
+            return;
+        }else
+          return;
+      }
+    }else
+      return;
+  }
+
+  if (stop && (moveanim != 0)) {
+    moveanim->stop();
+  }
+  if (this->target != 0) {
+    this->target->unrefer();
+  }
+  this->target = target;
+  target->referTo();
+  targetcell = target->getBPos(cellpos);
+  if (attackanim == 0) {
+    attackanim = new UAttackAnimEvent(0, this);
+    p::aequeue->scheduleEvent(attackanim);
+  } else {
+    attackanim->update();
+  }
 }
 
 void Unit::turn(Uint8 facing, Uint8 layer)
 {
-    TurnAnimEvent** t;
-    switch (layer) {
+  TurnAnimEvent** t;
+  switch (layer) {
     case 0:
-        t = &turnanim1;
-        break;
+      t = &turnanim1;
+      break;
     case 1:
-        t = &turnanim2;
-        break;
+      t = &turnanim2;
+      break;
     default:
-        Logger::getInstance()->Error("invalid arg of %i to Unit::turn\n");//,layer);
-        return;
-        break;
-    }
-    if (*t == 0) {
-        *t = new TurnAnimEvent(type->getROT(), this, facing, layer);
-        p::aequeue->scheduleEvent(*t);
-    } else {
-        (*t)->changedir(facing);
-    }
+      Logger::getInstance()->Error("invalid arg of %i to Unit::turn\n");//,layer);
+      return;
+      break;
+  }
+  if (*t == 0) {
+    *t = new TurnAnimEvent(type->getROT(), this, facing, layer);
+    p::aequeue->scheduleEvent(*t);
+  } else {
+    (*t)->changedir(facing);
+  }
 
 }
 
 void Unit::stop()
 {
-    if (moveanim != 0) {
-        moveanim->stop();
-    }
-    if (attackanim != 0) {
-        attackanim->stop();
-    }
+  if (moveanim != 0) {
+    moveanim->stop();
+  }
+  if (attackanim != 0) {
+    attackanim->stop();
+  }
 }
 
 void Unit::remove()
 {
-    p::ccmap->getPlayerPool()->getPlayer(this->getOwner())->lostUnit(this, deployed);
-    UnitOrStructure::remove();
+  p::ccmap->getPlayerPool()->getPlayer(this->getOwner())->lostUnit(this, deployed);
+  UnitOrStructure::remove();
 }
 
 void Unit::applyDamage(Sint16 amount, Weapon* weap, UnitOrStructure* attacker)
 {
 
-//	printf ("%s line %i: Apply damage, damage = %i\n", __FILE__, __LINE__, amount);
+  //	printf ("%s line %i: Apply damage, damage = %i\n", __FILE__, __LINE__, amount);
 
-	LastDamageTick = SDL_GetTicks();
+  LastDamageTick = SDL_GetTicks();
 
-	if (this->getOwner() != p::ccmap->getPlayerPool()->getLPlayerNum()){
-		// This unit is from a computer player
-		if (p::ccmap->getGameMode() != GAME_MODE_SINGLE_PLAYER){
-			pc::ai->DefendComputerPlayerUnitUnderAttack ( p::ccmap->getPlayerPool()->getPlayer(this->getOwner()), this->getOwner(), attacker, this );
-		}
-	}
+  if (this->getOwner() != p::ccmap->getPlayerPool()->getLPlayerNum()){
+    // This unit is from a computer player
+    if (p::ccmap->getGameMode() != GAME_MODE_SINGLE_PLAYER){
+      pc::ai->DefendComputerPlayerUnitUnderAttack ( p::ccmap->getPlayerPool()->getPlayer(this->getOwner()), this->getOwner(), attacker, this );
+    }
+  }
 #if 0
-	else {
-		// The structure is from the local player
-		if ((SDL_GetTicks() - LastAttackTick) > (60 * 1000)){
-			pc::sfxeng->PlaySound(pc::Config.BaseUnderAttack);
-			LastAttackTick = SDL_GetTicks();
-		}
-	}
+  else {
+    // The structure is from the local player
+    if ((SDL_GetTicks() - LastAttackTick) > (60 * 1000)){
+      pc::sfxeng->PlaySound(pc::Config.BaseUnderAttack);
+      LastAttackTick = SDL_GetTicks();
+    }
+  }
 #endif
 
-	// If the Weapon exist
-	if (weap != 0){
-		amount = (Sint16)((double)amount * weap->getVersus(type->getArmor()));
-	}
+  // If the Weapon exist
+  if (weap != 0){
+    amount = (Sint16)((double)amount * weap->getVersus(type->getArmor()));
+  }
 
-    if ((getHealth()-amount) <= 0)
-    {
-        // Throw the event
-        MACRO_LOG_DEBUG("TRIGGER_EVENT_DESTROYED unit")
+  if ((getHealth()-amount) <= 0)
+  {
+    // Throw the event
+    MACRO_LOG_DEBUG("TRIGGER_EVENT_DESTROYED unit")
 
-        // (-1 means nothing)
-        HandleTriggers((UnitOrStructure*)this, TRIGGER_EVENT_DESTROYED, -1);
+    // (-1 means nothing)
+    HandleTriggers((UnitOrStructure*)this, TRIGGER_EVENT_DESTROYED, -1);
 
-        doRandTalk(TB_die);
+    doRandTalk(TB_die);
 
-        // Add a death for stats
-        if (attacker != 0){
-            p::ccmap->getPlayerPool()->getPlayer(attacker->getOwner())->addUnitKill();
-        }
-
-        // todo: add infantry death animation here
-
-        // remove the unit
-        p::uspool->removeUnit(this);
-        return;
-    } else if ((getHealth()-amount) > type->getMaxHealth()) {
-        setHealth(type->getMaxHealth());
-    } else {
-        setHealth((Uint16)(getHealth() - amount));
+    // Add a death for stats
+    if (attacker != 0){
+      p::ccmap->getPlayerPool()->getPlayer(attacker->getOwner())->addUnitKill();
     }
-    ratio = (double)getHealth() / (double)type->getMaxHealth();
+
+    // todo: add infantry death animation here
+
+    // remove the unit
+    p::uspool->removeUnit(this);
+    return;
+  } else if ((getHealth()-amount) > type->getMaxHealth()) {
+    setHealth(type->getMaxHealth());
+  } else {
+    setHealth((Uint16)(getHealth() - amount));
+  }
+  ratio = (double)getHealth() / (double)type->getMaxHealth();
 }
 
 void Unit::updateDamaged()
 {
-	ratio = (double)getHealth() / (double)type->getMaxHealth();
+  ratio = (double)getHealth() / (double)type->getMaxHealth();
 }
 
 /**
@@ -591,23 +587,23 @@ void Unit::updateDamaged()
  */
 bool Unit::IsHarvester()
 {
-    // Check if the internal type of this unit is "HARV"
-    if (type->getName() == "HARV")
-    {
-        // Return true because it's an Harvester
-        return true;
-    }
-    // Return false because it's not an Harvester
-    return false;
+  // Check if the internal type of this unit is "HARV"
+  if (type->getName() == "HARV")
+  {
+    // Return true because it's an Harvester
+    return true;
+  }
+  // Return false because it's not an Harvester
+  return false;
 }
 
 bool Unit::IsHarvesting()
 {
-	if (harvestanim != 0)
-	{
-		return true;
-	}
-	return false;
+  if (harvestanim != 0)
+  {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -615,99 +611,99 @@ bool Unit::IsHarvesting()
  */
 Uint32 Unit::FindTiberium()
 {
-	Uint32 tiberium = 0;
-	Uint32 ClosesedPos = 0;
-	Uint32 ClosesedDistance = 0;
-	Uint32 Distance = 0;
-	Uint32 ClosesedExpensivePos = 0;
-	Uint32 ClosesedExpensiveDistance = 0;
-	bool FirstFound = false;
-	bool FirstExpensiveFound = false;
+  Uint32 tiberium = 0;
+  Uint32 ClosesedPos = 0;
+  Uint32 ClosesedDistance = 0;
+  Uint32 Distance = 0;
+  Uint32 ClosesedExpensivePos = 0;
+  Uint32 ClosesedExpensiveDistance = 0;
+  bool FirstFound = false;
+  bool FirstExpensiveFound = false;
 
-	Uint8 typeNumber;
-	Uint8 amount;
+  Uint8 typeNumber;
+  Uint8 amount;
 
-	//getUnitAt(Uint32 cell, Uint8 subcell);
+  //getUnitAt(Uint32 cell, Uint8 subcell);
 
-	for (unsigned int pos =0; pos < p::ccmap->getSize(); pos++)
-	{
-		tiberium = p::ccmap->getResource(pos, &typeNumber, &amount);
-		if (tiberium != 0)
-		{
-			// Found tiberium
-			//printf ("Found tiberium\n");
-			Distance = this->getDist(pos);
-			if (Distance < ClosesedDistance || !FirstFound)
-            {
-				if (p::uspool->getUnitAt(pos) == 0)
-                {
-					ClosesedPos		= pos;
-					ClosesedDistance	= Distance;
-					FirstFound = true;
-				}
+  for (unsigned int pos =0; pos < p::ccmap->getSize(); pos++)
+  {
+    tiberium = p::ccmap->getResource(pos, &typeNumber, &amount);
+    if (tiberium != 0)
+    {
+      // Found tiberium
+      //printf ("Found tiberium\n");
+      Distance = this->getDist(pos);
+      if (Distance < ClosesedDistance || !FirstFound)
+      {
+        if (p::uspool->getUnitAt(pos) == 0)
+        {
+          ClosesedPos		= pos;
+          ClosesedDistance	= Distance;
+          FirstFound = true;
+        }
 
-				// Initialize the expensive values
-				if (typeNumber < 4 && ClosesedExpensivePos == 0)
-                {
-					ClosesedExpensivePos		= pos;
-					ClosesedExpensiveDistance	= Distance;
-				}
-			}
-			if (typeNumber < 4)
-            {
-				//Christal
-				Distance = this->getDist(pos);
-				if (Distance < ClosesedExpensiveDistance || !FirstExpensiveFound){
-					if (p::uspool->getUnitAt(pos) == 0){
-						ClosesedExpensivePos		= pos;
-						ClosesedExpensiveDistance	= Distance;
-						FirstExpensiveFound = true;
-					}
-				}
-			}
-		}
-	}
-//	if (owner != p::ccmap->getPlayerPool()->getLPlayerNum()){
-//		printf ("%s line %i: Exdist = %i, Dist = %i, ExFound = %i\n", __FILE__, __LINE__, ClosesedExpensiveDistance, ClosesedDistance, FirstExpensiveFound);
-//	}
-	if (this->getOwner() != p::ccmap->getPlayerPool()->getLPlayerNum() && ((ClosesedExpensiveDistance < (ClosesedDistance*3)) || ClosesedExpensiveDistance < 10) && FirstExpensiveFound){
-		//printf ("Return closesed expecive pos");
-		return ClosesedExpensivePos;
-	}
+        // Initialize the expensive values
+        if (typeNumber < 4 && ClosesedExpensivePos == 0)
+        {
+          ClosesedExpensivePos		= pos;
+          ClosesedExpensiveDistance	= Distance;
+        }
+      }
+      if (typeNumber < 4)
+      {
+        //Christal
+        Distance = this->getDist(pos);
+        if (Distance < ClosesedExpensiveDistance || !FirstExpensiveFound){
+          if (p::uspool->getUnitAt(pos) == 0){
+            ClosesedExpensivePos		= pos;
+            ClosesedExpensiveDistance	= Distance;
+            FirstExpensiveFound = true;
+          }
+        }
+      }
+    }
+  }
+  //	if (owner != p::ccmap->getPlayerPool()->getLPlayerNum()){
+  //		printf ("%s line %i: Exdist = %i, Dist = %i, ExFound = %i\n", __FILE__, __LINE__, ClosesedExpensiveDistance, ClosesedDistance, FirstExpensiveFound);
+  //	}
+  if (this->getOwner() != p::ccmap->getPlayerPool()->getLPlayerNum() && ((ClosesedExpensiveDistance < (ClosesedDistance*3)) || ClosesedExpensiveDistance < 10) && FirstExpensiveFound){
+    //printf ("Return closesed expecive pos");
+    return ClosesedExpensivePos;
+  }
 
-	return ClosesedPos;
+  return ClosesedPos;
 }
 
 /**
  * @param pos position to harvest
- * @param Struct 
+ * @param Struct Struct
  */
 void Unit::Harvest(Uint32 pos, Structure* Struct)
 {
-	if (harvestanim == 0)
-	{
-		harvestanim = new UHarvestEvent(0, this);
-		p::aequeue->scheduleEvent(harvestanim);
-	}
-	else
-	{
-		harvestanim->update();
+  if (harvestanim == 0)
+  {
+    harvestanim = new UHarvestEvent(0, this);
+    p::aequeue->scheduleEvent(harvestanim);
+  }
+  else
+  {
+    harvestanim->update();
+  }
+
+  if (pos != 0)
+  {
+    if (moveanim != 0)
+    {
+      this->move(pos, false);
     }
+    //		moveanim->stop();
+    harvestanim->setHarvestingPos(pos);
+  }
 
-	if (pos != 0)
-	{
-		if (moveanim != 0)
-		{
-			this->move(pos, false);
-		}
-//		moveanim->stop();
-		harvestanim->setHarvestingPos(pos);
-	}
-
-	if (Struct != 0)
-	{
-		SetBaseRefinery(Struct);
-	}
+  if (Struct != 0)
+  {
+    SetBaseRefinery(Struct);
+  }
 }
 
 /**
@@ -715,49 +711,49 @@ void Unit::Harvest(Uint32 pos, Structure* Struct)
  */
 bool Unit::Repair(Structure *str)
 {
-    // Get the type of the structure
-    StructureType* strType = dynamic_cast<StructureType*>(str->getType());
+  // Get the type of the structure
+  StructureType* strType = dynamic_cast<StructureType*>(str->getType());
 
-    // Check if the structure is "FIX"
-    if (strType->getName() == "FIX")
-    {
-        return false;
-    }
+  // Check if the structure is "FIX"
+  if (strType->getName() == "FIX")
+  {
+    return false;
+  }
 
-	// Get coordinates	
-	Uint16 xpos;
-	Uint16 ypos;
-	p::ccmap->translateFromPos(str->getPos(), &xpos, &ypos);
+  // Get coordinates
+  Uint16 xpos;
+  Uint16 ypos;
+  p::ccmap->translateFromPos(str->getPos(), &xpos, &ypos);
 
-	// Try to get the middle
-	xpos += strType->getXsize()/2 ;
-	ypos += strType->getYsize()/2;
+  // Try to get the middle
+  xpos += strType->getXsize()/2 ;
+  ypos += strType->getYsize()/2;
 
-	fix_str_num = str->getNum();
-	fix_str_pos = (Uint16)p::ccmap->translateToPos(xpos, ypos);
+  fix_str_num = str->getNum();
+  fix_str_pos = (Uint16)p::ccmap->translateToPos(xpos, ypos);
 
-	if (repairanim == 0) {
-		repairanim = new URepairEvent(0, this);
-		p::aequeue->scheduleEvent(repairanim);
-	} else {
-		repairanim->update();
-	}
+  if (repairanim == 0) {
+    repairanim = new URepairEvent(0, this);
+    p::aequeue->scheduleEvent(repairanim);
+  } else {
+    repairanim->update();
+  }
 
-	move(fix_str_pos);
+  move(fix_str_pos);
 
-	return true;
+  return true;
 }
 
 /**
  */
 void Unit::doRandTalk(TalkbackType ttype)
 {
-    const char* sname;
-    sname = type->getRandTalk(ttype);
-    if (sname != 0)
-    {
-        pc::sfxeng->PlaySound(sname);
-    }
+  const char* sname;
+  sname = type->getRandTalk(ttype);
+  if (sname != 0)
+  {
+    pc::sfxeng->PlaySound(sname);
+  }
 }
 
 /**
@@ -765,17 +761,17 @@ void Unit::doRandTalk(TalkbackType ttype)
  */
 bool Unit::deploy()
 {
-    // error catching
-    if (type->canDeploy())
+  // error catching
+  if (type->canDeploy())
+  {
+    //if (type->getDeployTarget() != 0)
     {
-        //if (type->getDeployTarget() != 0)
-        {
-            deployed = true;
-            p::uspool->removeUnit(this);
-            return true;
-        }
+      deployed = true;
+      p::uspool->removeUnit(this);
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -784,15 +780,15 @@ bool Unit::deploy()
  */
 bool Unit::canDeploy(CnCMap* theMap)
 {
-    if (type->canDeploy())
+  if (type->canDeploy())
+  {
+    if (!deployed)
     {
-        if (!deployed)
-        {
-            return checkDeployTarget(theMap, calcDeployPos());
-        }
-        return false;
+      return checkDeployTarget(theMap, calcDeployPos());
     }
     return false;
+  }
+  return false;
 }
 
 /**
@@ -802,243 +798,233 @@ bool Unit::canDeploy(CnCMap* theMap)
  */
 bool Unit::checkDeployTarget(CnCMap* theMap, Uint32 pos)
 {
-    Uint8 placexpos;
-    Uint8 placeypos;
-    Uint32 curpos;
-    Uint8 typewidth;
-    Uint8 typeheight;
+  Uint8 placexpos;
+  Uint8 placeypos;
+  Uint32 curpos;
+  Uint8 typewidth;
+  Uint8 typeheight;
 
-    if (pos == (Uint32)(-1))
-    {
-        return false;
-    }
-    if (type->getDeployType() == 0)
-    {
-        return false;
-    }
+  if (pos == (Uint32)(-1))
+  {
+    return false;
+  }
+  if (type->getDeployType() == 0)
+  {
+    return false;
+  }
 
-    typewidth = type->getDeployType()->getXsize();
-    typeheight = type->getDeployType()->getYsize();
+  typewidth = type->getDeployType()->getXsize();
+  typeheight = type->getDeployType()->getYsize();
 
-    if ((pos%theMap->getWidth())+typewidth > theMap->getWidth())
-    {
-        return false;
-    }
-    if ((pos/theMap->getWidth())+typeheight > theMap->getHeight())
-    {
-        return false;
-    }
+  if ((pos%theMap->getWidth())+typewidth > theMap->getWidth())
+  {
+    return false;
+  }
+  if ((pos/theMap->getWidth())+typeheight > theMap->getHeight())
+  {
+    return false;
+  }
 
-    for( placeypos = 0; placeypos < typeheight; ++placeypos)
+  for( placeypos = 0; placeypos < typeheight; ++placeypos)
+  {
+    for( placexpos = 0; placexpos < typewidth; ++placexpos)
     {
-        for( placexpos = 0; placexpos < typewidth; ++placexpos)
+      curpos = pos + placeypos*theMap->getWidth() + placexpos;
+      if( type->getDeployType()->isBlocked(placeypos*typewidth+placexpos) )
+      {
+        if (!p::ccmap->isBuildableAt(this->getOwner(), curpos,this))
         {
-            curpos = pos + placeypos*theMap->getWidth() + placexpos;
-            if( type->getDeployType()->isBlocked(placeypos*typewidth+placexpos) )
-            {
-                if (!p::ccmap->isBuildableAt(this->getOwner(), curpos,this))
-                {
-                    return false;
-                }
-            }
+          return false;
         }
+      }
     }
-    return true;
+  }
+  return true;
 }
 
 /**
  */
 Uint32 Unit::calcDeployPos() const
 {
-    Uint32 deploypos;
-    Uint32 mapwidth;
-    Uint8 w;
-    Uint8 h;
+  Uint32 deploypos;
+  Uint32 mapwidth;
+  Uint8 w;
+  Uint8 h;
 
 
-    mapwidth = p::ccmap->getWidth();
+  mapwidth = p::ccmap->getWidth();
 
-    if (type->getDeployType() == 0)
+  if (type->getDeployType() == 0)
+  {
+    if (cellpos%mapwidth == mapwidth)
     {
-        if (cellpos%mapwidth == mapwidth)
-        {
-            return (Uint32)-1;
-        }
-        deploypos = cellpos+1;
-    } else {
-        w = type->getDeployType()->getXsize();
-        h = type->getDeployType()->getYsize();
-
-        deploypos = cellpos;
-        if ((Uint32)(w >> 1) > deploypos)
-            return (Uint32)-1; // large number
-        else
-            deploypos -= w >> 1;
-        if ((mapwidth*(h >> 1)) > deploypos)
-            return (Uint32)-1;
-        else
-            deploypos -= mapwidth*(h >> 1);
+      return (Uint32)-1;
     }
-    return deploypos;
+    deploypos = cellpos+1;
+  } else {
+    w = type->getDeployType()->getXsize();
+    h = type->getDeployType()->getYsize();
+
+    deploypos = cellpos;
+    if ((Uint32)(w >> 1) > deploypos)
+      return (Uint32)-1; // large number
+    else
+      deploypos -= w >> 1;
+    if ((mapwidth*(h >> 1)) > deploypos)
+      return (Uint32)-1;
+    else
+      deploypos -= mapwidth*(h >> 1);
+  }
+  return deploypos;
 }
 
 Uint32 Unit::calcDeployPos(Uint32 pos) const
 {
-    Uint32 deploypos;
-    Uint32 mapwidth = p::ccmap->getWidth();
-    Uint8 w,h;
+  Uint32 deploypos;
+  Uint32 mapwidth = p::ccmap->getWidth();
+  Uint8 w,h;
 
-    if (type->getDeployType() == 0) {
-        if (pos%mapwidth == mapwidth) {
-            return (Uint32)-1;
-        }
-        deploypos = pos+1;
-    } else {
-        w = type->getDeployType()->getXsize();
-        h = type->getDeployType()->getYsize();
-
-        deploypos = pos;
-        if ((Uint32)(w >> 1) > deploypos)
-            return (Uint32)-1; // large number
-        else
-            deploypos -= w >> 1;
-        if ((mapwidth*(h >> 1)) > deploypos)
-            return (Uint32)-1;
-        else
-            deploypos -= mapwidth*(h >> 1);
+  if (type->getDeployType() == 0) {
+    if (pos%mapwidth == mapwidth) {
+      return (Uint32)-1;
     }
-    return deploypos;
+    deploypos = pos+1;
+  } else {
+    w = type->getDeployType()->getXsize();
+    h = type->getDeployType()->getYsize();
+
+    deploypos = pos;
+    if ((Uint32)(w >> 1) > deploypos)
+      return (Uint32)-1; // large number
+    else
+      deploypos -= w >> 1;
+    if ((mapwidth*(h >> 1)) > deploypos)
+      return (Uint32)-1;
+    else
+      deploypos -= mapwidth*(h >> 1);
+  }
+  return deploypos;
 }
 
 Uint32 Unit::getExitCell() const
 {
-	return calcDeployPos();
+  return calcDeployPos();
 }
 
 double Unit::getRatio() const
 {
-	return ratio;
+  return ratio;
 }
 
 Uint16 Unit::getDist(Uint16 pos)
 {
-    Uint16 x, y, nx, ny, xdiff, ydiff;
-    x = cellpos%p::ccmap->getWidth();
-    y = cellpos/p::ccmap->getWidth();
-    nx = pos%p::ccmap->getWidth();
-    ny = pos/p::ccmap->getWidth();
+  Uint16 x, y, nx, ny, xdiff, ydiff;
+  x = cellpos%p::ccmap->getWidth();
+  y = cellpos/p::ccmap->getWidth();
+  nx = pos%p::ccmap->getWidth();
+  ny = pos/p::ccmap->getWidth();
 
-    xdiff = abs(x-nx);
-    ydiff = abs(y-ny);
-//    return min(xdiff,ydiff)+abs(xdiff-ydiff);
-	double res = sqrt(double(xdiff*xdiff+ydiff*ydiff));
-    return (Uint16)res;
+  xdiff = abs(x-nx);
+  ydiff = abs(y-ny);
+  //    return min(xdiff,ydiff)+abs(xdiff-ydiff);
+  double res = sqrt(double(xdiff*xdiff+ydiff*ydiff));
+  return (Uint16)res;
 }
 
 /**
  */
 Uint16 Unit::getTargetCell()
 {
-    if (attackanim != 0 && target != 0) 
-    {
-        return target->getBPos(cellpos);
-    }
-    return targetcell;
+  if (attackanim != 0 && target != 0)
+  {
+    return target->getBPos(cellpos);
+  }
+  return targetcell;
 }
 
 Structure* Unit::GetBaseRefinery()
 {
-	return BaseRefinery;
+  return BaseRefinery;
 }
 
 void Unit::SetBaseRefinery (Structure *Bref)
 {
-	printf ("Set base refinery\n");
-	BaseRefinery = Bref;
-	if (harvestanim == 0)
-	{
-		harvestanim = new UHarvestEvent(0, this);
-		p::aequeue->scheduleEvent(harvestanim);
-	} else {
-		harvestanim->update();
-	}
+  printf ("Set base refinery\n");
+  BaseRefinery = Bref;
+  if (harvestanim == 0)
+  {
+    harvestanim = new UHarvestEvent(0, this);
+    p::aequeue->scheduleEvent(harvestanim);
+  } else {
+    harvestanim->update();
+  }
 }
 
 void Unit::AddResource (Uint8 ResourceType)
 {
-	ResourceTypes[NumbResources] = ResourceType;  // Resource type in harvester
-	NumbResources++;
+  ResourceTypes[NumbResources] = ResourceType;  // Resource type in harvester
+  NumbResources++;
 }
 
 void Unit::EmptyResources()
 {
-	NumbResources = 0;  // Resource type in harvester
+  NumbResources = 0;  // Resource type in harvester
 }
 
 Uint8 Unit::GetNumResources()
 {
-	return NumbResources;  // Resource type in harvester
+  return NumbResources;  // Resource type in harvester
 }
 
 bool Unit::GetResourceType (Uint8 Numb, Uint8 *Type)
 {
-	if (Numb < NumbResources)
-	{
-		*Type = ResourceTypes[Numb];
-		return true;
-	}
-	return false;
+  if (Numb < NumbResources)
+  {
+    *Type = ResourceTypes[Numb];
+    return true;
+  }
+  return false;
 }
 
-Uint32 Unit::GetFixStr()
-{
-	return fix_str_num;
+Uint32 Unit::GetFixStr() {
+  return fix_str_num;
 }
 
-Uint16 Unit::GetFixPos()
-{
-	return fix_str_pos;
+Uint16 Unit::GetFixPos() {
+  return fix_str_pos;
 }
 
-bool Unit::IsAirBound()
-{
-	if (type->getType() == UN_PLANE ||
-		type->getType() == UN_HELICOPTER)
-	{
-		return true;
-	}
-	return false;
+bool Unit::IsAirBound() {
+  if (type->getType() == UN_PLANE || type->getType() == UN_HELICOPTER) {
+    return true;
+  }
+  return false;
 }
 
-bool Unit::IsWaterBound()
-{
-	if (type->getType() == UN_BOAT)
-		return true;
-	return false;
+bool Unit::IsWaterBound() {
+  if (type->getType() == UN_BOAT)
+    return true;
+  return false;
 }
 
-string Unit::getTriggerName()
-{
-	return TriggerName;
+std::string Unit::getTriggerName() {
+  return TriggerName;
 }
 
-UInfiltrateAnimEvent* Unit::getInfianim()
-{
-	return infianim;
+UInfiltrateAnimEvent* Unit::getInfianim() {
+  return infianim;
 }
 
-void Unit::setInfianim(UInfiltrateAnimEvent* anim)
-{
-	this->infianim = infianim;
+void Unit::setInfianim(UInfiltrateAnimEvent* anim) {
+  infianim = anim;
 }
 
 /**
  * @param target Structure to infiltrate
  */
-void Unit::Infiltrate(Structure* target)
-{
-	this->target = target;
+void Unit::Infiltrate(Structure* target) {
+  this->target = target;
 
-	this->infianim = new UInfiltrateAnimEvent(0, this);
-	p::aequeue->scheduleEvent(infianim);
+  this->infianim = new UInfiltrateAnimEvent(0, this);
+  p::aequeue->scheduleEvent(infianim);
 }

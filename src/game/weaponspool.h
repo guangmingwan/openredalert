@@ -1,6 +1,5 @@
 // weaponspool.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -28,26 +27,23 @@ class Projectile;
 class Weapon;
 class Warhead;
 
-using std::string;
-using std::map;
-
 class WeaponsPool {
-public:
-    friend class Weapon;
-   // friend class Projectile;
-   // friend class Warhead;
-    WeaponsPool();
-    ~WeaponsPool();
+ public:
+  friend class Weapon;
+  // friend class Projectile;
+  // friend class Warhead;
+  WeaponsPool();
+  ~WeaponsPool();
 
 
-    Weapon * getWeapon(const char * wname);
-    INIFile * getWeaponsINI();
+  Weapon * getWeapon(const char * wname);
+  INIFile * getWeaponsINI();
 
-private:
-    map < string, Weapon * > weaponspool;
-    map < string, Projectile * > projectilepool;
-    map < string, Warhead * > warheadpool;
-    INIFile * weapini;
+ private:
+  std::map<std::string, Weapon*> weaponspool;
+  std::map<std::string, Projectile*> projectilepool;
+  std::map<std::string, Warhead*> warheadpool;
+  INIFile * weapini;
 };
 
 #endif //WEAPONSPOOL_H

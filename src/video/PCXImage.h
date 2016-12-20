@@ -1,6 +1,5 @@
 // PCXImage.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
 #ifndef PCXIMAGE_H
 #define PCXIMAGE_H
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "PCXHeader.h"
@@ -29,28 +27,27 @@ class VFile;
 /**
  * Image in .pcx format
  */
-class PCXImage
-{
-public:
-	PCXImage(const char * fname, int scaleq);
-	~PCXImage();
+class PCXImage {
+ public:
+  PCXImage(const char * fname, int scaleq);
+  ~PCXImage();
 
-	SDL_Surface* getImage();
+  SDL_Surface* getImage();
 
-private:
-	void loadImage();
-	void readPalette();
+ private:
+  void loadImage();
+  void readPalette();
 
-	/** Header of the file */
-	PCXHeader header;
-	Uint32 imgsize;
-	Uint8 * pcxdata;
-	SDL_Color palette[256];
-	int scaleq;
-	ImageProc scaler;
-	SDL_Surface * image;
-	bool Use16ColorPalette;
-	bool HeaderError;
+  /** Header of the file */
+  PCXHeader header;
+  Uint32 imgsize;
+  Uint8 * pcxdata;
+  SDL_Color palette[256];
+  int scaleq;
+  ImageProc scaler;
+  SDL_Surface * image;
+  bool Use16ColorPalette;
+  bool HeaderError;
 };
 
 #endif //PCXIMAGE_H

@@ -34,9 +34,6 @@
 
 #include "misc/INIFile.h"
 
-using std::map;
-using std::string;
-
 /**
  *
  */
@@ -57,9 +54,9 @@ WeaponsPool::WeaponsPool()
  */
 WeaponsPool::~WeaponsPool()
 {
-	map<string, Weapon*>::const_iterator wpclear;
-	map<string, Warhead*>::const_iterator whpclear;
-	map<string, Projectile*>::const_iterator ppclear;
+	std::map<std::string, Weapon*>::const_iterator wpclear;
+	std::map<std::string, Warhead*>::const_iterator whpclear;
+	std::map<std::string, Projectile*>::const_iterator ppclear;
 
 	wpclear = weaponspool.begin();
 	whpclear = warheadpool.begin();
@@ -84,11 +81,11 @@ WeaponsPool::~WeaponsPool()
 
 Weapon *WeaponsPool::getWeapon(const char *wname)
 {
-	map<string, Weapon*>::iterator weapentry;
+	std::map<std::string, Weapon*>::iterator weapentry;
 	Weapon *weap;
-	string weapname;
+	std::string weapname;
 
-	weapname = (string)wname;
+	weapname = (std::string)wname;
 	// @todo DEBUG
 	//transform(weapname.begin(), weapname.end(), weapname.begin(), toupper);
 	weapentry = weaponspool.find(weapname);

@@ -20,10 +20,5 @@
 #include <string>
 #include <stdexcept>
 
-using std::string;
-using std::runtime_error;
-
-ImageNotFound::ImageNotFound(const string& msg) :
-	std::runtime_error(msg)
-{
+ImageNotFound::ImageNotFound(const std::string& msg) : std::runtime_error(msg) {
 }

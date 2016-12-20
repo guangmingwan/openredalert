@@ -1,6 +1,5 @@
 // SoundFile.h
 // 0.4
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,14 +19,11 @@
 
 #include <string>
 
-#include "SDL_types.h"
 #include "SDL_audio.h"
 
 #include "SoundBuffer.h"
 
 class VFile;
-
-using std::string;
 
 /**
  * Audio file
@@ -36,43 +32,42 @@ using std::string;
  * @version 1.1
  * @since r???
  */
-class SoundFile
-{
-public:
-    SoundFile();
-    ~SoundFile();
+class SoundFile {
+ public:
+  SoundFile();
+  ~SoundFile();
 
-    /** Load a file */
-    bool Open(const string& filename);
-    /** Close the file */
-    void Close();
+  /** Load a file */
+  bool Open(const std::string& filename);
+  /** Close the file */
+  void Close();
 
-    // Length is the max size in bytes of the uncompressed sample, returned
-    // in buffer. If length is zero, the full file is decoded.
-    Uint32 Decode(SampleBuffer& buffer, Uint32 length = 0);
+  // Length is the max size in bytes of the uncompressed sample, returned
+  // in buffer. If length is zero, the full file is decoded.
+  Uint32 Decode(SampleBuffer& buffer, Uint32 length = 0);
 
-private:
-    /** Name of the audio file */
-    string filename;
-    /** Reference to the file */
-    VFile* file;
-    /** true if file is opened */
-    bool fileOpened;
+ private:
+  /** Name of the audio file */
+  std::string filename;
+  /** Reference to the file */
+  VFile* file;
+  /** true if file is opened */
+  bool fileOpened;
 
-    // Header information
-    Uint16 frequency;
-    Uint32 comp_size;
-    Uint32 uncomp_size;
-    Uint8 flags;
-    Uint8 type;
+  // Header information
+  Uint16 frequency;
+  Uint32 comp_size;
+  Uint32 uncomp_size;
+  Uint8 flags;
+  Uint8 type;
 
-    /** IMADecode info */
-    Sint32 imaSample;
-    /** IMADecode info */
-    Sint32 imaIndex;
+  /** IMADecode info */
+  Sint32 imaSample;
+  /** IMADecode info */
+  Sint32 imaIndex;
 
-    /** Audio converter filter */
-    SDL_AudioCVT* conv;
+  /** Audio converter filter */
+  SDL_AudioCVT* conv;
 };
 
 #endif //SOUNDFILE_H

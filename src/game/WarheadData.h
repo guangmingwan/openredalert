@@ -1,6 +1,5 @@
 // WarheadData.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,77 +19,71 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
 #include "misc/INIFile.h"
 
-
-using std::string;
-
 /**
- * This is what gives the "rock, paper, scissors" character to the game. It describes how the damage is to be applied to the target. The values should take into consideration the 'area of effect'.; example: Although an armor piercing tank round would instantly kill a soldier IF it hit, the anti-infantry rating is still very low because the tank round has such a limited area of effect, lacks pinpoint accuracy, and acknowledges the fact that tanks pose little threat to infantry that take cover. 
+ * This is what gives the "rock, paper, scissors" character to the game. It describes how the damage is to be applied to the target. The values should take into consideration the 'area of effect'.; example: Although an armor piercing tank round would instantly kill a soldier IF it hit, the anti-infantry rating is still very low because the tank round has such a limited area of effect, lacks pinpoint accuracy, and acknowledges the fact that tanks pose little threat to infantry that take cover.
  */
 class WarheadData {
-public:
+ public:
+  uint32_t getSpread();
 
-    Uint32 getSpread();
+  void setSpread(uint32_t spread);
 
-    void setSpread(Uint32 spread);
+  uint32_t getWall();
 
-    Uint32 getWall();
+  void setWall(uint32_t wall);
 
-    void setWall(Uint32 wall);
+  uint32_t getWood();
 
-    Uint32 getWood();
+  void setWood(uint32_t wood);
 
-    void setWood(Uint32 wood);
+  uint32_t getOre();
 
-    Uint32 getOre();
+  void setOre(uint32_t ore);
 
-    void setOre(Uint32 ore);
+  uint32_t getVersusNone();
 
-    Uint32 getVersusNone();
+  void setVersusNone(uint32_t versusNone);
 
-    void setVersusNone(Uint32 versusNone);
+  uint32_t getVersusWood();
 
-    Uint32 getVersusWood();
+  void setVersusWood(uint32_t versusWood);
 
-    void setVersusWood(Uint32 versusWood);
+  uint32_t getVersusLight();
 
-    Uint32 getVersusLight();
+  void setVersusLight(uint32_t versusLight);
 
-    void setVersusLight(Uint32 versusLight);
+  uint32_t getVersusHeavy();
 
-    Uint32 getVersusHeavy();
+  void setVersusHeavy(uint32_t versusHeavy);
 
-    void setVersusHeavy(Uint32 versusHeavy);
+  uint32_t getVersusConcrete();
 
-    Uint32 getVersusConcrete();
+  void setVersusConcrete(uint32_t versusConcrete);
 
-    void setVersusConcrete(Uint32 versusConcrete);
+  uint32_t getExplosion();
 
-    Uint32 getExplosion();
+  void setExplosion(uint32_t explosion);
 
-    void setExplosion(Uint32 explosion);
+  uint32_t getInfDeath();
 
-    Uint32 getInfDeath();
+  void setInfDeath(uint32_t infDeath);
 
-    void setInfDeath(Uint32 infDeath);
-    
-    static WarheadData* loadWarheadData(INIFile * file, string name);
-    void print();
+  static WarheadData* loadWarheadData(INIFile * file, std::string name);
+  void print();
 
 private:
-    Uint32 spread;
-    Uint32 wall;
-    Uint32 wood;
-    Uint32 ore;
-    Uint32 versusNone;
-    Uint32 versusWood;
-    Uint32 versusLight;
-    Uint32 versusHeavy;
-    Uint32 versusConcrete;
-    Uint32 explosion;
-    Uint32 infDeath;
+  uint32_t spread;
+  uint32_t wall;
+  uint32_t wood;
+  uint32_t ore;
+  uint32_t versusNone;
+  uint32_t versusWood;
+  uint32_t versusLight;
+  uint32_t versusHeavy;
+  uint32_t versusConcrete;
+  uint32_t explosion;
+  uint32_t infDeath;
 };
 #endif //WARHEADDATA_H

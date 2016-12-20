@@ -1,6 +1,5 @@
 // Message.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,23 +18,15 @@
 
 #include <string>
 
-#include "SDL_types.h"
-
-using std::string;
-
-Message::Message(string msg, Uint32 deltime)
-{
-    message = msg;
-    deltime = deltime;
+Message::Message(std::string msg, uint32_t deltime) {
+  message = msg;
+  deltime = deltime;
 }
 
-const char * Message::getMessage() const
-{
-    return message.c_str();
+const char * Message::getMessage() const {
+  return message.c_str();
 }
 
-bool Message::expired(Uint32 time) const
-{
-    return time > deltime;
+bool Message::expired(uint32_t time) const {
+  return time > deltime;
 }
-

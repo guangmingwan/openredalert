@@ -1,6 +1,5 @@
 // MultiPlayerMaps.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,40 +20,36 @@
 #include <string>
 #include <vector>
 
-using std::string;
-using std::vector;
-
-/** 
+/**
  * Multiplayer map class
  */
-class MultiPlayerMaps
-{
-public:
-    MultiPlayerMaps();
-    ~MultiPlayerMaps();
+class MultiPlayerMaps {
+ public:
+  MultiPlayerMaps();
+  ~MultiPlayerMaps();
 
-    bool getMapDescription(unsigned int Index, string & String);
+  bool getMapDescription(unsigned int Index, std::string &String);
 
-    /**
-     * Return a map name. 
-     */
-    bool getMapName(unsigned int Index, string & Name);
+  /**
+   * Return a map name.
+   */
+  bool getMapName(unsigned int Index, std::string &Name);
 
-private:
-    MultiPlayerMaps(const MultiPlayerMaps& orig);
+ private:
+  MultiPlayerMaps(const MultiPlayerMaps& orig);
 
-    /** Name of maps */
-    vector<string> MapNames;
-    /** Description of maps */
-    vector<string> MapDescriptions;
+  /** Name of maps */
+  std::vector<std::string> MapNames;
+  /** Description of maps */
+  std::vector<std::string> MapDescriptions;
 
-    /**
-     * Read information of Multi-Player maps from file "missions.pkt" in mix archives. 
-     */
-    void readMapData();
+  /**
+   * Read information of Multi-Player maps from file "missions.pkt" in mix archives.
+   */
+  void readMapData();
 
-    /** Function that try to list and load all maps in /data/maps folder **/
-    void loadMapsFolder();
+  /** Function that try to list and load all maps in /data/maps folder **/
+  void loadMapsFolder();
 };
 
 #endif //MULTIPLAYERMAPS_H

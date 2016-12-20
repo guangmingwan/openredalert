@@ -1,6 +1,5 @@
 // AiRules.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,8 +18,6 @@
 #define AIRULES_H
 
 #include <vector>
-
-#include "SDL_types.h"
 
 /**
  * Params of the Ai

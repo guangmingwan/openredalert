@@ -108,7 +108,6 @@ void SDLLayer::get_pixel ( SDL_Surface* Surface, SDL_Color &RGBcolor, Uint32 x, 
  * @param color the color gotten from the sdl surface (Uint32 color)
  * @param x x-pos in the picture to get the pixel color form
  * @param y y-pos in the picture to get the pixel color form
- * @returns void
  */
 void SDLLayer::set_pixel ( SDL_Surface* Surface, Uint32 color, Uint32 x, Uint32 y )
 {
@@ -144,7 +143,7 @@ void SDLLayer::set_pixel ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint32 x, U
  * @param color the color of the rectangle to draw
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
- * @param wdith the width of the rectangle to draw
+ * @param width the width of the rectangle to draw
  * @param height the heigth of the rectangle to draw
  * @param lnpx the line weigth of the square to draw
  */
@@ -187,10 +186,9 @@ void SDLLayer::draw_rectangle(SDL_Surface* Surface, Uint32 color, Uint16 x, Uint
  * @param RGBcolor the color of the rectangle to draw
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
- * @param wdith the width of the rectangle to draw
+ * @param width the width of the rectangle to draw
  * @param height the heigth of the rectangle to draw
  * @param lnpx the line weigth of the square to draw
- * @return void
  */
 void SDLLayer::draw_rectangle ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16 x, Uint16 y, Uint16 width, Uint16 height, Uint8 lnpx )
 {
@@ -205,9 +203,8 @@ void SDLLayer::draw_rectangle ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16
  * @param color the color of the rectangle to draw
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
- * @param wdith the width of the rectangle to draw
+ * @param width the width of the rectangle to draw
  * @param height the heigth of the rectangle to draw
- * @return void
  */
 void SDLLayer::draw_solidrectangle ( SDL_Surface* Surface, Uint32 color, Uint16 x, Uint16 y, Uint16 width, Uint16 height )
 {
@@ -231,9 +228,8 @@ void SDLLayer::draw_solidrectangle ( SDL_Surface* Surface, Uint32 color, Uint16 
  * @param RGBcolor the color of the rectangle to draw
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
- * @param wdith the width of the rectangle to draw
+ * @param width the width of the rectangle to draw
  * @param height the heigth of the rectangle to draw
- * @return void
  */
 void SDLLayer::draw_solidrectangle ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16 x, Uint16 y, Uint16 width, Uint16 height )
 {
@@ -249,8 +245,7 @@ void SDLLayer::draw_solidrectangle ( SDL_Surface* Surface, SDL_Color RGBcolor, U
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
  * @param length the heigth of the rectangle to draw
- * @param wdith the width of the rectangle to draw
- * @return void
+ * @param pt pt
  */
 void SDLLayer::draw_h_line ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16 x, Uint16 y, Uint16 length, Uint16 pt )
 {
@@ -264,9 +259,8 @@ void SDLLayer::draw_h_line ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16 x,
  * @param RGBcolor the color of the rectangle to draw
  * @param x x-pos of the rectangle to draw
  * @param y y-pos of the rectangle to draw
- * @param wdith the width of the rectangle to draw
- * @param height the heigth of the rectangle to draw
- * @return void
+ * @param length length
+ * @param pt pt
  */
 void SDLLayer::draw_v_line ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint16 x, Uint16 y, Uint16 length, Uint16 pt )
 {

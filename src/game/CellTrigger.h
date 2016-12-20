@@ -1,6 +1,5 @@
 // CellTrigger.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,15 +19,12 @@
 
 #include <string>
 
-using std::string;
-
-class CellTrigger
-{
-public:
-    string name;
-    unsigned int cellpos;
-    unsigned int x;
-    unsigned int y;
+class CellTrigger {
+ public:
+  std::string name;
+  unsigned int cellpos;
+  unsigned int x;
+  unsigned int y;
 };
 
 #endif //CELLTRIGGER_H

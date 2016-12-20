@@ -1,6 +1,5 @@
 // ActionEvent.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,31 +17,30 @@
 #ifndef ACTIONEVENT_H
 #define ACTIONEVENT_H
 
-#include "SDL_types.h"
+#include <cstdint>
 
-/** 
+/**
  * An abstract class which all actionevents must extend.
- *  
- * The run must be implemented. 
+ *
+ * The run must be implemented.
  */
-class ActionEvent 
-{
-public:
-    ActionEvent(Uint32 p);
+class ActionEvent {
+ public:
+  ActionEvent(uint32_t p);
 
-    void addCurtick(Uint32 curtick);
-    virtual void run();
+  void addCurtick(uint32_t curtick);
+  virtual void run();
 
-    void setDelay(Uint32 p);
+  void setDelay(uint32_t p);
 
-    Uint32 getPrio();
+  uint32_t getPrio();
 
-    virtual ~ActionEvent();
-    virtual void stop();
-    
-private:
-    Uint32 prio;
-    Uint32 delay;
+  virtual ~ActionEvent();
+  virtual void stop();
+
+ private:
+  uint32_t prio;
+  uint32_t delay;
 };
 
 #endif //ACTIONEVENT_H

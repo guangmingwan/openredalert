@@ -1,6 +1,5 @@
 // MissionMapsClass.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,30 +20,25 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
-
-using std::string;
-using std::vector;
-
 /**
  *  Mission map class
  *  reads out the missions from ____
  */
 class MissionMapsClass {
-public:
-	MissionMapsClass();	
-	
-	string getGdiMissionMap(Uint32 missionNumber);
-	string getNodMissionMap(Uint32 missionNumber);
+ public:
+  MissionMapsClass();
 
-private:
-	void readMissionData();
+  std::string getGdiMissionMap(uint32_t missionNumber);
+  std::string getNodMissionMap(uint32_t missionNumber);
 
-	vector<string> Mapdata;
-	vector<string> NodMissionMaps;
-	vector<string> GdiMissionMaps;
-	vector<string> MissionBriefing;
-	vector<string> MultiPlayerMapNames;
+ private:
+  void readMissionData();
+
+  std::vector<std::string> Mapdata;
+  std::vector<std::string> NodMissionMaps;
+  std::vector<std::string> GdiMissionMaps;
+  std::vector<std::string> MissionBriefing;
+  std::vector<std::string> MultiPlayerMapNames;
 };
 
 #endif //MISSIONMAPSCLASS_H

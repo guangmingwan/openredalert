@@ -1,6 +1,5 @@
 // RaWindow.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
 #ifndef RAWINDOW_H
 #define RAWINDOW_H
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 class Font;
@@ -31,36 +29,35 @@ class RA_Label;
  * @version 1.0
  * @since r???
  */
-class RaWindow
-{
-public:
-	RaWindow();
-	~RaWindow();
-	
-	void setPalette(Uint8 pal);
-	void DrawRaBackground();
-	void SolidFill(Uint8 red, Uint8 green, Uint8 blue);
-	void ResizeWindow(int Width, int Heigth);
-	void GetWindowPosition(int *Xpos, int *Ypos);
-	void ChangeWindowPosition(int Xpos, int Ypos);
-	SDL_Surface* GetWindowSurface();
-	void SetupWindow(int Xpos, int Ypos, int Width, int Heigth);
-	void DrawWindow();
+class RaWindow {
+ public:
+  RaWindow();
+  ~RaWindow();
 
-private:
-	SDL_Surface* ReadShpImage(char *Name, int ImageNumb, Uint8 palnum = 1);
-	
-	SDL_Surface* DisplaySurface;
-	SDL_Surface* WindowSurface;
-	SDL_Rect SizeAndPosition;
+  void setPalette(Uint8 pal);
+  void DrawRaBackground();
+  void SolidFill(Uint8 red, Uint8 green, Uint8 blue);
+  void ResizeWindow(int Width, int Heigth);
+  void GetWindowPosition(int *Xpos, int *Ypos);
+  void ChangeWindowPosition(int Xpos, int Ypos);
+  SDL_Surface* GetWindowSurface();
+  void SetupWindow(int Xpos, int Ypos, int Width, int Heigth);
+  void DrawWindow();
 
-	Uint32 Background;
-	Uint32 LeftBorder;
-	Uint32 RightBorder;
-	Uint32 TopBorder;
-	Uint32 BottomBorder;
-	Uint32 Corner;
-	Uint8 PalNr;
+ private:
+  SDL_Surface* ReadShpImage(char *Name, int ImageNumb, Uint8 palnum = 1);
+
+  SDL_Surface* DisplaySurface;
+  SDL_Surface* WindowSurface;
+  SDL_Rect SizeAndPosition;
+
+  Uint32 Background;
+  Uint32 LeftBorder;
+  Uint32 RightBorder;
+  Uint32 TopBorder;
+  Uint32 BottomBorder;
+  Uint32 Corner;
+  Uint8 PalNr;
 };
 
 #endif //RAWINDOW_H

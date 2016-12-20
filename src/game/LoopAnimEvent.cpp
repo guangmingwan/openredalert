@@ -1,6 +1,5 @@
 // LoopAnimEvent.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,19 +20,18 @@
 #include "anim_nfo.h"
 #include "Structure.h"
 
-LoopAnimEvent::LoopAnimEvent(Uint32 p, Structure* str) : BuildingAnimEvent(p, str, 1)
-{
-    updateDamaged();
-    framend = getaniminfo().loopend;
-    frame = 0;
+LoopAnimEvent::LoopAnimEvent(uint32_t p, Structure* str) : BuildingAnimEvent(p, str, 1) {
+  updateDamaged();
+  framend = getaniminfo().loopend;
+  frame = 0;
 }
-void LoopAnimEvent::anim_func(anim_nfo* data)
-{
-    updateDamaged();
-    data->frame0 = frame;
-    if ((frame-data->damagedelta) < framend) {
-        ++frame;
-    } else {
-        frame = data->damagedelta;
-    }
+
+void LoopAnimEvent::anim_func(anim_nfo* data) {
+  updateDamaged();
+  data->frame0 = frame;
+  if ((frame-data->damagedelta) < framend) {
+    ++frame;
+  } else {
+    frame = data->damagedelta;
+  }
 }

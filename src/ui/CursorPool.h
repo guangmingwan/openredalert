@@ -1,6 +1,5 @@
 // CursorPool.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,12 +20,6 @@
 #include <string>
 #include <map>
 #include <vector>
-
-#include "SDL_types.h"
-
-using std::string;
-using std::map;
-using std::vector;
 
 class CursorInfo;
 
@@ -83,16 +76,16 @@ class CursorInfo;
  no gold fix     213
  mini deploysupr 214-221
  */
-class CursorPool
-{
-public:
-    CursorPool();
-    ~CursorPool();
-    CursorInfo* getCursorByName(string name);
 
-private:
-    vector<CursorInfo*> cursorpool;
-    map<string, Uint16> name2index;
+class CursorPool {
+ public:
+  CursorPool();
+  ~CursorPool();
+  CursorInfo* getCursorByName(std::string name);
+
+ private:
+  std::vector<CursorInfo*> cursorpool;
+  std::map<std::string, uint16_t> name2index;
 };
 
 #endif //CURSORPOOL_H

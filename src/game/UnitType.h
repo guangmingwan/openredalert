@@ -1,6 +1,5 @@
 // UnitType.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,8 +19,6 @@
 
 #include <vector>
 
-#include "SDL_types.h"
-
 #include "UnitOrStructureType.h"
 #include "TalkbackType.h"
 
@@ -34,110 +31,107 @@ class WeaponsPool;
 class INIFile;
 class L2Overlay;
 
-using std::vector;
-
 /**
  * Type of unit with stats
  */
-class UnitType : public UnitOrStructureType
-{
-public:
-    UnitType(const string& typeName, INIFile* unitini);
-    ~UnitType();
+class UnitType : public UnitOrStructureType {
+ public:
+  UnitType(const std::string& typeName, INIFile* unitini);
+  ~UnitType();
 
-    Uint32 *getSHPNums();
-    Uint8 getNumLayers() const;
-    bool isInfantry() const;
-    Uint8 getType() const;
-    Uint16 *getSHPTNum();
+  uint32_t *getSHPNums();
+  uint8_t getNumLayers() const;
+  bool isInfantry() const;
+  uint8_t getType() const;
+  uint16_t *getSHPTNum();
 
-    virtual vector<string> getOwners() const;
-    Uint8 getOffset() const;
+  virtual std::vector<std::string> getOwners() const;
+  uint8_t getOffset() const;
 
-    Uint8 getROT() const;
-    Sint8 getMoveMod() const;
-    Uint8 getTurnMod() const;
+  uint8_t getROT() const;
+  int8_t getMoveMod() const;
+  uint8_t getTurnMod() const;
 
-    Uint8 getTurnspeed() const;
+  uint8_t getTurnspeed() const;
 
-    armor_t getArmor() const;
+  armor_t getArmor() const;
 
 #ifdef LOOPEND_TURN
 
-    animinfo_t getAnimInfo() const
-    {
-        return animinfo;
-    }
+  animinfo_t getAnimInfo() const
+  {
+    return animinfo;
+  }
 #endif
 
-    const char* getRandTalk(TalkbackType type) const;
+  const char* getRandTalk(TalkbackType type) const;
 
-    bool isWall() const;
-    bool canDeploy() const;
-    string getDeployTarget() const;
-    StructureType* getDeployType() const;
-    Uint8 getBuildlevel() const;
+  bool isWall() const;
+  bool canDeploy() const;
+  std::string getDeployTarget() const;
+  StructureType* getDeployType() const;
+  uint8_t getBuildlevel() const;
 
-    /** what colour pip should be displayed for this unit when being carried*/
-    Uint8 getPipColour() const;
-    Uint8 getMaxPassengers() const;
-    vector<Uint8> getPassengerAllow() const;
-    vector<UnitType*> getSpecificTypeAllow() const;
-    Uint8 getPQueue() const;
-    bool isStructure() const;
-    bool isDoubleOwned();
-    /** C4 = Equipped with building sabotage explosives [presumes Infiltrate is true] (def=no)? */
-    bool isC4() const;
-    /** */
-    bool isInfiltrate();
-    /** */
-    void setInfiltrate(bool infiltrate);
+  /** what colour pip should be displayed for this unit when being carried*/
+  uint8_t getPipColour() const;
+  uint8_t getMaxPassengers() const;
+  std::vector<uint8_t> getPassengerAllow() const;
+  std::vector<UnitType*> getSpecificTypeAllow() const;
+  uint8_t getPQueue() const;
+  bool isStructure() const;
+  bool isDoubleOwned();
+  /** C4 = Equipped with building sabotage explosives [presumes Infiltrate is true] (def=no)? */
+  bool isC4() const;
+  /** */
+  bool isInfiltrate();
+  /** */
+  void setInfiltrate(bool infiltrate);
 
-private:
-    Uint32 *shpnums;
-    Uint16 *shptnum;
-    /** In multi player both sides can use this unit */
-    bool doubleowned;
-    Uint8 numlayers;
-    Uint8 turnspeed;
-    Uint8 turnmod;
-    Uint8 offset;
-    Uint8 pipcolour;
-    Uint8 buildlevel;
-    Uint8 unittype;
-    Sint8 movemod;
+ private:
+  uint32_t *shpnums;
+  uint16_t *shptnum;
+  /** In multi player both sides can use this unit */
+  bool doubleowned;
+  uint8_t numlayers;
+  uint8_t turnspeed;
+  uint8_t turnmod;
+  uint8_t offset;
+  uint8_t pipcolour;
+  uint8_t buildlevel;
+  uint8_t unittype;
+  int8_t movemod;
 
-    vector<string> owners;
+  std::vector<std::string> owners;
 
-    /** Talkback related members*/
-    Talkback* talkback;
+  /** Talkback related members*/
+  Talkback* talkback;
 
-    /** <code>true</code> if this unit is an infantry */
-    bool is_infantry;
-    bool deployable;
+  /** <code>true</code> if this unit is an infantry */
+  bool is_infantry;
+  bool deployable;
 
-    /** this is used to check the unit can deploy */
-    StructureType* deploytype;
+  /** this is used to check the unit can deploy */
+  StructureType* deploytype;
 
-    /** max number of passenger */
-    Uint8 maxpassengers;
+  /** max number of passenger */
+  uint8_t maxpassengers;
 
-    /** matches the unit's type value specified in units.ini*/
-    vector<Uint8> passengerAllow;
+  /** matches the unit's type value specified in units.ini*/
+  std::vector<uint8_t> passengerAllow;
 
-    /** matches the unit's type name.*/
-    vector<UnitType*> specificTypeAllow;
+  /** matches the unit's type name.*/
+  std::vector<UnitType*> specificTypeAllow;
 
-    /**
-     * C4 = Equipped with building sabotage explosives
-     * [presumes Infiltrate is true] (def=no)?
-     */
-    bool c4;
+  /**
+   * C4 = Equipped with building sabotage explosives
+   * [presumes Infiltrate is true] (def=no)?
+   */
+  bool c4;
 
-    /**
-     * Infiltrate = Can it enter a building like a spy or thief (def=no)?
-     */
-    bool infiltrate;
+  /**
+   * Infiltrate = Can it enter a building like a spy or thief (def=no)?
+   */
+  bool infiltrate;
 };
 
 #endif //UNITTYPE_H

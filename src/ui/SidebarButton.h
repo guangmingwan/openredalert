@@ -1,6 +1,5 @@
 // SidebarButton.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
 #ifndef SIDEBARBUTTON_H
 #define SIDEBARBUTTON_H
 
-#include "SDL_types.h"
 #include "SDL_video.h"
 
 #include "RA_Label.h"
@@ -29,39 +27,38 @@
 /**
  * Button of the Sidebar
  */
-class SidebarButton 
-{
-public:
-    /** */
-    SidebarButton(int x, int y, const string& fname, Uint8 func, const string& theatre, Uint8 palnum);
-    ~SidebarButton();
-    
-    void ChangeImage(const string& fname);
-    void ChangeImage(const string&, Uint8 number);
-    void ChangeImage(const string&, Uint8 number,  Uint8 side);
-    
-    SDL_Surface* getSurface() const;
-    SDL_Rect getRect() const;
-    unsigned int getFunction() const;
-    
-    SDL_Surface* Fallback(const string& fname);
+class SidebarButton {
+ public:
+  /** */
+  SidebarButton(int x, int y, const std::string& fname, Uint8 func, const std::string& theatre, Uint8 palnum);
+  ~SidebarButton();
 
-    void ReloadImage();
-    
-private:
-    Uint32 picnum;
-    SDL_Surface *pic;
-    Uint8 function; 
-    Uint8 palnum;
-    string theatre;
+  void ChangeImage(const std::string& fname);
+  void ChangeImage(const std::string&, Uint8 number);
+  void ChangeImage(const std::string&, Uint8 number,  Uint8 side);
 
-    bool using_fallback;
-    const char *fallbackfname;
-    
-    /** Destination rect (on the sidebar) */
-    SDL_Rect picloc;	
+  SDL_Surface* getSurface() const;
+  SDL_Rect getRect() const;
+  unsigned int getFunction() const;
 
-	RA_Label FallbackLabel;
+  SDL_Surface* Fallback(const std::string& fname);
+
+  void ReloadImage();
+
+ private:
+  Uint32 picnum;
+  SDL_Surface *pic;
+  Uint8 function;
+  Uint8 palnum;
+  std::string theatre;
+
+  bool using_fallback;
+  const char *fallbackfname;
+
+  /** Destination rect (on the sidebar) */
+  SDL_Rect picloc;
+
+  RA_Label FallbackLabel;
 };
 
 #endif //SIDEBARBUTTON_H

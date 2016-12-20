@@ -1,6 +1,5 @@
 // animinfo_t.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,23 +17,20 @@
 #ifndef ANIMINFO_T_H
 #define ANIMINFO_T_H
 
-#include "SDL_types.h"
-
 /**
- * Information about image animation (use to decode image in animation) 
+ * Information about image animation (use to decode image in animation)
  */
-struct animinfo_t
-{
-	Uint32 animdelay;
-	Uint8 loopend;
-	Uint8 loopend2;
-	Uint8 animspeed;
-	Uint8 animtype;
-	Uint8 sectype;
-	Uint8 dmgoff;
-	Uint8 dmgoff2;
-	/** number of image during making anim */
-	Uint16 makenum;
+struct animinfo_t {
+  uint32_t animdelay;
+  uint8_t loopend;
+  uint8_t loopend2;
+  uint8_t animspeed;
+  uint8_t animtype;
+  uint8_t sectype;
+  uint8_t dmgoff;
+  uint8_t dmgoff2;
+  /** number of image during making anim */
+  uint16_t makenum;
 };
 
 #endif //ANIMINFO_T_H

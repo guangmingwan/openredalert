@@ -1,6 +1,5 @@
 // StructureType.h
 // 1.5
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -21,8 +20,6 @@
 #include <string>
 #include <vector>
 
-#include "SDL_types.h"
-
 #include "UnitOrStructureType.h"
 #include "PowerInfo.h"
 
@@ -30,123 +27,118 @@
 #include "animinfo_t.h"
 
 class INIFile;
-//class UnitType;
 class Weapon;
-
-using std::string;
-using std::vector;
 
 /**
  * Base class for structure in game
  */
-class StructureType : public UnitOrStructureType
-{
-public:
-    /** Constructor */
-    StructureType(const string& typeName, INIFile* structini, INIFile* artini,
-                  const string& thext);
-    ~StructureType();
+class StructureType : public UnitOrStructureType {
+ public:
+  /** Constructor */
+  StructureType(const std::string& typeName, INIFile* structini, INIFile* artini,
+                const std::string& thext);
+  ~StructureType();
 
-	Uint16 * getSHPNums();
+  uint16_t *getSHPNums();
 
-	Uint16 * getSHPTNum();
+  uint16_t *getSHPTNum();
 
-	vector<string> getDeployWith() const;
+  std::vector<std::string> getDeployWith() const;
 
-	vector<string> getOwners() const;
+  std::vector<std::string> getOwners() const;
 
-	Uint8 getNumLayers() const;
+  uint8_t getNumLayers() const;
 
-	Uint16 getMakeImg() const;
+  uint16_t getMakeImg() const;
 
-	/** Only applicable to structures.  UnitType always returns false. */	    
-	bool isWall() const;
+  /** Only applicable to structures.  UnitType always returns false. */
+  bool isWall() const;
 
-	bool isWaterBound() const;
+  bool isWaterBound() const;
 
-	bool hasAirBoundUnits() const;
+  bool hasAirBoundUnits() const;
 
-	Uint8 getXsize() const;
+  uint8_t getXsize() const;
 
-	Uint8 getYsize() const;
+  uint8_t getYsize() const;
 
-	Uint8 isBlocked(Uint16 tile) const;
+  uint8_t isBlocked(uint16_t tile) const;
 
-	Sint8 getXoffset() const;
+  int8_t getXoffset() const;
 
-	Sint8 getYoffset() const;
+  int8_t getYoffset() const;
 
-	Uint8 getOffset() const;
+  uint8_t getOffset() const;
 
-	Uint8 getTurnspeed() const;
+  uint8_t getTurnspeed() const;
 
-	/**
-	 * Surcharge speed with 0 (because it's a building). 
-	 */
-	Uint8 getSpeed() const;
+  /**
+   * Surcharge speed with 0 (because it's a building).
+   */
+  uint8_t getSpeed() const;
 
-	armor_t getArmor() const;
+  armor_t getArmor() const;
 
-	animinfo_t getAnimInfo() const;
+  animinfo_t getAnimInfo() const;
 
-	PowerInfo getPowerInfo() const;
+  PowerInfo getPowerInfo() const;
 
-	bool isPowered();
+  bool isPowered();
 
-	bool hasTurret() const;
+  bool hasTurret() const;
 
-	Uint16 getBlckOff() const;
+  uint16_t getBlckOff() const;
 
-	bool isInfantry() const;
+  bool isInfantry() const;
 
-	Uint8 getNumWallLevels() const;
+  uint8_t getNumWallLevels() const;
 
-	Uint8 getDefaultFace() const;
+  uint8_t getDefaultFace() const;
 
-	Uint8 getBuildlevel() const;
+  uint8_t getBuildlevel() const;
 
-	bool primarySettable() const;
+  bool primarySettable() const;
 
-	bool Charges();
+  bool Charges();
 
-	Uint8 getPQueue() const;
+  uint8_t getPQueue() const;
 
-	bool isStructure() const;
+  bool isStructure() const;
 
-	Uint32 getAdjacent() const;
+  uint32_t getAdjacent() const;
 
-private:
-    StructureType(const StructureType& orig);
+ private:
+  StructureType(const StructureType& orig);
 
-	/** Index in the ImagePool of the first MAKE image */
-	Uint16 makeimg;
-	Uint16 blckoff;
-	Sint8 xoffset;
-	Sint8 yoffset;
-	Uint8 turnspeed;
-	Uint8 xsize;
-	Uint8 ysize;
-	Uint8 numshps;
-	Uint8 numwalllevels;
-	Uint8 defaultface;
-	Uint8 buildlevel;
-	Uint8 * blocked;
+  /** Index in the ImagePool of the first MAKE image */
+  uint16_t makeimg;
+  uint16_t blckoff;
+  int8_t xoffset;
+  int8_t yoffset;
+  uint8_t turnspeed;
+  uint8_t xsize;
+  uint8_t ysize;
+  uint8_t numshps;
+  uint8_t numwalllevels;
+  uint8_t defaultface;
+  uint8_t buildlevel;
+  uint8_t * blocked;
 
-	vector<string> owners;
-	vector<string> deploywith;
-	PowerInfo powerinfo;
+  std::vector<std::string> owners;
+  std::vector<std::string> deploywith;
+  PowerInfo powerinfo;
 
-	bool is_wall;
-	bool turret;
-	bool primarysettable;
-	bool charges;
-	bool WaterBound;
-	bool AirBoundUnits;
-	Uint16* shptnum;
-	Uint16* shpnums;
-
-	/** Adjacent = distance allowed to place from other buildings (def=1) */
-	Uint32 adjacent;
+  bool is_wall;
+  bool turret;
+  bool primarysettable;
+  bool charges;
+  bool WaterBound;
+  bool AirBoundUnits;
+  uint16_t* shptnum;
+  uint16_t* shpnums;
+  
+  /** Adjacent = distance allowed to place from other buildings (def=1) */
+  uint32_t adjacent;
 };
 
 #endif

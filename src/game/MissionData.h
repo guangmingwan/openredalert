@@ -20,35 +20,32 @@
 
 #include <string>
 
-using std::string;
-
 /**
  * Represent all information contains in the [Base] section of the inifile of the map
  */
-class MissionData
-{
-public:
-    MissionData();
-    ~MissionData();
+class MissionData {
+ public:
+  MissionData();
+  ~MissionData();
 
-    /** the name of the map */
-    string mapname;
-    /** movie played after failed mission */
-    string losemov;
-    /** movie played after completed mission */
-    string winmov;
-    /** Specific music to play for this mission.*/
-    string theme;
-    /** The house of the player (Greece, USSR, England, etc) */
-    string player;
-    /** the actionmovie */
-    string action;
-    /** the briefing movie */
-    string brief;
-    /** the theater of the map (can be "SNOW", "WINTER" or "INTERIOR") */
-    string theater;
-    /** True if it's the last mission */
-    bool endOfGame;
+  /** the name of the map */
+  std::string mapname;
+  /** movie played after failed mission */
+  std::string losemov;
+  /** movie played after completed mission */
+  std::string winmov;
+  /** Specific music to play for this mission.*/
+  std::string theme;
+  /** The house of the player (Greece, USSR, England, etc) */
+  std::string player;
+  /** the actionmovie */
+  std::string action;
+  /** the briefing movie */
+  std::string brief;
+  /** the theater of the map (can be "SNOW", "WINTER" or "INTERIOR") */
+  std::string theater;
+  /** True if it's the last mission */
+  bool endOfGame;
 };
 
 #endif //MISSIONDATA_H

@@ -1,6 +1,5 @@
 // MissionTheater.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -19,27 +18,22 @@
 
 #include <string>
 
-using std::string;
-
 /** 
  * @return the name of the theater 
  */
-string MissionTheater::getName()
-{
+std::string MissionTheater::getName() {
 	// return the name of the theater
 	return name;
 }
 
 /**  */
-MissionTheater::MissionTheater()
-{
+MissionTheater::MissionTheater() {
 }
 
 /**
  * @param aName Name of the MissionTheater
  */
-MissionTheater::MissionTheater(string aName)
-{
+MissionTheater::MissionTheater(std::string aName) {
 	// Set the name
 	this->name = aName;
 
@@ -53,7 +47,6 @@ MissionTheater::MissionTheater(string aName)
 /** 
  * @return <code>true</code> if it's the 'INTERIOR' theater 
  */
-bool MissionTheater::isInterior()
-{
+bool MissionTheater::isInterior() {
 	return this->interior;
 }

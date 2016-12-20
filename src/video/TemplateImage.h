@@ -1,6 +1,5 @@
 // TemplateImage.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,28 +19,26 @@
 
 #include <string>
 
-#include "SDL_types.h"
-#include "SDL_video.h"
-
 #include "SHPBase.h"
+
+#include "SDL_video.h"
 
 class VFile;
 
 /**
- * Image use to decode tile of terrain overlay pack 
+ * Image use to decode tile of terrain overlay pack
  */
-class TemplateImage : SHPBase
-{
-public:
-	TemplateImage(const char *fname, Sint8 scaleq, bool ratemp = false);
-	~TemplateImage();
+class TemplateImage : SHPBase {
+ public:
+  TemplateImage(const char *fname, Sint8 scaleq, bool ratemp = false);
+  ~TemplateImage();
 
-	Uint16 getNumTiles();
-	SDL_Surface* getImage(Uint16 imgnum);
+  Uint16 getNumTiles();
+  SDL_Surface* getImage(Uint16 imgnum);
 
-private:
-	bool ratemp;
-	VFile* tmpfile;
+ private:
+  bool ratemp;
+  VFile* tmpfile;
 };
 
 #endif //TEMPLATEIMAGE_H

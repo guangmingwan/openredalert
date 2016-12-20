@@ -1,6 +1,5 @@
 // ActionEventQueue.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,41 +19,36 @@
 
 #include <queue>
 #include <vector>
-
-#include "SDL_types.h"
+#include <cstdint>
 
 #include "game/Comp.h"
 
 class ActionEvent;
 
-using std::vector;
-using std::priority_queue;
-
 /**
  * Manager of all ActionEvent in the game
- * 
+ *
  * This object call ActionEvent with priority
- * 
+ *
  * @todo add method start to backup the time and start from 0 the time elapsed (possible trigger bug)
  */
-class ActionEventQueue
-{
-public:
-    ActionEventQueue();
-    ~ActionEventQueue();
+class ActionEventQueue {
+ public:
+  ActionEventQueue();
+  ~ActionEventQueue();
 
-    /** Schedule an ActionEvent in the queue */
-    void scheduleEvent(ActionEvent * ev);
-    void runEvents();
-    /** Get time elapsed between the creation of the queue and now */
-    Uint32 getElapsedTime();
-    Uint32 getCurtick();
+  /** Schedule an ActionEvent in the queue */
+  void scheduleEvent(ActionEvent * ev);
+  void runEvents();
+  /** Get time elapsed between the creation of the queue and now */
+  uint32_t getElapsedTime();
+  uint32_t getCurtick();
 
-private:
-    /** First tick backup */
-    Uint32 starttick;
-    /** Queue of all ActionEvent which waiting to be called by this ActionEventQueue */
-    priority_queue<ActionEvent*, vector<ActionEvent*>, Comp> eventqueue;
+ private:
+  /** First tick backup */
+  uint32_t starttick;
+  /** Queue of all ActionEvent which waiting to be called by this ActionEventQueue */
+  std::priority_queue<ActionEvent*, std::vector<ActionEvent*>, Comp> eventqueue;
 };
 
 #endif //ACTIONEVENTQUEUE_H
