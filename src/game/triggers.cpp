@@ -28,12 +28,14 @@
 #include "UnitAndStructurePool.h"
 #include "Unit.hpp"
 #include "PlayerPool.h"
-#include "RA_Tigger.h"
+#include "TriggerCondition.h"
 #include "Player.h"
 #include "TriggerAction.h"
 #include "TextTriggerAction.h"
 #include "RawTriggerAction.h"
 #include "GlobalSetTriggerAction.h"
+#include "NoActionTriggerAction.h"
+#include "GlobalClearTriggerAction.h"
 
 using Sound::SoundEngine;
 
@@ -45,17 +47,113 @@ namespace p {
 namespace pc {
   extern ConfigType Config;
   extern SoundEngine* sfxeng;
+  extern MessagePool* msg;
 }
 
 /** Global variables for triggers */
 bool GlobalVar[100];
 
-/** 
+RA_Tigger::RA_Tigger(const std::string &name_, const std::string &data) {
+  name = name_;
+  transform(name.begin(), name.end(), name.begin(), toupper);
+
+  // Split the line
+  std::vector<char*> triggsData = splitList(data, ',');
+  // check that the line had 18 param
+  if (triggsData.size() != 18) {
+    Logger::getInstance()->Warning("error in reading trigger '" + name + "'");
+  } else {
+    sscanf(triggsData[0], "%d", &repeatable);
+    sscanf(triggsData[1], "%d", &country);
+    sscanf(triggsData[2], "%d", &activate);
+    sscanf(triggsData[3], "%d", &actions);
+    sscanf(triggsData[4], "%d", &trigger1.event);
+    sscanf(triggsData[5], "%d", &trigger1.param1);
+    sscanf(triggsData[6], "%d", &trigger1.param2);
+    sscanf(triggsData[7], "%d", &trigger2.event);
+    sscanf(triggsData[8], "%d", &trigger2.param1);
+    sscanf(triggsData[9], "%d", &trigger2.param2);
+    // Build Action 1
+    int actionType = 0;
+    sscanf(triggsData[10], "%d", &actionType); // get the type
+    int param1 = 0;
+    sscanf(triggsData[11], "%d", &param1);
+    int param2 = 0;
+    sscanf(triggsData[12], "%d", &param2);
+    int param3 = 0;
+    sscanf(triggsData[13], "%d", &param3);
+    switch (actionType) {
+      case TRIGGER_ACTION_NO_ACTION:
+        action1 = new NoActionTriggerAction();
+        break;
+      case TRIGGER_ACTION_TEXT: {
+        // Get string with the num in data
+        INIFile* messageTable = new INIFile("tutorial.ini");
+        std::string messageToDraw = std::string(messageTable->readString("Tutorial", triggsData[13]));
+        // Build the TriggerAction
+        action1 = new TextTriggerAction(messageToDraw, pc::msg);
+      }
+        break;
+      case TRIGGER_ACTION_GLOBAL_SET:
+        // Create an action (param 3 is the number of the global)
+        action1 = new GlobalSetTriggerAction(param3);
+        break;
+      case TRIGGER_ACTION_GLOBAL_CLEAR:
+        // Create an action (param 3 is the number of the global)
+        action1 = new GlobalClearTriggerAction(param3);
+        break;
+      default:
+        action1 = new RawTriggerAction(actionType, param1, param2, param3);
+        break;
+    }
+
+    // Build Action 2
+    int action2Type = 0;
+    sscanf(triggsData[14], "%d", &action2Type); // get the type
+    int param1b = 0;
+    sscanf(triggsData[15], "%d", &param1b);
+    int param2b = 0;
+    sscanf(triggsData[16], "%d", &param2b);
+    int param3b = 0;
+    sscanf(triggsData[17], "%d", &param3b);
+    switch (action2Type)
+    {
+      case TRIGGER_ACTION_NO_ACTION:
+        action2 = new NoActionTriggerAction();
+        break;
+      case TRIGGER_ACTION_TEXT:
+      {
+        // Get string with the num in data
+        INIFile* messageTable = new INIFile("tutorial.ini");
+        std::string messageToDraw = std::string(messageTable->readString("Tutorial", triggsData[17]));
+        // Build the TriggerAction
+        action2 = new TextTriggerAction(messageToDraw, pc::msg);
+        break;
+      }
+      case TRIGGER_ACTION_GLOBAL_SET:
+        // Create an action (param 3 is the number of the global)
+        action2 = new GlobalSetTriggerAction(param3b);
+        break;
+      case TRIGGER_ACTION_GLOBAL_CLEAR:
+        // Create an action (param 3 is the number of the global)
+        action2 = new GlobalClearTriggerAction(param3);
+        break;
+      default:
+        action2 = new RawTriggerAction(action2Type, param1b, param2b, param3b);
+        break;
+    }
+
+    // Set to zero (=never executed)
+    hasexecuted = false;
+  }
+}
+
+/**
  * Check that the event parameters are correct
- * 
+ *
  * for TRIGGER_EVENT_SPIED_BY
  * - value = house num of the spy
- *  
+ *
  * @param Event the event that was triggerd
  * @param param1 the parameter1 needed for the event
  * @param param2 the parameter2 needed for the event
@@ -67,7 +165,7 @@ bool CheckEvent(unsigned int Event, int param1, int param2, unsigned int Eventpa
     switch (Event)
     {
     	//
-        // No Events (ONLY THROW BY FORCE TRIGGER) 
+        // No Events (ONLY THROW BY FORCE TRIGGER)
     	//
         case TRIGGER_EVENT_NO_EVENT:
         	if (Event == Eventparam){
@@ -339,7 +437,7 @@ bool CheckSecondTriggerEvent(int TriggerNumb, RA_Tiggers  *Trigger)
  */
 void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param) {
 	std::string AssociatedTriggerName = "None";
-	RA_Tiggers* AssociatedTrigger = 0;
+	RA_Tigger* AssociatedTrigger = 0;
 	//int			value = 0;
 	
 	Logger::getInstance()->Debug(__FILE__, __LINE__, "HandleTriggers with event = "
@@ -509,9 +607,8 @@ void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param) {
  * @param Event the event that was caused for this unit or structure
  * @param value the parameter that goes with the event (example time eleapsed)
  */
-void HandleGlobalTrigger(int Event, int value)
-{
-	RA_Tiggers  *Trigger;
+void HandleGlobalTrigger(int Event, int value) {
+	RA_Tigger  *Trigger;
 	int         TriggNumb = 0;
 	
 	
@@ -521,8 +618,7 @@ void HandleGlobalTrigger(int Event, int value)
 				value);
 
 	// For each trigger
-	while ((Trigger = p::ccmap->getTriggerByNumb(TriggNumb)) != 0)
-	{
+	while ((Trigger = p::ccmap->getTriggerByNumb(TriggNumb)) != 0) {
 		TriggNumb++;
 
 		if (Trigger == 0){
@@ -655,11 +751,10 @@ void HandleGlobalTrigger(int Event, int value)
 }
 
 
-void CheckCellTriggers(Uint32 pos)
-{
+void CheckCellTriggers(Uint32 pos) {
 	//UnitOrStructure *unitOrStructure;
 	Unit            *unit;
-	RA_Tiggers      *Trigger;
+	RA_Tigger      *Trigger;
 
 /*
     unitOrStructure = p::uspool->getUnitOrStructureAt(pos,0);
@@ -718,7 +813,7 @@ void CheckCellTriggers(Uint32 pos)
     // player->getName()
 
 #if 1
-    PrintTrigger ( *Trigger );
+    Trigger->Print();
 #endif
 }
 
@@ -887,7 +982,7 @@ void ExecuteTriggerAction(TriggerAction* action)
         	
         	int parameter = actTrig->getParam2();
 
-        	RA_Tiggers* Trig =  p::ccmap->getTriggerByNumb(parameter);
+        	RA_Tigger* Trig =  p::ccmap->getTriggerByNumb(parameter);
 
         	// Set that Trigger is executed
         	Trig->hasexecuted = true;
@@ -983,19 +1078,19 @@ void ExecuteTriggerAction(TriggerAction* action)
 /**
  * Print a Trigger
  */
-void PrintTrigger(const RA_Tiggers& Trigger) {
-  printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
-  printf ("name = \t\t\t%s\n", Trigger.name.c_str());
-  printf ("repeatable = \t\t%i\n", Trigger.repeatable);
-  printf ("country = \t\t%i\n", Trigger.country);
-  printf ("activate = \t\t%i\n", Trigger.activate);
-  printf ("actions = \t\t%i\n", Trigger.actions);
+void RA_Tigger::Print() {
+//  printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
+  printf ("name = \t\t\t%s\n", name.c_str());
+  printf ("repeatable = \t\t%i\n", repeatable);
+  printf ("country = \t\t%i\n", country);
+  printf ("activate = \t\t%i\n", activate);
+  printf ("actions = \t\t%i\n", actions);
 
-  printf ("trigger #1 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(Trigger.trigger1.event).c_str(), Trigger.trigger1.param1, Trigger.trigger1.param2);
-  printf ("trigger #2 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(Trigger.trigger2.event).c_str(), Trigger.trigger2.param1, Trigger.trigger2.param2);
+  printf ("trigger #1 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(trigger1.event).c_str(), trigger1.param1, trigger1.param2);
+  printf ("trigger #2 = \t%s\t(%i, %i)\n", getTriggerEventNameByNumber(trigger2.event).c_str(), trigger2.param1, trigger2.param2);
 
-  printf ("action #1 = \t%s\n", Trigger.action1->getName().c_str());
-  printf ("action #2 = \t%s\n", Trigger.action2->getName().c_str());
+  printf ("action #1 = \t"); action1->Print(); printf("\n");
+  printf ("action #2 = \t"); action2->Print(); printf("\n");
   printf ("\n");
 }
 

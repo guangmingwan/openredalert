@@ -17,7 +17,7 @@
 #ifndef INIFILE_H
 #define INIFILE_H
 
-#include <map>
+#include <vector>
 #include <string>
 
 #include "INISection.h"
@@ -27,6 +27,13 @@
  *
  */
 class INIFile {
+ protected:
+  class SectionNode {
+   public:
+    std::string name;
+    INISection section;
+  };
+
  public:
   explicit INIFile(const std::string& filename);
   ~INIFile();
@@ -57,7 +64,7 @@ class INIFile {
   bool isKeyInSection(const std::string& section, const std::string& keyString) const;
 
   /** Function to get number of key/value per section */
-  int getNumberOfKeysInSection(const std::string& section) const;
+  size_t getNumberOfKeysInSection(const std::string& section) const;
 
   /** Get the file name of the ini file */
   std::string getFileName() const;
@@ -67,7 +74,7 @@ class INIFile {
   std::string filename;
 
   /** Internal data */
-  std::map<std::string, INISection> Inidata;
+  std::vector<SectionNode> Inidata;
 };
 
 #endif //INIFILE_H

@@ -73,6 +73,8 @@ class TriggerAction {
 	int getAction();
   std::string getName();
 
+  virtual void Print() = 0;
+
 	/** Destructor */
 	virtual ~TriggerAction();
 

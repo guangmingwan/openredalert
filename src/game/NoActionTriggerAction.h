@@ -1,6 +1,5 @@
 // NoActionTriggerAction.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,19 +21,20 @@
 
 /**
  * Action that do nothing.
- * 
+ *
  * @author Damien Carol (OpenRedAlert)
  * @version 1.0
  * @since r379
  */
-class NoActionTriggerAction : public TriggerAction
-{
-public:
-    /** Constructor */
-    NoActionTriggerAction();
+class NoActionTriggerAction : public TriggerAction {
+ public:
+  /** Constructor */
+  NoActionTriggerAction();
 
-    /** Execute the action */
-    void execute();
+  /** Execute the action */
+  void execute();
+
+  virtual void Print() {}
 };
 
 #endif //NOACTIONTRIGGERACTION_H

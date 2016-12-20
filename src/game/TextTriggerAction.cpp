@@ -59,3 +59,7 @@ void TextTriggerAction::execute()
 	// Post the message in the pool
 	this->pool->postMessage(this->message);
 }
+
+void TextTriggerAction::Print() {
+  printf("TEXT (%s)", message.c_str());
+}

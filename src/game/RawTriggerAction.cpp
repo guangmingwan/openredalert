@@ -1,6 +1,5 @@
 // RawTriggerAction.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,30 +17,29 @@
 #include "RawTriggerAction.h"
 
 RawTriggerAction::RawTriggerAction(int action, int param1, int param2, int param3) :
-	TriggerAction(action)
+TriggerAction(action)
 {
-	this->param1 = param1;
-	this->param2 = param2;
-	this->param3 = param3;
+  this->param1 = param1;
+  this->param2 = param2;
+  this->param3 = param3;
 }
 
 /** Execute the action */
-void RawTriggerAction::execute()
-{
+void RawTriggerAction::execute() {
 }
 
-int RawTriggerAction::getParam1()
-{
-	return param1;
+int RawTriggerAction::getParam1() {
+  return param1;
 }
 
-int RawTriggerAction::getParam2()
-{
-	return param2;
+int RawTriggerAction::getParam2() {
+  return param2;
 }
 
-int RawTriggerAction::getParam3()
-{
-	return param3;
+int RawTriggerAction::getParam3() {
+  return param3;
 }
 
+void RawTriggerAction::Print() {
+  printf("%s (%d, %d, %d)", getName().c_str(), param1, param2, param3);
+}

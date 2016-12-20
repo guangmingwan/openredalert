@@ -1076,25 +1076,20 @@ Uint32 CnCMap::setTiberium(Uint32 pos, Uint8 value)
  * @param TriggerName Name of the trigger
  * @param Trig Pointer to the data of the trigger
  */
-void CnCMap::setTriggerByName(std::string TriggerName, RA_Tiggers *Trig)
-{
+void CnCMap::setTriggerByName(std::string TriggerName, RA_Tigger *Trig) {
   // Parse all triggers
-  for (unsigned int i = 0; i < RaTriggers.size(); i++)
-  {
-    if (TriggerName.size() != RaTriggers[i]->name.size())
-    {
+  for (unsigned int i = 0; i < RaTriggers.size(); i++) {
+    if (TriggerName.size() != RaTriggers[i]->name.size()) {
       continue;
     }
     unsigned int j;
-    for (j = 0; j < TriggerName.size(); j++)
-    {
+    for (j = 0; j < TriggerName.size(); j++) {
       if (toupper(TriggerName[j]) != toupper(RaTriggers[i]->name[j]))
         break;
     }
     //printf ("String1 = %s, String2 = %s, j = %i, size1 = %i, size2 = %i\n", TriggerName.c_str(), RaTriggers[i].name.c_str(), j, TriggerName.size(), RaTriggers[i].name.size());
-    if (j == TriggerName.size())
-    {
-      memcpy(&RaTriggers[i], Trig, sizeof (RA_Tiggers));
+    if (j == TriggerName.size()) {
+      memcpy(&RaTriggers[i], Trig, sizeof (RA_Tigger));
     }
   }
 }
@@ -1186,18 +1181,15 @@ void CnCMap::decreaseResource(Uint32 pos, Uint8 amount)
  *
  * @param triggerNumber Number of the trigger
  */
-RA_Tiggers* CnCMap::getTriggerByNumb(int triggerNumber)
-{
+RA_Tigger* CnCMap::getTriggerByNumb(int triggerNumber) {
   // If number = -1
-  if (triggerNumber == -1)
-  {
+  if (triggerNumber == -1) {
     // Return NULL
     return 0;
   }
 
   // If the number is out of array size
-  if (triggerNumber >= RaTriggers.size() || triggerNumber < -1)
-  {
+  if (triggerNumber >= RaTriggers.size() || triggerNumber < -1) {
     // Return NULL
     return 0;
   }
@@ -1211,8 +1203,7 @@ RA_Tiggers* CnCMap::getTriggerByNumb(int triggerNumber)
  *
  * @param TriggerName Name of the trigger wanted
  */
-RA_Tiggers* CnCMap::getTriggerByName(std::string TriggerName)
-{
+RA_Tigger* CnCMap::getTriggerByName(std::string TriggerName) {
   // Upper the string
   std::string name = TriggerName;
   transform(name.begin(), name.end(), name.begin(), toupper);
@@ -2355,117 +2346,15 @@ void CnCMap::advancedSections(INIFile *inifile) {
   }
 
   // Parse and Create triggers
-  INIFile* messageTable = new INIFile("tutorial.ini");
-  try
-  {
-    for (int keynum = 0;; keynum++)
-    {
-      if (maptype == GAME_RA)
-      {
+  try {
+    for (int keynum = 0;; keynum++) {
+      if (maptype == GAME_RA) {
         INISection::const_iterator key = inifile->readKeyValue("TRIGS", keynum);
         // is the char which separate terraintype from action.
-        RA_Tiggers triggers(key->first);
-        transform(triggers.name.begin(), triggers.name.end(), triggers.name.begin(), toupper);
-        // Split the line
-        std::vector<char*> triggsData = splitList(key->second, ',');
-        // check that the line had 18 param
-        if (triggsData.size() != 18)
-        {
-          Logger::getInstance()->Warning("error in reading trigger '" + key->first + "'");
-        }
-        else
-        {
-          sscanf(triggsData[0], "%d", &triggers.repeatable);
-          sscanf(triggsData[1], "%d", &triggers.country);
-          sscanf(triggsData[2], "%d", &triggers.activate);
-          sscanf(triggsData[3], "%d", &triggers.actions);
-          sscanf(triggsData[4], "%d", &triggers.trigger1.event);
-          sscanf(triggsData[5], "%d", &triggers.trigger1.param1);
-          sscanf(triggsData[6], "%d", &triggers.trigger1.param2);
-          sscanf(triggsData[7], "%d", &triggers.trigger2.event);
-          sscanf(triggsData[8], "%d", &triggers.trigger2.param1);
-          sscanf(triggsData[9], "%d", &triggers.trigger2.param2);
-          // Build Action 1
-          int actionType = 0;
-          sscanf(triggsData[10], "%d", &actionType); // get the type
-          int param1 = 0;
-          sscanf(triggsData[11], "%d", &param1);
-          int param2 = 0;
-          sscanf(triggsData[12], "%d", &param2);
-          int param3 = 0;
-          sscanf(triggsData[13], "%d", &param3);
-          switch (actionType)
-          {
-            case TRIGGER_ACTION_NO_ACTION:
-              triggers.action1 = new NoActionTriggerAction();
-              break;
-            case TRIGGER_ACTION_TEXT:
-            {
-              // Get string with the num in data
-              std::string messageToDraw = std::string(messageTable->readString("Tutorial", triggsData[13]));
-              printf("Txt = %s\n", messageToDraw.c_str());
-              // Build the TriggerAction
-              triggers.action1 = new TextTriggerAction(messageToDraw, pc::msg);
-            }
-              break;
-            case TRIGGER_ACTION_GLOBAL_SET:
-              // Create an action (param 3 is the number of the global)
-              triggers.action1 = new GlobalSetTriggerAction(param3);
-              break;
-            case TRIGGER_ACTION_GLOBAL_CLEAR:
-              // Create an action (param 3 is the number of the global)
-              triggers.action1 = new GlobalClearTriggerAction(param3);
-              break;
-            default:
-              triggers.action1 = new RawTriggerAction(actionType, param1, param2, param3);
-              break;
-          }
-
-          // Build Action 2
-          int action2Type = 0;
-          sscanf(triggsData[14], "%d", &action2Type); // get the type
-          int param1b = 0;
-          sscanf(triggsData[15], "%d", &param1b);
-          int param2b = 0;
-          sscanf(triggsData[16], "%d", &param2b);
-          int param3b = 0;
-          sscanf(triggsData[17], "%d", &param3b);
-          switch (action2Type)
-          {
-            case TRIGGER_ACTION_NO_ACTION:
-              triggers.action2 = new NoActionTriggerAction();
-              break;
-            case TRIGGER_ACTION_TEXT:
-            {
-              // Get string with the num in data
-              std::string messageToDraw = std::string(messageTable->readString("Tutorial", triggsData[17]));
-              printf("Txt = %s\n", messageToDraw.c_str());
-              // Build the TriggerAction
-              triggers.action2 = new TextTriggerAction(messageToDraw, pc::msg);
-              break;
-            }
-            case TRIGGER_ACTION_GLOBAL_SET:
-              // Create an action (param 3 is the number of the global)
-              triggers.action2 = new GlobalSetTriggerAction(param3b);
-              break;
-            case TRIGGER_ACTION_GLOBAL_CLEAR:
-              // Create an action (param 3 is the number of the global)
-              triggers.action2 = new GlobalClearTriggerAction(param3);
-              break;
-            default:
-              triggers.action2 = new RawTriggerAction(action2Type, param1b, param2b, param3b);
-              break;
-          }
-
-          PrintTrigger(triggers);
-
-          // Set to zero (=never executed)
-          triggers.hasexecuted = false;
-          RaTriggers.push_back(&triggers);
-        }
-      }
-      else if (maptype == GAME_TD)
-      {
+        RA_Tigger triggers(key->first, key->second);
+        triggers.Print();
+        RaTriggers.push_back(&triggers);
+      } else if (maptype == GAME_TD) {
         //key = inifile->readKeyValue("TRIGGERS", keynum);
         // is the char which separate terraintype from action.
         //logger->warning ("%s line %i: Trigger1 text: %s\n", __FILE__, __LINE__, key->first.c_str());

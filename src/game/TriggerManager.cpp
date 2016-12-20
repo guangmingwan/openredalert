@@ -24,49 +24,44 @@
 
 namespace OpenRedAlert
 {
-namespace Game
-{
+  namespace Game
+  {
 
-/**
- * The constructor is private to avoid it
- */
-TriggerManager::TriggerManager()
-{
-    // Nothing
-}
+    /**
+     * The constructor is private to avoid it
+     */
+    TriggerManager::TriggerManager() {
+      // Nothing
+    }
 
-/**
- *
- */
-TriggerManager::TriggerManager(CnCMap* pCncMap)
-{
-    // Update the reference
-    this->cncMap = pCncMap;
-}
+    /**
+     *
+     */
+    TriggerManager::TriggerManager(CnCMap* pCncMap) {
+      // Update the reference
+      this->cncMap = pCncMap;
+    }
 
-/**
- *The constructor is private to avoid it
- */
-TriggerManager::~TriggerManager()
-{
-    // Nothing
-}
+    /**
+     *The constructor is private to avoid it
+     */
+    TriggerManager::~TriggerManager() {
+      // Nothing
+    }
 
-void TriggerManager::handle()
-{
-    int numberOfTrigger = this->cncMap->getTriggerPool()->size();
+    void TriggerManager::handle() {
+      std::vector<OpenRedAlert::Game::Trigger*> *theTriggerPool = this->cncMap->getTriggerPool();
+      size_t numberOfTrigger = theTriggerPool->size();
 
-    for (int i = 0; i < numberOfTrigger; i++)
-    {
+      for (int i = 0; i < numberOfTrigger; i++) {
         // Get the Trigger
-        std::vector<OpenRedAlert::Game::Trigger*>* theTriggerPool = this->cncMap->getTriggerPool();
         OpenRedAlert::Game::Trigger* theTrigger = (*theTriggerPool)[i];
 
         // Some stuff ...
         printf("Trigger in stack : %s\n", theTrigger->getName().c_str());
+      }
     }
-}
-
-} //Game
-
+    
+  } //Game
+  
 } //OpenRedAlert

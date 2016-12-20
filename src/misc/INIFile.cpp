@@ -17,16 +17,7 @@
 
 #include "INIFile.h"
 
-#include <iosfwd>
-#include <map>
-#include <stdexcept>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <list>
-
 #include "KeyNotFound.h"
-#include "misc/common.h"
 #include "Logger.hpp"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
@@ -44,27 +35,16 @@ INIFile::INIFile(const std::string& filename) {
   char value[1024];
   char* str;
 
-  VFile* inifile;
-  std::string cursectionName;
-  //    INISection cursection;
-  INISection newSection;
-  IniEntry Entry;
-
-  //int MAXLINELENGTH = 1024;
-  //int MAXSTRINGLENGTH = 128;
-
-
   // Open the File
-  inifile = VFSUtils::VFS_Open(filename.c_str());
-  if (inifile == 0) {
+  VFile *inifile = VFSUtils::VFS_Open(filename.c_str());
+  if (inifile == nullptr) {
     std::string s = "Unable to open ";
     s += filename;
     Logger::getInstance()->Error(s);
-
     throw std::runtime_error(s);
   }
 
-  cursectionName = "";
+  std::string cursectionName = "";
 
   // parse the inifile and write data to inidata
   while (inifile->readLine(line, 1024) != 0) {
@@ -78,13 +58,11 @@ INIFile::INIFile(const std::string& filename) {
     }
     if (sscanf(str, "[%[^]]]", key) == 1) {
       if (cursectionName != "") {
-        //inidata[cursectionName] = cursection;
-        Inidata[cursectionName] = newSection;
-        //                cursection.clear();
-        newSection.clear();
+        SectionNode sectionNode;
+        sectionNode.name = cursectionName;
+        Inidata.push_back(sectionNode);
       }
-      for (unsigned int i = 0; key[i] != '\0'; i++)
-      {
+      for (unsigned int i = 0; key[i] != '\0'; i++) {
         key[i] = toupper(key[i]);
       }
       cursectionName = key;
@@ -117,21 +95,9 @@ INIFile::INIFile(const std::string& filename) {
       while ((*str) == ' ' || (*str) == '\t') {
         str++;
       }
-      //cursection[(string)key] = (string)str;
-      Entry.first = (std::string)key;
-      Entry.second = (std::string)str;
-      //newSection.push_back(Entry);
-      //            std::pair entry ((string)key, (string)str);
-      //            newSection.push_back (key, str);
 
-      newSection[key] = str;
+      Inidata.back().section[key] = str;
     }
-  }
-  if (cursectionName != "") {
-    //inidata[cursectionName] = cursection;
-    Inidata[cursectionName] = newSection;
-    //        cursection.clear();
-    newSection.clear();
   }
 
   // Close the file
@@ -141,10 +107,9 @@ INIFile::INIFile(const std::string& filename) {
 /**
  * Destructor, closes the file
  */
-INIFile::~INIFile()
-{
+INIFile::~INIFile() {
   // delete all entries in inidata
-  this->Inidata.clear();
+  Inidata.clear();
 }
 
 /**
@@ -155,21 +120,24 @@ INIFile::~INIFile()
  * @param value the name of the string to extract.
  * @return the extracted string.
  */
-std::string INIFile::readString(const std::string& section, const std::string& value) const
-{
-  char* retval = 0; // Return value
-
+std::string INIFile::readString(const std::string& section, const std::string& value) const {
   std::string s = section;
   transform(s.begin(), s.end(), s.begin(), toupper);
+
+  // Try to find section
+  const INISection *foundSection = nullptr;
+  for (const SectionNode &sectionNode : Inidata) {
+    if (sectionNode.name == s) {
+      foundSection = &sectionNode.section;
+    }
+  }
+
+  if (foundSection == nullptr) {
+    return std::string();
+  }
+
   std::string v = value;
   transform(v.begin(), v.end(), v.begin(), toupper);
-
-  // Try to find the key
-  std::map<std::string, INISection>::const_iterator sec = Inidata.find(s);
-
-  if (sec == Inidata.end()) {
-    return 0;
-  }
 
   // get a const iterator
   INISection::const_iterator key = sec->second.begin();
@@ -195,11 +163,9 @@ std::string INIFile::readString(const std::string& section, const std::string& v
 /**
  * wrapper around readString to return a provided default instead of NULL
  */
-std::string INIFile::readString(const std::string& section, const std::string& key, const std::string& deflt) const
-{
+std::string INIFile::readString(const std::string& section, const std::string& key, const std::string& deflt) const {
   // Test if the section exist
-  if (isKeyInSection(section, key) == false)
-  {
+  if (isKeyInSection(section, key) == false) {
     return std::string(deflt);
   }
 
@@ -213,11 +179,9 @@ std::string INIFile::readString(const std::string& section, const std::string& k
  * @param defaultValue Default value to return if the key doesn't exist
  * @return the value of the key
  */
-int INIFile::readInt(const std::string& section, const std::string& key, int defaultValue) const
-{
+int INIFile::readInt(const std::string& section, const std::string& key, int defaultValue) const {
   // Test if the key exist in the section
-  if (isKeyInSection(section, key) == false)
-  {
+  if (isKeyInSection(section, key) == false) {
     // Return the default value
     return defaultValue;
   }
@@ -242,8 +206,7 @@ int INIFile::readInt(const std::string& section, const std::string& key, int def
  * @param key the name of the value to extract.
  * @return the value.
  */
-int INIFile::readInt(const std::string& section, const std::string& key) const
-{
+int INIFile::readInt(const std::string& section, const std::string& key) const {
   // @todo remove that !!!!
   // We UPPER the string because strings are stored in UPPER WAY
   std::string s = section;
@@ -252,8 +215,7 @@ int INIFile::readInt(const std::string& section, const std::string& key) const
   transform(k.begin(), k.end(), k.begin(), toupper);
 
   // If the section doesn't exist
-  if (isKeyInSection(s, k) == false)
-  {
+  if (isKeyInSection(s, k) == false) {
     throw KeyNotFound("Can't find the section [" + s + "] in ini file.");
   }
 
@@ -299,8 +261,7 @@ int INIFile::readInt(const std::string& section, const std::string& key) const
  * @param keyString the name of the value to extract.
  * @return the value.
  */
-float INIFile::readFloat(const std::string& sectionString, const std::string& keyString)
-{
+float INIFile::readFloat(const std::string& sectionString, const std::string& keyString) {
   float retval;
 
   // Get the "UPPER" strings
@@ -349,16 +310,12 @@ float INIFile::readFloat(const std::string& sectionString, const std::string& ke
  * @param deflt default value to return
  * @return the value of the key or the default value if the key not exists
  */
-float INIFile::readFloat(const std::string& section, const std::string& key, const float deflt)
-{
+float INIFile::readFloat(const std::string& section, const std::string& key, const float deflt) {
   //  If the key not exist default value is returned
-  if (isKeyInSection(section, key) == false)
-  {
+  if (isKeyInSection(section, key) == false) {
     // return the default key
     return deflt;
-  }
-  else
-  {
+  } else {
     // Read the key in a string
     std::string floatString = readString(section, key);
 
@@ -374,8 +331,7 @@ float INIFile::readFloat(const std::string& section, const std::string& key, con
 /**
  * Function to get number of key/value per section
  */
-int INIFile::getNumberOfKeysInSection(const std::string& section) const
-{
+size_t INIFile::getNumberOfKeysInSection(const std::string& section) const {
 
   std::string s;
 
@@ -402,8 +358,7 @@ int INIFile::getNumberOfKeysInSection(const std::string& section) const
  * @param keynum Will skip (keynum-1) entries in section.
  * @returns an iterator to the keynum'th key in section.
  */
-INISection::const_iterator INIFile::readKeyValue(const char* section, unsigned int keynum)
-{
+INISection::const_iterator INIFile::readKeyValue(const char* section, unsigned int keynum) {
   std::map<std::string, INISection>::iterator sec_new;
   std::string s;
 
@@ -415,13 +370,11 @@ INISection::const_iterator INIFile::readKeyValue(const char* section, unsigned i
 
   sec_new = Inidata.find(s);
   if (sec_new == Inidata.end()) {
-    throw KeyNotFound("Section [" + std::string(section)
-                      + "] not found in .ini file.");
+    throw KeyNotFound("Section [" + std::string(section) + "] not found in .ini file.");
   }
 
   if (keynum >= sec_new->second.size()) {
-    throw KeyNotFound("Key number [???] in Section [" + std::string(section)
-                      + "] not found in .ini file.");
+    throw KeyNotFound("Key number [???] in Section [" + std::string(section) + "] not found in .ini file.");
   }
 
   INISection::iterator Key = sec_new->second.begin();
@@ -430,16 +383,14 @@ INISection::const_iterator INIFile::readKeyValue(const char* section, unsigned i
   }
   if (Key == sec_new->second.end()) {
     Logger::getInstance()->Error("throw 0 in INIFile::readKeyValue()\n");
-    throw KeyNotFound("Key number [????] in Section [" + std::string(section)
-                      + "] not found in .ini file.");
+    throw KeyNotFound("Key number [????] in Section [" + std::string(section) + "] not found in .ini file.");
   }
   return Key;
 }
 
 /**
  */
-INISection::const_iterator INIFile::readIndexedKeyValue(const char* section, unsigned int index, const char* prefix)
-{
+INISection::const_iterator INIFile::readIndexedKeyValue(const char* section, unsigned int index, const char* prefix) {
   std::string s = section;
   transform(s.begin(), s.end(), s.begin(), toupper);
 
@@ -480,8 +431,7 @@ INISection::const_iterator INIFile::readIndexedKeyValue(const char* section, uns
 }
 
 std::string INIFile::readSection(unsigned int secnum) {
-  if (secnum >= Inidata.size())
-  {
+  if (secnum >= Inidata.size()) {
     throw 0;
   }
 
@@ -499,15 +449,11 @@ std::string INIFile::readSection(unsigned int secnum) {
  * @param section Section of the ini file
  * @return true if the section exist
  */
-bool INIFile::isSection(const std::string& section) const
-{
+bool INIFile::isSection(const std::string& section) const {
   std::map<std::string, INISection>::const_iterator sec = Inidata.find(section);
-  if (sec == Inidata.end())
-  {
+  if (sec == Inidata.end()) {
     return false;
-  }
-  else
-  {
+  } else {
     return true;
   }
 }
@@ -517,8 +463,7 @@ bool INIFile::isSection(const std::string& section) const
  * @param keyString Key to check
  * @return <code>true</code> if the key exist in the section else return <code>false</code>
  */
-bool INIFile::isKeyInSection(const std::string& section,
-                             const std::string& keyString) const {
+bool INIFile::isKeyInSection(const std::string& section, const std::string& keyString) const {
   // Upper version of the section
   std::string s = section;
   // Upper the section string
@@ -531,9 +476,7 @@ bool INIFile::isKeyInSection(const std::string& section,
   if (sec == Inidata.end()) {
     // Return false
     return false;
-  }
-  else
-  {
+  } else {
     // Upper version of the key string
     std::string k = keyString;
     // Upper the key string
@@ -541,11 +484,9 @@ bool INIFile::isKeyInSection(const std::string& section,
 
     // Get an iterator
     INISection::const_iterator sec_key = sec->second.begin();
-    while (sec_key!=sec->second.end())
-    {
+    while (sec_key!=sec->second.end()) {
       // If the Key was found
-      if (sec_key->first == k)
-      {
+      if (sec_key->first == k) {
         // Return true
         return true;
       }
@@ -557,21 +498,16 @@ bool INIFile::isKeyInSection(const std::string& section,
   return false;
 }
 
-int INIFile::readYesNo(const std::string& section, const std::string& value,
-                       const int defaut) const {
+int INIFile::readYesNo(const std::string& section, const std::string& value, const int defaut) const {
   std::stringstream defStr;
-  if (defaut != 0)
-  {
+  if (defaut != 0) {
     defStr << "yes";
-  }
-  else
-  {
+  } else {
     defStr << "no";
   }
   std::string tmpAA = this->readString(section, value, defStr.str());
   int a;
-  if (tmpAA == "yes")
-  {
+  if (tmpAA == "yes") {
     a = 1;
   } else {
     a = 0;

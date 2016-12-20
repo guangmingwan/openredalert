@@ -1,6 +1,5 @@
 // GlobalSetTriggerAction.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -23,16 +22,19 @@ extern bool GlobalVar[100];
 /**
  */
 GlobalSetTriggerAction::GlobalSetTriggerAction(int number) :
-	TriggerAction(TriggerAction::GLOBAL_SET)
+  TriggerAction(TriggerAction::GLOBAL_SET)
 {
-    // Set the number
-	this->number = number;
+  // Set the number
+  this->number = number;
 }
 
 /**
  */
-void GlobalSetTriggerAction::execute()
-{
-    // Set the blobal variable
-	GlobalVar[number] = true;
+void GlobalSetTriggerAction::execute() {
+  // Set the blobal variable
+  GlobalVar[number] = true;
+}
+
+void GlobalSetTriggerAction::Print() {
+  printf("GLOBAL_SET (%d)", number);
 }

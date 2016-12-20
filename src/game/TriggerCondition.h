@@ -1,4 +1,4 @@
-// RA_Tigger.h
+// TriggerCondition.h
 // 1.0
 //    This file is part of OpenRedAlert.
 //
@@ -14,15 +14,15 @@
 //    You should have received a copy of the GNU General Public License
 //    along with OpenRedAlert.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RA_TIGGER_H
-#define RA_TIGGER_H
+#ifndef TRIGGERCONDITION_H
+#define TRIGGERCONDITION_H
 
 /**
  * Event data for trigger
  *
  * @see triggers.h for list of TRIGGER_EVENT_TYPE
  */
-class RA_Tigger {
+class TriggerCondition {
  public:
   /** Trigger event type */
   int event;
@@ -32,5 +32,5 @@ class RA_Tigger {
   int param2;
 };
 
-#endif //RA_TIGGER_H
+#endif  // TRIGGERCONDITION_H
 

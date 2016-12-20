@@ -279,7 +279,7 @@
 		7B523F791DFFE8AB00EB265F /* ProjectileDataList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProjectileDataList.h; path = ../src/game/ProjectileDataList.h; sourceTree = "<group>"; };
 		7B523F7A1DFFE8AB00EB265F /* pside.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pside.h; path = ../src/game/pside.h; sourceTree = "<group>"; };
 		7B523F7B1DFFE8AB00EB265F /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Queue.h; path = ../src/game/Queue.h; sourceTree = "<group>"; };
-		7B523F7C1DFFE8AB00EB265F /* RA_Tigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RA_Tigger.h; path = ../src/game/RA_Tigger.h; sourceTree = "<group>"; };
+		7B523F7C1DFFE8AB00EB265F /* TriggerCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriggerCondition.h; path = ../src/game/TriggerCondition.h; sourceTree = "<group>"; };
 		7B523F7D1DFFE8AB00EB265F /* RadarAnimEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RadarAnimEvent.cpp; path = ../src/game/RadarAnimEvent.cpp; sourceTree = "<group>"; };
 		7B523F7E1DFFE8AB00EB265F /* RadarAnimEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadarAnimEvent.h; path = ../src/game/RadarAnimEvent.h; sourceTree = "<group>"; };
 		7B523F7F1DFFE8AB00EB265F /* RawTriggerAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RawTriggerAction.cpp; path = ../src/game/RawTriggerAction.cpp; sourceTree = "<group>"; };
@@ -664,7 +664,7 @@
 				7B523F791DFFE8AB00EB265F /* ProjectileDataList.h */,
 				7B523F7A1DFFE8AB00EB265F /* pside.h */,
 				7B523F7B1DFFE8AB00EB265F /* Queue.h */,
-				7B523F7C1DFFE8AB00EB265F /* RA_Tigger.h */,
+				7B523F7C1DFFE8AB00EB265F /* TriggerCondition.h */,
 				7B523F7D1DFFE8AB00EB265F /* RadarAnimEvent.cpp */,
 				7B523F7E1DFFE8AB00EB265F /* RadarAnimEvent.h */,
 				7B523F7F1DFFE8AB00EB265F /* RawTriggerAction.cpp */,

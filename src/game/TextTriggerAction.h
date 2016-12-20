@@ -38,6 +38,8 @@ class TextTriggerAction: public TriggerAction {
 	/** Execute this Action */
 	void execute();
 
+  virtual void Print();
+
  private:
 	/** Message to display */
 	std::string message;

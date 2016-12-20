@@ -1,6 +1,5 @@
 // GlobalClearTriggerAction.cpp
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -22,12 +21,15 @@
 extern bool GlobalVar[100];
 
 GlobalClearTriggerAction::GlobalClearTriggerAction(int number) :
-	TriggerAction(TriggerAction::GLOBAL_CLEAR)
+  TriggerAction(TriggerAction::GLOBAL_CLEAR)
 {
-	this->number = number;
+  this->number = number;
 }
 
-void GlobalClearTriggerAction::execute()
-{
-	GlobalVar[number] = false;
+void GlobalClearTriggerAction::execute() {
+  GlobalVar[number] = false;
+}
+
+void GlobalClearTriggerAction::Print() {
+  printf("GLOBAL_CLEAR (%d)", number);
 }

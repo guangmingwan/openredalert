@@ -187,11 +187,11 @@ class CnCMap {
 
   RA_Teamtype* getTeamtypeByNumb(unsigned int TeamNumb);
 
-  RA_Tiggers* getTriggerByName(std::string TriggerName);
+  RA_Tigger* getTriggerByName(std::string TriggerName);
 
-  void setTriggerByName(std::string TriggerName, RA_Tiggers *Trig);
+  void setTriggerByName(std::string TriggerName, RA_Tigger *Trig);
 
-  RA_Tiggers* getTriggerByNumb(int TriggerNumb);
+  RA_Tigger* getTriggerByNumb(int TriggerNumb);
 
   /** Return the trigger pool */
   std::vector<Trigger*>* getTriggerPool();
@@ -371,7 +371,7 @@ private:
 
   std::vector<Uint32> overlaymatrix;
 
-  std::vector<RA_Tiggers*> RaTriggers;
+  std::vector<RA_Tigger*> RaTriggers;
 
   std::vector<RA_Teamtype> RaTeamtypes;
 

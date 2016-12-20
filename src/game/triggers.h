@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include "game/RA_Tigger.h"
+#include "game/TriggerCondition.h"
 
 #define TRIGGER_NON_REPEATING                   0   // Fires when the events happen and destroys the trigger
 #define TRIGGER_REPEAT_ONCE_ALL                 1   // Fires when all instances of the trigger (e.g. celltriggers, triggers on units, etc.) have their events happen, then destroys the trigger.
@@ -241,23 +241,21 @@ class UnitOrStructure;
 /**
  * Trigger in RedAlert missions
  */
-class RA_Tiggers {
+class RA_Tigger {
  private:
   /** Make the constructor private to avoid it **/
-  RA_Tiggers(){
+  RA_Tigger(){
     // Nothing
   }
   /** Make the constructor by copy private to avoid it **/
-  RA_Tiggers(const RA_Tiggers&){
-
+  RA_Tigger(const RA_Tigger&) {
   }
 
  public:
   /** **/
-  RA_Tiggers(std::string pName){
-    // Set the Name
-    this->name = pName;
-  }
+  RA_Tigger(const std::string &name, const std::string &data);
+
+  void Print();
 
   /** Name of this trigger **/
   std::string name;
@@ -282,9 +280,9 @@ class RA_Tiggers {
    */
   int                 actions;
   /** first trigger */
-  RA_Tigger           trigger1;
+  TriggerCondition trigger1;
   /** second trigger */
-  RA_Tigger trigger2;
+  TriggerCondition trigger2;
   /** first trigger action */
   TriggerAction* action1;
   /** second trigger action,  If this trigger has more than
@@ -301,7 +299,6 @@ class RA_Tiggers {
 //
 // Forward declarations
 //
-void PrintTrigger(const RA_Tiggers& Trigger );
 void HandleTriggers ( UnitOrStructure *UnitOrStructure, int Event, int param = 0 );
 void HandleGlobalTrigger ( int Event, int param );
 void CheckCellTriggers(unsigned int pos);

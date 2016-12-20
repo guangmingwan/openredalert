@@ -512,7 +512,6 @@ void Game::play()
      pc::ai->handle();
      // Handle timing triggers
      HandleTiming();
-
      // Handle mission actions
      handleAiCommands();
 
@@ -626,19 +625,15 @@ void Game::play()
     pc::gfxeng->setupCurrentGame();
 
     // Check use of Fog of War
-    if (!pc::Config.UseFogOfWar)
-    {
+    if (!pc::Config.UseFogOfWar) {
       p::ccmap->getPlayerPool()->getLPlayer()->setVisBuild(Player::SOB_SIGHT, true);
     }
 
-    if (p::ccmap->getGameMode() == GAME_MODE_SINGLE_PLAYER)
-    {
+    if (p::ccmap->getGameMode() == GAME_MODE_SINGLE_PLAYER) {
       /// Jump to start location
       /// @todo: Jump to correct start location in multiplayer games.
       p::ccmap->restoreLocation(0);
-    }
-    else
-    {
+    } else {
       // The following is a hack that sets the location
       // to the current players location
       Player *LocalPlayer = p::ccmap->getPlayerPool()->getLPlayer();
@@ -648,31 +643,23 @@ void Game::play()
       // printf ("Startpos = %i, Current scrollpos = %i\n", StartPos, p::ccmap->getScrollPos());
       Uint32 x, y;
 
-      if (StartPos%p::ccmap->getWidth()> 14)
-      {
+      if (StartPos%p::ccmap->getWidth()> 14) {
         x = StartPos%p::ccmap->getWidth() - 14;
-      }
-      else
-      {
+      } else {
         x = StartPos%p::ccmap->getWidth();
       }
 
-      if (StartPos/p::ccmap->getWidth()> 10)
-      {
+      if (StartPos/p::ccmap->getWidth()> 10) {
         y = StartPos/p::ccmap->getWidth() - 10;
-      }
-      else
-      {
+      } else {
         y = StartPos/p::ccmap->getWidth() - 10;
       }
 
-      if (x> p::ccmap->getWidth())
-      {
+      if (x > p::ccmap->getWidth()) {
         x = p::ccmap->getWidth();
       }
 
-      if (y> p::ccmap->getHeight())
-      {
+      if (y > p::ccmap->getHeight()) {
         y = p::ccmap->getHeight();
       }
 
@@ -691,16 +678,14 @@ void Game::play()
     // Create the trigger manager
     TriggerManager lTriggerManager(p::ccmap);
 
-    while (!pc::input->shouldQuit() && !pc::quit)
-    {
+    while (!pc::input->shouldQuit() && !pc::quit) {
       // first thing we want to do is scroll the map
       if (p::ccmap->toScroll()){
         p::ccmap->doscroll();
       }
 
       // Draw the pause menu (when needed)
-      while (pc::Config.pause)
-      {
+      while (pc::Config.pause) {
         //pc::PauseMenu->HandleMenu();
         lPauseMenu->HandleMenu();
       }
@@ -722,11 +707,10 @@ void Game::play()
       // Handle AiCommand for mission
       //handleAiCommands();
       // Handle timing triggers
-      //HandleTiming();
+      HandleTiming();
 
 
-      if (gamemode == GAME_MODE_MULTI_PLAYER)
-      {
+      if (gamemode == GAME_MODE_MULTI_PLAYER) {
         // Synchronise events with server
       }
     }
@@ -794,19 +778,17 @@ void Game::play()
   //delete missions;
 }
 
-/*void Game::HandleTiming()
- {
- Uint32 uptime;
- // get elapsed time
- uptime = p::aequeue->getElapsedTime();
- // elapsed time in sec.
- uptime /= 1000;
- if ((uptime - OldUptime) > 6)
- {
- HandleGlobalTrigger(TRIGGER_EVENT_TIME_ELAPSED, uptime/6);
- OldUptime = uptime;
- }
- }*/
+void Game::HandleTiming() {
+  Uint32 uptime;
+  // get elapsed time
+  uptime = p::aequeue->getElapsedTime();
+  // elapsed time in sec.
+  uptime /= 1000;
+  if ((uptime - OldUptime) > 6) {
+    HandleGlobalTrigger(TRIGGER_EVENT_TIME_ELAPSED, uptime/6);
+    OldUptime = uptime;
+  }
+}
 
 /**
  * Prints stats of a game session
