@@ -257,8 +257,13 @@ class RA_Tigger {
 
   void Print();
 
+  std::string getName() { return name; }
+
+ protected:
   /** Name of this trigger **/
   std::string name;
+
+ public:
   int repeatable;
   /** which country trigger applies to */
   int                 country;

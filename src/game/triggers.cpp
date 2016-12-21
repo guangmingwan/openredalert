@@ -40,8 +40,8 @@
 using Sound::SoundEngine;
 
 namespace p {
-	extern CnCMap* ccmap;
-	extern UnitAndStructurePool* uspool;
+  extern CnCMap* ccmap;
+  extern UnitAndStructurePool* uspool;
 }
 
 namespace pc {
@@ -160,660 +160,649 @@ RA_Tigger::RA_Tigger(const std::string &name_, const std::string &data) {
  * @param value the value that the event has now
  * @returns void
  */
-bool CheckEvent(unsigned int Event, int param1, int param2, unsigned int Eventparam, int value)
-{
-    switch (Event)
-    {
-    	//
-        // No Events (ONLY THROW BY FORCE TRIGGER)
-    	//
-        case TRIGGER_EVENT_NO_EVENT:
-        	if (Event == Eventparam){
-        		return true;
-        	}
-        	break;
-        //
-        // value = HouseNum of the player
-        //
-        case TRIGGER_EVENT_SPIED_BY:
-        	if (Event == Eventparam){
-        		if (param2 == value) {
-        			return true;
-        		}
-        	}
-        	break;
-        //
-        // value = HouseNum of the player
-        //
-        case TRIGGER_EVENT_DISCOVERED_BY:
-        	// @todo implemente this
-        	break;
-        //
-        // value = HouseNum of the player
-        //
-        case TRIGGER_EVENT_ATTACKED:
-        	if (Event == Eventparam){
-        		if (value == param2){
-        			return true;
-        		}
-        	}
-        	break;
-        // 
-        //
-        case TRIGGER_EVENT_DESTROYED:        	        	
-        	if (Event == Eventparam){
-        		return true;
-        	}
-        	break;
-        // 
-        // ALL EVENT but NO "NO_EVENT"
-        case TRIGGER_EVENT_ANY_EVENT:
-        	if (Eventparam != TRIGGER_EVENT_NO_EVENT){
-        		return true;
-        	}
-        	break;   	
-        case TRIGGER_EVENT_MISSION_TIMER_EXPIRED:
-        case TRIGGER_EVENT_NO_FACTORIES_LEFT:
-            return false;
-            break;
-
-        // Events with parameters
-        case TRIGGER_EVENT_TIME_ELAPSED:
-            if (param2 <= value)
-                return true;
-            break;
-
-        // Unit of a house enter somewhere
-        // param2 = num of the global var
-        case TRIGGER_EVENT_ENTERED_BY:
-        	if (Event == Eventparam){
-        		if (param2 == value){
-        			return true;
-        		}
-        	}
-        	break;
-        // Unhandled events
-        case TRIGGER_EVENT_THIEVED_BY:
-        case TRIGGER_EVENT_HOUSE_DISCOVERED:
-        case TRIGGER_EVENT_ALL_UNITS_DESTROYED:
-        case TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED:
-        case TRIGGER_EVENT_ALL_DESTROYED:
-        case TRIGGER_EVENT_CREDITS_EXCEED:
-        case TRIGGER_EVENT_DESTROYED_NR_BUILDINGS:
-        case TRIGGER_EVENT_DESTROYED_NR_UNITS:
-        case TRIGGER_EVENT_CIVILIANS_EVACUATED:
-        case TRIGGER_EVENT_BUILD_BUILDING_TYPE:
-        case TRIGGER_EVENT_BUILD_UNIT_TYPE:
-        case TRIGGER_EVENT_BUILD_INFANTRY_TYPE:
-        case TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE:
-        case TRIGGER_EVENT_LEAVES_MAP:
-        case TRIGGER_EVENT_ZONE_ENTRY:
-        case TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE:
-        case TRIGGER_EVENT_CROSSED_VERTICAL_LINE:
-        	break;
-        //
-        // param2 = num of the global var
-        //
-        case TRIGGER_EVENT_GLOBAL_IS_SET:
-        	if (GlobalVar[param2] == true){
-        		return true;
-        	}
-        	break;
-        //
-        // param2 = num of the global var
-        //
-        case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
-        	if (GlobalVar[param2] == false){
-        		return true;
-        	}
-        	break;
-        case TRIGGER_EVENT_DESTROYED_FAKES_ALL:
-        	printf ("%s line %i: CheckParameters, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
-        	return false;
-        	break;
-        case TRIGGER_EVENT_LOW_POWER:
-        {
-        	// Check if a player have low power (<=> PowerUsed > Power)
-        	// param2 = player to check
-        	printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER try to analysis\n", __FILE__, __LINE__);
-        	// The player to check
-        	Player* pl = 0;
-        	pl = p::ccmap->getPlayerPool()->getPlayer((Uint8)param2);
-        	printf ("%s line %i: CheckParameters, TRIGGER_EVENT_LOW_POWER analysis player %s\n", __FILE__, __LINE__, pl->getName().c_str());
-        	if (pl->getPowerUsed() > pl->getPower())
-        	{
-        		printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide TRUE\n", __FILE__, __LINE__);        		        	
-        		return true;
-        	}
-        	else
-        	{
-        		printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide FALSE\n", __FILE__, __LINE__);        		
-        		return false;
-        	}
-        	break;
+bool CheckEvent(unsigned int Event, int param1, int param2, unsigned int Eventparam, int value) {
+  switch (Event) {
+      //
+      // No Events (ONLY THROW BY FORCE TRIGGER)
+      //
+    case TRIGGER_EVENT_NO_EVENT:
+      if (Event == Eventparam){
+        return true;
+      }
+      break;
+      //
+      // value = HouseNum of the player
+      //
+    case TRIGGER_EVENT_SPIED_BY:
+      if (Event == Eventparam){
+        if (param2 == value) {
+          return true;
         }
-        case TRIGGER_EVENT_ALL_BRIDGES_DESTROYED:
-        case TRIGGER_EVENT_BUILDING_EXISTS:
-            printf ("%s line %i: CheckParameters, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
-            return false;
-            break;
+      }
+      break;
+      //
+      // value = HouseNum of the player
+      //
+    case TRIGGER_EVENT_DISCOVERED_BY:
+      // @todo implemente this
+      break;
+      //
+      // value = HouseNum of the player
+      //
+    case TRIGGER_EVENT_ATTACKED:
+      if (Event == Eventparam){
+        if (value == param2){
+          return true;
+        }
+      }
+      break;
+      //
+      //
+    case TRIGGER_EVENT_DESTROYED:
+      if (Event == Eventparam){
+        return true;
+      }
+      break;
+      //
+      // ALL EVENT but NO "NO_EVENT"
+    case TRIGGER_EVENT_ANY_EVENT:
+      if (Eventparam != TRIGGER_EVENT_NO_EVENT){
+        return true;
+      }
+      break;
+    case TRIGGER_EVENT_MISSION_TIMER_EXPIRED:
+    case TRIGGER_EVENT_NO_FACTORIES_LEFT:
+      return false;
+      break;
 
-        default:
-            printf ("%s line %i: CheckParameters, Event %i not supported\n", __FILE__, __LINE__, Event);
-            break;
+      // Events with parameters
+    case TRIGGER_EVENT_TIME_ELAPSED:
+      if (param2 <= value)
+        return true;
+      break;
+
+      // Unit of a house enter somewhere
+      // param2 = num of the global var
+    case TRIGGER_EVENT_ENTERED_BY:
+      if (Event == Eventparam){
+        if (param2 == value){
+          return true;
+        }
+      }
+      break;
+      // Unhandled events
+    case TRIGGER_EVENT_THIEVED_BY:
+    case TRIGGER_EVENT_HOUSE_DISCOVERED:
+    case TRIGGER_EVENT_ALL_UNITS_DESTROYED:
+    case TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED:
+    case TRIGGER_EVENT_ALL_DESTROYED:
+    case TRIGGER_EVENT_CREDITS_EXCEED:
+    case TRIGGER_EVENT_DESTROYED_NR_BUILDINGS:
+    case TRIGGER_EVENT_DESTROYED_NR_UNITS:
+    case TRIGGER_EVENT_CIVILIANS_EVACUATED:
+    case TRIGGER_EVENT_BUILD_BUILDING_TYPE:
+    case TRIGGER_EVENT_BUILD_UNIT_TYPE:
+    case TRIGGER_EVENT_BUILD_INFANTRY_TYPE:
+    case TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE:
+    case TRIGGER_EVENT_LEAVES_MAP:
+    case TRIGGER_EVENT_ZONE_ENTRY:
+    case TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE:
+    case TRIGGER_EVENT_CROSSED_VERTICAL_LINE:
+      break;
+      //
+      // param2 = num of the global var
+      //
+    case TRIGGER_EVENT_GLOBAL_IS_SET:
+      if (GlobalVar[param2] == true){
+        return true;
+      }
+      break;
+      //
+      // param2 = num of the global var
+      //
+    case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
+      if (GlobalVar[param2] == false){
+        return true;
+      }
+      break;
+    case TRIGGER_EVENT_DESTROYED_FAKES_ALL:
+      printf ("%s line %i: CheckParameters, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
+      return false;
+      break;
+    case TRIGGER_EVENT_LOW_POWER:
+    {
+      // Check if a player have low power (<=> PowerUsed > Power)
+      // param2 = player to check
+      printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER try to analysis\n", __FILE__, __LINE__);
+      // The player to check
+      Player* pl = 0;
+      pl = p::ccmap->getPlayerPool()->getPlayer((Uint8)param2);
+      printf ("%s line %i: CheckParameters, TRIGGER_EVENT_LOW_POWER analysis player %s\n", __FILE__, __LINE__, pl->getName().c_str());
+      if (pl->getPowerUsed() > pl->getPower())
+      {
+        printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide TRUE\n", __FILE__, __LINE__);
+        return true;
+      }
+      else
+      {
+        printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide FALSE\n", __FILE__, __LINE__);
+        return false;
+      }
+      break;
     }
+    case TRIGGER_EVENT_ALL_BRIDGES_DESTROYED:
+    case TRIGGER_EVENT_BUILDING_EXISTS:
+      printf ("%s line %i: CheckParameters, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
+      return false;
+      break;
 
-    return false;
+    default:
+      printf ("%s line %i: CheckParameters, Event %i not supported\n", __FILE__, __LINE__, Event);
+      break;
+  }
+
+  return false;
 }
 
 /**
- * 
+ *
  */
 /*
-bool CheckOtherEvent(unsigned int Event, int param1, int param2, int value)
-{
-    switch (Event)
-    {
-        case TRIGGER_EVENT_NO_EVENT:
-        case TRIGGER_EVENT_SPIED_BY:
-        case TRIGGER_EVENT_DISCOVERED_BY:
-        case TRIGGER_EVENT_ATTACKED:
-        case TRIGGER_EVENT_DESTROYED:
-        case TRIGGER_EVENT_ANY_EVENT:
-        case TRIGGER_EVENT_MISSION_TIMER_EXPIRED:
-        case TRIGGER_EVENT_NO_FACTORIES_LEFT:
-        case TRIGGER_EVENT_TIME_ELAPSED:
-        case TRIGGER_EVENT_ENTERED_BY:
-        case TRIGGER_EVENT_THIEVED_BY:
-        case TRIGGER_EVENT_HOUSE_DISCOVERED:
-        case TRIGGER_EVENT_ALL_UNITS_DESTROYED:
-        case TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED:
-        case TRIGGER_EVENT_ALL_DESTROYED:
-        case TRIGGER_EVENT_CREDITS_EXCEED:
-        case TRIGGER_EVENT_DESTROYED_NR_BUILDINGS:
-        case TRIGGER_EVENT_DESTROYED_NR_UNITS:
-        case TRIGGER_EVENT_CIVILIANS_EVACUATED:
-        case TRIGGER_EVENT_BUILD_BUILDING_TYPE:
-        case TRIGGER_EVENT_BUILD_UNIT_TYPE:
-        case TRIGGER_EVENT_BUILD_INFANTRY_TYPE:
-        case TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE:
-        case TRIGGER_EVENT_LEAVES_MAP:
-        case TRIGGER_EVENT_ZONE_ENTRY:
-        case TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE:
-        case TRIGGER_EVENT_CROSSED_VERTICAL_LINE:
-        	return false;
-        	break;
-        // !!!
-        case TRIGGER_EVENT_GLOBAL_IS_SET:
-        	if (GlobalVar[param2] == true)
-        		return true;
-        	else
-        		return false;
-        	break;
-        // !!!
-        case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
-        	if (GlobalVar[param2] == false)
-        		return true;
-        	else
-        		return false;
-        	break;
-        case TRIGGER_EVENT_DESTROYED_FAKES_ALL:
-        	printf ("%s line %i: CheckOtherEvent, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
-        	return false;
-        	break;
-        case TRIGGER_EVENT_LOW_POWER:
-        {
-        	// Check if a player have low power (<=> PowerUsed > Power)
-        	// param2 = player to check
-        	printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER try to analysis\n", __FILE__, __LINE__);
-        	// The player to check
-        	Player* pl = p::ccmap->getPlayerPool()->getPlayer((Uint8)param2);
-        	printf ("%s line %i: CheckParameters, TRIGGER_EVENT_LOW_POWER analysis player %s\n", __FILE__, __LINE__, pl->getName());
-        	if (pl->getPowerUsed() > pl->getPower())
-        	{
-        		printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide TRUE\n", __FILE__, __LINE__);
-        		return true;
-        	} else {
-        		printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide FALSE\n", __FILE__, __LINE__);
-        		return false;
-        	}
-        	break;
-        }     	        
-        case TRIGGER_EVENT_ALL_BRIDGES_DESTROYED:
-        case TRIGGER_EVENT_BUILDING_EXISTS:
-            printf ("%s line %i: CheckOtherEvent, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
-            return false;
-            break;
+ bool CheckOtherEvent(unsigned int Event, int param1, int param2, int value)
+ {
+ switch (Event)
+ {
+ case TRIGGER_EVENT_NO_EVENT:
+ case TRIGGER_EVENT_SPIED_BY:
+ case TRIGGER_EVENT_DISCOVERED_BY:
+ case TRIGGER_EVENT_ATTACKED:
+ case TRIGGER_EVENT_DESTROYED:
+ case TRIGGER_EVENT_ANY_EVENT:
+ case TRIGGER_EVENT_MISSION_TIMER_EXPIRED:
+ case TRIGGER_EVENT_NO_FACTORIES_LEFT:
+ case TRIGGER_EVENT_TIME_ELAPSED:
+ case TRIGGER_EVENT_ENTERED_BY:
+ case TRIGGER_EVENT_THIEVED_BY:
+ case TRIGGER_EVENT_HOUSE_DISCOVERED:
+ case TRIGGER_EVENT_ALL_UNITS_DESTROYED:
+ case TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED:
+ case TRIGGER_EVENT_ALL_DESTROYED:
+ case TRIGGER_EVENT_CREDITS_EXCEED:
+ case TRIGGER_EVENT_DESTROYED_NR_BUILDINGS:
+ case TRIGGER_EVENT_DESTROYED_NR_UNITS:
+ case TRIGGER_EVENT_CIVILIANS_EVACUATED:
+ case TRIGGER_EVENT_BUILD_BUILDING_TYPE:
+ case TRIGGER_EVENT_BUILD_UNIT_TYPE:
+ case TRIGGER_EVENT_BUILD_INFANTRY_TYPE:
+ case TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE:
+ case TRIGGER_EVENT_LEAVES_MAP:
+ case TRIGGER_EVENT_ZONE_ENTRY:
+ case TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE:
+ case TRIGGER_EVENT_CROSSED_VERTICAL_LINE:
+ return false;
+ break;
+ // !!!
+ case TRIGGER_EVENT_GLOBAL_IS_SET:
+ if (GlobalVar[param2] == true)
+ return true;
+ else
+ return false;
+ break;
+ // !!!
+ case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
+ if (GlobalVar[param2] == false)
+ return true;
+ else
+ return false;
+ break;
+ case TRIGGER_EVENT_DESTROYED_FAKES_ALL:
+ printf ("%s line %i: CheckOtherEvent, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
+ return false;
+ break;
+ case TRIGGER_EVENT_LOW_POWER:
+ {
+ // Check if a player have low power (<=> PowerUsed > Power)
+ // param2 = player to check
+ printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER try to analysis\n", __FILE__, __LINE__);
+ // The player to check
+ Player* pl = p::ccmap->getPlayerPool()->getPlayer((Uint8)param2);
+ printf ("%s line %i: CheckParameters, TRIGGER_EVENT_LOW_POWER analysis player %s\n", __FILE__, __LINE__, pl->getName());
+ if (pl->getPowerUsed() > pl->getPower())
+ {
+ printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide TRUE\n", __FILE__, __LINE__);
+ return true;
+ } else {
+ printf ("%s line %i: CheckParameters, Event TRIGGER_EVENT_LOW_POWER decide FALSE\n", __FILE__, __LINE__);
+ return false;
+ }
+ break;
+ }
+ case TRIGGER_EVENT_ALL_BRIDGES_DESTROYED:
+ case TRIGGER_EVENT_BUILDING_EXISTS:
+ printf ("%s line %i: CheckOtherEvent, Event %i not handled jet -> skip ckeck\n", __FILE__, __LINE__, Event);
+ return false;
+ break;
 
-        default:
-            printf ("%s line %i: CheckOtherEvent, Event %i not supported\n", __FILE__, __LINE__, Event);
-            break;
-    }
+ default:
+ printf ("%s line %i: CheckOtherEvent, Event %i not supported\n", __FILE__, __LINE__, Event);
+ break;
+ }
 
-    return false;
-}
-*/
+ return false;
+ }
+ */
 /*
-bool CheckSecondTriggerEvent(int TriggerNumb, RA_Tiggers  *Trigger)
-{
+ bool CheckSecondTriggerEvent(int TriggerNumb, RA_Tiggers  *Trigger)
+ {
 	int EventToCheck;
 	int param2;
-	
+
 	if (TriggerNumb == 1){
-		EventToCheck	= Trigger->trigger1.event;
-		param2		= Trigger->trigger1.param2;
+ EventToCheck	= Trigger->trigger1.event;
+ param2		= Trigger->trigger1.param2;
 	}else{
-		EventToCheck	= Trigger->trigger2.event;
-		param2		= Trigger->trigger2.param2;
+ EventToCheck	= Trigger->trigger2.event;
+ param2		= Trigger->trigger2.param2;
 	}
 
 	switch (EventToCheck)
 	{
-		case TRIGGER_EVENT_GLOBAL_IS_SET:
-			if (GlobalVar[param2] == true){
-				//printf ("PARAMCHECK OKE|\n");
-				return true;
-			}
-			break;
-		case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
-			if (!GlobalVar[param2] == false){
-				//printf ("PARAMCHECK OKE|\n");
-				return true;
-			}
-			break;
-		default:
-			printf ("%s line %i: Unhandled trigger event = %i\n", __FILE__, __LINE__, EventToCheck);
-			break;
+ case TRIGGER_EVENT_GLOBAL_IS_SET:
+ if (GlobalVar[param2] == true){
+ //printf ("PARAMCHECK OKE|\n");
+ return true;
+ }
+ break;
+ case TRIGGER_EVENT_GLOBAL_IS_CLEAR:
+ if (!GlobalVar[param2] == false){
+ //printf ("PARAMCHECK OKE|\n");
+ return true;
+ }
+ break;
+ default:
+ printf ("%s line %i: Unhandled trigger event = %i\n", __FILE__, __LINE__, EventToCheck);
+ break;
 	}
 	return false;
-}
-*/
-/** 
+ }
+ */
+/**
  * Handle UnitOrStructure triggers
- * 
+ *
  * @param UnitOrStructure the unit or structure that has the event happening
  * @param Event the event that was caused for this unit or structure
  * @param param this is a event parameter ( doesn't have to be used )
  */
 void HandleTriggers(UnitOrStructure* UnitOrStructure, int Event, int param) {
-	std::string AssociatedTriggerName = "None";
-	RA_Tigger* AssociatedTrigger = 0;
-	//int			value = 0;
-	
-	Logger::getInstance()->Debug(__FILE__, __LINE__, "HandleTriggers with event = "
-        + getTriggerEventNameByNumber(Event) + " param = "); //param);
-	
-	// Check if there are someone behind this trigger :)
-    if (UnitOrStructure == 0){
-    	Logger::getInstance()->Warning("%s line %i: No structure defined !");
-        return;
-    }
-    
+  std::string AssociatedTriggerName = "None";
+  RA_Tigger* AssociatedTrigger = 0;
+  //int			value = 0;
 
-    // Get the trigger name from the unit or structure
-    AssociatedTriggerName = UnitOrStructure->getTriggerName();
-    // If they are no trigger then escape
-    if (AssociatedTriggerName == "None"){
-        return;
-    }
-    MACRO_LOG_DEBUG("Handle trigger [" + AssociatedTriggerName + "]")
-    
-    //
-    // Find the associated trigger in the map
-    //
-    AssociatedTrigger = p::ccmap->getTriggerByName(AssociatedTriggerName);
-    if (AssociatedTrigger == 0){
-        printf ("Trigger not found %s\n", AssociatedTrigger->name.c_str());
-        return;
-    }
+  Logger::getInstance()->Debug(__FILE__, __LINE__, "HandleTriggers with event = "
+                               + getTriggerEventNameByNumber(Event) + " param = "); //param);
+
+  // Check if there are someone behind this trigger :)
+  if (UnitOrStructure == 0){
+    Logger::getInstance()->Warning("%s line %i: No structure defined !");
+    return;
+  }
+
+
+  // Get the trigger name from the unit or structure
+  AssociatedTriggerName = UnitOrStructure->getTriggerName();
+  // If they are no trigger then escape
+  if (AssociatedTriggerName == "None"){
+    return;
+  }
+  MACRO_LOG_DEBUG("Handle trigger [" + AssociatedTriggerName + "]")
+
+  //
+  // Find the associated trigger in the map
+  //
+  AssociatedTrigger = p::ccmap->getTriggerByName(AssociatedTriggerName);
+  if (AssociatedTrigger == 0){
+    printf ("Trigger not found %s\n", AssociatedTrigger->getName().c_str());
+    return;
+  }
 
 #if 0
-    int countrynr = p::ccmap->getPlayerPool()->getHouseNumByPlayerNum(UnitOrStructure->getOwner());
+  int countrynr = p::ccmap->getPlayerPool()->getHouseNumByPlayerNum(UnitOrStructure->getOwner());
 
-    // Check if the trigger was meant for us
-    if (countrynr != AssociatedTrigger->country){
-        return;
-    }
+  // Check if the trigger was meant for us
+  if (countrynr != AssociatedTrigger->country){
+    return;
+  }
 #endif
-    
-//    printf ("%s line %i: Trigger name = %s, unitorstructurename = %c%c%c\n", __FILE__, __LINE__, AssociatedTriggerName.c_str(), UnitOrStructure->getType()->getTName()[0], UnitOrStructure->getType()->getTName()[1], UnitOrStructure->getType()->getTName()[2]);
-    
-    // Check if already done 	
-  	switch (AssociatedTrigger->repeatable)
-  	{
-  	case TRIGGER_NON_REPEATING:
-  		//printf("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
-  		if (AssociatedTrigger->hasexecuted == true){
-  			//printf("ALREADY DONE !!! (RETURN)\n");
-  			return;
-  		}
-  		break;
-  	case TRIGGER_REPEAT_ONCE_ALL:
-  		//printf("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
-  		break;
-  	case TRIGGER_FREE_REPEAT:
-  		//printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
-  		break;
-  	}
 
-    switch (AssociatedTrigger->activate)
-    {
-        // Only trigger event 1 must be true
-        case 0:
-            MACRO_LOG_DEBUG("case 0")
-            
-            if (CheckEvent(AssociatedTrigger->trigger1.event,
-            			   AssociatedTrigger->trigger1.param1,
-            			   AssociatedTrigger->trigger1.param2,
-            			   Event,
-            			   param) == true)
-            {
-                MACRO_LOG_DEBUG("EVENT CHECK IS OK")
-                
-            	// Set that Trigger is executed
-            	AssociatedTrigger->hasexecuted = true;
-            	
-            	// Execute Action 1
-                ExecuteTriggerAction(AssociatedTrigger->action1);
-                // If actions = 1 execute Action 2
-                if (AssociatedTrigger->actions == 1){
-                    ExecuteTriggerAction(AssociatedTrigger->action2);
-                }
-            }
-            break;
-            
-        // EVENT 1 & EVENT 2  ==> ACTION 1
-        // Triggger event one and two must be true
-        //
-        case 1:
-            MACRO_LOG_DEBUG("case 1")
-            
-            if ((CheckEvent(AssociatedTrigger->trigger1.event,
-                           AssociatedTrigger->trigger1.param1,
-                           AssociatedTrigger->trigger1.param2,
-                           Event,
-                           param) == true) &&
-                (CheckEvent(AssociatedTrigger->trigger2.event,
-                           AssociatedTrigger->trigger2.param1,
-                           AssociatedTrigger->trigger2.param2,
-                           Event,
-                           param) == true))
-            {
+  //    printf ("%s line %i: Trigger name = %s, unitorstructurename = %c%c%c\n", __FILE__, __LINE__, AssociatedTriggerName.c_str(), UnitOrStructure->getType()->getTName()[0], UnitOrStructure->getType()->getTName()[1], UnitOrStructure->getType()->getTName()[2]);
+
+  // Check if already done
+  switch (AssociatedTrigger->repeatable) {
+    case TRIGGER_NON_REPEATING:
+      //printf("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
+      if (AssociatedTrigger->hasexecuted == true){
+        //printf("ALREADY DONE !!! (RETURN)\n");
+        return;
+      }
+      break;
+    case TRIGGER_REPEAT_ONCE_ALL:
+      //printf("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
+      break;
+    case TRIGGER_FREE_REPEAT:
+      //printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, AssociatedTrigger->repeatable);
+      break;
+  }
+
+  switch (AssociatedTrigger->activate) {
+      // Only trigger event 1 must be true
+    case 0:
+      MACRO_LOG_DEBUG("case 0")
+
+      if (CheckEvent(AssociatedTrigger->trigger1.event,
+                     AssociatedTrigger->trigger1.param1,
+                     AssociatedTrigger->trigger1.param2,
+                     Event,
+                     param) == true)
+      {
+        MACRO_LOG_DEBUG("EVENT CHECK IS OK")
+
+        // Set that Trigger is executed
+        AssociatedTrigger->hasexecuted = true;
+
+        // Execute Action 1
+        ExecuteTriggerAction(AssociatedTrigger->action1);
+        // If actions = 1 execute Action 2
+        if (AssociatedTrigger->actions == 1){
+          ExecuteTriggerAction(AssociatedTrigger->action2);
+        }
+      }
+      break;
+
+      // EVENT 1 & EVENT 2  ==> ACTION 1
+      // Triggger event one and two must be true
+      //
+    case 1:
+      MACRO_LOG_DEBUG("case 1")
+
+      if ((CheckEvent(AssociatedTrigger->trigger1.event,
+                      AssociatedTrigger->trigger1.param1,
+                      AssociatedTrigger->trigger1.param2,
+                      Event,
+                      param) == true) &&
+          (CheckEvent(AssociatedTrigger->trigger2.event,
+                      AssociatedTrigger->trigger2.param1,
+                      AssociatedTrigger->trigger2.param2,
+                      Event,
+                      param) == true))
+      {
 
 
 
-            /*if (AssociatedTrigger->trigger1.event == Event){
-				// Trigger 1 is already oke, check trigger 2
-				if (CheckpaSecondTriggerEvent (2, AssociatedTrigger)){
-					ExecuteTriggerAction (Event, 1, AssociatedTrigger );
-					if (AssociatedTrigger->actions == 1){
-						ExecuteTriggerAction (Event, 2, AssociatedTrigger );
-					}
-				}
-			}else if (AssociatedTrigger->trigger2.event == Event){
-				// Trigger 2 is already oke, check trigger 1
-				if (CheckSecondTriggerEvent (1, AssociatedTrigger)){
-					ExecuteTriggerAction (Event, 1, AssociatedTrigger );
-					if (AssociatedTrigger->actions == 1){
-						ExecuteTriggerAction (Event, 2, AssociatedTrigger );
-					}
-				}
-			}else
-				printf ("%s line %i: ERROR, this should not happen\n", __FILE__, __LINE__);
-*/
-            //printf ("%s line %i: @todo: ********************trigger event1 and trigger event2 must be true check: T1 = %i, T2 = %i, param = %i *******************\n", __FILE__, __LINE__, AssociatedTrigger->trigger1.event, AssociatedTrigger->trigger2.event, value);
-        	}
-        	break;
-        // Either the first or the second trigger event must be true (activate all associated action on trigger1 or trigger2)
-        case 2:
-            MACRO_LOG_DEBUG("case 2")
+        /*if (AssociatedTrigger->trigger1.event == Event){
+         // Trigger 1 is already oke, check trigger 2
+         if (CheckpaSecondTriggerEvent (2, AssociatedTrigger)){
+         ExecuteTriggerAction (Event, 1, AssociatedTrigger );
+         if (AssociatedTrigger->actions == 1){
+         ExecuteTriggerAction (Event, 2, AssociatedTrigger );
+         }
+         }
+         }else if (AssociatedTrigger->trigger2.event == Event){
+         // Trigger 2 is already oke, check trigger 1
+         if (CheckSecondTriggerEvent (1, AssociatedTrigger)){
+         ExecuteTriggerAction (Event, 1, AssociatedTrigger );
+         if (AssociatedTrigger->actions == 1){
+         ExecuteTriggerAction (Event, 2, AssociatedTrigger );
+         }
+         }
+         }else
+         printf ("%s line %i: ERROR, this should not happen\n", __FILE__, __LINE__);
+         */
+        //printf ("%s line %i: @todo: ********************trigger event1 and trigger event2 must be true check: T1 = %i, T2 = %i, param = %i *******************\n", __FILE__, __LINE__, AssociatedTrigger->trigger1.event, AssociatedTrigger->trigger2.event, value);
+      }
+      break;
+      // Either the first or the second trigger event must be true (activate all associated action on trigger1 or trigger2)
+    case 2:
+      MACRO_LOG_DEBUG("case 2")
 
-            /*
-            if (AssociatedTrigger->trigger1.event == Event){
-                ExecuteTriggerAction (Event, 1, AssociatedTrigger );
-                if (AssociatedTrigger->actions == 1){
-                    ExecuteTriggerAction (Event, 2, AssociatedTrigger );
-                }
-            }
-            if (AssociatedTrigger->trigger2.event == Event){
-                ExecuteTriggerAction (Event, 1, AssociatedTrigger );
-                if (AssociatedTrigger->actions == 1){
-                    ExecuteTriggerAction (Event, 2, AssociatedTrigger );
-                }
-            }*/
-            break;
-        // Either the first or the second trigger event must be true (activate action 1 for trigger1, activate action2 for trigger2)
-        case 3:
-            MACRO_LOG_DEBUG("case 3\n")
-                        
-            /*
-            if (AssociatedTrigger->trigger1.event == Event){
-                ExecuteTriggerAction (Event, 1, AssociatedTrigger );
-            }
-            if (AssociatedTrigger->trigger2.event == Event){
-                ExecuteTriggerAction (Event, 2, AssociatedTrigger );
-            }
-            */
-            break;
-        default:
-            MACRO_LOG_DEBUG("Invalid trigger activation")
-            break;
-    }
+      /*
+       if (AssociatedTrigger->trigger1.event == Event){
+       ExecuteTriggerAction (Event, 1, AssociatedTrigger );
+       if (AssociatedTrigger->actions == 1){
+       ExecuteTriggerAction (Event, 2, AssociatedTrigger );
+       }
+       }
+       if (AssociatedTrigger->trigger2.event == Event){
+       ExecuteTriggerAction (Event, 1, AssociatedTrigger );
+       if (AssociatedTrigger->actions == 1){
+       ExecuteTriggerAction (Event, 2, AssociatedTrigger );
+       }
+       }*/
+      break;
+      // Either the first or the second trigger event must be true (activate action 1 for trigger1, activate action2 for trigger2)
+    case 3:
+      MACRO_LOG_DEBUG("case 3\n")
+
+      /*
+       if (AssociatedTrigger->trigger1.event == Event){
+       ExecuteTriggerAction (Event, 1, AssociatedTrigger );
+       }
+       if (AssociatedTrigger->trigger2.event == Event){
+       ExecuteTriggerAction (Event, 2, AssociatedTrigger );
+       }
+       */
+      break;
+    default:
+      MACRO_LOG_DEBUG("Invalid trigger activation")
+      break;
+  }
 }
 
-/** 
+/**
  * @Handle global triggers
- * 
+ *
  * @param Event the event that was caused for this unit or structure
  * @param value the parameter that goes with the event (example time eleapsed)
  */
 void HandleGlobalTrigger(int Event, int value) {
-	RA_Tigger  *Trigger;
-	int         TriggNumb = 0;
-	
-	
-	// Debug
-	printf("HandleGlobalTrigger with event=%s param=%d\n", 
-				getTriggerEventNameByNumber(Event).c_str(), 
-				value);
+  RA_Tigger  *Trigger;
+  int         TriggNumb = 0;
 
-	// For each trigger
-	while ((Trigger = p::ccmap->getTriggerByNumb(TriggNumb)) != 0) {
-		TriggNumb++;
+  // Debug
+  printf("HandleGlobalTrigger with event=%s param=%d\n",
+         getTriggerEventNameByNumber(Event).c_str(),
+         value);
 
-		if (Trigger == 0){
-			return;
-		}
-		//logger->debug("TRIG = [%s]  (activate=%d)\n", Trigger->name.c_str(), Trigger->activate);
-
-		//if (Trigger->name == "EINS")
-		//		continue;
-		//if (Trigger->name == "REVL")
-		//		continue;
-		//if (Trigger->name == "RSPD")
-		//		continue;
-				
-		// Check if already done 	
-		switch (Trigger->repeatable)
-		{
-		case TRIGGER_NON_REPEATING:
-			printf("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, Trigger->repeatable);
-			if (Trigger->hasexecuted == true){
-				printf("ALREADY DONE !!! (RETURN)\n");
-				return;
-			}
-			break;
-		case TRIGGER_REPEAT_ONCE_ALL:
-			printf("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, Trigger->repeatable);
-			break;
-		case TRIGGER_FREE_REPEAT:
-			printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, Trigger->repeatable);
-			break;
-		}
-
-
-		switch (Trigger->activate)
-		{
-			// Only trigger event 1 must be true
-			case 0:
-			{
-				// If the event is not true then continue to the next trigger
-				if (!CheckEvent(Trigger->trigger1.event,
-							Trigger->trigger1.param1, 
-							Trigger->trigger1.param2, 
-							Event, 
-							value))
-						continue;
-				
-				MACRO_LOG_DEBUG("TRIG [" + Trigger->name + "] Event check ok")
-
-				Trigger->hasexecuted = true;
-										
-				ExecuteTriggerAction(Trigger->action1);
-				if (Trigger->actions == 1){
-					ExecuteTriggerAction(Trigger->action2);
-				}
-				
-				break;
-			}
-			// Triggger event one and two must be true
-			case 1:
-				/*if (Trigger->trigger1.event == Event && !CheckParameters (Event, Trigger->trigger1.param1, Trigger->trigger1.param2, value)){
-					continue;
-				}
-				if (Trigger->trigger2.event == Event  && !CheckParameters (Event, Trigger->trigger2.param1, Trigger->trigger2.param2, value)){
-					continue;
-				}
-				if (Trigger->trigger1.event == Event){
-					// Trigger 1 is already oke, check trigger 2
-					if (CheckSecondTriggerEvent (2, Trigger)){
-						//printf ("Execute trigger action\n");
-						ExecuteTriggerAction ( Event, 1, Trigger );
-						if (Trigger->actions == 1){
-							ExecuteTriggerAction ( Event, 2, Trigger );
-						}
-					}
-				}else if (Trigger->trigger2.event == Event){
-					// Trigger 2 is already oke, check trigger 1
-					if (CheckSecondTriggerEvent (1, Trigger)){
-						//printf ("Execute trigger action\n");
-						ExecuteTriggerAction ( Event, 1, Trigger );
-						if (Trigger->actions == 1){
-							ExecuteTriggerAction ( Event, 2, Trigger );
-						}
-					}
-
-				}else
-					printf ("%s line %i: ERROR, this should not happen\n", __FILE__, __LINE__);
-				//printf ("%s line %i: @todo: ********************trigger event1 and trigger event2 must be true check: T1 = %i, T2 = %i, param = %i *******************\n", __FILE__, __LINE__, Trigger->trigger1.event, Trigger->trigger2.event, value);
-				*/break;
-			
-			// Either the first or the second trigger event must be 
-			// true (activate all associated action on trigger1 or 
-			// trigger2)
-			case 2:
-				/*
-				if (Trigger->trigger1.event == Event){
-					if (Trigger->trigger1.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger1.param2 < value)
-						continue;
-					ExecuteTriggerAction ( Event, 1, Trigger );
-					if (Trigger->actions == 1){
-						ExecuteTriggerAction ( Event, 2, Trigger );
-					}
-				}
-				if (Trigger->trigger2.event == Event){
-					if (Trigger->trigger2.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger2.param2 < value)
-						continue;
-					ExecuteTriggerAction ( Event, 1, Trigger );
-					if (Trigger->actions == 1){
-						ExecuteTriggerAction ( Event, 2, Trigger );
-					}
-				}*/
-				break;
-			// Either the first or the second trigger event must be true (activate action 1 for trigger1, activate action2 for trigger2)
-			case 3:/*
-				if (Trigger->trigger1.event == Event){
-					if (Trigger->trigger1.event == TRIGGER_EVENT_TIME_ELAPSED && !CheckParameters (Event, Trigger->trigger1.param1, Trigger->trigger1.param2, value))
-						continue;
-					ExecuteTriggerAction ( Event, 1, Trigger );
-				}
-				if (Trigger->trigger2.event == Event){
-					if (Trigger->trigger2.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger2.param2 < value)
-						continue;
-					ExecuteTriggerAction ( Event, 2, Trigger );
-				}*/
-				break;
-			default:
-				printf ("%s line %i: Invalid trigger activation\n", __FILE__, __LINE__);
-				break;
-		}
-	}
-}
-
-
-void CheckCellTriggers(Uint32 pos) {
-	//UnitOrStructure *unitOrStructure;
-	Unit            *unit;
-	RA_Tigger      *Trigger;
-
-/*
-    unitOrStructure = p::uspool->getUnitOrStructureAt(pos,0);
-
-    if (unitOrStructure == NULL)
-        return;
-
-    if (unitOrStructure->getType()->isStructure())
-        return;
-
-    unit = (Unit*) unitOrStructure;
-*/
-    unit = p::uspool->getGroundUnitAt(pos);
-
-	if (unit == 0){
-    	unit = p::uspool->getFlyingAt(pos);
-	}
-	if (unit == 0){
-		return;
-	}
-
-
-    if (unit->getTriggerName() == "None")
-    {
-        return;
-    }
-
-    Trigger = p::ccmap->getTriggerByName(unit->getTriggerName().c_str());
+  // For each trigger
+  while ((Trigger = p::ccmap->getTriggerByNumb(TriggNumb)) != 0) {
+    TriggNumb++;
 
     if (Trigger == 0){
-        return;
+      return;
     }
-    int countrynr = p::ccmap->getPlayerPool()->getHouseNumByPlayerNum(unit->getOwner());
+    //logger->debug("TRIG = [%s]  (activate=%d)\n", Trigger->name.c_str(), Trigger->activate);
 
-    // Check if the trigger was meant for us
-    if (countrynr != Trigger->country)
-        return;
+    //if (Trigger->name == "EINS")
+    //		continue;
+    //if (Trigger->name == "REVL")
+    //		continue;
+    //if (Trigger->name == "RSPD")
+    //		continue;
 
-    switch (Trigger->repeatable){
-        case TRIGGER_NON_REPEATING:
-            printf ("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, Trigger->repeatable);
-            break;
-
-        case TRIGGER_REPEAT_ONCE_ALL:
-            printf ("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, Trigger->repeatable);
-            break;
-
-        case TRIGGER_FREE_REPEAT:
-            printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, Trigger->repeatable);
-            break;
+    // Check if already done
+    switch (Trigger->repeatable) {
+      case TRIGGER_NON_REPEATING:
+        printf("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, Trigger->repeatable);
+        if (Trigger->hasexecuted == true){
+          printf("ALREADY DONE !!! (RETURN)\n");
+          return;
+        }
+        break;
+      case TRIGGER_REPEAT_ONCE_ALL:
+        printf("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, Trigger->repeatable);
+        break;
+      case TRIGGER_FREE_REPEAT:
+        printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, Trigger->repeatable);
+        break;
     }
 
-    printf ("%s line %i: Celltrigger triggered, trigger is %s, trigger country = %i, side = %i\n", __FILE__, __LINE__, Trigger->name.c_str(), Trigger->country, countrynr);
+    switch (Trigger->activate) {
+        // Only trigger event 1 must be true
+      case 0: {
+        // If the event is not true then continue to the next trigger
+        if (!CheckEvent(Trigger->trigger1.event,
+                        Trigger->trigger1.param1,
+                        Trigger->trigger1.param2,
+                        Event,
+                        value))
+          continue;
 
-    // player->getPlayerNum()
-    // player->getName()
+        MACRO_LOG_DEBUG("TRIG [" + Trigger->getName() + "] Event check ok")
+
+        Trigger->hasexecuted = true;
+
+        ExecuteTriggerAction(Trigger->action1);
+        if (Trigger->actions == 1){
+          ExecuteTriggerAction(Trigger->action2);
+        }
+
+        break;
+      }
+        // Triggger event one and two must be true
+      case 1:
+        /*if (Trigger->trigger1.event == Event && !CheckParameters (Event, Trigger->trigger1.param1, Trigger->trigger1.param2, value)){
+         continue;
+         }
+         if (Trigger->trigger2.event == Event  && !CheckParameters (Event, Trigger->trigger2.param1, Trigger->trigger2.param2, value)){
+         continue;
+         }
+         if (Trigger->trigger1.event == Event){
+         // Trigger 1 is already oke, check trigger 2
+         if (CheckSecondTriggerEvent (2, Trigger)){
+         //printf ("Execute trigger action\n");
+         ExecuteTriggerAction ( Event, 1, Trigger );
+         if (Trigger->actions == 1){
+         ExecuteTriggerAction ( Event, 2, Trigger );
+         }
+         }
+         }else if (Trigger->trigger2.event == Event){
+         // Trigger 2 is already oke, check trigger 1
+         if (CheckSecondTriggerEvent (1, Trigger)){
+         //printf ("Execute trigger action\n");
+         ExecuteTriggerAction ( Event, 1, Trigger );
+         if (Trigger->actions == 1){
+         ExecuteTriggerAction ( Event, 2, Trigger );
+         }
+         }
+
+         }else
+         printf ("%s line %i: ERROR, this should not happen\n", __FILE__, __LINE__);
+         //printf ("%s line %i: @todo: ********************trigger event1 and trigger event2 must be true check: T1 = %i, T2 = %i, param = %i *******************\n", __FILE__, __LINE__, Trigger->trigger1.event, Trigger->trigger2.event, value);
+         */break;
+
+        // Either the first or the second trigger event must be
+        // true (activate all associated action on trigger1 or
+        // trigger2)
+      case 2:
+        /*
+         if (Trigger->trigger1.event == Event){
+         if (Trigger->trigger1.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger1.param2 < value)
+         continue;
+         ExecuteTriggerAction ( Event, 1, Trigger );
+         if (Trigger->actions == 1){
+         ExecuteTriggerAction ( Event, 2, Trigger );
+         }
+         }
+         if (Trigger->trigger2.event == Event){
+         if (Trigger->trigger2.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger2.param2 < value)
+         continue;
+         ExecuteTriggerAction ( Event, 1, Trigger );
+         if (Trigger->actions == 1){
+         ExecuteTriggerAction ( Event, 2, Trigger );
+         }
+         }*/
+        break;
+        // Either the first or the second trigger event must be true (activate action 1 for trigger1, activate action2 for trigger2)
+      case 3:/*
+              if (Trigger->trigger1.event == Event){
+              if (Trigger->trigger1.event == TRIGGER_EVENT_TIME_ELAPSED && !CheckParameters (Event, Trigger->trigger1.param1, Trigger->trigger1.param2, value))
+              continue;
+              ExecuteTriggerAction ( Event, 1, Trigger );
+              }
+              if (Trigger->trigger2.event == Event){
+              if (Trigger->trigger2.event == TRIGGER_EVENT_TIME_ELAPSED && Trigger->trigger2.param2 < value)
+              continue;
+              ExecuteTriggerAction ( Event, 2, Trigger );
+              }*/
+        break;
+      default:
+        printf ("%s line %i: Invalid trigger activation\n", __FILE__, __LINE__);
+        break;
+    }
+  }
+}
+
+void CheckCellTriggers(Uint32 pos) {
+  //UnitOrStructure *unitOrStructure;
+  Unit            *unit;
+  RA_Tigger      *Trigger;
+
+  /*
+   unitOrStructure = p::uspool->getUnitOrStructureAt(pos,0);
+
+   if (unitOrStructure == NULL)
+   return;
+
+   if (unitOrStructure->getType()->isStructure())
+   return;
+
+   unit = (Unit*) unitOrStructure;
+   */
+  unit = p::uspool->getGroundUnitAt(pos);
+
+  if (unit == 0){
+    unit = p::uspool->getFlyingAt(pos);
+  }
+  if (unit == 0){
+    return;
+  }
+
+
+  if (unit->getTriggerName() == "None") {
+    return;
+  }
+
+  Trigger = p::ccmap->getTriggerByName(unit->getTriggerName().c_str());
+
+  if (Trigger == 0){
+    return;
+  }
+  int countrynr = p::ccmap->getPlayerPool()->getHouseNumByPlayerNum(unit->getOwner());
+
+  // Check if the trigger was meant for us
+  if (countrynr != Trigger->country)
+    return;
+
+  switch (Trigger->repeatable){
+    case TRIGGER_NON_REPEATING:
+      printf ("%s line %i: NON REPEATING TRIGGER, %i\n", __FILE__, __LINE__, Trigger->repeatable);
+      break;
+
+    case TRIGGER_REPEAT_ONCE_ALL:
+      printf ("%s line %i: SEMI REPEATING %i\n", __FILE__, __LINE__, Trigger->repeatable);
+      break;
+
+    case TRIGGER_FREE_REPEAT:
+      printf ("%s line %i: FREE REPEATING TRIGGER %i\n", __FILE__, __LINE__, Trigger->repeatable);
+      break;
+  }
+
+  printf ("%s line %i: Celltrigger triggered, trigger is %s, trigger country = %i, side = %i\n", __FILE__, __LINE__, Trigger->getName().c_str(), Trigger->country, countrynr);
+
+  // player->getPlayerNum()
+  // player->getName()
 
 #if 1
-    Trigger->Print();
+  Trigger->Print();
 #endif
 }
 
@@ -821,265 +810,256 @@ void CheckCellTriggers(Uint32 pos) {
 void ExecuteTriggerAction(TriggerAction* action)
 //void ExecuteTriggerAction(unsigned int Event, Uint8 ActionNr, RA_Tiggers *Trigger )
 {
-    /*unsigned int    Action;
-    int             parameter;
-    RA_Tiggers      *Trig;
-    Structure       *str;
-    std::string     TriggerName;
-    int             TeamNr;
-    RA_Teamtype     *Team;
-    Uint32 Waypoint = 0;*/ // For reveal around waypoint/zone
+  /*unsigned int    Action;
+   int             parameter;
+   RA_Tiggers      *Trig;
+   Structure       *str;
+   std::string     TriggerName;
+   int             TeamNr;
+   RA_Teamtype     *Team;
+   Uint32 Waypoint = 0;*/ // For reveal around waypoint/zone
 
-	// Check if the trigger should be executed (if it is not 
-    // repeatable and has already exectued once it should not 
-    // exectute again)
-	/*if (!Trigger->repeatable && Trigger->hasexecuted){
-		return;
-	}
+  // Check if the trigger should be executed (if it is not
+  // repeatable and has already exectued once it should not
+  // exectute again)
+  /*if (!Trigger->repeatable && Trigger->hasexecuted){
+   return;
+   }
 
-	// Set the has executed var now (to prevent inf loops)
-	Trigger->hasexecuted = true;
-	p::ccmap->setTriggerByName(Trigger->name.c_str(), Trigger);
+   // Set the has executed var now (to prevent inf loops)
+   Trigger->hasexecuted = true;
+   p::ccmap->setTriggerByName(Trigger->name.c_str(), Trigger);
 
 
-	if (ActionNr == 1){
-		Action = Trigger->action1->getAction();
-	}else if (ActionNr == 2){
-		Action = Trigger->action2->getAction();
-	}else {
-		printf("error ActionNr != 1 or 2 ERRROR !!! \n");
-		return;
-	}
-	*/
-	if (NULL == action) {
-        Logger::getInstance()->Error("action = NULL.");
+   if (ActionNr == 1){
+   Action = Trigger->action1->getAction();
+   }else if (ActionNr == 2){
+   Action = Trigger->action2->getAction();
+   }else {
+   printf("error ActionNr != 1 or 2 ERRROR !!! \n");
+   return;
+   }
+   */
+  if (NULL == action) {
+    Logger::getInstance()->Error("action = NULL.");
+  }
+  //printf("TRIGGER->action : %d\n", action->getAction());
+
+  switch (action->getAction()) {
+    case TRIGGER_ACTION_NO_ACTION:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_NO_ACTION***\n");
+      action->execute();
+      break;
+    case TRIGGER_ACTION_WINNER_IS:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_WINNER_IS***\n");
+      break;
+    case TRIGGER_ACTION_LOSER_IS: {
+      RawTriggerAction* actTrig = 0;
+      actTrig = dynamic_cast<RawTriggerAction*>(action);
+
+      //Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_LOSER_IS = %d ***\n", __FILE__, __LINE__, actTrig->getParam3());
+
+      unsigned int numPlayer = p::ccmap->getPlayerPool()->getPlayerNumByHouseNum(actTrig->getParam3());
+      Player* thePlayer = p::ccmap->getPlayerPool()->getPlayer(numPlayer);
+      if (thePlayer != 0) {
+        thePlayer->setVictorious(false);
+      }
+      break;
     }
-    //printf("TRIGGER->action : %d\n", action->getAction());
+    case TRIGGER_ACTION_PRODUCTION_BEGINS:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PRODUCTION_BEGINS***\n");
+      break;
+    case TRIGGER_ACTION_CREATE_TEAM:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_CREATE_TEAM***\n");
+      break;
+    case TRIGGER_ACTION_DESTROY_TEAM:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_DESTROY_TEAM***\n");
+      break;
+    case TRIGGER_ACTION_ALL_TO_HUNT:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ALL_TO_HUNT***\n");
+      break;
+    case TRIGGER_ACTION_REINFORCEMENTS: {
+      // The action to execute
+      RawTriggerAction* actTrig = 0;
+      actTrig = dynamic_cast<RawTriggerAction*>(action);
 
-    switch (action->getAction())
-    {
-        case TRIGGER_ACTION_NO_ACTION:
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_NO_ACTION***\n");
-        	action->execute();
-        	break;
-        case TRIGGER_ACTION_WINNER_IS:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_WINNER_IS***\n");
-            break;
-        case TRIGGER_ACTION_LOSER_IS:
-        {
-        	RawTriggerAction* actTrig = 0;
-        	actTrig = dynamic_cast<RawTriggerAction*>(action);
-        	
-        	//Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_LOSER_IS = %d ***\n", __FILE__, __LINE__, actTrig->getParam3());
-        	
-        	unsigned int numPlayer = p::ccmap->getPlayerPool()->getPlayerNumByHouseNum(actTrig->getParam3());
-        	Player* thePlayer = p::ccmap->getPlayerPool()->getPlayer(numPlayer);
-        	if (thePlayer != 0)
-            {
-        		thePlayer->setVictorious(false);
-        	}        	
-        	break;
-        }
-        case TRIGGER_ACTION_PRODUCTION_BEGINS:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PRODUCTION_BEGINS***\n");
-            break;
-        case TRIGGER_ACTION_CREATE_TEAM:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_CREATE_TEAM***\n");
-            break;
-        case TRIGGER_ACTION_DESTROY_TEAM:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_DESTROY_TEAM***\n");
-            break;
-        case TRIGGER_ACTION_ALL_TO_HUNT:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ALL_TO_HUNT***\n");
-            break;
-        case TRIGGER_ACTION_REINFORCEMENTS:
-        	{
-        		// The action to execute
-        		RawTriggerAction* actTrig = 0;
-        		actTrig = dynamic_cast<RawTriggerAction*>(action);
-        		
-        		//TeamNr = Trigger->action1->param1;
-        		int TeamNr = actTrig->getParam1();
-        		RA_Teamtype* Team = 0;
-        		Team = p::ccmap->getTeamtypeByNumb(TeamNr);
-        		if (Team != NULL)
-        		{
-        			Logger::getInstance()->Warning("Reinforcement team = " + Team->tname);
-        			p::uspool->createReinforcements(Team);
-        		}
-        		// Play the reinforcements have arrived tune
-        		pc::sfxeng->PlaySound(pc::Config.Reinforcements);
-			}
-        	break;            
-        case TRIGGER_ACTION_DROP_ZONE_FLARE:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_DROP_ZONE_FLARE***\n");
-            break;
-        case TRIGGER_ACTION_FIRE_SALE:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_FIRE_SALE***\n");
-            break;
-        case TRIGGER_ACTION_PLAY_MOVIE:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_MOVIE***\n");
-            break;
-        case TRIGGER_ACTION_TEXT:
-        	// Log it
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TEXT***\n");
-        	// Execute the action
-        	action->execute();
-            break;
-        case TRIGGER_ACTION_DESTROY_TRIGGER:
-            Logger::getInstance()->Error("%s line %i: ***RIGGER_ACTION_DESTROY_TRIGGER***\n");
-            break;
-        case TRIGGER_ACTION_AUTOCREATE_BEGINS:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_AUTOCREATE_BEGINS***\n");
-            break;
-        case TRIGGER_ACTION_ALLOW_WIN:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ALLOW_WIN***\n");
-            break;
-        case TRIGGER_ACTION_REVEAL_MAP:
-        	//Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_MAP***\n", __FILE__, __LINE__);
-        	//ppool->getLPlayer()->revealAroundWaypoint(Uint32 Waypoint);
-        	p::ccmap->getPlayerPool()->getLPlayer()->setVisBuild(Player::SOB_SIGHT, true);
-        	break;
-        case TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT:
-        {
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT***\n");
-        	        	
-        	// The action to execute
-        	RawTriggerAction* actionTrig = 0;
-        	actionTrig = dynamic_cast<RawTriggerAction*>(action);
-        	int Waypoint = actionTrig->getParam3();
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT***, waypoint1 == %u\n");
-        	p::ccmap->getPlayerPool()->getLPlayer()->revealAroundWaypoint(Waypoint);
-        	break;
-        }
-        case TRIGGER_ACTION_REVEAL_ZONE_OF_WAYPOINT:
-        	/// This is incorrect this funtion should reveal a complete zone, two possibilities
-        	/// 1. Everything around the waypoint where one would be able to walk / drive
-        	/// 2. If the waypoint is over a place where one can't walk/drive reveal all places on the map where one can't walk/drive
-        	/*if (ActionNr == 1){
-        	 * 			Waypoint = Trigger->action1->param3;
-        	 * 		}else if (ActionNr == 2){
-        	 * 			Waypoint = Trigger->action2->param3;
-        	 * 		}
-        	 * 		p::ccmap->getPlayerPool()->getLPlayer()->revealAroundWaypoint(Waypoint);*/
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_ZONE_OF_WAYPOINT***\n");
-        	break;
-        case TRIGGER_ACTION_PLAY_SOUND:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_SOUND***\n");
-            break;
-        case TRIGGER_ACTION_PLAY_MUSIC:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_MUSIC***\n");
-            break;
-        case TRIGGER_ACTION_PLAY_SPEECH:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_SPEECH***\n");
-            break;
-        case TRIGGER_ACTION_FORCE_TRIGGER:
-        {
-        	Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_FORCE_TRIGGER***\n");
-        	
-        	RawTriggerAction* actTrig = 0;
-        	actTrig = dynamic_cast<RawTriggerAction*>(action);
-        	
-        	int parameter = actTrig->getParam2();
-
-        	RA_Tigger* Trig =  p::ccmap->getTriggerByNumb(parameter);
-
-        	// Set that Trigger is executed
-        	Trig->hasexecuted = true;
-        	
-        	// Execute Action 1
-        	ExecuteTriggerAction(Trig->action1);
-        	// If actions = 1 execute Action 2
-        	if (Trig->actions == 1){
-        		ExecuteTriggerAction(Trig->action2);
-        	}
-            //logger->warning("%s line %i: Force trigger %s\n", __FILE__, __LINE__, Trig->name.c_str());
-            break;
-        }
-        case TRIGGER_ACTION_TIMER_START:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_START***\n");
-            break;
-        case TRIGGER_ACTION_TIMER_STOP:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_STOP***\n");
-            break;
-        case TRIGGER_ACTION_TIMER_EXTEND:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_EXTEND***\n");
-            break;
-        case TRIGGER_ACTION_TIMER_SHORTEN:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_SHORTEN***\n");
-            break;
-        case TRIGGER_ACTION_TIMER_SET:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_SET***\n");
-            break;
-        case TRIGGER_ACTION_GLOBAL_SET:
-        {
-            // Log it
-            Logger::getInstance()->Debug(__FILE__, __LINE__, "***TRIGGER_ACTION_GLOBAL_SET***");
-            // Executed the action
-            action->execute();
-            break;
-        }
-        // Trigger to clear a global variable
-        case TRIGGER_ACTION_GLOBAL_CLEAR:
-        {
-            // Log it
-            Logger::getInstance()->Debug(__FILE__, __LINE__, "***TRIGGER_ACTION_GLOBAL_CLEAR***");
-            // Execute the action
-            action->execute();
-            break;
-        }
-        case TRIGGER_ACTION_AUTO_BASE_BUILDING:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_AUTO_BASE_BUILDING***\n");
-            break;
-        case TRIGGER_ACTION_GROW_SHROUD_ONE_STEP:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_GROW_SHROUD_ONE_STEP***\n");
-            break;
-        case TRIGGER_ACTION_DESTROY_BUILDING:
-        	//break;
-        	//PrintTrigger ( *Trigger );
-			/*for (unsigned int i = 0; i < p::uspool->getNumbStructures(); i++){
-				str = p::uspool->getStructure(i);
-				if (str == NULL || !str->isAlive()){
-					continue;
-				}
-				TriggerName = str->getTriggerName();
-				for (unsigned int j=0; j<TriggerName.length(); ++j){
-					TriggerName[j]=toupper(TriggerName[j]);
-				}
-				if (TriggerName == Trigger->name)
-				{
-					/// @todo DANGEROUS HACK
-					/// this is a dangerous hack
-					/// possibility off recursive function calls,
-					/// possibility off infinite loops
-					str->applyDamage(255, NULL, NULL);
-				}
-			}*/
-            //Logger::getInstance()->Error("%s line %i: **********************Unhandled trigger action**********************\n", __FILE__, __LINE__);
-            break;
-        case TRIGGER_ACTION_ADD_1TIME_SPEC_WEAPON:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ADD_1TIME_SPEC_WEAPON***\n");
-            break;
-        case TRIGGER_ACTION_ADD_SPEC_WEAPON:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ADD_SPEC_WEAPON***\n");
-            break;
-        case TRIGGER_ACTION_PREFERRED_TARGET:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PREFERRED_TARGET****\n");
-            break;
-        case TRIGGER_ACTION_LAUNCH_NUKES:
-            Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_LAUNCH_NUKES***\n");
-            break;
-        default:
-            Logger::getInstance()->Error("%s line %i: BIG ERROR unkown trigger\n");
-            break;
+      //TeamNr = Trigger->action1->param1;
+      int TeamNr = actTrig->getParam1();
+      RA_Teamtype* Team = 0;
+      Team = p::ccmap->getTeamtypeByNumb(TeamNr);
+      if (Team != NULL) {
+        Logger::getInstance()->Warning("Reinforcement team = " + Team->tname);
+        p::uspool->createReinforcements(Team);
+      }
+      // Play the reinforcements have arrived tune
+      pc::sfxeng->PlaySound(pc::Config.Reinforcements);
     }
+      break;
+    case TRIGGER_ACTION_DROP_ZONE_FLARE:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_DROP_ZONE_FLARE***\n");
+      break;
+    case TRIGGER_ACTION_FIRE_SALE:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_FIRE_SALE***\n");
+      break;
+    case TRIGGER_ACTION_PLAY_MOVIE:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_MOVIE***\n");
+      break;
+    case TRIGGER_ACTION_TEXT:
+      // Log it
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TEXT***\n");
+      // Execute the action
+      action->execute();
+      break;
+    case TRIGGER_ACTION_DESTROY_TRIGGER:
+      Logger::getInstance()->Error("%s line %i: ***RIGGER_ACTION_DESTROY_TRIGGER***\n");
+      break;
+    case TRIGGER_ACTION_AUTOCREATE_BEGINS:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_AUTOCREATE_BEGINS***\n");
+      break;
+    case TRIGGER_ACTION_ALLOW_WIN:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ALLOW_WIN***\n");
+      break;
+    case TRIGGER_ACTION_REVEAL_MAP:
+      //Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_MAP***\n", __FILE__, __LINE__);
+      //ppool->getLPlayer()->revealAroundWaypoint(Uint32 Waypoint);
+      p::ccmap->getPlayerPool()->getLPlayer()->setVisBuild(Player::SOB_SIGHT, true);
+      break;
+    case TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT: {
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT***\n");
+
+      // The action to execute
+      RawTriggerAction* actionTrig = 0;
+      actionTrig = dynamic_cast<RawTriggerAction*>(action);
+      int Waypoint = actionTrig->getParam3();
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_AROUND_WAYPOINT***, waypoint1 == %u\n");
+      p::ccmap->getPlayerPool()->getLPlayer()->revealAroundWaypoint(Waypoint);
+      break;
+    }
+    case TRIGGER_ACTION_REVEAL_ZONE_OF_WAYPOINT:
+      /// This is incorrect this funtion should reveal a complete zone, two possibilities
+      /// 1. Everything around the waypoint where one would be able to walk / drive
+      /// 2. If the waypoint is over a place where one can't walk/drive reveal all places on the map where one can't walk/drive
+      /*if (ActionNr == 1){
+       * 			Waypoint = Trigger->action1->param3;
+       * 		}else if (ActionNr == 2){
+       * 			Waypoint = Trigger->action2->param3;
+       * 		}
+       * 		p::ccmap->getPlayerPool()->getLPlayer()->revealAroundWaypoint(Waypoint);*/
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_REVEAL_ZONE_OF_WAYPOINT***\n");
+      break;
+    case TRIGGER_ACTION_PLAY_SOUND:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_SOUND***\n");
+      break;
+    case TRIGGER_ACTION_PLAY_MUSIC:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_MUSIC***\n");
+      break;
+    case TRIGGER_ACTION_PLAY_SPEECH:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PLAY_SPEECH***\n");
+      break;
+    case TRIGGER_ACTION_FORCE_TRIGGER: {
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_FORCE_TRIGGER***\n");
+
+      RawTriggerAction* actTrig = 0;
+      actTrig = dynamic_cast<RawTriggerAction*>(action);
+
+      int parameter = actTrig->getParam2();
+
+      RA_Tigger* Trig =  p::ccmap->getTriggerByNumb(parameter);
+
+      // Set that Trigger is executed
+      Trig->hasexecuted = true;
+
+      // Execute Action 1
+      ExecuteTriggerAction(Trig->action1);
+      // If actions = 1 execute Action 2
+      if (Trig->actions == 1){
+        ExecuteTriggerAction(Trig->action2);
+      }
+      //logger->warning("%s line %i: Force trigger %s\n", __FILE__, __LINE__, Trig->name.c_str());
+      break;
+    }
+    case TRIGGER_ACTION_TIMER_START:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_START***\n");
+      break;
+    case TRIGGER_ACTION_TIMER_STOP:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_STOP***\n");
+      break;
+    case TRIGGER_ACTION_TIMER_EXTEND:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_EXTEND***\n");
+      break;
+    case TRIGGER_ACTION_TIMER_SHORTEN:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_SHORTEN***\n");
+      break;
+    case TRIGGER_ACTION_TIMER_SET:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_TIMER_SET***\n");
+      break;
+    case TRIGGER_ACTION_GLOBAL_SET: {
+      // Log it
+      Logger::getInstance()->Debug(__FILE__, __LINE__, "***TRIGGER_ACTION_GLOBAL_SET***");
+      // Executed the action
+      action->execute();
+      break;
+    }
+      // Trigger to clear a global variable
+    case TRIGGER_ACTION_GLOBAL_CLEAR: {
+      // Log it
+      Logger::getInstance()->Debug(__FILE__, __LINE__, "***TRIGGER_ACTION_GLOBAL_CLEAR***");
+      // Execute the action
+      action->execute();
+      break;
+    }
+    case TRIGGER_ACTION_AUTO_BASE_BUILDING:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_AUTO_BASE_BUILDING***\n");
+      break;
+    case TRIGGER_ACTION_GROW_SHROUD_ONE_STEP:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_GROW_SHROUD_ONE_STEP***\n");
+      break;
+    case TRIGGER_ACTION_DESTROY_BUILDING:
+      //break;
+      //PrintTrigger ( *Trigger );
+      /*for (unsigned int i = 0; i < p::uspool->getNumbStructures(); i++){
+       str = p::uspool->getStructure(i);
+       if (str == NULL || !str->isAlive()){
+       continue;
+       }
+       TriggerName = str->getTriggerName();
+       for (unsigned int j=0; j<TriggerName.length(); ++j){
+       TriggerName[j]=toupper(TriggerName[j]);
+       }
+       if (TriggerName == Trigger->name)
+       {
+       /// @todo DANGEROUS HACK
+       /// this is a dangerous hack
+       /// possibility off recursive function calls,
+       /// possibility off infinite loops
+       str->applyDamage(255, NULL, NULL);
+       }
+       }*/
+      //Logger::getInstance()->Error("%s line %i: **********************Unhandled trigger action**********************\n", __FILE__, __LINE__);
+      break;
+    case TRIGGER_ACTION_ADD_1TIME_SPEC_WEAPON:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ADD_1TIME_SPEC_WEAPON***\n");
+      break;
+    case TRIGGER_ACTION_ADD_SPEC_WEAPON:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_ADD_SPEC_WEAPON***\n");
+      break;
+    case TRIGGER_ACTION_PREFERRED_TARGET:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_PREFERRED_TARGET****\n");
+      break;
+    case TRIGGER_ACTION_LAUNCH_NUKES:
+      Logger::getInstance()->Error("%s line %i: ***TRIGGER_ACTION_LAUNCH_NUKES***\n");
+      break;
+    default:
+      Logger::getInstance()->Error("%s line %i: BIG ERROR unkown trigger\n");
+      break;
+  }
 }
 
 /**
  * Print a Trigger
  */
 void RA_Tigger::Print() {
-//  printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
+  //  printf ("%s line %i: Read trigger:\n", __FILE__, __LINE__);
   printf ("name = \t\t\t%s\n", name.c_str());
   printf ("repeatable = \t\t%i\n", repeatable);
   printf ("country = \t\t%i\n", country);
@@ -1100,52 +1080,52 @@ void RA_Tigger::Print() {
  * - Reset global vars
  */
 void InitializeTriggers() {
-	// Reset all the Global Vars
-    for (int i = 0; i < 100; i++){
-        GlobalVar[i] = false;
-    }
+  // Reset all the Global Vars
+  for (int i = 0; i < 100; i++){
+    GlobalVar[i] = false;
+  }
 }
 
 /**
  * Return the name of a trigger with this number
  */
 std::string getTriggerEventNameByNumber(Uint8 number) {
-	std::string str;
-	switch(number){
-	case 0:	str = "TRIGGER_EVENT_NO_EVENT";	break;
-	case 1:	str = "TRIGGER_EVENT_ENTERED_BY"; break;
-	case 2:	str = "TRIGGER_EVENT_SPIED_BY"; break;
-	case 3: str = "TRIGGER_EVENT_THIEVED_BY"; break;
-	case 4: str = "TRIGGER_EVENT_DISCOVERED_BY"; break;
-	case 5: str = "TRIGGER_EVENT_HOUSE_DISCOVERED"; break;
-	case 6: str = "TRIGGER_EVENT_ATTACKED"; break;
-	case 7: str = "TRIGGER_EVENT_DESTROYED"; break;
-	case 8: str = "TRIGGER_EVENT_ANY_EVENT"; break;
-	case 9: str = "TRIGGER_EVENT_ALL_UNITS_DESTROYED"; break;
-	case 10: str = "TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED"; break;
-	case 11: str = "TRIGGER_EVENT_ALL_DESTROYED"; break;
-	case 12: str = "TRIGGER_EVENT_CREDITS_EXCEED"; break;
-	case 13: str = "TRIGGER_EVENT_TIME_ELAPSED"; break;
-	case 14: str = "TRIGGER_EVENT_MISSION_TIMER_EXPIRED"; break;
-	case 15: str = "TRIGGER_EVENT_DESTROYED_NR_BUILDINGS"; break;
-	case 16: str = "TRIGGER_EVENT_DESTROYED_NR_UNITS"; break;
-	case 17: str = "TRIGGER_EVENT_NO_FACTORIES_LEFT"; break;
-	case 18: str = "TRIGGER_EVENT_CIVILIANS_EVACUATED"; break;
-	case 19: str = "TRIGGER_EVENT_BUILD_BUILDING_TYPE"; break;
-	case 20: str = "TRIGGER_EVENT_BUILD_UNIT_TYPE"; break;
-	case 21: str = "TRIGGER_EVENT_BUILD_INFANTRY_TYPE"; break;
-	case 22: str = "TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE"; break;
-	case 23: str = "TRIGGER_EVENT_LEAVES_MAP"; break;
-	case 24: str = "TRIGGER_EVENT_ZONE_ENTRY"; break;
-	case 25: str = "TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE"; break;
-	case 26: str = "TRIGGER_EVENT_CROSSED_VERTICAL_LINE"; break;
-	case 27: str = "TRIGGER_EVENT_GLOBAL_IS_SET"; break;
-	case 28: str = "TRIGGER_EVENT_GLOBAL_IS_CLEAR"; break;
-	case 29: str = "TRIGGER_EVENT_DESTROYED_FAKES_ALL"; break;
-	case 30: str = "TRIGGER_EVENT_LOW_POWER"; break;
-	case 31: str = "TRIGGER_EVENT_ALL_BRIDGES_DESTROYED"; break;
-	case 32: str = "TRIGGER_EVENT_BUILDING_EXISTS"; break;
-	default : str = "TRIGGER_EVENT_????"; break;
-	}
-	return str;
+  std::string str;
+  switch(number){
+    case 0:	str = "TRIGGER_EVENT_NO_EVENT";	break;
+    case 1:	str = "TRIGGER_EVENT_ENTERED_BY"; break;
+    case 2:	str = "TRIGGER_EVENT_SPIED_BY"; break;
+    case 3: str = "TRIGGER_EVENT_THIEVED_BY"; break;
+    case 4: str = "TRIGGER_EVENT_DISCOVERED_BY"; break;
+    case 5: str = "TRIGGER_EVENT_HOUSE_DISCOVERED"; break;
+    case 6: str = "TRIGGER_EVENT_ATTACKED"; break;
+    case 7: str = "TRIGGER_EVENT_DESTROYED"; break;
+    case 8: str = "TRIGGER_EVENT_ANY_EVENT"; break;
+    case 9: str = "TRIGGER_EVENT_ALL_UNITS_DESTROYED"; break;
+    case 10: str = "TRIGGER_EVENT_ALL_BUILDINGS_DESTROYED"; break;
+    case 11: str = "TRIGGER_EVENT_ALL_DESTROYED"; break;
+    case 12: str = "TRIGGER_EVENT_CREDITS_EXCEED"; break;
+    case 13: str = "TRIGGER_EVENT_TIME_ELAPSED"; break;
+    case 14: str = "TRIGGER_EVENT_MISSION_TIMER_EXPIRED"; break;
+    case 15: str = "TRIGGER_EVENT_DESTROYED_NR_BUILDINGS"; break;
+    case 16: str = "TRIGGER_EVENT_DESTROYED_NR_UNITS"; break;
+    case 17: str = "TRIGGER_EVENT_NO_FACTORIES_LEFT"; break;
+    case 18: str = "TRIGGER_EVENT_CIVILIANS_EVACUATED"; break;
+    case 19: str = "TRIGGER_EVENT_BUILD_BUILDING_TYPE"; break;
+    case 20: str = "TRIGGER_EVENT_BUILD_UNIT_TYPE"; break;
+    case 21: str = "TRIGGER_EVENT_BUILD_INFANTRY_TYPE"; break;
+    case 22: str = "TRIGGER_EVENT_BUILD_AIRCRAFT_TYPE"; break;
+    case 23: str = "TRIGGER_EVENT_LEAVES_MAP"; break;
+    case 24: str = "TRIGGER_EVENT_ZONE_ENTRY"; break;
+    case 25: str = "TRIGGER_EVENT_CROSSED_HORIZONTAL_LINE"; break;
+    case 26: str = "TRIGGER_EVENT_CROSSED_VERTICAL_LINE"; break;
+    case 27: str = "TRIGGER_EVENT_GLOBAL_IS_SET"; break;
+    case 28: str = "TRIGGER_EVENT_GLOBAL_IS_CLEAR"; break;
+    case 29: str = "TRIGGER_EVENT_DESTROYED_FAKES_ALL"; break;
+    case 30: str = "TRIGGER_EVENT_LOW_POWER"; break;
+    case 31: str = "TRIGGER_EVENT_ALL_BRIDGES_DESTROYED"; break;
+    case 32: str = "TRIGGER_EVENT_BUILDING_EXISTS"; break;
+    default : str = "TRIGGER_EVENT_????"; break;
+  }
+  return str;
 }

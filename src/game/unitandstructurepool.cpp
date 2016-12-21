@@ -419,7 +419,7 @@ bool UnitAndStructurePool::createReinforcements(RA_Teamtype* Team) {
   //logger->debug("%s line %i: Team size = %i, Owner = %i\n", __FILE__, __LINE__, Team->Units.size(), (int)owner);
 
   // Get the trigger
-  name_trigger = p::ccmap->getTriggerByNumb(Team->trigger)->name;
+  name_trigger = p::ccmap->getTriggerByNumb(Team->trigger)->getName();
 
   // For each unit type
   for (unsigned int i = 0; i < Team->Units.size(); i++)

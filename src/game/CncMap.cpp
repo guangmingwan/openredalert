@@ -1074,19 +1074,12 @@ Uint32 CnCMap::setTiberium(Uint32 pos, Uint8 value)
  * @param Trig Pointer to the data of the trigger
  */
 void CnCMap::setTriggerByName(std::string TriggerName, RA_Tigger *Trig) {
+  transform(TriggerName.begin(), TriggerName.end(), TriggerName.begin(), toupper);
+
   // Parse all triggers
-  for (unsigned int i = 0; i < RaTriggers.size(); i++) {
-    if (TriggerName.size() != RaTriggers[i]->name.size()) {
-      continue;
-    }
-    unsigned int j;
-    for (j = 0; j < TriggerName.size(); j++) {
-      if (toupper(TriggerName[j]) != toupper(RaTriggers[i]->name[j]))
-        break;
-    }
-    //printf ("String1 = %s, String2 = %s, j = %i, size1 = %i, size2 = %i\n", TriggerName.c_str(), RaTriggers[i].name.c_str(), j, TriggerName.size(), RaTriggers[i].name.size());
-    if (j == TriggerName.size()) {
-      memcpy(&RaTriggers[i], Trig, sizeof (RA_Tigger));
+  for (RA_Tigger *trigger : RaTriggers) {
+    if (trigger->getName() == TriggerName) {
+      *trigger = *Trig;
     }
   }
 }
@@ -1206,15 +1199,13 @@ RA_Tigger* CnCMap::getTriggerByName(std::string TriggerName) {
   transform(name.begin(), name.end(), name.begin(), toupper);
 
   // Parse all triggers to found one
-  for (unsigned int j = 0; j < RaTriggers.size(); j++)
-  {
+  for (unsigned int j = 0; j < RaTriggers.size(); j++) {
     // Upper the string of the trigger
-    std::string UpTrig = RaTriggers[j]->name;
+    std::string UpTrig = RaTriggers[j]->getName();
     transform(UpTrig.begin(), UpTrig.end(), UpTrig.begin(), toupper);
 
     // Compare both
-    if (UpTrig == name)
-    {
+    if (UpTrig == name) {
       // We found it ! :)
       //printf("%s = %s \n", UpTrig.c_str(), name.c_str());
       return RaTriggers[j];
@@ -1224,8 +1215,7 @@ RA_Tigger* CnCMap::getTriggerByName(std::string TriggerName) {
   return 0;
 }
 
-RA_Teamtype *CnCMap::getTeamtypeByNumb(unsigned int TeamNumb)
-{
+RA_Teamtype *CnCMap::getTeamtypeByNumb(unsigned int TeamNumb) {
   if (TeamNumb >= RaTeamtypes.size())
     return NULL;
   return &RaTeamtypes[TeamNumb];
@@ -2288,9 +2278,9 @@ void CnCMap::advancedSections(INIFile *inifile) {
       if (maptype == GAME_RA) {
         INIFile::KeyNode key = inifile->readKeyValue("TRIGS", keynum);
         // is the char which separate terraintype from action.
-        RA_Tigger triggers(key.name, key.value);
-        triggers.Print();
-        RaTriggers.push_back(&triggers);
+        RA_Tigger *triggers = new RA_Tigger(key.name, key.value);
+        triggers->Print();
+        RaTriggers.push_back(triggers);
       } else if (maptype == GAME_TD) {
         //key = inifile->readKeyValue("TRIGGERS", keynum);
         // is the char which separate terraintype from action.
