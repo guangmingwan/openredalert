@@ -33,7 +33,6 @@
 
 #include "SDL.h"
 
-class RA_Label;
 class RaWindow;
 
 /**
@@ -48,13 +47,13 @@ class Button {
   void SetDrawingSurface(SDL_Surface *Surface);
   void SetDrawingWindow(RaWindow* Window);
   /** Set the font color in the button up state.*/
-  void setFontColor_up(Uint8 red, Uint8 green, Uint8 blue);
+  void setFontColor_up(uint8_t red, uint8_t green, uint8_t blue);
   /**  Set the font color in the button down state.*/
-  void setFontColor_down(Uint8 red, Uint8 green, Uint8 blue);
-  void setcolor(Uint8 red, Uint8 green, Uint8 blue);
-  void setcolor(Uint32 SDL_color);
+  void setFontColor_down(uint8_t red, uint8_t green, uint8_t blue);
+  void setcolor(uint8_t red, uint8_t green, uint8_t blue);
+  void setcolor(uint32_t SDL_color);
   void setcolor(SDL_Color Color);
-  Uint32 GetColor();
+  uint32_t GetColor();
   void setposition(int x, int y);
   void setsize(int w, int h);
   void setText(const std::string buff);
@@ -78,9 +77,9 @@ class Button {
   SDL_Surface* ButtonImg_over;
   SDL_Rect SizeAndPosition;
   /** SDL color (of the button) */
-  Uint32 color;
-  Uint32 LightColor;
-  Uint32 DarkColor;
+  uint32_t color;
+  uint32_t LightColor;
+  uint32_t DarkColor;
   RA_Label ButtonUpLabel;
   RA_Label ButtonDownLabel;
 
@@ -90,7 +89,7 @@ class Button {
    *  down or the mouse is  over the button
    */
   int ButtonState;
-  Uint8 ButtonType;
+  uint8_t ButtonType;
 };
 
 #endif //BUTTON_H
