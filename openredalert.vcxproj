@@ -186,7 +186,6 @@
     <ClCompile Include="src\misc\Compression.cpp" />
     <ClCompile Include="src\misc\fibheap.cpp" />
     <ClCompile Include="src\misc\INIFile.cpp" />
-    <ClCompile Include="src\misc\KeyNotFound.cpp" />
     <ClCompile Include="src\misc\StringTableFile.cpp" />
     <ClCompile Include="src\OpenRedAlert.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
@@ -227,7 +226,6 @@
     <ClCompile Include="src\video\message.cpp" />
     <ClCompile Include="src\video\MessagePool.cpp" />
     <ClCompile Include="src\video\PCXImage.cpp" />
-    <ClCompile Include="src\video\Renderer.cpp" />
     <ClCompile Include="src\video\sdllayer.cpp" />
     <ClCompile Include="src\video\SHPBase.cpp" />
     <ClCompile Include="src\video\SHPImage.cpp" />
@@ -350,14 +348,12 @@
     <ClInclude Include="src\include\fcnc_endian.h" />
     <ClInclude Include="src\include\fibheap.h" />
     <ClInclude Include="src\include\imageproc.h" />
-    <ClInclude Include="src\include\Logger.h" />
     <ClInclude Include="src\include\sdllayer.h" />
     <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\misc\Compression.h" />
     <ClInclude Include="src\misc\gametypes.h" />
     <ClInclude Include="src\misc\IniEntry.h" />
     <ClInclude Include="src\misc\INIFile.h" />
-    <ClInclude Include="src\misc\INIKey.h" />
     <ClInclude Include="src\misc\INISection.h" />
     <ClInclude Include="src\misc\KeyNotFound.h" />
     <ClInclude Include="src\misc\StringTableFile.h" />
@@ -411,7 +407,6 @@
     <ClInclude Include="src\video\Palettes.h" />
     <ClInclude Include="src\video\PCXHeader.h" />
     <ClInclude Include="src\video\PCXImage.h" />
-    <ClInclude Include="src\video\Renderer.h" />
     <ClInclude Include="src\video\SHPBase.h" />
     <ClInclude Include="src\video\SHPHeader.h" />
     <ClInclude Include="src\video\SHPImage.h" />

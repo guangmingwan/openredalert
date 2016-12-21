@@ -182,7 +182,7 @@ class Player {
 
   // All of these pointers are owned elsewhere.
   std::vector<Unit*> unitpool;
-  std::vector<Structure*>* structurepool;
+  std::vector<Structure*> *structurepool;
   std::map<StructureType*, std::list<Structure*> > structures_owned;
   std::map<uint32_t, std::list<Structure*> > production_groups;
   std::map<uint32_t, Structure*> primary_structure;

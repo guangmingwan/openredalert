@@ -16,6 +16,8 @@
 
 #include "vfs.h"
 
+#include <cstdarg>
+
 #include "VFile.h"
 #include "filesystem/externalvfs.h"
 #include "mix/mixvfs.h"

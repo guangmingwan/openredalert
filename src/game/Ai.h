@@ -70,7 +70,7 @@ class Ai {
   // Uint16 getDist(Uint16 pos1, Uint16 pos2);
   void guideAttack(Player * Player, int PlayerNumb);
   uint32_t getDist(uint32_t pos1, uint32_t pos2);
-  bool CanBuildAt(uint8_t PlayerNumb, const char * structname, uint32_t pos);
+  bool CanBuildAt(uint8_t PlayerNumb, const std::string &structname, uint32_t pos);
   bool BuildStructure(Player * Player, int PlayerNumb, const char * structname, uint32_t ConstYardPos);
   unsigned int FindClosesedTiberium(Unit * Unit);
   void DefendStructures(Player * Player, int PlayerNumb);

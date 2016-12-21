@@ -17,7 +17,6 @@
 
 #include <cstdlib>
 #include <cstring>
-#include "video/Renderer.h"
 #include "include/imageproc.h"
 
 /** Constructor, empty

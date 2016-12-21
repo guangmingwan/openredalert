@@ -58,8 +58,7 @@ class UnitType : public UnitOrStructureType {
 
 #ifdef LOOPEND_TURN
 
-  animinfo_t getAnimInfo() const
-  {
+  animinfo_t getAnimInfo() const {
     return animinfo;
   }
 #endif

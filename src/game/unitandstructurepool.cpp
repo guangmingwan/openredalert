@@ -422,8 +422,7 @@ bool UnitAndStructurePool::createReinforcements(RA_Teamtype* Team) {
   name_trigger = p::ccmap->getTriggerByNumb(Team->trigger)->getName();
 
   // For each unit type
-  for (unsigned int i = 0; i < Team->Units.size(); i++)
-  {
+  for (unsigned int i = 0; i < Team->Units.size(); i++) {
     UnitType* type = getUnitTypeByName(Team->Units[i].tname.c_str());
     cellpos = p::ccmap->getWaypoint(Team->waypoint);
     if (0 == type) {
@@ -1441,8 +1440,7 @@ UnitType* UnitAndStructurePool::getUnitTypeByName(const std::string& unitname)
  * @param structname the name of the structure to retrieve (e.g. FACT or PROC)
  * @return pointer to the StructureType value
  */
-StructureType* UnitAndStructurePool::getStructureTypeByName(const std::string& structname)
-{
+StructureType* UnitAndStructurePool::getStructureTypeByName(const std::string& structname) {
   // Get a copy of the name
   std::string sname = structname;
 
@@ -1453,13 +1451,10 @@ StructureType* UnitAndStructurePool::getStructureTypeByName(const std::string& s
   std::map<std::string, StructureType*>::const_iterator typeentry = structuretypepool.find(sname);
 
   // If not found
-  if (typeentry != structuretypepool.end())
-  {
+  if (typeentry != structuretypepool.end()) {
     // Return the type found
     return typeentry->second;
-  }
-  else
-  {
+  } else {
     // build a new type and add it to the stack
     StructureType* type = new StructureType(structname, structini, artini, theaterext);
     structuretypepool[sname] = type;

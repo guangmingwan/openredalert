@@ -20,7 +20,7 @@
 #include <cstdlib>
 #include <cstring>
 
-FibHeapEntry::FibHeapEntry(void *value, Uint32 key) {
+FibHeapEntry::FibHeapEntry(void *value, uint32_t key) {
   this->value = value;
   this->mark = 0;
   this->key = key;
@@ -87,7 +87,7 @@ void FibHeap::push(FibHeapEntry *value) {
   n++;
 }
 
-void FibHeap::decreaseKey(FibHeapEntry *x, Uint32 k) {
+void FibHeap::decreaseKey(FibHeapEntry *x, uint32_t k) {
   FibHeapEntry *y;
 
   if( k > x->key )
@@ -106,7 +106,7 @@ void FibHeap::decreaseKey(FibHeapEntry *x, Uint32 k) {
 }
 
 void FibHeap::consolidate() {
-  Uint32 i, last, d;
+  uint32_t i, last, d;
   FibHeapEntry *x, *w, *y, *tmp;
   FibHeapEntry **A;
 

@@ -20,7 +20,6 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "video/Renderer.h"
 #include "config.h"
 #include "misc/INIFile.h"
 #include "Logger.h"

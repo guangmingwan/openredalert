@@ -169,10 +169,7 @@ Player::Player(const std::string& pname) {
     structpalnum = 0;
   }
 
-  // Hack !
-  //this->structurepool.reserve(500);
-  this->structurepool = new std::vector<Structure*>(500);
-  //this->structurepool->resize(1000, 0);
+  this->structurepool = new std::vector<Structure*>();
 
   sightMatrix = new std::vector<Uint8>(128*128);
   buildMatrix= new std::vector<Uint8>(128*128);
@@ -747,21 +744,22 @@ void Player::lostStruct(Structure* str)
   //HandleGlobalTrigger(TRIGGER_EVENT_LOW_POWER, this->getPlayerNum());
 }
 
-size_t Player::getNumUnits()
-{
+size_t Player::getNumUnits() {
   return unitpool.size();
 }
 
-size_t Player::getNumStructs() const
-{
+size_t Player::getNumStructs() const {
   return this->structurepool->size();
 }
 
-const std::vector<Unit*>& Player::getUnits() const {return unitpool;}
-const std::vector<Structure*>* Player::getStructures() const
-{
+const std::vector<Unit*>& Player::getUnits() const {
+  return unitpool;
+}
+
+const std::vector<Structure*> *Player::getStructures() const {
   return this->structurepool;
 }
+
 Uint8 Player::getStructpalNum() const {return structpalnum;}
 Uint8 Player::getUnitpalNum() const {return unitpalnum;}
 Uint32 Player::getPower() const {return powerGenerated;}

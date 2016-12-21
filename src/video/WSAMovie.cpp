@@ -20,7 +20,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "Renderer.h"
 #include "misc/config.h"
 #include "misc/Compression.h"
 #include "include/fcnc_endian.h"

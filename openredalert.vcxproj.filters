@@ -159,9 +159,6 @@
     <ClCompile Include="src\game\KeyComp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\misc\KeyNotFound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\game\L2Overlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -268,9 +265,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\RefineAnimEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\video\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\RepairAnimEvent.cpp">
@@ -620,9 +614,6 @@
     <ClInclude Include="src\misc\INIFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\misc\INIKey.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\misc\INISection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -651,9 +642,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\LOADSTATE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Logger.hpp">
@@ -774,9 +762,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\RefineAnimEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\video\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\RepairAnimEvent.h">

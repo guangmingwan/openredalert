@@ -35,7 +35,6 @@
 #include "audio/SoundEngine.h"
 #include "video/ImageNotFound.h"
 #include "video/ImageCache.h"
-#include "video/Renderer.h"
 
 namespace pc {
   extern ImageCache* imgcache;

@@ -21,7 +21,7 @@
 #include <cctype>
 
 #include "Logger.h"
-#include "fcnc_endian.h"
+#include "include/fcnc_endian.h"
 
 /**
  * Decodes base64 data

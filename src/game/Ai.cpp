@@ -35,7 +35,6 @@
 #include "Unit.h"
 #include "misc/INIFile.h"
 #include "audio/SoundEngine.h"
-#include "video/Renderer.h"
 #include "UnitType.h"
 #include "StructureType.h"
 
@@ -50,16 +49,14 @@ namespace p {
 /**
  *  AI constructor
  */
-Ai::Ai()
-{
+Ai::Ai() {
   this->Difficulty = 1;
   LplayerBasePos = 0;
   guide = false;
 
   NumbPlayers = p::ccmap->getPlayerPool()->getNumPlayers();
 
-  for (unsigned int i = 0; i < (unsigned)NumbPlayers; i++)
-  {
+  for (unsigned int i = 0; i < (unsigned)NumbPlayers; i++) {
     LastGuideTickCount.push_back(SDL_GetTicks());
     LastBuildTickCount.push_back(SDL_GetTicks());
     LastAttackTickCount.push_back(SDL_GetTicks());
@@ -78,8 +75,7 @@ Ai::Ai()
 
   /// Load the sounds ini file
   INIFile *rules_ini = new INIFile("rules.ini");
-  if (rules_ini != 0)
-  {
+  if (rules_ini != 0) {
     Rules->AttackInterval = rules_ini->readInt("AI", "AttackInterval", 3);
     Rules->AttackDelay = rules_ini->readInt("AI", "AttackDelay", 5);
     Rules->PatrolScan = rules_ini->readFloat("AI", "PatrolScan", .016f);
@@ -113,9 +109,7 @@ Ai::Ai()
     Rules->CompEasyBonus    = true; // @todo read this value from the config file
     Rules->Paranoid        = true; // @todo read this value from the config file
     Rules->PowerEmergency    = rules_ini->readInt    ("AI", "PowerEmergency", 75);
-  }
-  else
-  {
+  } else {
     Rules->AttackInterval    = 3;
     Rules->AttackDelay    = 5;
     Rules->PatrolScan    =.016f;
@@ -172,62 +166,45 @@ void Ai::SetDifficulty(int diff) {
  *
  */
 void Ai::DefendUnits(Player* pPlayer, int pPlayerNumb) {
-  size_t              lNumbUnits;
-  std::vector<Unit*>       lUnitpool;
-  Unit                *lUnit;
-  Unit                *lEnemyUnit;
-  Structure           *lEnemyStructure;
-
-  // Get the number of Unit of the player
-  lNumbUnits = pPlayer->getNumUnits();
-
-  // Get a list of Units of the player
-  lUnitpool = pPlayer->getUnits();
-
   // For each unit from this player
-  for (int lUnitNumb = 0; lUnitNumb < lNumbUnits; lUnitNumb++)
-  {
-
-    lUnit = lUnitpool[lUnitNumb];
-
+  for (Unit *lUnit : pPlayer->getUnits()) {
     // Check that the unit can attack and that the unit doens't have other thing to do
     if (!lUnit->canAttack() || lUnit->IsAttacking() || lUnit->IsMoving ()){
       continue;
     }
 
-    lEnemyUnit = EnemyUnitInRange (pPlayerNumb, lUnit );
+    Unit *lEnemyUnit = EnemyUnitInRange(pPlayerNumb, lUnit);
 
-    if (lEnemyUnit != NULL && lUnit->canAttack())
-    {
+    if (lEnemyUnit != NULL && lUnit->canAttack()) {
       // Don't distract units on a AI mission (only abort the mission if we see a harvester)
-      if (!lUnit->UnderAttack () && lUnit->AI_Mission != 1 )
-      {
+      if (!lUnit->UnderAttack () && lUnit->AI_Mission != 1) {
         // Abort the ai mission if we 'see' a harvester
-        if (lEnemyUnit->getType()->getName() == "HARV")
+        if (lEnemyUnit->getType()->getName() == "HARV") {
           lUnit->AI_Mission = 1;
-        else
+        } else {
           continue;
+        }
       }
 
       //            Enemy  = p::uspool->getUnitOrStructureAt(EnemyUnit->getPos(), EnemyUnit->getSubpos());
-      UnitOrStructure* lEnemy = (UnitOrStructure*) p::uspool->getGroundUnitAt(lEnemyUnit->getPos(), lEnemyUnit->getSubpos());
+      UnitOrStructure* lEnemy = (UnitOrStructure*)p::uspool->getGroundUnitAt(lEnemyUnit->getPos(), lEnemyUnit->getSubpos());
 
-      if (lEnemy == 0)
-        lEnemy  = (UnitOrStructure*) p::uspool->getFlyingAt ( lEnemyUnit->getPos(), lEnemyUnit->getSubpos() );
+      if (lEnemy == nullptr) {
+        lEnemy  = (UnitOrStructure*)p::uspool->getFlyingAt(lEnemyUnit->getPos(), lEnemyUnit->getSubpos());
+      }
 
-      if (lEnemy == 0)
-        lEnemy  = (UnitOrStructure*) p::uspool->getStructureAt ( lEnemyUnit->getPos(), lEnemyUnit->getSubpos(), false );
+      if (lEnemy == nullptr) {
+        lEnemy  = (UnitOrStructure*)p::uspool->getStructureAt(lEnemyUnit->getPos(), lEnemyUnit->getSubpos(), false);
+      }
 
-
-      if (lEnemy != 0){
+      if (lEnemy != nullptr){
         lUnit->attack(lEnemy);
         return;
       }
     }
 
-    lEnemyStructure = EnemyStructureInRange ( pPlayerNumb, lUnit );
-    if (lEnemyStructure != NULL && lUnit->canAttack())
-    {
+    Structure *lEnemyStructure = EnemyStructureInRange(pPlayerNumb, lUnit);
+    if ((lEnemyStructure != nullptr) && lUnit->canAttack()) {
       //Enemy  = p::uspool->getUnitOrStructureAt(EnemyStructure->getPos(), EnemyStructure->getSubpos());
 
       //            if ( Enemy != NULL ){
@@ -239,18 +216,14 @@ void Ai::DefendUnits(Player* pPlayer, int pPlayerNumb) {
   }
 }
 
-void Ai::DefendComputerPlayerBaseUnderAttack (Player *Player, int PlayerNumb, UnitOrStructure *Enemy, Structure *StructureUnderAttack)
-{
-  size_t            NumbUnits = 0;
-  std::vector<Unit*>    unitpool;
-  Unit* Unit = 0;
-  int    Distance;
-  int SightRange;
-  int StructureUnderAttackPos;
-
-  if (Enemy == 0 || StructureUnderAttack == 0){
+void Ai::DefendComputerPlayerBaseUnderAttack(Player *Player,
+                                             int PlayerNumb,
+                                             UnitOrStructure *Enemy,
+                                             Structure *StructureUnderAttack) {
+  if (Enemy == nullptr || StructureUnderAttack == nullptr){
     return;
   }
+
   if (Enemy->getOwner() == StructureUnderAttack->getOwner()){
     return;
   }
@@ -262,43 +235,36 @@ void Ai::DefendComputerPlayerBaseUnderAttack (Player *Player, int PlayerNumb, Un
     return;
   }
 
-  NumbUnits                = Player->getNumUnits();
-  unitpool                = Player->getUnits();
-  StructureUnderAttackPos    = StructureUnderAttack->getPos();
+  int StructureUnderAttackPos = StructureUnderAttack->getPos();
 
   // Repair the structure (if needed)
   if (StructureUnderAttack->getType()->getMaxHealth() > StructureUnderAttack->getHealth()){
-    if (!StructureUnderAttack->isRepairing ())
+    if (!StructureUnderAttack->isRepairing()) {
       StructureUnderAttack->repair();
+    }
   }
 
-  for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++)
-  {
-    Unit = unitpool[UnitNumb];
-
-    if (/*Unit->IsAttacking () ||*/ !Unit->canAttack())
+  for (Unit *Unit : Player->getUnits()) {
+    if (/*Unit->IsAttacking () ||*/ !Unit->canAttack()) {
       continue;
+    }
 
-    Distance    = Unit->getDist(StructureUnderAttackPos);
-    SightRange    = Unit->getType()->getSight();
+    int Distance = Unit->getDist(StructureUnderAttackPos);
+    int SightRange = Unit->getType()->getSight();
 
-    if ( Distance < (SightRange * 3) /*&& !Unit->IsAttacking ()*/){
-      Unit->attack ((UnitOrStructure*)Enemy);
+    if (Distance < (SightRange * 3) /*&& !Unit->IsAttacking ()*/){
+      Unit->attack(Enemy);
     }
   }
 }
 
-void Ai::DefendComputerPlayerUnitUnderAttack (Player *Player, int PlayerNumb, UnitOrStructure *Enemy, Unit *UnitUnderAttack)
-{
-  size_t            NumbUnits = 0;
-  std::vector<Unit*>    unitpool;
-  Unit* lUnit = 0;
-  int    Distance, SightRange, UnitUnderAttackPos;
-
-
-
-  if ( Enemy == NULL || UnitUnderAttack == NULL)
+void Ai::DefendComputerPlayerUnitUnderAttack(Player *Player,
+                                             int PlayerNumb,
+                                             UnitOrStructure *Enemy,
+                                             Unit *UnitUnderAttack) {
+  if (Enemy == nullptr || UnitUnderAttack == nullptr) {
     return;
+  }
 
   if (Enemy->getOwner() == UnitUnderAttack->getOwner())
     return;
@@ -313,22 +279,18 @@ void Ai::DefendComputerPlayerUnitUnderAttack (Player *Player, int PlayerNumb, Un
     UnitUnderAttack->attack (Enemy);
 
 
-  NumbUnits    = Player->getNumUnits();
-  unitpool    = Player->getUnits();
+  int UnitUnderAttackPos = UnitUnderAttack->getPos();
 
-  UnitUnderAttackPos = UnitUnderAttack->getPos();
-
-  for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++){
-    lUnit = unitpool[UnitNumb];
-
-    if (/*lUnit->IsAttacking () ||*/ !lUnit->canAttack())
+  for (Unit *lUnit : Player->getUnits()){
+    if (/*lUnit->IsAttacking () ||*/ !lUnit->canAttack()) {
       continue;
+    }
 
-    Distance    = lUnit->getDist(UnitUnderAttackPos);
-    SightRange    = lUnit->getType()->getSight();
+    int Distance    = lUnit->getDist(UnitUnderAttackPos);
+    int SightRange    = lUnit->getType()->getSight();
 
     // If I can see my comrade under attack
-    if ( Distance < SightRange){
+    if (Distance < SightRange){
       lUnit->attack ((UnitOrStructure*)Enemy);
     }
   }
@@ -338,8 +300,7 @@ void Ai::DefendComputerPlayerUnitUnderAttack (Player *Player, int PlayerNumb, Un
 /**
  * This is a beginning, for now this function only deploy's the starting MCV
  */
-void Ai::handle()
-{
+void Ai::handle() {
   Player * CurPlayer;
   static bool DelayAttack = true;
   // Structures
@@ -433,8 +394,7 @@ void Ai::handle()
   }
 }
 
-void Ai::guideAttack (Player *Player, int PlayerNumb)
-{
+void Ai::guideAttack(Player *Player, int PlayerNumb) {
   size_t NumbUnits;
   size_t NumbStructures;
   int lPlayerNumbStructures;
@@ -645,34 +605,23 @@ void Ai::guideAttack (Player *Player, int PlayerNumb)
 /**
  *
  */
-Uint32 Ai::getDist(Uint32 pos1, Uint32 pos2)
-{
-  Uint16 x, y, nx, ny, xdiff, ydiff;
-  x = pos2%p::ccmap->getWidth();
-  y = pos2/p::ccmap->getWidth();
-  nx = pos1%p::ccmap->getWidth();
-  ny = pos1/p::ccmap->getWidth();
+uint32_t Ai::getDist(uint32_t pos1, uint32_t pos2) {
+  uint16_t x, y, nx, ny, xdiff, ydiff;
+
+  p::ccmap->translateFromPos(pos1, &nx, &ny);
+  p::ccmap->translateFromPos(pos2, &x, &y);
 
   xdiff = abs(x-nx);
   ydiff = abs(y-ny);
-  //    return min(xdiff,ydiff)+abs(xdiff-ydiff);
-#ifdef _MSC_VER
-  return sqrt ( ((double) ((long)xdiff*xdiff+ydiff*ydiff))  );		//performance?
-#else
-  return (Uint32) sqrt (((long)xdiff*xdiff+ydiff*ydiff));
-#endif
+
+  return (uint32_t)sqrt(((long)xdiff*xdiff+ydiff*ydiff));
 }
 
 
-bool Ai::CanBuildAt (Uint8 PlayerNumb, const char *structname, Uint32 pos)
-{
-  Uint32 placeypos;
-  Uint32 placexpos;
-  Uint32 curpos;
-  Uint16 xpos;
-  Uint16 ypos;
-  Uint32	br;
-
+bool Ai::CanBuildAt(uint8_t PlayerNumb, const std::string &structname,
+                    uint32_t pos) {
+  uint16_t xpos;
+  uint16_t ypos;
   p::ccmap->translateFromPos(pos, &xpos, &ypos);
 
   StructureType* Type	= p::uspool->getStructureTypeByName(structname);
@@ -680,38 +629,43 @@ bool Ai::CanBuildAt (Uint8 PlayerNumb, const char *structname, Uint32 pos)
   std::vector<bool>* buildable = p::ccmap->getPlayerPool()->getPlayer(PlayerNumb)->getMapBuildable();
 
   // Check that we don't try to build outside the map (copied check from unitandstructurepool.cpp!!
-  br = pos + p::ccmap->getWidth()*(Type->getYsize()-1);
-  if (pos > p::ccmap->getSize() || (br > p::ccmap->getSize() && 0))
+  uint32_t br = pos + p::ccmap->getWidth()*(Type->getYsize()-1);
+  if (pos > p::ccmap->getSize() || (br > p::ccmap->getSize() && 0)) {
     return false;
+  }
 
   // Prevent wrapping around
-  if (xpos + Type->getXsize() > p::ccmap->getWidth())
+  if (xpos + Type->getXsize() > p::ccmap->getWidth()) {
     return false;
+  }
 
-  for (placeypos = 0; placeypos < Type->getYsize(); placeypos++) {
-    for (placexpos = 0; placexpos < Type->getXsize(); placexpos++) {
+  for (uint32_t placeypos = 0; placeypos < Type->getYsize(); placeypos++) {
+    for (uint32_t placexpos = 0; placexpos < Type->getXsize(); placexpos++) {
+      uint32_t curpos = pos + placeypos*p::ccmap->getWidth() + placexpos;
 
-      curpos = pos+placeypos*p::ccmap->getWidth()+placexpos;
-
-      if (!buildable->at(curpos))
+      if (!buildable->at(curpos)) {
         return false;
+      }
 
-      if (p::uspool->getGroundUnitAt(curpos) != NULL || p::uspool->getFlyingAt(curpos) != NULL || p::uspool->getStructureAt(curpos) != NULL)    //p::uspool->getUnitAt(curpos+x) != NULL
+      if (p::uspool->getGroundUnitAt(curpos) != NULL ||
+          p::uspool->getFlyingAt(curpos) != NULL ||
+          p::uspool->getStructureAt(curpos) != NULL) {   //p::uspool->getUnitAt(curpos+x) != NULL
         return false;
+      }
 
-      if (!p::ccmap->isBuildableAt(PlayerNumb, curpos))
+      if (!p::ccmap->isBuildableAt(PlayerNumb, curpos)) {
         return false;
-
+      }
     }
   }
+
   return true;
 }
 
 /**
  *
  */
-bool Ai::BuildStructure(Player *Player, int PlayerNumb, const char *structname, Uint32 ConstYardPos)
-{
+bool Ai::BuildStructure(Player *Player, int PlayerNumb, const char *structname, Uint32 ConstYardPos) {
   Uint32 pos = 0;
   Uint16 ConstYard_x;
   Uint16 ConstYard_y;
@@ -772,8 +726,7 @@ bool Ai::BuildStructure(Player *Player, int PlayerNumb, const char *structname, 
 /**
  *
  */
-unsigned int Ai::FindClosesedTiberium(Unit *Unit)
-{
+unsigned int Ai::FindClosesedTiberium(Unit *Unit) {
   Uint32 tiberium = 0;
   Uint32 ClosesedPos = 0;
   Uint32 ClosesedDistance = 0;
@@ -792,30 +745,25 @@ unsigned int Ai::FindClosesedTiberium(Unit *Unit)
       }
     }
   }
-  return ClosesedPos;
 
+  return ClosesedPos;
 }
 
 
-void Ai::DefendStructures(Player *thePlayer, int PlayerNumb)
-{
-
+void Ai::DefendStructures(Player *thePlayer, int PlayerNumb) {
   //
   // Make structures defend themselves
   //
   const std::vector<Structure*>* structurepool = thePlayer->getStructures();
-  std::vector<Structure*>::const_iterator theStructure = structurepool->begin();
 
   // For each structure from this player
-  for (theStructure=structurepool->begin(); theStructure != structurepool->end(); theStructure++)
-  {
+  for (Structure *theStructure : *structurepool) {
     // We should ensure that the structurepool is always consistent,
     // in order to avoid segfaults due to the presence of NULL elements in the vector
     // Using list instead of vector would solve the problem
-    if((*theStructure) != NULL)
-    {
-      Unit* EnemyUnit = EnemyUnitInRange(PlayerNumb, (*theStructure));
-      StructureType* st = dynamic_cast<StructureType*>((*theStructure)->getType());
+    if(theStructure != NULL) {
+      Unit* EnemyUnit = EnemyUnitInRange(PlayerNumb, theStructure);
+      StructureType* st = dynamic_cast<StructureType*>(theStructure->getType());
 
       // If there is no valid enemy
       // OR the structure is a building
@@ -823,21 +771,20 @@ void Ai::DefendStructures(Player *thePlayer, int PlayerNumb)
       // OR we don't have enough power
       // OR the structure is already attacking
       if( EnemyUnit == 0 ||
-         (*theStructure)->IsBuilding() ||
-         !(*theStructure)->canAttack() ||
+         theStructure->IsBuilding() ||
+         !theStructure->canAttack() ||
          (st->getPowerInfo().powered && (thePlayer->getPower() < thePlayer->getPowerUsed()) ) ||
-         (*theStructure)->IsAttacking() )
+         theStructure->IsAttacking() )
       {
         continue;
       }
 
-      (*theStructure)->attack(EnemyUnit);
+      theStructure->attack(EnemyUnit);
     }
   }
 }
 
-void Ai::Build (Player *Player, int PlayerNumb)
-{
+void Ai::Build (Player *Player, int PlayerNumb) {
   std::vector<Structure*>	structurepool;
   size_t					NumbUnits;
   size_t					NumbStructures;
@@ -908,49 +855,40 @@ void Ai::Build (Player *Player, int PlayerNumb)
   }
 
   // Count Units from this computer player
-  for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++)
-  {
+  for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++) {
     theUnit = unitpool[UnitNumb];
 
     if (theUnit->getType()->isInfantry()){
       NumbOfInfantry++;
     }
 
-    if (theUnit->getType()->getName() == "HARV")
-    {
-      if (theUnit->GetBaseRefinery() == 0)
-      {
+    if (theUnit->getType()->getName() == "HARV") {
+      if (theUnit->GetBaseRefinery() == 0) {
         theUnit->SetBaseRefinery(OreRefinery);
       }
       NumbOfOreTrucks++;
     }
 
-    if (theUnit->getType()->getName() == "1TNK")
-    {
+    if (theUnit->getType()->getName() == "1TNK") {
       NumbTanks++;
     }
   }
 
   // Check our units if we can deploy them (only for MCV yet)
-  if (NumbConstYards == 0)
-  {
-    for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++)
-    {
+  if (NumbConstYards == 0) {
+    for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++) {
       theUnit = unitpool[UnitNumb];
 
-      if (theUnit->getType()->getName() == "MCV")
-      {
-        if (theUnit->canDeploy(p::ccmap) == true)
-        {
+      if (theUnit->getType()->getName() == "MCV") {
+        if (theUnit->canDeploy(p::ccmap) == true) {
           // We don't have any structures, randomly deploy
           theUnit->deploy();
         } else {
-          if (!theUnit->IsMoving())
-          {
+          if (!theUnit->IsMoving()) {
             p::ccmap->translateFromPos(theUnit->getPos(), &xpos, &ypos);
             if (xpos + 20 < p::ccmap->getWidth()){
               theUnit->move(p::ccmap->translateToPos(xpos + 20, ypos));
-            }else{
+            } else {
               theUnit->move(p::ccmap->translateToPos(xpos - 20, ypos));
             }
           }
@@ -987,16 +925,13 @@ void Ai::Build (Player *Player, int PlayerNumb)
 
     // build power plant (if needed)
     //printf ("Power = %i, PowerUsed = %i, PowerSurplus = %i\n", Player->getPower(), Player->getPowerUsed(), Rules->PowerSurplus);
-    if (!StructureWasBuild && ((signed)(Player->getPower() - Rules->PowerSurplus) < (signed)Player->getPowerUsed()))
-    {
+    if (!StructureWasBuild && ((signed)(Player->getPower() - Rules->PowerSurplus) < (signed)Player->getPowerUsed())) {
       cost = p::uspool->getStructureTypeByName("APWR")->getCost();
-      if (Player->getMoney() > cost)
-      {
-        if (NumbOfPowerPlants > 0)
-        {
+      if (Player->getMoney() > cost) {
+        if (NumbOfPowerPlants > 0) {
           if (BuildStructure (Player, PlayerNumb, "APWR", ConstYardPos))
             Player->changeMoney(-1 * cost);
-        }else{
+        } else {
           if (BuildStructure (Player, PlayerNumb, "POWR", ConstYardPos))
             Player->changeMoney(-1 * cost);
         }
@@ -1034,9 +969,9 @@ void Ai::Build (Player *Player, int PlayerNumb)
       if (Player->getMoney() > cost){
         if (p::dispatcher->unitSpawn(type, PlayerNumb))
           Player->changeMoney(-1 * cost);
-      }else if (NumbOreRefs > 0 && NumbOfOreTrucks > 0)
+      } else if (NumbOreRefs > 0 && NumbOfOreTrucks > 0)
         return;
-    }else{
+    } else {
       // Build tanks
       // Get the structure type so we can see what the cost are for this structure
       // UnitType* type = p::uspool->getUnitTypeByName("1TNK"); // allied tank
@@ -1051,10 +986,9 @@ void Ai::Build (Player *Player, int PlayerNumb)
   }
 
   // Build soldier
-  if (NumbBarracks > 0 && ((unsigned)Player->getMoney() > Rules->InfantryReserve || (unsigned) (NumbStructures * Rules->InfantryBaseMult) > NumbOfInfantry))
-  {
+  if (NumbBarracks > 0 && ((unsigned)Player->getMoney() > Rules->InfantryReserve || (unsigned) (NumbStructures * Rules->InfantryBaseMult) > NumbOfInfantry)) {
     UnitType* type;
-    switch (UnitBuildMultiplexer[PlayerNumb]){
+    switch (UnitBuildMultiplexer[PlayerNumb]) {
       case 0:
         // Rifle Infantry, cost 100
         type = p::uspool->getUnitTypeByName("E1");
@@ -1103,8 +1037,7 @@ void Ai::Build (Player *Player, int PlayerNumb)
 /**
  *	Returns a enemy **unit** if one is in range of our **unit**
  */
-Unit* Ai::EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange)
-{
+Unit* Ai::EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange) {
   // Check parameter pb
   if (MyUnit == 0)
     return 0;
@@ -1124,8 +1057,7 @@ Unit* Ai::EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange)
 
 
 
-  for (unsigned int i = 0; i < this->NumbPlayers; i++)
-  {
+  for (unsigned int i = 0; i < this->NumbPlayers; i++) {
     // Don't find my own units
     if (MyPlayerNumb == i){
       continue;
@@ -1151,19 +1083,16 @@ Unit* Ai::EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange)
 
 
     // For each unit from this player
-    for (unsigned int UnitNumb = 0; UnitNumb < EnemyNumbUnits; UnitNumb++)
-    {
+    for (unsigned int UnitNumb = 0; UnitNumb < EnemyNumbUnits; UnitNumb++) {
       Unit* EnemyUnit = Enemyunitpool[UnitNumb];
       int distance = MyUnit->getDist(EnemyUnit->getPos());
-      if (distance <= AttackRange && EnemyPlayer->getSide() != PS_NEUTRAL){
+      if (distance <= AttackRange && EnemyPlayer->getSide() != PS_NEUTRAL) {
         return EnemyUnit;
       }
 
       // Make it easyer to attack harvesters
-      if ((EnemyUnit->getType()->getName() == "HARV") && MyPlayerNumb != this->HumanPlayerNumb)
-      {
-        if (distance <= 4*AttackRange && EnemyPlayer->getSide() != PS_NEUTRAL)
-        {
+      if ((EnemyUnit->getType()->getName() == "HARV") && MyPlayerNumb != this->HumanPlayerNumb) {
+        if (distance <= 4*AttackRange && EnemyPlayer->getSide() != PS_NEUTRAL) {
           return EnemyUnit;
         }
       }
@@ -1177,97 +1106,78 @@ Unit* Ai::EnemyUnitInRange(int MyPlayerNumb, Unit* MyUnit, int AttackRange)
 /**
  * Returns a enemy Unit if one is in range of our Structure
  */
-Unit* Ai::EnemyUnitInRange (int MyPlayerNumb, Structure* MyStructure, int AttackRange )
-{
-  size_t              EnemyNumbUnits;
-  std::vector<Unit*>	Enemyunitpool;
+Unit *Ai::EnemyUnitInRange(int MyPlayerNumb, Structure* MyStructure,
+                           int AttackRange) {
+  if (MyStructure == nullptr) {
+    return nullptr;
+  }
 
-  if (MyStructure == 0)
-    return 0;
-
-  if (!MyStructure->canAttack())
-    return 0;
+  if (!MyStructure->canAttack()) {
+    return nullptr;
+  }
 
   if (AttackRange == -1){
-    StructureType* theType = dynamic_cast< StructureType*>(MyStructure->getType());
-    Weapon* theWeapon = theType->getWeapon(true);
+    StructureType *theType = dynamic_cast<StructureType*>(MyStructure->getType());
+    Weapon *theWeapon = theType->getWeapon(true);
     AttackRange = theWeapon->getRange();
   }
 
-  for (unsigned int i = 0; i < this->NumbPlayers; i++)
-  {
+  for (unsigned int i = 0; i < NumbPlayers; i++) {
     // Don't defend against my own units
-    if (MyPlayerNumb == i)
-    {
+    if (MyPlayerNumb == i) {
       continue;
     }
 
     Player* enemyPlayer = p::ccmap->getPlayerPool()->getPlayer(i);
-
     Player* myPlayer = p::ccmap->getPlayerPool()->getPlayer(MyPlayerNumb);
     Player* localPl = p::ccmap->getPlayerPool()->getLPlayer();
 
     // Check to see if these are both AI players and if AI players are allied
-    if ((myPlayer != localPl) && (enemyPlayer = localPl) && Rules->AlwaysAlly)
+    if ((myPlayer != localPl) && (enemyPlayer = localPl) && Rules->AlwaysAlly) {
       continue;
+    }
 
     // Check if the Enemy player is a ally ;)
-    if (enemyPlayer->isAllied(myPlayer))
+    if (enemyPlayer->isAllied(myPlayer)) {
       continue;
-
-    EnemyNumbUnits = enemyPlayer->getNumUnits();
-
-    Enemyunitpool = enemyPlayer->getUnits();
+    }
 
     // For each unit from this player
-    for (int UnitNumb = 0; UnitNumb < EnemyNumbUnits; UnitNumb++)
-    {
-      Unit* enemyUnit = Enemyunitpool[UnitNumb];
-      //			int distance = MyStructure->getDist(EnemyUnit->getPos());
+    for (Unit *enemyUnit : enemyPlayer->getUnits()) {
       int distance = enemyUnit->getDist(MyStructure->getPos());
       if (distance <= AttackRange  && enemyPlayer->getSide() != PS_NEUTRAL){
         return enemyUnit;
       }
-
     }
   }
-  return 0;
+
+  return nullptr;
 }
 
 /**
  * @return a enemy Structure if one is in range of our Unit
  */
-Structure* Ai::EnemyStructureInRange (int MyPlayerNumb, Unit* MyUnit, int AttackRange)
-{
-  Player*     EnemyPlayer;
-  Player*     MyPlayer;
-  size_t      EnemyNumbStructures;
-  std::vector<Structure*>	Enemystructurepool;
-  Structure*  EnemyStructure;
-
-
-  if (MyUnit == 0)
-  {
-    return 0;
+Structure *Ai::EnemyStructureInRange (int MyPlayerNumb, Unit* MyUnit,
+                                      int AttackRange) {
+  if (MyUnit == nullptr) {
+    return nullptr;
   }
 
-  if (!MyUnit->canAttack())
-    return 0;
+  if (!MyUnit->canAttack()) {
+    return nullptr;
+  }
 
   if (AttackRange == -1)
     AttackRange = MyUnit->getType()->getWeapon()->getRange();  //MyUnit->getType()->getSight();
 
-  for (unsigned int i = 0; i < this->NumbPlayers; i++)
-  {
+  for (unsigned int i = 0; i < this->NumbPlayers; i++) {
     // Don't find my own units
     if (MyPlayerNumb == i)
       continue;
 
-    EnemyPlayer = p::ccmap->getPlayerPool()->getPlayer(i);
-
-    MyPlayer = p::ccmap->getPlayerPool()->getPlayer(MyPlayerNumb);
-
-    Player* localPl = p::ccmap->getPlayerPool()->getLPlayer();
+    Player *EnemyPlayer = p::ccmap->getPlayerPool()->getPlayer(i);
+    Player *MyPlayer = p::ccmap->getPlayerPool()->getPlayer(MyPlayerNumb);
+    Player *localPl = p::ccmap->getPlayerPool()->getLPlayer();
 
     // Check to see if these are both ai players and if ai players are allied
     if ((MyPlayer != localPl) && (EnemyPlayer != localPl) && Rules->AlwaysAlly)
@@ -1278,19 +1188,16 @@ Structure* Ai::EnemyStructureInRange (int MyPlayerNumb, Unit* MyUnit, int Attack
     if (EnemyPlayer->isAllied(MyPlayer))
       continue;
 
-    EnemyNumbStructures	= EnemyPlayer->getNumStructs();
-    // Enemystructurepool	= EnemyPlayer->getStructures();
-
     // For each unit from this player
-    for (int StructureNumb = 0; StructureNumb < EnemyNumbStructures; StructureNumb++){
-      EnemyStructure = Enemystructurepool[StructureNumb];
+    for (Structure *EnemyStructure : *EnemyPlayer->getStructures()){
       int distance = MyUnit->getDist(EnemyStructure->getPos());
       if (distance <= AttackRange && EnemyPlayer->getSide() != PS_NEUTRAL){
         return EnemyStructure;
       }
     }
   }
-  return 0;
+
+  return nullptr;
 }
 
 /**
@@ -1298,26 +1205,16 @@ Structure* Ai::EnemyStructureInRange (int MyPlayerNumb, Unit* MyUnit, int Attack
  *
  * @param PlayerNumb number of the player
  */
-void Ai::Harvest(Player *Player, int PlayerNumb)
-{
+void Ai::Harvest(Player *Player, int PlayerNumb) {
   // don't try to control for the human player
-  if (PlayerNumb == this->HumanPlayerNumb)
-  {
+  if (PlayerNumb == this->HumanPlayerNumb) {
     return;
   }
 
-  // Handle unit vars
-  size_t NumbUnits = Player->getNumUnits();
-  std::vector<Unit*> unitpool = Player->getUnits();
-
   // Parse all Units to find harvester (HARV -> code for harvester)
-  for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++)
-  {
-    Unit* theUnit = unitpool[UnitNumb];
-    if (theUnit->getType()->getName() == "HARV")
-    {
-      if (!theUnit->IsHarvesting())
-      {
+  for (Unit* theUnit : Player->getUnits()) {
+    if (theUnit->getType()->getName() == "HARV") {
+      if (!theUnit->IsHarvesting()) {
         // Command the unit to harvest with no parameters (NULL, NULL)
         theUnit->Harvest(0, 0);
       }
@@ -1329,8 +1226,7 @@ void Ai::Harvest(Player *Player, int PlayerNumb)
  * For now the AI assumes that all non local players are computer players
  * This means no support for multiplayer with computer players mix.
  */
-void Ai::patrolAndAttack(Player *Player, int PlayerNumb)
-{
+void Ai::patrolAndAttack(Player *Player, int PlayerNumb) {
   size_t NumbUnits;
   size_t NumbStructures;
   size_t lPlayerNumbStructures;
@@ -1365,8 +1261,7 @@ void Ai::patrolAndAttack(Player *Player, int PlayerNumb)
   lPlayerNumbUnits	= p::ccmap->getPlayerPool()->getLPlayer()->getNumUnits();
 
   // First find a good target
-  if (lPlayerNumbStructures > 0)
-  {
+  if (lPlayerNumbStructures > 0) {
     RndStr = (int) ((double)lPlayerNumbStructures*rand()/(RAND_MAX));
 
     if (PreferLastStructures){
@@ -1399,22 +1294,15 @@ void Ai::patrolAndAttack(Player *Player, int PlayerNumb)
     }
   }
 
-  if ((lPlayerNumbStructures > 0 || lPlayerNumbUnits > 0) && NumbUnits > 0)
-  {
-
-    for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++)
-    {
+  if ((lPlayerNumbStructures > 0 || lPlayerNumbUnits > 0) && NumbUnits > 0) {
+    for (int UnitNumb = 0; UnitNumb < NumbUnits; UnitNumb++) {
       Unit = unitpool[UnitNumb];
       if (!Unit->canAttack())
         continue;
-      if (Unit->AI_Mission == 1 || Unit->AI_Mission == 3)
-      {
-        if (Unit->getType()->getName() == "HARV")
-        {
+      if (Unit->AI_Mission == 1 || Unit->AI_Mission == 3) {
+        if (Unit->getType()->getName() == "HARV") {
           Logger::getInstance()->Error(__FILE__, __LINE__, "Error harvesters can't attack.");
-        }
-        else
-        {
+        } else {
           Unit->AI_Mission = 3;
           player_targets[PlayerNumb] = target;
 

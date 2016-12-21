@@ -24,7 +24,6 @@
 #include "game/Ai.h"
 #include "misc/common.h"
 #include "misc/INIFile.h"
-#include "video/Renderer.h"
 #include "game/ActionEventQueue.h"
 #include "ui/PauseMenu.h"
 #include "video/GraphicsEngine.h"

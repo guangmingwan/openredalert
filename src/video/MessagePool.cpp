@@ -20,7 +20,6 @@
 #include <functional>
 #include <algorithm>
 
-#include "video/Renderer.h"
 #include "ui/RA_Label.h"
 #include "video/drawmessage.h"
 #include "Message.h"

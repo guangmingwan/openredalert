@@ -529,8 +529,7 @@ void Game::play()
 
 
     // Draw the starting menu
-    if (!missionWon)
-    {
+    if (!missionWon) {
       while (false == lMenu->isDone() ||
              (true == lMenu->isDone() && true == lMenu->isProlog()))
       {
@@ -540,8 +539,7 @@ void Game::play()
         pc::sfxeng->PlayLoopedSound("intro.aud", 0);
 
         // Play the battle control terminated sound (if needed)
-        if (BattleControlTerminated)
-        {
+        if (BattleControlTerminated) {
           pc::sfxeng->PlaySound(pc::Config.BattleControlTerm);
         }
         // Start with a clean image cache
@@ -553,18 +551,15 @@ void Game::play()
         // Cleanup the image cache again
         //pc::imgcache->Cleanup();
 
-        if (true == lMenu->isProlog())
-        {
+        if (true == lMenu->isProlog()) {
           // Halt the menu sound
           pc::sfxeng->StopMusic();
           pc::sfxeng->StopLoopedSound(-1);
 
-          try
-          {
+          try {
             VQAMovie mov("PROLOG");
             mov.play();
-          } catch (...)
-          {
+          } catch (...) {
           }
         }
       }
@@ -577,25 +572,18 @@ void Game::play()
     pc::sfxeng->StopLoopedSound(-1);
 
     // Exit the game (if the user wants to)
-    if (true == lMenu->isQuit())
-    {
+    if (true == lMenu->isQuit()) {
       Logger::getInstance()->Info("Exit by user (game menu)\n");
       FreeMemory();
       return;
     }
 
-    if (pc::Config.gamemode == GAME_MODE_SINGLE_PLAYER)
-    {
-      if (pc::Config.mside == "gdi")
-      {
+    if (pc::Config.gamemode == GAME_MODE_SINGLE_PLAYER) {
+      if (pc::Config.mside == "gdi") {
         pc::Config.mapname = missions->getGdiMissionMap(MissionNr);
-      }
-      else if (pc::Config.mside == "nod")
-      {
+      } else if (pc::Config.mside == "nod") {
         pc::Config.mapname = missions->getNodMissionMap(MissionNr);
-      }
-      else
-      {
+      } else {
         Logger::getInstance()->Error(__FILE__ , __LINE__, "Unknown mission type");
       }
     }
@@ -604,15 +592,13 @@ void Game::play()
     InitializeMap(pc::Config.mapname);
 
     // Start playing the background music
-    if (p::ccmap->getMissionData().theme != "No theme")
-    {
+    if (p::ccmap->getMissionData().theme != "No theme") {
       pc::sfxeng->PlayTrack(p::ccmap->getMissionData().theme);
     }
 
 
     // Play Animation Map
-    if (pc::Config.gamemode == GAME_MODE_SINGLE_PLAYER)
-    {
+    if (pc::Config.gamemode == GAME_MODE_SINGLE_PLAYER) {
       //            MapAnimationMenu myAnimMenu;
       // @todo change that to get the good parameters
       //             myAnimMenu.Play(*(pc::gfxeng), MissionNr, true);
@@ -636,10 +622,10 @@ void Game::play()
       // to the current players location
       Player *LocalPlayer = p::ccmap->getPlayerPool()->getLPlayer();
 
-      Uint32 StartPos = LocalPlayer->getPlayerStart();
+      uint32_t StartPos = LocalPlayer->getPlayerStart();
 
       // printf ("Startpos = %i, Current scrollpos = %i\n", StartPos, p::ccmap->getScrollPos());
-      Uint32 x, y;
+      uint32_t x, y;
 
       if (StartPos%p::ccmap->getWidth()> 14) {
         x = StartPos%p::ccmap->getWidth() - 14;
@@ -698,12 +684,12 @@ void Game::play()
       pc::input->handle();
 
       // Handle the ai
-      //pc::ai->handle();
+      pc::ai->handle();
 
       // Handle triggers
       lTriggerManager.handle();
       // Handle AiCommand for mission
-      //handleAiCommands();
+      handleAiCommands();
       // Handle timing triggers
       HandleTiming();
 
@@ -720,35 +706,25 @@ void Game::play()
     pc::sfxeng->StopLoopedSound(-1);
 
     // Check if it was a single player game
-    if (gamemode == GAME_MODE_SINGLE_PLAYER)
-    {
+    if (gamemode == GAME_MODE_SINGLE_PLAYER) {
       // Get Local Player
       Player* localPlayer = p::ccmap->getPlayerPool()->getPlayer(p::ccmap->getMissionData().player);            // ? if player won ?
-      if (localPlayer->isVictorious() == true)
-      {
+      if (localPlayer->isVictorious() == true) {
         missionWon = true;
         MissionNr++;
-        try
-        {
+        try {
           VQAMovie mov(p::ccmap->getMissionData().winmov.c_str());
           mov.play();
+        } catch (std::runtime_error&) {
         }
-        catch (std::runtime_error&)
-        {
-        }
-      }
-      else if (localPlayer->isDefeated() == true)
-      {
+      } else if (localPlayer->isDefeated() == true) {
         missionWon = false;
         try {
           VQAMovie mov(p::ccmap->getMissionData().losemov.c_str());
           mov.play();
+        } catch (std::runtime_error&) {
         }
-        catch (std::runtime_error&)
-        {}
-      }
-      else
-      {
+      } else {
         // Game was abborted
         missionWon = false;
       }
@@ -769,8 +745,7 @@ void Game::play()
       // Game is over
       missionWon = false;
     }
-  }
-  while (!pc::quit);
+  } while (!pc::quit);
 
   // Free missions names loader (not needed)
   //delete missions;
@@ -793,8 +768,8 @@ void Game::HandleTiming() {
  */
 void Game::dumpstats() {
   Player* pl;
-  Uint8 h, m, s, i;
-  Uint32 uptime;
+  uint8_t h, m, s, i;
+  uint32_t uptime;
 
   uptime = p::aequeue->getElapsedTime();
   uptime /= 1000;

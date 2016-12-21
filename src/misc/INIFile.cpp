@@ -17,6 +17,9 @@
 #include "INIFile.h"
 
 #include <sstream>
+#include <algorithm>
+#include <cctype>
+#include <functional>
 
 #include "Logger.h"
 #include "vfs/vfs.h"

@@ -20,7 +20,6 @@
 #include <stdexcept>
 
 #include "ui/FontCache.h"
-#include "video/Renderer.h"
 #include "include/fcnc_endian.h"
 #include "include/sdllayer.h"
 #include "vfs/vfs.h"
