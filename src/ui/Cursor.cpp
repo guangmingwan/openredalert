@@ -23,7 +23,7 @@
 #include "CursorPool.h"
 #include "CursorInfo.h"
 #include "RA_Label.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "video/Dune2Image.h"
 #include "video/TemplateImage.h"
 #include "misc/gametypes.h"

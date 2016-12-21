@@ -14,7 +14,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with OpenRedAlert.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "Unit.hpp"
+#include "Unit.h"
 
 #include <string>
 #include <math.h>
@@ -36,7 +36,7 @@
 #include "UnitAndStructurePool.h"
 #include "audio/SoundEngine.h"
 #include "PlayerPool.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/config.h"
 #include "TalkbackType.h"
 #include "UInfiltrateAnimEvent.h"

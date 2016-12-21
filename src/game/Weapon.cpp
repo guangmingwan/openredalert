@@ -26,7 +26,7 @@
 #include "ExplosionAnim.h"
 #include "ActionEventQueue.h"
 #include "UnitOrStructure.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "weaponspool.h"
 #include "video/ImageNotFound.h"
 #include "video/SHPImage.h"

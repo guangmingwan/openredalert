@@ -18,7 +18,7 @@
 
 #include <cmath>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "anim_nfo.h"
 #include "Structure.h"
 #include "UnitAndStructurePool.h"

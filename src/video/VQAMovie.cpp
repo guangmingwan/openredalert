@@ -23,12 +23,12 @@
 #include <string>
 
 #include "misc/config.h"
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "video/GraphicsEngine.h"
 #include "include/imageproc.h"
 #include "misc/INIFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "audio/SoundCommon.h"
 #include "audio/SoundEngine.h"
 #include "audio/SoundUtils.h"

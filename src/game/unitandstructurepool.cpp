@@ -20,14 +20,14 @@
 #include <algorithm>
 #include <vector>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/config.h"
 #include "CnCMap.h"
 #include "misc/common.h"
 #include "game/Game.h"
 #include "misc/INIFile.h"
 #include "PlayerPool.h"
-#include "game/Unit.hpp"
+#include "game/Unit.h"
 #include "weaponspool.h"
 #include "video/ImageCache.h"
 #include "InfantryGroup.h"
@@ -40,7 +40,7 @@
 #include "Structure.h"
 #include "pside.h"
 #include "Player.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "GameMode.h"
 #include "misc/INIFile.h"
 #include "UnitAndStructureMat.h"

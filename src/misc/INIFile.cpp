@@ -18,7 +18,7 @@
 
 #include <sstream>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 

@@ -26,7 +26,7 @@
 #include "PlayerPool.h"
 #include "UnitOrStructure.h"
 #include "unittypes.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "ActionEventQueue.h"
 #include "UnitType.h"
 

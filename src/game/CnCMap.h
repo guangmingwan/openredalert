@@ -26,7 +26,7 @@
 #include "misc/INIFile.h"
 #include "misc/gametypes.h"
 #include "video/SHPImage.h"
-#include "Trigger.hpp"
+#include "Trigger.h"
 
 #include "SDL.h"
 

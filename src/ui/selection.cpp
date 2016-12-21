@@ -22,14 +22,14 @@
 #include <exception>
 #include <iterator>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "game/Dispatcher.h"
 #include "game/Player.h"
 #include "game/PlayerPool.h"
 #include "game/weaponspool.h"
 #include "game/UnitOrStructure.h"
 #include "game/Structure.h"
-#include "game/Unit.hpp"
+#include "game/Unit.h"
 #include "game/CnCMap.h"
 #include "game/unittypes.h"
 

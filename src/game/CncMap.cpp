@@ -21,12 +21,12 @@
 #include <vector>
 #include <stdexcept>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "Player.h"
 #include "UnitAndStructurePool.h"
 #include "MissionData.h"
 #include "CellTrigger.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "LoadMapError.h"
 #include "GameMode.h"
 #include "TriggerAction.h"
@@ -35,7 +35,7 @@
 #include "GlobalClearTriggerAction.h"
 #include "TextTriggerAction.h"
 #include "RawTriggerAction.h"
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "misc/INIFile.h"
 #include "misc/StringTableFile.h"
 #include "vfs/vfs.h"
@@ -51,7 +51,7 @@
 #include "PlayerPool.h"
 #include "triggers.h"
 #include "AiCommand.h"
-#include "Trigger.hpp"
+#include "Trigger.h"
 
 namespace pc {
   extern ImageCache* imgcache;

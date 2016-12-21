@@ -17,7 +17,7 @@
 
 #include "include/sdllayer.h"
 
-#include "Logger.hpp"
+#include "Logger.h"
 
 //#define _15BIT(r,g,b) (((r&248)<<7) + ((g&248)<<2) + (b>>3))
 //#define _16BIT(r,g,b) (((r&248)<<8) + ((g&252)<<3) + (b>>3))

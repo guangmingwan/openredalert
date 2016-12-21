@@ -16,7 +16,7 @@
 
 #include "ExplosionAnim.h"
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ActionEventQueue.h"
 #include "L2Overlay.h"
 #include "UnitAndStructurePool.h"

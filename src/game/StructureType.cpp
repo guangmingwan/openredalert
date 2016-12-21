@@ -18,7 +18,7 @@
 
 #include <cstring>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/common.h"
 #include "weaponspool.h"
 #include "video/ImageNotFound.h"

@@ -21,7 +21,7 @@
 #include <string>
 #include <iostream>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ProjectileData.h"
 #include "misc/INIFile.h"
 

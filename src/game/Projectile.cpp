@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ProjectileData.h"
 #include "ProjectileDataList.h"
 #include "video/ImageNotFound.h"

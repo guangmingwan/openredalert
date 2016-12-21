@@ -25,7 +25,7 @@
 #include "game/PlayerPool.h"
 #include "misc/config.h"
 #include "video/GraphicsEngine.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "audio/SoundEngine.h"
 #include "include/sdllayer.h"
 #include "video/Dune2Image.h"

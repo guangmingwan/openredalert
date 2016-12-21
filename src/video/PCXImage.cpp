@@ -20,12 +20,12 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "misc/INIFile.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "video/ImageNotFound.h"
 
 PCXImage::PCXImage(const char* fname, int scaleq) : pcxdata(0), image(0) 

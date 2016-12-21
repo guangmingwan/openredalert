@@ -18,7 +18,7 @@
 
 #include "video/CPSImage.h"
 #include "video/GraphicsEngine.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "CPSImage.h"
 #include "video/ImageNotFound.h"
 #include "video/MessagePool.h"

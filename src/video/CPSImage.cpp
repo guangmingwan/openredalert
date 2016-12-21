@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "vfs/vfs.h" // to use VFSUtils::VFS_Open()
 #include "vfs/VFile.h" // to use VFile
 #include "video/ImageNotFound.h" // to use ImageNotFound

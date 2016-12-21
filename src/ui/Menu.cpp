@@ -26,7 +26,7 @@
 #include "TCheckBox.h"
 
 #include "misc/config.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "game/MissionMapsClass.h"
 #include "game/MultiPlayerMaps.h"
 #include "game/GameMode.h"

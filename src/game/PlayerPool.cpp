@@ -19,7 +19,7 @@
 
 #include <vector>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ActionEventQueue.h"
 #include "Player.h"
 #include "misc/config.h"

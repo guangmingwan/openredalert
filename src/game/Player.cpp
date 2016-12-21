@@ -22,7 +22,7 @@
 #include <cstring>
 #include <map>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "CnCMap.h"
 #include "misc/config.h"
 #include "Dispatcher.h"
@@ -35,7 +35,7 @@
 #include "Structure.h"
 #include "ConStatus.h"
 #include "pside.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "PowerInfo.h"
 
 #include "misc/INIFile.h"

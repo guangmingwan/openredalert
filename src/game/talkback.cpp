@@ -22,7 +22,7 @@
 #include <vector>
 #include <iterator>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/INIFile.h"
 #include "audio/SoundEngine.h"
 #include "UnitAndStructurePool.h"

@@ -20,7 +20,7 @@
 #include <cmath>
 #include <sstream>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ActionEventQueue.h"
 #include "CnCMap.h"
 #include "PlayerPool.h"
@@ -32,7 +32,7 @@
 #include "pside.h"
 #include "Player.h"
 #include "AiRules.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "misc/INIFile.h"
 #include "audio/SoundEngine.h"
 #include "video/Renderer.h"

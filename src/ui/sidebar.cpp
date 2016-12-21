@@ -29,7 +29,7 @@
 #include "game/RadarAnimEvent.h"
 #include "createmode_t.h"
 #include "SidebarError.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "video/SHPImage.h"
 #include "video/ImageCache.h"
 #include "video/ImageCacheEntry.h"

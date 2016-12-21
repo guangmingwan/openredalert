@@ -28,7 +28,7 @@
 #include "audio/SoundEngine.h"
 #include "game/Game.h"
 #include "game/GameError.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "vfs/vfs.h"
 #include "video/GraphicsEngine.h"
 #include "video/VideoError.h"

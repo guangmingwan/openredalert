@@ -14,13 +14,13 @@
 //    You should have received a copy of the GNU General Public License
 //    along with OpenRedAlert.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "Compression.hpp"
+#include "Compression.h"
 
 #include <algorithm>
 #include <cstring>
 #include <cctype>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "fcnc_endian.h"
 
 /**

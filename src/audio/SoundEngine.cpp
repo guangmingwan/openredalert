@@ -20,10 +20,10 @@
 #include <string>
 #include <algorithm>
 
-#include "SoundCacheCleaner.hpp"
+#include "SoundCacheCleaner.h"
 #include "SoundCommon.h"
 #include "SOUND_DECODE_STATE.h"
-#include "Logger.hpp"
+#include "Logger.h"
 
 using OpenRedAlert::Sound::SoundCacheCleaner;
 

@@ -21,7 +21,7 @@
 #include <string>
 #include <algorithm> // for find()
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "audio/SoundEngine.h"
 #include "Dispatcher.h"
 #include "PlayerPool.h"

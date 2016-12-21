@@ -18,7 +18,7 @@
 #define WALKANIMEVENT_H
 
 #include "UnitAnimEvent.h"
-#include "Unit.hpp"
+#include "Unit.h"
 
 class WalkAnimEvent : public UnitAnimEvent {
  public:

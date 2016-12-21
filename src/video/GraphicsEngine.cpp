@@ -24,11 +24,11 @@
 
 #include "misc/common.h"
 #include "misc/config.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "game/CnCMap.h"
 #include "game/PlayerPool.h"
 #include "game/Player.h"
-#include "game/Unit.hpp"
+#include "game/Unit.h"
 #include "game/UnitAndStructurePool.h"
 #include "game/StructureType.h"
 #include "audio/SoundEngine.h"

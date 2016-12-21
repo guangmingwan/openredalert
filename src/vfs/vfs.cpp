@@ -16,18 +16,11 @@
 
 #include "vfs.h"
 
-//#include <iostream>
-//#include <map>
-//#include <string>
-//#include <cstring>
-//#include <cstdarg>
-//#include <stdexcept>
-
 #include "VFile.h"
 #include "filesystem/externalvfs.h"
 #include "mix/mixvfs.h"
 #include "misc/INIFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/config.h"
 
 ExternalFiles * VFSUtils::externals = 0;

@@ -20,8 +20,7 @@
 
 #include "UnitOrStructure.h"
 #include "ActionEventQueue.h"
-#include "game/Unit.hpp"
-#include "Unit.hpp"
+#include "game/Unit.h"
 
 namespace p {
   extern ActionEventQueue * aequeue;

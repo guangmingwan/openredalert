@@ -21,7 +21,7 @@
 
 #include "SDL.h"
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ActionEventQueue.h"
 #include "CnCMap.h"
 #include "Dispatcher.h"
@@ -51,9 +51,9 @@
 #include "LoadMapError.h"
 #include "video/VideoError.h"
 #include "game/UnitAndStructurePool.h"
-#include "ui/MapAnimationMenu.hpp"
-#include "TriggerManager.hpp"
-#include "game/Unit.hpp"
+#include "ui/MapAnimationMenu.h"
+#include "TriggerManager.h"
+#include "game/Unit.h"
 
 using VQA::VQAMovie;
 

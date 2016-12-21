@@ -19,20 +19,18 @@
 
 class GraphicsEngine;
 
-namespace UI
-{
+namespace UI {
 
-/**
- * Class wich provide easy way to show select mission animation
- * 
- * @author Damien Carol (OpenRedAlert)
- */
-class MapAnimationMenu
-{
-public:
+  /**
+   * Class wich provide easy way to show select mission animation
+   *
+   * @author Damien Carol (OpenRedAlert)
+   */
+  class MapAnimationMenu {
+   public:
     /** Play the animation for a mission */
     void Play(GraphicsEngine& theGraphicEngine, const unsigned int mapNumber, const bool isAlly) const;
-};
+  };
 
 }
 

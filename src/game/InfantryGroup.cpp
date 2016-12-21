@@ -19,14 +19,14 @@
 #include <string>
 #include <math.h>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "CnCMap.h"
 #include "weaponspool.h"
 #include "misc/INIFile.h"
 #include "PlayerPool.h"
 #include "audio/SoundEngine.h"
 #include "UnitAndStructurePool.h"
-#include "Unit.hpp"
+#include "Unit.h"
 
 #include "SDL.h"
 

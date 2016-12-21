@@ -22,11 +22,11 @@
 #include <stdexcept>
 #include <string>
 
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "include/imageproc.h"
 #include "misc/INIFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 #include "video/ImageNotFound.h"

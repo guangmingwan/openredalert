@@ -19,7 +19,7 @@
 
 #include <string>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 #include "misc/config.h"

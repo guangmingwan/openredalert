@@ -163,7 +163,7 @@
 		7B523EFE1DFFE7E100EB265F /* SOUND_DECODE_STATE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SOUND_DECODE_STATE.h; path = ../src/audio/SOUND_DECODE_STATE.h; sourceTree = "<group>"; };
 		7B523EFF1DFFE7E100EB265F /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = ../src/audio/SoundBuffer.h; sourceTree = "<group>"; };
 		7B523F001DFFE7E100EB265F /* SoundCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundCache.h; path = ../src/audio/SoundCache.h; sourceTree = "<group>"; };
-		7B523F011DFFE7E100EB265F /* SoundCacheCleaner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SoundCacheCleaner.hpp; path = ../src/audio/SoundCacheCleaner.hpp; sourceTree = "<group>"; };
+		7B523F011DFFE7E100EB265F /* SoundCacheCleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundCacheCleaner.h; path = ../src/audio/SoundCacheCleaner.h; sourceTree = "<group>"; };
 		7B523F021DFFE7E100EB265F /* SoundCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundCommon.h; path = ../src/audio/SoundCommon.h; sourceTree = "<group>"; };
 		7B523F031DFFE7E100EB265F /* SoundEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundEngine.cpp; path = ../src/audio/SoundEngine.cpp; sourceTree = "<group>"; };
 		7B523F041DFFE7E100EB265F /* SoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundEngine.h; path = ../src/audio/SoundEngine.h; sourceTree = "<group>"; };
@@ -303,11 +303,11 @@
 		7B523F921DFFE8AC00EB265F /* TextTriggerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextTriggerAction.h; path = ../src/game/TextTriggerAction.h; sourceTree = "<group>"; };
 		7B523F931DFFE8AC00EB265F /* TileRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileRef.h; path = ../src/game/TileRef.h; sourceTree = "<group>"; };
 		7B523F941DFFE8AC00EB265F /* Trigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Trigger.cpp; path = ../src/game/Trigger.cpp; sourceTree = "<group>"; };
-		7B523F951DFFE8AC00EB265F /* Trigger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Trigger.hpp; path = ../src/game/Trigger.hpp; sourceTree = "<group>"; };
+		7B523F951DFFE8AC00EB265F /* Trigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trigger.h; path = ../src/game/Trigger.h; sourceTree = "<group>"; };
 		7B523F961DFFE8AC00EB265F /* TriggerAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TriggerAction.cpp; path = ../src/game/TriggerAction.cpp; sourceTree = "<group>"; };
 		7B523F971DFFE8AC00EB265F /* TriggerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriggerAction.h; path = ../src/game/TriggerAction.h; sourceTree = "<group>"; };
 		7B523F981DFFE8AC00EB265F /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TriggerManager.cpp; path = ../src/game/TriggerManager.cpp; sourceTree = "<group>"; };
-		7B523F991DFFE8AC00EB265F /* TriggerManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TriggerManager.hpp; path = ../src/game/TriggerManager.hpp; sourceTree = "<group>"; };
+		7B523F991DFFE8AC00EB265F /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriggerManager.h; path = ../src/game/TriggerManager.h; sourceTree = "<group>"; };
 		7B523F9A1DFFE8AC00EB265F /* triggers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = triggers.cpp; path = ../src/game/triggers.cpp; sourceTree = "<group>"; };
 		7B523F9B1DFFE8AC00EB265F /* triggers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = triggers.h; path = ../src/game/triggers.h; sourceTree = "<group>"; };
 		7B523F9C1DFFE8AC00EB265F /* TurnAnimEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TurnAnimEvent.cpp; path = ../src/game/TurnAnimEvent.cpp; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 		7B523FA21DFFE8AC00EB265F /* UInfiltrateAnimEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UInfiltrateAnimEvent.cpp; path = ../src/game/UInfiltrateAnimEvent.cpp; sourceTree = "<group>"; };
 		7B523FA31DFFE8AC00EB265F /* UInfiltrateAnimEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UInfiltrateAnimEvent.h; path = ../src/game/UInfiltrateAnimEvent.h; sourceTree = "<group>"; };
 		7B523FA41DFFE8AC00EB265F /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../src/game/Unit.cpp; sourceTree = "<group>"; };
-		7B523FA51DFFE8AC00EB265F /* Unit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Unit.hpp; path = ../src/game/Unit.hpp; sourceTree = "<group>"; };
+		7B523FA51DFFE8AC00EB265F /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = ../src/game/Unit.h; sourceTree = "<group>"; };
 		7B523FA61DFFE8AC00EB265F /* UnitAndStructureMat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitAndStructureMat.h; path = ../src/game/UnitAndStructureMat.h; sourceTree = "<group>"; };
 		7B523FA71DFFE8AC00EB265F /* unitandstructurepool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unitandstructurepool.cpp; path = ../src/game/unitandstructurepool.cpp; sourceTree = "<group>"; };
 		7B523FA81DFFE8AC00EB265F /* UnitAndStructurePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitAndStructurePool.h; path = ../src/game/UnitAndStructurePool.h; sourceTree = "<group>"; };
@@ -355,13 +355,13 @@
 		7B5240141DFFE8D000EB265F /* imageproc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imageproc.h; path = ../src/include/imageproc.h; sourceTree = "<group>"; };
 		7B5240151DFFE8D000EB265F /* sdllayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdllayer.h; path = ../src/include/sdllayer.h; sourceTree = "<group>"; };
 		7B5240161DFFE8DE00EB265F /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = ../src/Logger.cpp; sourceTree = SOURCE_ROOT; };
-		7B5240171DFFE8DE00EB265F /* Logger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = ../src/Logger.hpp; sourceTree = SOURCE_ROOT; };
+		7B5240171DFFE8DE00EB265F /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = ../src/Logger.h; sourceTree = SOURCE_ROOT; };
 		7B5240181DFFE8DE00EB265F /* OpenRedAlert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenRedAlert.cpp; path = ../src/OpenRedAlert.cpp; sourceTree = SOURCE_ROOT; };
 		7B52401C1DFFE90B00EB265F /* args.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = args.cpp; path = ../src/misc/args.cpp; sourceTree = "<group>"; };
 		7B52401D1DFFE90B00EB265F /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common.cpp; path = ../src/misc/common.cpp; sourceTree = "<group>"; };
 		7B52401E1DFFE90B00EB265F /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../src/misc/common.h; sourceTree = "<group>"; };
 		7B52401F1DFFE90B00EB265F /* Compression.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compression.cpp; path = ../src/misc/Compression.cpp; sourceTree = "<group>"; };
-		7B5240201DFFE90B00EB265F /* Compression.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Compression.hpp; path = ../src/misc/Compression.hpp; sourceTree = "<group>"; };
+		7B5240201DFFE90B00EB265F /* Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Compression.h; path = ../src/misc/Compression.h; sourceTree = "<group>"; };
 		7B5240211DFFE90B00EB265F /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../src/misc/config.h; sourceTree = "<group>"; };
 		7B5240221DFFE90B00EB265F /* fibheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fibheap.cpp; path = ../src/misc/fibheap.cpp; sourceTree = "<group>"; };
 		7B5240231DFFE90B00EB265F /* gametypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gametypes.h; path = ../src/misc/gametypes.h; sourceTree = "<group>"; };
@@ -391,7 +391,7 @@
 		7B5240471DFFE94100EB265F /* ListboxClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListboxClass.h; path = ../src/ui/ListboxClass.h; sourceTree = "<group>"; };
 		7B5240481DFFE94100EB265F /* ListBoxLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListBoxLine.h; path = ../src/ui/ListBoxLine.h; sourceTree = "<group>"; };
 		7B5240491DFFE94100EB265F /* MapAnimationMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapAnimationMenu.cpp; path = ../src/ui/MapAnimationMenu.cpp; sourceTree = "<group>"; };
-		7B52404A1DFFE94100EB265F /* MapAnimationMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MapAnimationMenu.hpp; path = ../src/ui/MapAnimationMenu.hpp; sourceTree = "<group>"; };
+		7B52404A1DFFE94100EB265F /* MapAnimationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapAnimationMenu.h; path = ../src/ui/MapAnimationMenu.h; sourceTree = "<group>"; };
 		7B52404B1DFFE94100EB265F /* Menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Menu.cpp; path = ../src/ui/Menu.cpp; sourceTree = "<group>"; };
 		7B52404C1DFFE94100EB265F /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Menu.h; path = ../src/ui/Menu.h; sourceTree = "<group>"; };
 		7B52404D1DFFE94100EB265F /* PauseMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PauseMenu.cpp; path = ../src/ui/PauseMenu.cpp; sourceTree = "<group>"; };
@@ -518,7 +518,7 @@
 				7B5240791DFFE95000EB265F /* vfs */,
 				7B5240811DFFE97600EB265F /* video */,
 				7B5240161DFFE8DE00EB265F /* Logger.cpp */,
-				7B5240171DFFE8DE00EB265F /* Logger.hpp */,
+				7B5240171DFFE8DE00EB265F /* Logger.h */,
 				7B5240181DFFE8DE00EB265F /* OpenRedAlert.cpp */,
 			);
 			path = OpenRedAlert;
@@ -530,7 +530,7 @@
 				7B523EFE1DFFE7E100EB265F /* SOUND_DECODE_STATE.h */,
 				7B523EFF1DFFE7E100EB265F /* SoundBuffer.h */,
 				7B523F001DFFE7E100EB265F /* SoundCache.h */,
-				7B523F011DFFE7E100EB265F /* SoundCacheCleaner.hpp */,
+				7B523F011DFFE7E100EB265F /* SoundCacheCleaner.h */,
 				7B523F021DFFE7E100EB265F /* SoundCommon.h */,
 				7B523F031DFFE7E100EB265F /* SoundEngine.cpp */,
 				7B523F041DFFE7E100EB265F /* SoundEngine.h */,
@@ -684,11 +684,11 @@
 				7B523F921DFFE8AC00EB265F /* TextTriggerAction.h */,
 				7B523F931DFFE8AC00EB265F /* TileRef.h */,
 				7B523F941DFFE8AC00EB265F /* Trigger.cpp */,
-				7B523F951DFFE8AC00EB265F /* Trigger.hpp */,
+				7B523F951DFFE8AC00EB265F /* Trigger.h */,
 				7B523F961DFFE8AC00EB265F /* TriggerAction.cpp */,
 				7B523F971DFFE8AC00EB265F /* TriggerAction.h */,
 				7B523F981DFFE8AC00EB265F /* TriggerManager.cpp */,
-				7B523F991DFFE8AC00EB265F /* TriggerManager.hpp */,
+				7B523F991DFFE8AC00EB265F /* TriggerManager.h */,
 				7B523F9A1DFFE8AC00EB265F /* triggers.cpp */,
 				7B523F9B1DFFE8AC00EB265F /* triggers.h */,
 				7B523F9C1DFFE8AC00EB265F /* TurnAnimEvent.cpp */,
@@ -700,7 +700,7 @@
 				7B523FA21DFFE8AC00EB265F /* UInfiltrateAnimEvent.cpp */,
 				7B523FA31DFFE8AC00EB265F /* UInfiltrateAnimEvent.h */,
 				7B523FA41DFFE8AC00EB265F /* Unit.cpp */,
-				7B523FA51DFFE8AC00EB265F /* Unit.hpp */,
+				7B523FA51DFFE8AC00EB265F /* Unit.h */,
 				7B523FA61DFFE8AC00EB265F /* UnitAndStructureMat.h */,
 				7B523FA71DFFE8AC00EB265F /* unitandstructurepool.cpp */,
 				7B523FA81DFFE8AC00EB265F /* UnitAndStructurePool.h */,
@@ -753,7 +753,7 @@
 				7B52401D1DFFE90B00EB265F /* common.cpp */,
 				7B52401E1DFFE90B00EB265F /* common.h */,
 				7B52401F1DFFE90B00EB265F /* Compression.cpp */,
-				7B5240201DFFE90B00EB265F /* Compression.hpp */,
+				7B5240201DFFE90B00EB265F /* Compression.h */,
 				7B5240211DFFE90B00EB265F /* config.h */,
 				7B5240221DFFE90B00EB265F /* fibheap.cpp */,
 				7B5240231DFFE90B00EB265F /* gametypes.h */,
@@ -790,7 +790,7 @@
 				7B5240471DFFE94100EB265F /* ListboxClass.h */,
 				7B5240481DFFE94100EB265F /* ListBoxLine.h */,
 				7B5240491DFFE94100EB265F /* MapAnimationMenu.cpp */,
-				7B52404A1DFFE94100EB265F /* MapAnimationMenu.hpp */,
+				7B52404A1DFFE94100EB265F /* MapAnimationMenu.h */,
 				7B52404B1DFFE94100EB265F /* Menu.cpp */,
 				7B52404C1DFFE94100EB265F /* Menu.h */,
 				7B52404D1DFFE94100EB265F /* PauseMenu.cpp */,

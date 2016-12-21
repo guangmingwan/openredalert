@@ -20,11 +20,11 @@
 #include <sstream>
 #include <cmath>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "Player.h"
 #include "PlayerPool.h"
 #include "audio/SoundEngine.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "UnitAndStructurePool.h"
 #include "weaponspool.h"
 #include "anim_nfo.h"

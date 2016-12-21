@@ -25,7 +25,7 @@
 #include "SOUND_DECODE_STATE.h"
 #include "SoundCommon.h"
 #include "SoundUtils.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "vfs/vfs.h"
 #include "vfs/VFile.h"
 

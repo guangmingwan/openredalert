@@ -16,7 +16,7 @@
 
 #include "UnitOrStructure.h"
 
-#include "Logger.hpp"
+#include "Logger.h"
 
 void UnitOrStructure::remove() {
   deleted = true;

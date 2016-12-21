@@ -23,8 +23,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "Logger.hpp"
-#include "misc/Compression.hpp"
+#include "Logger.h"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "include/imageproc.h"
 #include "misc/INIFile.h"

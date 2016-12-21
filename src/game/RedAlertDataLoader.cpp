@@ -20,7 +20,7 @@
 #include <string>
 #include <iostream>
 
-#include "Logger.hpp"
+#include "Logger.h"
 
 #include "WarheadDataList.h"
 #include "ProjectileDataList.h"

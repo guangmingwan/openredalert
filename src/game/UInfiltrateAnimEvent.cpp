@@ -18,7 +18,7 @@
 
 #include <cmath>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "ActionEventQueue.h"
 #include "UnitOrStructure.h"
 #include "TurnAnimEvent.h"
@@ -27,9 +27,8 @@
 #include "Projectile.h"
 #include "Weapon.h"
 #include "PlayerPool.h"
-#include "game/Unit.hpp"
+#include "game/Unit.h"
 #include "CnCMap.h"
-#include "Unit.hpp"
 #include "UnitOrStructureType.h"
 
 namespace p {

@@ -24,7 +24,7 @@
 #include "MoveAnimEvent.h"
 #include "Structure.h"
 #include "UnitAndStructurePool.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "ActionEventQueue.h"
 #include "UnitOrStructureType.h"
 

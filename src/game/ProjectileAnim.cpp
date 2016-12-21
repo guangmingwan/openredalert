@@ -18,7 +18,7 @@
 
 #include <cmath>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "UnitOrStructure.h"
 #include "ExplosionAnim.h"
 #include "L2Overlay.h"
@@ -26,7 +26,7 @@
 #include "Warhead.h"
 #include "WarheadData.h"
 #include "Projectile.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "UnitAndStructurePool.h"
 #include "ActionEventQueue.h"
 #include "CnCMap.h"

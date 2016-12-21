@@ -23,7 +23,7 @@
 #include "video/Renderer.h"
 #include "config.h"
 #include "misc/INIFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 
 #ifndef VERSION
 #define VERSION "438"

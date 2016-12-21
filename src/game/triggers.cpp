@@ -21,12 +21,12 @@
 #include <cstring>
 #include <string>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "misc/config.h"
 #include "audio/SoundEngine.h"
 #include "CnCMap.h"
 #include "UnitAndStructurePool.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "PlayerPool.h"
 #include "TriggerCondition.h"
 #include "Player.h"

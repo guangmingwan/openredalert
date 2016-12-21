@@ -19,7 +19,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "include/imageproc.h"
 #include "misc/INIFile.h"

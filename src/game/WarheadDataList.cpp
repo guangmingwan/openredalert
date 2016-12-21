@@ -21,7 +21,7 @@
 #include <string>
 
 #include "misc/INIFile.h"
-#include "Logger.hpp"
+#include "Logger.h"
 #include "DataLoader.h"
 #include "WarheadData.h"
 

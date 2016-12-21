@@ -19,7 +19,7 @@
 
 #include <cmath>
 
-#include "Logger.hpp"
+#include "Logger.h"
 #include "UnitOrStructure.h"
 #include "unittypes.h"
 #include "TurnAnimEvent.h"
@@ -28,7 +28,7 @@
 #include "WalkAnimEvent.h"
 #include "ActionEventQueue.h"
 #include "UnitAndStructurePool.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "InfantryGroup.h"
 #include "UnitType.h"
 

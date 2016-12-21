@@ -22,7 +22,7 @@
 #include "CnCMap.h"
 #include "misc/common.h"
 #include "PlayerPool.h"
-#include "Unit.hpp"
+#include "Unit.h"
 #include "UnitAndStructurePool.h"
 #include "vfs/vfs.h"
 #include "StructureType.h"

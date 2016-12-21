@@ -15,12 +15,12 @@
 //    You should have received a copy of the GNU General Public License
 //    along with OpenRedAlert.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "TriggerManager.hpp"
+#include "TriggerManager.h"
 
 #include <vector>
 
 #include "CnCMap.h"
-#include "Trigger.hpp"
+#include "Trigger.h"
 
 namespace OpenRedAlert
 {

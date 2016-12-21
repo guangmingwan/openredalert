@@ -18,7 +18,7 @@
 #define TURNANIMEVENT_H
 
 #include "UnitAnimEvent.h"
-#include "Unit.hpp"
+#include "Unit.h"
 
 class TurnAnimEvent : public UnitAnimEvent {
  public:

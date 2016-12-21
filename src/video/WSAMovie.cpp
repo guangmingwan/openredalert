@@ -22,7 +22,7 @@
 
 #include "Renderer.h"
 #include "misc/config.h"
-#include "misc/Compression.hpp"
+#include "misc/Compression.h"
 #include "include/fcnc_endian.h"
 #include "video/GraphicsEngine.h"
 #include "include/imageproc.h"

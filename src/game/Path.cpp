@@ -25,10 +25,9 @@
 #include "KeyComp.h"
 #include "FibHeapEntry.h"
 #include "TileRef.h"
-#include "Unit.hpp"
+#include "Unit.h"
 
-namespace p 
-{
+namespace p {
 	extern CnCMap * ccmap;
 }
 
