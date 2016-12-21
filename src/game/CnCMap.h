@@ -28,8 +28,6 @@
 #include "video/SHPImage.h"
 #include "Trigger.h"
 
-#include "SDL.h"
-
 class CellTrigger;
 class LoadingScreen;
 class CnCMap;
@@ -50,14 +48,14 @@ namespace OpenRedAlert {
  * Information about terrain placement
  */
 struct TerrainEntry {
-  Uint32 shpnum;
-  Sint16 xoffset;
-  Sint16 yoffset;
+  uint32_t shpnum;
+  int16_t xoffset;
+  int16_t yoffset;
 };
 
 struct TileList {
-  Uint16 templateNum;
-  Uint8 tileNum;
+  uint16_t templateNum;
+  uint8_t tileNum;
 };
 
 
@@ -90,28 +88,28 @@ class RA_Teamtype {
 
 
 struct ScrollVector {
-  Sint8 x;
-  Sint8 y;
-  Uint8 t;
+  int8_t x;
+  int8_t y;
+  uint8_t t;
 };
 
 struct ScrollBookmark {
-  Uint16 x;
-  Uint16 y;
-  Uint16 xtile;
-  Uint16 ytile;
+  uint16_t x;
+  uint16_t y;
+  uint16_t xtile;
+  uint16_t ytile;
 };
 
 struct ScrollData {
-  Uint16 maxx;
-  Uint16 maxy;
-  Uint16 curx;
-  Uint16 cury;
-  Uint16 maxxtileoffs;
-  Uint16 maxytileoffs;
-  Uint16 curxtileoffs;
-  Uint16 curytileoffs;
-  Uint16 tilewidth;
+  uint16_t maxx;
+  uint16_t maxy;
+  uint16_t curx;
+  uint16_t cury;
+  uint16_t maxxtileoffs;
+  uint16_t maxytileoffs;
+  uint16_t curxtileoffs;
+  uint16_t curytileoffs;
+  uint16_t tilewidth;
 };
 
 
@@ -119,7 +117,7 @@ struct TemplateTilePair {
   /** Template for Theater */
   TemplateImage *theater;
   /** Tile number in this Theater */
-  Uint8 tile;
+  uint8_t tile;
 };
 
 typedef std::map<std::string, TemplateImage*> TemplateCache;
@@ -133,7 +131,7 @@ class CnCMap {
   CnCMap();
   ~CnCMap();
 
-  void Init(gametypes gameNumber, Uint8 gameMode);
+  void Init(gametypes gameNumber, uint8_t gameMode);
   // old proto :: void InitCnCMap();
 
   // Comments with "C/S:" at the start are to do with the client/server split.
@@ -144,16 +142,16 @@ class CnCMap {
 
   bool isLoading() const ;
 
-  bool canSpawnAt(Uint16 pos) const;
-  bool isBuildableAt( Uint32 PlayerNumb, Uint16 pos, bool WaterBound ) const;
-  bool isBuildableAt(Uint16 pos, Unit* excpUn = NULL) const;
-  bool isBuildableAt(Uint32 PlayerNumb, Uint16 pos, Unit* excpUn = NULL) const;
-  Uint16 getCost(Uint16 pos, Unit* excpUn = 0) const;
-  Uint16 getWidth() const ;
-  Uint16 getHeight() const ;
-  Uint32 getSize() const ;
-  Uint32 translateToPos(Uint16 x, Uint16 y) const;
-  void translateFromPos(Uint32 pos, Uint16 *x, Uint16 *y) const;
+  bool canSpawnAt(uint16_t pos) const;
+  bool isBuildableAt(uint32_t PlayerNumb, uint16_t pos, bool WaterBound ) const;
+  bool isBuildableAt(uint16_t pos, Unit* excpUn = NULL) const;
+  bool isBuildableAt(uint32_t PlayerNumb, uint16_t pos, Unit* excpUn = NULL) const;
+  uint16_t getCost(uint16_t pos, Unit* excpUn = 0) const;
+  uint16_t getWidth() const ;
+  uint16_t getHeight() const ;
+  uint32_t getSize() const ;
+  uint32_t translateToPos(uint16_t x, uint16_t y) const;
+  void translateFromPos(uint32_t pos, uint16_t *x, uint16_t *y) const;
 
   enum TerrainType {
     t_land=0,
@@ -169,19 +167,19 @@ class CnCMap {
     s_upright = 3, s_downright = 6, s_downleft = 12, s_upleft = 9, s_all = 15};
 
   // C/S: Not sure about this one
-  Uint8 getGameMode() const ;
+  uint8_t getGameMode() const ;
 
   /** C/S: These functions are client only*/
-  void setTerrainOverlay( Uint32 pos, Uint32 ImgNum, Uint16 Frame ) ;
+  void setTerrainOverlay(uint32_t pos, uint32_t ImgNum, uint16_t Frame);
 
   /** C/S: These functions are client only*/
-  Uint32 getTerrainOverlay( Uint32 pos ) ;
+  uint32_t getTerrainOverlay(uint32_t pos) ;
 
   /** Return true if this map is in snow theme */
   bool SnowTheme() const;
 
-  SDL_Surface *getMapTile( Uint32 pos );
-  SDL_Surface *getShadowTile(Uint8 shadownum);
+  SDL_Surface *getMapTile(uint32_t pos);
+  SDL_Surface *getShadowTile(uint8_t shadownum);
 
   RA_Teamtype* getTeamtypeByName(std::string TeamName);
 
@@ -200,66 +198,66 @@ class CnCMap {
    * In red alert when type is bigger the 4 it is normal ore,
    * when type is smaller or equal to 4 the resource is christal :)
    */
-  bool getResource(Uint32 pos, Uint8* type, Uint8* amount) const ;
+  bool getResource(uint32_t pos, uint8_t* type, uint8_t* amount) const ;
 
-  void decreaseResource(Uint32 pos, Uint8 amount);
+  void decreaseResource(uint32_t pos, uint8_t amount);
 
   /**
    * @return the resource data in a form best understood
    * by the imagecache/renderer
    */
-  Uint32 getResourceFrame(Uint32 pos) const ;
+  uint32_t getResourceFrame(uint32_t pos) const ;
 
-  Uint32 getTiberium(Uint32 pos) const ;
+  uint32_t getTiberium(uint32_t pos) const ;
 
-  Uint32 getSmudge(Uint32 pos) const ;
-  Uint32 setSmudge(Uint32 pos, Uint8 value) ;
-  Uint32 setTiberium(Uint32 pos, Uint8 value) ;
-  Uint32 getOverlay(Uint32 pos);
-  Uint32 getTerrain(Uint32 pos, Sint16* xoff, Sint16* yoff);
-  Uint8 getTerrainType(Uint32 pos) const ;
+  uint32_t getSmudge(uint32_t pos) const ;
+  uint32_t setSmudge(uint32_t pos, uint8_t value) ;
+  uint32_t setTiberium(uint32_t pos, uint8_t value) ;
+  uint32_t getOverlay(uint32_t pos);
+  uint32_t getTerrain(uint32_t pos, int16_t* xoff, int16_t* yoff);
+  uint8_t getTerrainType(uint32_t pos) const ;
 
   /** Reloads all the tiles SDL_Images */
   void reloadTiles();
 
-  Uint8 accScroll(Uint8 direction);
-  Uint8 absScroll(Sint16 dx, Sint16 dy, Uint8 border);
+  uint8_t accScroll(uint8_t direction);
+  uint8_t absScroll(int16_t dx, int16_t dy, uint8_t border);
   void doscroll();
-  void setMaxScroll(Uint32 x, Uint32 y, Uint32 xtile, Uint32 ytile, Uint32 tilew);
+  void setMaxScroll(uint32_t x, uint32_t y, uint32_t xtile, uint32_t ytile, uint32_t tilew);
   void setValidScroll();
 
-  void setScrollPos(Uint32 x, Uint32 y) ;
+  void setScrollPos(uint32_t x, uint32_t y);
 
-  Uint32 getScrollPos() const ;
-  Uint16 getXScroll() const ;
-  Uint16 getYScroll() const ;
-  Uint16 getXTileScroll() const ;
-  Uint16 getYTileScroll() const ;
+  uint32_t getScrollPos() const;
+  uint16_t getXScroll() const;
+  uint16_t getYScroll() const;
+  uint16_t getXTileScroll() const;
+  uint16_t getYTileScroll() const;
 
-  SDL_Surface* getMiniMap(Uint8 pixside);
-  void prepMiniClip(Uint16 sidew, Uint16 sideh) ;
-  const MiniMapClipping& getMiniMapClipping() const ;
+  SDL_Surface* getMiniMap(uint8_t pixside);
+  void prepMiniClip(uint16_t sidew, uint16_t sideh);
+  const MiniMapClipping& getMiniMapClipping() const;
 
   bool toScroll() ;
-  void storeLocation(Uint8 loc);
-  void restoreLocation(Uint8 loc);
+  void storeLocation(uint8_t loc);
+  void restoreLocation(uint8_t loc);
 
-  Uint32 getWaypoint(Uint8 pointnr);
+  uint32_t getWaypoint(uint8_t pointnr);
 
-  void setWaypoint (Uint8 pointnr, Uint32 mappos);
-  SHPImage* getPips() ;
-  Uint32 getPipsNum() const ;
-  SHPImage* getMoveFlash() ;
-  Uint32 getMoveFlashNum() const ;
+  void setWaypoint (uint8_t pointnr, uint32_t mappos);
+  SHPImage* getPips();
+  uint32_t getPipsNum() const;
+  SHPImage* getMoveFlash();
+  uint32_t getMoveFlashNum() const;
   /** X offset of viewing map
    * C/S: Client only? */
-  Uint16 getX() const ;
+  uint16_t getX() const;
   /** Y offset of viewing map
    * C/S: Client only? */
-  Uint16 getY() const ;
+  uint16_t getY() const;
 
   /** Checks the WW coord is valid */
-  bool validCoord(Uint16 tx, Uint16 ty) const;
+  bool validCoord(uint16_t tx, uint16_t ty) const;
   /** Converts a WW coord into a more flexible coord */
   unsigned int normaliseCoord(unsigned int linenum) const;
   /** Converts a WW coord into a more flexible coord */
@@ -268,7 +266,7 @@ class CnCMap {
   void translateCoord(unsigned int linenum, unsigned int* tx, unsigned int* ty) const;
 
   /** Return the number with string of a COMMAND */
-  Uint8 UnitActionToNr(const std::string action);
+  uint8_t UnitActionToNr(const std::string action);
 
   /** Return true if it's the last mission of the game */
   bool isEndOfGame();
@@ -286,7 +284,7 @@ private:
 #if _MSC_VER && _MSC_VER < 1300
 #define NUMMARKS ((Uint8)5)
 #else
-  static const Uint8 NUMMARKS=5;
+  static const uint8_t NUMMARKS=5;
 #endif
   MissionData* missionData;
 
@@ -326,20 +324,20 @@ private:
   void parseBin(TileList *bindata);
 
   /** Parse the overlay part of the map */
-  void parseOverlay(const Uint32& linenum, const std::string& name);
+  void parseOverlay(const uint32_t& linenum, const std::string& name);
 
   /** load a specified tile*/
-  SDL_Surface *loadTile(INIFile *templini, Uint16 templ, Uint8 tile,
-                        Uint32* tiletype);
+  SDL_Surface *loadTile(INIFile *templini, uint16_t templ, uint8_t tile,
+                        uint32_t* tiletype);
 
   /** width of map in tiles */
-  Uint16 width;
+  uint16_t width;
   /** height of map in tiles */
-  Uint16 height;
+  uint16_t height;
   /** X coordinate for the first tile (inner map) */
-  Uint16 x;
+  uint16_t x;
   /** Y coordinate for the first tile (inner map) */
-  Uint16 y;
+  uint16_t y;
 
   /** Are we loading the map?*/
   bool loading;
@@ -350,10 +348,10 @@ private:
   ScrollData scrollpos;
   /* A array of tiles and a vector containing the images for the tiles
    * The matrix used to store terrain information.*/
-  std::vector<Uint16> tilematrix;
+  std::vector<uint16_t> tilematrix;
   /* A array of tiles and a vector containing the images for the tiles
    * The matrix used to store terrain information.*/
-  std::vector<Uint32> terrainoverlay;
+  std::vector<uint32_t> terrainoverlay;
 
   // Client only
   TemplateCache templateCache; //Holds cache of TemplateImage*s
@@ -362,14 +360,14 @@ private:
   std::vector<SDL_Surface*> tileimages_backup; //Holds the SDL_Surfaces of the TemplateImage
   TemplateTileCache templateTileCache; //Stores the TemplateImage* and Tile# of each SDL_Surface in tileimages
 
-  Uint16 numShadowImg;
+  uint16_t numShadowImg;
   std::vector<SDL_Surface*> shadowimages;
 
   /** These come from the WAYPOINTS section of the inifile, and contain start
    * locations for multiplayer maps.*/
-  Uint32 waypoints[100];
+  uint32_t waypoints[100];
 
-  std::vector<Uint32> overlaymatrix;
+  std::vector<uint32_t> overlaymatrix;
 
   std::vector<RA_Tigger*> RaTriggers;
 
@@ -377,18 +375,18 @@ private:
 
   std::vector<CellTrigger> CellTriggers;
 
-  std::vector<Uint16> resourcematrix;
-  std::vector<Uint32> resourcebases;
-  std::map<std::string, Uint8> resourcenames;
+  std::vector<uint16_t> resourcematrix;
+  std::vector<uint32_t> resourcebases;
+  std::map<std::string, uint8_t> resourcenames;
 
-  std::vector<Uint8> terraintypes;
+  std::vector<uint8_t> terraintypes;
 
-  std::map<Uint32, TerrainEntry> terrains;
-  std::map<Uint32, Uint16> overlays;
+  std::map<uint32_t, TerrainEntry> terrains;
+  std::map<uint32_t, uint16_t> overlays;
 
   /// @todo We get this from the game loader part, investigate if there's a better approach.
-  Uint8 maptype;
-  Uint8 gamemode; // 0 - single player, 1 - skirmish, 2 - multiplayer
+  uint8_t maptype;
+  uint8_t gamemode; // 0 - single player, 1 - skirmish, 2 - multiplayer
 
   /** @todo These need a better (client side only) home, (ui related)*/
   SDL_Surface *minimap, *oldmmap;
@@ -398,15 +396,15 @@ private:
   ScrollVector scrollvec;
   bool toscroll;
   /** stores which directions can be scrolled */
-  Uint8 valscroll;
+  uint8_t valscroll;
   /** stores certain map locations*/
   ScrollBookmark scrollbookmarks[NUMMARKS];
-  Uint8 scrollstep, maxscroll, scrolltime;
+  uint8_t scrollstep, maxscroll, scrolltime;
 
   /// @todo These need a better (client side only) home (ui/gfx related)
-  Uint32 pipsnum;
+  uint32_t pipsnum;
   SHPImage* pips;
-  Uint32 flashnum;
+  uint32_t flashnum;
   SHPImage* moveflash;
 
   /** RA ->  translate_64 = false

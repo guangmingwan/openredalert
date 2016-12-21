@@ -1,6 +1,5 @@
 // Game.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -25,28 +24,27 @@
 /**
  * This object represent a game session
  */
-class Game
-{
-public:
-	Game();
-	~Game();
+class Game {
+ public:
+  Game();
+  ~Game();
 
-	void InitializeMap(std::string MapName);
-	/** Initialize some object of the game */
-	void InitializeGameClasses();
-	void FreeMemory();
-	void play();
-	void HandleTiming();
-	void dumpstats();
+  void InitializeMap(std::string MapName);
+  /** Initialize some object of the game */
+  void InitializeGameClasses();
+  void FreeMemory();
+  void play();
+  void HandleTiming();
+  void dumpstats();
 
-private:
-	void handleAiCommands();
+ private:
+  void handleAiCommands();
 
-	Uint8 MissionNr;
-	Uint32 OldUptime;
-	ConfigType config;
-	Uint8 gamemode;
-	bool BattleControlTerminated;
+  uint8_t MissionNr;
+  uint32_t OldUptime;
+  ConfigType config;
+  uint8_t gamemode;
+  bool BattleControlTerminated;
 };
 
 #endif //GAME_H

@@ -28,8 +28,6 @@
 #include "UnitAndStructurePool.h"
 #include "Unit.h"
 
-#include "SDL.h"
-
 InfantryGroup::InfantryGroup() {
   //logger->debug("Setting up infgroup %p\n", this);
   for (int i=0;i<5;i++){
@@ -44,7 +42,7 @@ InfantryGroup::~InfantryGroup()
   // printf ("%s line %i: Destroying infgroup\n", __FILE__, __LINE__);
 }
 
-const Sint8 InfantryGroup::unitoffsets[10] = {
+const int8_t InfantryGroup::unitoffsets[10] = {
   // Theses values have been heavily tested, do NOT change them unless you're
   //        _really_ sure of what you are doing
   // X value

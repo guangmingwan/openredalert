@@ -37,7 +37,6 @@ namespace pc {
   extern GraphicsEngine * gfxeng;
 }
 
-
 DropDownListBox::DropDownListBox() {
   List.empty();
 
@@ -75,8 +74,7 @@ DropDownListBox::DropDownListBox() {
   }
 }
 
-DropDownListBox::~DropDownListBox()
-{
+DropDownListBox::~DropDownListBox() {
   if (ListBoxSurface != NULL){
     SDL_FreeSurface( ListBoxSurface );
   }
@@ -88,16 +86,14 @@ DropDownListBox::~DropDownListBox()
 #endif
 }
 
-bool DropDownListBox::need_redraw(void)
-{
+bool DropDownListBox::need_redraw(void) {
   return Recreate;
 }
 
 /**
  * Set the surface (window) to draw the button on
  */
-void DropDownListBox::SetDrawingWindow(RaWindow* window)
-{
+void DropDownListBox::SetDrawingWindow(RaWindow* window) {
   if (window != 0){
     this->WindowToDrawOn = window;
   }
@@ -105,12 +101,10 @@ void DropDownListBox::SetDrawingWindow(RaWindow* window)
 
 /**
  */
-void DropDownListBox::Create()
-{
+void DropDownListBox::Create() {
   SDL_Rect	dest;
   Uint16		Ypos;
   //char		*temp;
-
 
   Recreate	= false;
 
@@ -150,7 +144,7 @@ void DropDownListBox::Create()
   // Fill the surface with the correct color
   SDL_FillRect(ListBoxSurface, &dest, ListBoxBackgroundColor);
 
-  if (Selected){
+  if (Selected) {
     // this is the destination as needed for the new surface
     dest.x = 1;
     dest.y = SizeAndPosition.h;

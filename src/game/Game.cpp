@@ -19,8 +19,6 @@
 
 #include <stdexcept>
 
-#include "SDL.h"
-
 #include "Logger.h"
 #include "ActionEventQueue.h"
 #include "CnCMap.h"

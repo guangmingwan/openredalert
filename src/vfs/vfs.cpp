@@ -201,14 +201,11 @@ void VFSUtils::VFS_Close(VFile* file)
 
 /**
  */
-const char* VFSUtils::VFS_getFirstExisting(const std::vector<const char*>& files)
-{
+const char* VFSUtils::VFS_getFirstExisting(const std::vector<const char*>& files) {
   VFile* tmp;
-  for (Uint32 i = 0; i < files.size(); ++i)
-  {
+  for (uint32_t i = 0; i < files.size(); ++i) {
     tmp = VFSUtils::VFS_Open(files[i], "r");
-    if (tmp != NULL)
-    {
+    if (tmp != NULL) {
       VFSUtils::VFS_Close(tmp);
       return files[i];
     }
@@ -218,8 +215,7 @@ const char* VFSUtils::VFS_getFirstExisting(const std::vector<const char*>& files
 
 /**
  */
-const char* VFSUtils::VFS_getFirstExisting(uint32_t count, ...)
-{
+const char* VFSUtils::VFS_getFirstExisting(uint32_t count, ...) {
   VFile* tmp;
   va_list ap;
   char* name;

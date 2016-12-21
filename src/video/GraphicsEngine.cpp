@@ -62,8 +62,7 @@ namespace pc {
  * Constructor, inits the sdl graphics and prepares to render maps and
  * draw vqaframes.
  */
-GraphicsEngine::GraphicsEngine()
-{
+GraphicsEngine::GraphicsEngine() {
   ConfigType config;
   config = getConfig();
   width = config.width;
@@ -83,7 +82,7 @@ GraphicsEngine::GraphicsEngine()
   SDL_WM_SetCaption(caption.c_str(), 0);
 
 
-  SDL_WM_GrabInput(config.grabmode);
+  SDL_WM_GrabInput((SDL_GrabMode)config.grabmode);
 
   // Init the icon of the main window
   //icon = SDL_LoadBMP_RW(SDL_RWFromFile("data/gfx/icon.bmp", "rb"), 1);

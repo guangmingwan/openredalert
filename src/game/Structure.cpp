@@ -50,8 +50,6 @@
 #include "BarrelExplosionActionEvent.h"
 #include "UnitType.h"
 
-#include "SDL.h"
-
 using Sound::SoundEngine;
 
 namespace p {

@@ -29,13 +29,14 @@
 #define VERSION "438"
 #endif
 
+#include "SDL.h"
+
 namespace {
   ConfigType config;
 }
 namespace pc {
   extern ConfigType Config;
 }
-
 
 /**
  * Print the help message
@@ -63,8 +64,7 @@ void PrintUsage() {
   printf("  -v, --version      - Print the version.\n\n");
 }
 
-const ConfigType& getConfig()
-{
+const ConfigType& getConfig() {
   return config;
 }
 
@@ -75,8 +75,7 @@ const ConfigType& getConfig()
  * @param argv pointer to array of arguments
  * @returns true on success, false if user entered invalid parameters
  */
-extern bool parse(int argc, char **argv)
-{
+extern bool parse(int argc, char **argv) {
   int i;
   bool fullscreen = false;
   INIFile *freecnc_ini;

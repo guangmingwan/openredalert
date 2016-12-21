@@ -21,8 +21,6 @@
 
 #include "SHPBase.h"
 
-#include "SDL.h"
-
 class SHPHeader;
 
 /**
@@ -30,7 +28,7 @@ class SHPHeader;
  */
 class SHPImage : SHPBase {
  public:
-  SHPImage(const char * fname, Sint8 scaleq);
+  SHPImage(const char *fname, Sint8 scaleq);
   ~SHPImage();
 
   void getImage(Uint16 imgnum, SDL_Surface * * img, SDL_Surface * * shadow,

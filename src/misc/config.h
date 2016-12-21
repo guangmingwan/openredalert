@@ -6,11 +6,8 @@
 #include "misc/common.h"
 #include "misc/gametypes.h"
 
-#include "SDL.h"
-#include "SDL.h"
-
 namespace {
-  const Uint8 NUMBINDABLE = 3;
+  const uint8_t NUMBINDABLE = 3;
 }
 
 enum KEY_TYPE {
@@ -20,44 +17,44 @@ enum KEY_TYPE {
 };
 
 typedef struct _ConfigType {
-  Uint32 videoflags;
-  Uint32 startMoney;
+  uint32_t videoflags;
+  uint32_t startMoney;
 
-  Uint16 width,
-  height,
-  bpp,
-  serverport;
+  uint16_t width;
+  uint16_t height;
+  uint16_t bpp;
+  uint16_t serverport;
 
-  Uint8 intro;
+  uint8_t intro;
   /* Game mode */
-  Uint8 gamemode;
-  Uint8 totalplayers,
-  playernum,
-  scrollstep,
-  scrolltime,
-  maxscroll,
-  finaldelay,
-  dispatch_mode;
+  uint8_t gamemode;
+  uint8_t totalplayers;
+  uint8_t playernum;
+  uint8_t scrollstep;
+  uint8_t scrolltime;
+  uint8_t maxscroll;
+  uint8_t finaldelay;
+  uint8_t dispatch_mode;
 
   bool nosound;
   bool pause;
   bool quit_mission;
-  bool playvqa,
-  allowsandbagging,
-  debug,
-  demo;
+  bool playvqa;
+  bool allowsandbagging;
+  bool debug;
+  bool demo;
   /** Enable/disable the fog of war */
   bool UseFogOfWar;
 
   gametypes gamenum;
 
-  SDL_GrabMode grabmode;
+  int grabmode;
 
-  SDLKey bindablekeys[NUMBINDABLE];
+  unsigned int bindablekeys[NUMBINDABLE];
 
-  Uint8 bindablemods[NUMBINDABLE];
+  uint8_t bindablemods[NUMBINDABLE];
 
-  Uint8 buildable_radius;
+  uint8_t buildable_radius;
 
   std::string mapname;
   std::string vqamovie;
@@ -102,18 +99,18 @@ typedef struct _ConfigType {
   /** Naval unit lost */
   std::string NavalUnitLost;
   /** General */
-  std::string BattleControlTerm,
-  BuildingCanceled,
-  BuildingOnHold,
-  Newoptions,
-  NoDeploy,
-  NoFunds,
-  Nopower,
-  Reinforcements,
-  RadarUp,
-  RadarDown,
-  MissionWon,
-  MissionLost;
+  std::string BattleControlTerm;
+  std::string BuildingCanceled;
+  std::string BuildingOnHold;
+  std::string Newoptions;
+  std::string NoDeploy;
+  std::string NoFunds;
+  std::string Nopower;
+  std::string Reinforcements;
+  std::string RadarUp;
+  std::string RadarDown;
+  std::string MissionWon;
+  std::string MissionLost;
   /** Money Up sound */
   std::string MoneyCountUp;
   /**

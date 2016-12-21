@@ -23,91 +23,91 @@
 
 #include "misc/INIFile.h"
 
-Uint32 WarheadData::getSpread() {
+uint32_t WarheadData::getSpread() {
   return spread;
 }
-void WarheadData::setSpread(Uint32 spread)
-{
+
+void WarheadData::setSpread(uint32_t spread) {
   this->spread = spread;
 }
-Uint32 WarheadData::getWall()
-{
+
+uint32_t WarheadData::getWall() {
   return wall;
 }
-void WarheadData::setWall(Uint32 wall)
-{
+
+void WarheadData::setWall(uint32_t wall) {
   this->wall = wall;
 }
-Uint32 WarheadData::getWood()
-{
+
+uint32_t WarheadData::getWood() {
   return wood;
 }
-void WarheadData::setWood(Uint32 wood)
-{
+
+void WarheadData::setWood(uint32_t wood) {
   this->wood = wood;
 }
-Uint32 WarheadData::getOre()
-{
+
+uint32_t WarheadData::getOre() {
   return ore;
 }
-void WarheadData::setOre(Uint32 ore)
-{
+
+void WarheadData::setOre(uint32_t ore) {
   this->ore = ore;
 }
-Uint32 WarheadData::getVersusNone()
-{
+
+uint32_t WarheadData::getVersusNone() {
   return versusNone;
 }
-void WarheadData::setVersusNone(Uint32 versusNone)
-{
+
+void WarheadData::setVersusNone(uint32_t versusNone) {
   this->versusNone = versusNone;
 }
-Uint32 WarheadData::getVersusWood()
-{
+
+uint32_t WarheadData::getVersusWood() {
   return versusWood;
 }
-void WarheadData::setVersusWood(Uint32 versusWood)
-{
+
+void WarheadData::setVersusWood(uint32_t versusWood) {
   this->versusWood = versusWood;
 }
-Uint32 WarheadData::getVersusLight()
-{
+
+uint32_t WarheadData::getVersusLight() {
   return versusLight;
 }
-void WarheadData::setVersusLight(Uint32 versusLight)
-{
+
+void WarheadData::setVersusLight(uint32_t versusLight) {
   this->versusLight = versusLight;
 }
-Uint32 WarheadData::getVersusHeavy()
-{
+
+uint32_t WarheadData::getVersusHeavy() {
   return versusHeavy;
 }
-void WarheadData::setVersusHeavy(Uint32 versusHeavy)
-{
+
+void WarheadData::setVersusHeavy(uint32_t versusHeavy) {
   this->versusHeavy = versusHeavy;
 }
 
-Uint32 WarheadData::getVersusConcrete() {
+uint32_t WarheadData::getVersusConcrete() {
   return versusConcrete;
 }
 
-void WarheadData::setVersusConcrete(Uint32 versusConcrete) {
+void WarheadData::setVersusConcrete(uint32_t versusConcrete) {
   this->versusConcrete = versusConcrete;
 }
 
-Uint32 WarheadData::getExplosion() {
+uint32_t WarheadData::getExplosion() {
   return explosion;
 }
 
-void WarheadData::setExplosion(Uint32 explosion) {
+void WarheadData::setExplosion(uint32_t explosion) {
   this->explosion = explosion;
 }
 
-Uint32 WarheadData::getInfDeath() {
+uint32_t WarheadData::getInfDeath() {
   return infDeath;
 }
 
-void WarheadData::setInfDeath(Uint32 infDeath) {
+void WarheadData::setInfDeath(uint32_t infDeath) {
   this->infDeath = infDeath;
 }
 
@@ -121,7 +121,7 @@ WarheadData* WarheadData::loadWarheadData(INIFile * file, std::string name) {
   //  [A value of 1 means the damage is halved every pixel distant from
   // center point.
   //   a value of 2 means damage is halved every 2 pixels, etc.]
-  Uint32 tmpSpread = file->readInt(name, "Spread", 1);
+  uint32_t tmpSpread = file->readInt(name, "Spread", 1);
   ptrWarheadData->setSpread(tmpSpread);
 
   // Wall = Does this warhead damage concrete walls (def=no)?
@@ -136,7 +136,7 @@ WarheadData* WarheadData::loadWarheadData(INIFile * file, std::string name) {
   // @todo REFACTOR THAT
   std::string tmpPtVerses = file->readString(name, "Verses", "");
   if (tmpPtVerses != "") {
-    Uint32 versus[5];
+    uint32_t versus[5];
 
     versus[0] = 100;
     versus[1] = 100;
@@ -162,13 +162,13 @@ WarheadData* WarheadData::loadWarheadData(INIFile * file, std::string name) {
   // Explosion = which explosion set to use when warhead of this
   // type impacts (def=0)
   // 0=none, 1=piff, 2=piffs, 3=fire, 4=frags, 5=pops, 6=nuke
-  Uint32 tmpExplosion = file->readInt(name.c_str(), "Explosion", 0);
+  uint32_t tmpExplosion = file->readInt(name.c_str(), "Explosion", 0);
   ptrWarheadData->setExplosion(tmpExplosion);
 
   // InfDeath = which infantry death animation to use (def=0)
   // 0=instant die, 1=twirl die, 2=explodes, 3=flying death,
   // 4=burn death, 5=electro
-  Uint32 tmpInfDeath = file->readInt(name.c_str(), "InfDeath", 0);
+  uint32_t tmpInfDeath = file->readInt(name.c_str(), "InfDeath", 0);
   ptrWarheadData->setInfDeath(tmpInfDeath);
 
   // Returns the constructed object

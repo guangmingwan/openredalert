@@ -26,8 +26,7 @@ MissionMapsClass::MissionMapsClass() {
 	readMissionData();
 }
 
-std::string MissionMapsClass::getGdiMissionMap(Uint32 missionNumber)
-{
+std::string MissionMapsClass::getGdiMissionMap(uint32_t missionNumber) {
 	// If the index required is <
 	if (missionNumber < GdiMissionMaps.size()) {
 		return GdiMissionMaps[missionNumber];
@@ -38,8 +37,7 @@ std::string MissionMapsClass::getGdiMissionMap(Uint32 missionNumber)
 /**
  * @param missionNumber Number of the Nod/Soviets mission
  */
-std::string MissionMapsClass::getNodMissionMap(Uint32 missionNumber)
-{
+std::string MissionMapsClass::getNodMissionMap(uint32_t missionNumber) {
     //
     if (missionNumber < NodMissionMaps.size())
     {

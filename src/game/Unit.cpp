@@ -43,8 +43,6 @@
 #include "UnitType.h"
 #include "StructureType.h"
 
-#include "SDL.h"
-
 namespace p {
   extern ActionEventQueue * aequeue;
   extern CnCMap* ccmap;

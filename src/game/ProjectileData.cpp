@@ -27,19 +27,19 @@ ProjectileData::ProjectileData(){
 	setImage(std::string("none"));
 }
 
-Uint32 ProjectileData::getAA() {
+uint32_t ProjectileData::getAA() {
 	return AA;
 }
 
-void ProjectileData::setAA(Uint32 AA) {
+void ProjectileData::setAA(uint32_t AA) {
 	this->AA = AA;
 }
 
-Uint32 ProjectileData::getAG() {
+uint32_t ProjectileData::getAG() {
 	return AG;
 }
 
-void ProjectileData::setAG(Uint32 AG) {
+void ProjectileData::setAG(uint32_t AG) {
 	this->AG = AG;
 }
 

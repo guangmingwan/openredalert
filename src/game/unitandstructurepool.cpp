@@ -517,7 +517,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
     return false;
 
   int x = 0, y = 0, curpos = 0;
-  Uint32 structnum = 0;
+  size_t structnum = 0;
   Structure* st = 0;
 
   Uint32 br = cellpos + p::ccmap->getWidth()*(type->getYsize()-1);
@@ -535,8 +535,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
     structnum = structurepool.size();
   }
 
-  if (type->isWall())
-  {
+  if (type->isWall()) {
     // walls will always be one cell
     if (0 != getStructureAt(cellpos) ||
         0 != (unitandstructmat[cellpos].flags & US_IS_UNIT)||
@@ -554,9 +553,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
     unitandstructmat[cellpos].structurenumb = structnum;
 
 
-  }
-  else
-  {
+  } else {
     /// @todo Rewrite this to use curpos in a more straightforward way.
     curpos = cellpos+p::ccmap->getWidth()*(type->getYsize());
     for (y = type->getYsize()-1; y>=0; --y) {
@@ -597,7 +594,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
           if (type->isBlocked(y*type->getXsize()+x) == 2) {
             unitandstructmat[curpos+x].flags = US_IS_STRUCTURE|US_HIGH_COST;
             unitandstructmat[curpos+x].structurenumb = structnum;
-          }else{
+          } else {
             //unitandstructmat[curpos+x] = US_IS_STRUCTURE|structnum;
             unitandstructmat[curpos+x].flags = US_IS_STRUCTURE;
             unitandstructmat[curpos+x].structurenumb = structnum;
@@ -610,11 +607,9 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
         }
 #if 1
         // Don't place worn down ground under a naval yard!!
-        if (!type->isWaterBound())
-        {
+        if (!type->isWaterBound()) {
           // Start of new worn down ground code
-          if (bib1 == 0)
-          {
+          if (bib1 == 0) {
             if (p::ccmap->SnowTheme ())
               bib1 = pc::imgcache->loadImage("bib1.sno", -1);
             else
@@ -665,8 +660,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
 
   // Create a new one
   st = new Structure(type, cellpos, owner, health, facing, trigger_name);
-  if (!type->isWall())
-  {
+  if (!type->isWall()) {
     PlayerPool* thePlayerPool = p::ccmap->getPlayerPool();
     Player* thePlayer = thePlayerPool->getPlayer(owner);
 
@@ -687,8 +681,7 @@ bool UnitAndStructurePool::createStructure(StructureType* type, Uint16 cellpos,
   }
 
   // Check if it's wall
-  if (type->isWall())
-  {
+  if (type->isWall()) {
     // update the wall-images
     updateWalls(st, true, p::ccmap);
   } else {
@@ -734,19 +727,23 @@ Unit* UnitAndStructurePool::createUnit(const char *typen, Uint16 cellpos,
 /**
  * Create a unit in the map
  */
-Unit* UnitAndStructurePool::createUnit(UnitType* type, Uint16 cellpos, Uint8 subpos, unsigned int owner, Uint16 health, Uint8 facing, Uint8 action, std::string trigger_name)
-{
+Unit* UnitAndStructurePool::createUnit(UnitType* type, Uint16 cellpos,
+                                       Uint8 subpos, unsigned int owner,
+                                       Uint16 health, Uint8 facing,
+                                       Uint8 action,
+                                       std::string trigger_name) {
   if (cellpos >= p::ccmap->getSize()){
     return nullptr;
   }
 
-  Uint32 unitnum = 0;
+  size_t unitnum = 0;
 
   if (cellpos > (p::ccmap->getWidth() * p::ccmap->getHeight())) {
     Logger::getInstance()->Error("Attempted to create a '" + type->getName() + "' at %i, outside map.");//, cellpos);
     return nullptr;
   }
-  if ((getStructureAt(cellpos) != 0) && ((unitandstructmat[cellpos].flags&(US_HIGH_COST)) == 0))
+  if ((getStructureAt(cellpos) != 0) &&
+      ((unitandstructmat[cellpos].flags&(US_HIGH_COST)) == 0))
   {
     Logger::getInstance()->Error("Cell %i already occupied by structure " //, cellpos,
                                  + getStructureAt(cellpos)->getType()->getName());
@@ -827,8 +824,7 @@ Unit* UnitAndStructurePool::createUnit(UnitType* type, Uint16 cellpos, Uint8 sub
 /**
  * Place the flag of a Cell Trigger in a cell
  */
-bool UnitAndStructurePool::createCellTrigger(Uint32 cellpos)
-{
+bool UnitAndStructurePool::createCellTrigger(uint32_t cellpos) {
   if (cellpos >= p::ccmap->getSize()){
     return false;
   }
@@ -841,9 +837,7 @@ bool UnitAndStructurePool::createCellTrigger(Uint32 cellpos)
 /**
  *
  */
-bool UnitAndStructurePool::spawnUnit(const char* typen, Uint8 owner)
-{
-
+bool UnitAndStructurePool::spawnUnit(const char* typen, uint8_t owner) {
   UnitType* type = getUnitTypeByName(typen);
   if (0 == type) {
     Logger::getInstance()->Error(__FILE__, __LINE__, "Invalid type name: '" + std::string(typen) + "'");
@@ -855,15 +849,14 @@ bool UnitAndStructurePool::spawnUnit(const char* typen, Uint8 owner)
 /**
  * First part of spawn unit (this starts the door animation if needed)
  */
-bool UnitAndStructurePool::spawnUnit(UnitType* type, Uint8 owner)
-{
+bool UnitAndStructurePool::spawnUnit(UnitType* type, uint8_t owner) {
   bool returnval = true;
   Player* player = p::ccmap->getPlayerPool()->getPlayer(owner);
 
   Structure* tmpstruct = player->getPrimary(type);
   StructureType* tmpStructType = dynamic_cast<StructureType*>(tmpstruct->getType());
   Uint16 pos = 0xffff;
-  Uint8 subpos = 0;
+  uint8_t subpos = 0;
 
   if (0 != tmpstruct) {
     pos = tmpstruct->getFreePos(&subpos, type->isInfantry());
@@ -893,8 +886,7 @@ bool UnitAndStructurePool::spawnUnit(UnitType* type, Uint8 owner)
   return false;
 }
 
-Unit* UnitAndStructurePool::getUnitAt(Uint32 cell, Uint8 subcell)
-{
+Unit* UnitAndStructurePool::getUnitAt(Uint32 cell, uint8_t subcell) {
   Unit *un = 0;
   if (cell >= p::ccmap->getSize()){
     return 0;

@@ -39,8 +39,6 @@
 #include "TalkbackType.h"
 #include "Weapon.h"
 
-#include "SDL.h"
-
 namespace pc {
   extern ImageCache* imgcache;
   extern std::vector<SHPImage*>* imagepool;
@@ -288,7 +286,6 @@ c4(false)
   animinfo.loopend2 = unitini->readInt(typeName, "loopend2", 0);
 
   animinfo.animspeed = unitini->readInt(typeName, "animspeed", 3);
-  animinfo.animspeed = abs(animinfo.animspeed);
   animinfo.animspeed = (animinfo.animspeed>1 ? animinfo.animspeed : 2);
   animinfo.animdelay = unitini->readInt(typeName, "delay", 0);
 

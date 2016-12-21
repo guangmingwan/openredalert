@@ -29,23 +29,23 @@ class ImageProc;
  */
 class SHPBase {
  public:
-  SHPBase(const std::string& fname, Sint8 scaleq = -1);
+  SHPBase(const std::string& fname, int8_t scaleq = -1);
   virtual ~SHPBase();
 
   static void setPalette(SDL_Color *pal);
   static void calculatePalettes();
-  static SDL_Color* getPalette(Uint8 palnum) ;
-  static Uint32 getColour(SDL_PixelFormat* fmt, Uint8 palnum, Uint16 index);
-  static Uint8 numPalettes() ;
+  static SDL_Color* getPalette(uint8_t palnum) ;
+  static uint32_t getColour(SDL_PixelFormat* fmt, uint8_t palnum, uint16_t index);
+  static uint8_t numPalettes() ;
 
   SDL_Surface* scale(SDL_Surface *input, int quality);
   const std::string& getFileName() const ;
 
  protected:
   static SDL_Color palette[32][256];
-  static const Uint8 numpals;
+  static const uint8_t numpals;
   std::string name;
-  Sint8 scaleq;
+  int8_t scaleq;
   ImageProc* scaler;
 };
 

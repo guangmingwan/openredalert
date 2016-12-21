@@ -71,28 +71,23 @@ PlayerPool::PlayerPool()
 /**
  * @param gamemode xxx
  */
-void PlayerPool::Init(Uint8 gamemode)
-{
+void PlayerPool::Init(uint8_t gamemode) {
 }
 
 /**
  * @param inifile Ini file where to laod the info
  */
-void PlayerPool::LoadIni(INIFile *inifile)
-{
+void PlayerPool::LoadIni(INIFile *inifile) {
   // Load ini informations
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
     Player* thePlayer = playerpool.at(i);
     thePlayer->LoadIni(inifile);
   }
 
   // Set the local player
-  if  (gamemode == GAME_MODE_SINGLE_PLAYER)
-  {
+  if  (gamemode == GAME_MODE_SINGLE_PLAYER) {
     // Test if the key exist
-    if (inifile->isKeyInSection("Basic", "Player") == true)
-    {
+    if (inifile->isKeyInSection("Basic", "Player") == true) {
       // Set the local player with info n the ini file
       setLPlayer(inifile->readString("Basic", "Player"));
     }
@@ -104,13 +99,10 @@ void PlayerPool::LoadIni(INIFile *inifile)
 
 /**
  */
-PlayerPool::~PlayerPool()
-{
+PlayerPool::~PlayerPool() {
   // Free all Player in the vector
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
-    if (playerpool[i] != 0)
-    {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
+    if (playerpool[i] != 0) {
       delete playerpool[i];
     }
   }
@@ -120,18 +112,12 @@ PlayerPool::~PlayerPool()
  * @param colour Color
  * @return Number of the color
  */
-const int PlayerPool::MultiColourStringToNumb(const std::string& colour)
-{
-  if (colour == "yellow")
-  {
+const int PlayerPool::MultiColourStringToNumb(const std::string& colour) {
+  if (colour == "yellow") {
     return 0;
-  }
-  else if (colour == "blue")
-  {
+  } else if (colour == "blue") {
     return 1;
-  }
-  else if (colour == "red")
-  {
+  } else if (colour == "red") {
     return 2;
   }
   else if (colour == "green")
@@ -458,13 +444,11 @@ void PlayerPool::setAlliances(INIFile* mapini)
 /**
  * @return Random start in the map
  */
-Uint16 PlayerPool::getAStart()
-{
-  Uint8 rnd, sze = 0;
-  Uint16 rv;
+uint16_t PlayerPool::getAStart() {
+  uint8_t rnd, sze = 0;
+  uint16_t rv;
 
-  for (int i = 0; i < 8; i++)
-  {
+  for (int i = 0; i < 8; i++) {
     if (playerstarts[i] != 0)
       sze++;
   }
@@ -485,18 +469,15 @@ Uint16 PlayerPool::getAStart()
 /**
  * Set the start position of a player in the map
  */
-void PlayerPool::setPlayerStarts(Uint8 pos, Uint32 start)
-{
+void PlayerPool::setPlayerStarts(uint8_t pos, uint32_t start) {
   //
   if (pos < 8){
     playerstarts[pos] = start;
   }
 }
 
-bool PlayerPool::pollSidebar()
-{
-  if (updatesidebar)
-  {
+bool PlayerPool::pollSidebar() {
+  if (updatesidebar) {
     updatesidebar = false;
     return true;
   }
@@ -516,12 +497,11 @@ void PlayerPool::updateSidebar()
  * case 2: // lost radar
  * case 3: // radar powered down
  */
-Uint8 PlayerPool::statRadar()
-{
-  static Uint32 old_numRadarLocalPlayer = 0;
+uint8_t PlayerPool::statRadar() {
+  static uint32_t old_numRadarLocalPlayer = 0;
   static bool old_powerOk = false;
   Player* localPlayer = 0;
-  Uint8 res;
+  uint8_t res;
   bool powerOk;
 
   // Get the localPlayer
@@ -593,45 +573,37 @@ Uint8 PlayerPool::statRadar()
   return res;
 }
 
-Uint8 PlayerPool::getNumPlayers() const
-{
-  return static_cast<Uint8>(playerpool.size());
+uint8_t PlayerPool::getNumPlayers() const {
+  return static_cast<uint8_t>(playerpool.size());
 }
 
-Uint8 PlayerPool::getLPlayerNum() const
-{
+uint8_t PlayerPool::getLPlayerNum() const {
   return localPlayer;
 }
 
-Player* PlayerPool::getLPlayer()
-{
-  if (localPlayer < playerpool.size())
-  {
+Player* PlayerPool::getLPlayer() {
+  if (localPlayer < playerpool.size()) {
     return playerpool[localPlayer];
   }
   return 0;
 }
 
-Player* PlayerPool::getPlayer(int playerNumber) const
-{
-  if (playerNumber >=0 && playerNumber < playerpool.size())
-  {
+Player* PlayerPool::getPlayer(int playerNumber) const {
+  if (playerNumber >=0 && playerNumber < playerpool.size()) {
     return playerpool[playerNumber];
   }
   // Return NULL
   return 0;
 }
 
-Uint8 PlayerPool::getUnitpalNum(Uint8 player) const
-{
+uint8_t PlayerPool::getUnitpalNum(uint8_t player) const {
   if (player < playerpool.size()){
     return playerpool[player]->getUnitpalNum();
   }
   return 0;
 }
 
-Uint8 PlayerPool::getStructpalNum(Uint8 player) const
-{
+uint8_t PlayerPool::getStructpalNum(uint8_t player) const {
   if (player < playerpool.size())
     return playerpool[player]->getStructpalNum();
   return 0;

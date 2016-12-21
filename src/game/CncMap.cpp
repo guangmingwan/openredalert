@@ -2696,8 +2696,7 @@ void CnCMap::loadOverlay(INIFile *inifile) {
   }
 }
 
-const char	* RAOverlayNames[] =
-{
+const char	* RAOverlayNames[] = {
   "SBAG", "CYCL", "BRIK", "FENC", "WOOD",
   "GOLD01", "GOLD02", "GOLD03", "GOLD04", "GEM01",
   "GEM02", "GEM03", "GEM04", "V12", "V13",
@@ -2705,12 +2704,10 @@ const char	* RAOverlayNames[] =
   "FPLS", "WCRATE", "SCRATE",	"FENC", "SBAG"
 };
 
-void CnCMap::unOverlayPack(INIFile *inifile)
-{
+void CnCMap::unOverlayPack(INIFile *inifile) {
   // Check that the section is ok
   //if (inifile->isSection("OverlayPack")==false) {
-  if (inifile->isSection("OVERLAYPACK") == false)
-  {
+  if (inifile->isSection("OVERLAYPACK") == false) {
     // Log it
     Logger::getInstance()->Warning("No '[OverlayPack]' section found for this map.");
     // zap the overlay loading
@@ -2745,9 +2742,7 @@ void CnCMap::unOverlayPack(INIFile *inifile)
   // decode the format80 coded data (2 chunks)
   int curpos = 0;
   for (int tmpval = 0; tmpval < 2; tmpval++) {
-    if (Compression::decode80((Uint8 *)temp+4+curpos, mapdata+8192*tmpval)
-        != 8192)
-    {
+    if (Compression::decode80((Uint8 *)temp+4+curpos, mapdata+8192*tmpval) != 8192) {
       Logger::getInstance()->Warning("A format80 chunk in the \"OverlayPack\" was of wrong size.");
     }
     curpos = curpos + 4 + temp[curpos] + (temp[curpos+1]<<8)
@@ -2796,16 +2791,11 @@ void CnCMap::parseOverlay(const Uint32& linenum, const std::string& name) {
     // Remember: imagecache's indexing format is different
     // (imagepool index << 16) | frame
     frame = pc::imgcache->loadImage(shpname.c_str()) >> 16;
-  }
-  catch(ImageNotFound&)
-  {
+  } catch(ImageNotFound&) {
     shpname = name + ".shp";
-    try
-    {
+    try {
       frame = pc::imgcache->loadImage(shpname.c_str()) >> 16;
-    }
-    catch (ImageNotFound&)
-    {
+    } catch (ImageNotFound&) {
       Logger::getInstance()->Error("Unable to load overlay " + shpname + " " + name);
       throw LoadMapError("Unable to load overlay " + shpname + " (or " + name + ".SHP)");
     }
@@ -2820,16 +2810,14 @@ void CnCMap::parseOverlay(const Uint32& linenum, const std::string& name) {
     // This is a hack to seed the map with semi-reasonable amounts of
     // resource growth.  This will hopefully become less ugly after the code
     // to manage resource growth has been written.
-    if (sscanf(name.c_str(), "TI%u", &i) == 0)
-    {
+    if (sscanf(name.c_str(), "TI%u", &i) == 0) {
       i = atoi(name.c_str() + (name.length() - 2));
       /* An even worse hack: number of frames in gems is less than the
        * number of different types of gem. */
       if ('E' == name[1])
         i = 3;
     }
-    if (0 == i)
-    {
+    if (0 == i) {
       Logger::getInstance()->Error("Resource hack for failed." + name);
       throw LoadMapError("Resource hack for " + name + " failed.");
     }
@@ -2841,15 +2829,11 @@ void CnCMap::parseOverlay(const Uint32& linenum, const std::string& name) {
       res = type | ((i-1) << 8);
       resourcenames[name] = type;
       resourcebases.push_back(frame);
-    }
-    else
-    {
+    } else {
       res = t->second | ((i-1) << 8);
     }
     resourcematrix[linenum] = res;
-  }
-  else
-  {
+  } else {
     overlaymatrix[linenum] |= HAS_OVERLAY;
     overlays[linenum] = frame;
 
@@ -2867,8 +2851,7 @@ void CnCMap::parseOverlay(const Uint32& linenum, const std::string& name) {
  *
  * @param palette array of SDL_Colour into which palette is loaded.
  */
-void CnCMap::loadPal(const std::string& paln, SDL_Color *palette)
-{
+void CnCMap::loadPal(const std::string& paln, SDL_Color *palette) {
   VFile *palfile;
   int i;
 
@@ -2876,26 +2859,21 @@ void CnCMap::loadPal(const std::string& paln, SDL_Color *palette)
   //    string palname = missionData.theater;
   std::string palname = paln;
 
-  if (palname.length() > 8)
-  {
+  if (palname.length() > 8) {
     palname.insert(8, ".PAL");
-  }
-  else
-  {
+  } else {
     palname += ".PAL";
   }
   // Seek the palette file in the mix
   palfile = VFSUtils::VFS_Open(palname.c_str());
-  if (palfile == NULL)
-  {
+  if (palfile == NULL) {
     Logger::getInstance()->Error(__FILE__ , __LINE__, "Unable to locate palette " + palname);
     throw LoadMapError("Unable to locate palette (" + palname + ")");
   }
 
   // Load the palette
   //for (int j = 0; j < 2; j++){
-  for (i = 0; i < 256; i++)
-  {
+  for (i = 0; i < 256; i++) {
     palfile->readByte(&palette[i].r, 1);
     palfile->readByte(&palette[i].g, 1);
     palfile->readByte(&palette[i].b, 1);
@@ -2907,8 +2885,7 @@ void CnCMap::loadPal(const std::string& paln, SDL_Color *palette)
 
 #if 0
   SHPBase::setPalette(palette);
-  for (i = 0; i < 16; i++)
-  {
+  for (i = 0; i < 16; i++) {
     palfile->readByte(&UnitOrStructurePalette[i].r, 1);
     palfile->readByte(&UnitOrStructurePalette[i].g, 1);
     palfile->readByte(&UnitOrStructurePalette[i].b, 1);
@@ -2932,8 +2909,7 @@ void CnCMap::loadPal(const std::string& paln, SDL_Color *palette)
  * @param tile the tilenumber.
  * @return a SDL_Surface containing the tile.
  */
-SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint32* tiletype)
-{
+SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint32* tiletype) {
   TemplateCache::iterator ti;
   TemplateImage *theaterfile;
 
@@ -2976,26 +2952,18 @@ SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint3
   // Check the templateCache
   ti = templateCache.find(tilefilename.str());
   // If we haven't preloaded this, lets do so now
-  if (ti == templateCache.end())
-  {
-    try
-    {
-      if (maptype == GAME_RA)
-      {
+  if (ti == templateCache.end()) {
+    try {
+      if (maptype == GAME_RA) {
         theaterfile = new TemplateImage(tilefilename.str().c_str(), -1, 1);
-      }
-      else
-      {
+      } else {
         theaterfile = new TemplateImage(tilefilename.str().c_str(), -1);
       }
-    }
-    catch (ImageNotFound&)
-    {
+    } catch (ImageNotFound&) {
       std::stringstream message;
       message << "Unable to locate template " << templ << ", " << tile << ", '" << tilefilename.str() << "' in mix! using tile 0, 0 instead";
       Logger::getInstance()->Warning(message.str());
-      if (templ == 0 && tile == 0)
-      {
+      if (templ == 0 && tile == 0) {
         Logger::getInstance()->Error("Unable to load tile 0,0.  Can't proceed");
         return NULL;
       }
@@ -3004,16 +2972,13 @@ SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint3
 
     // Store this TemplateImage for later use
     templateCache[tilefilename.str().c_str()] = theaterfile;
-  }
-  else
-  {
+  } else {
     theaterfile = ti->second;
   }
 
   // Now return this SDL_Surface
   retimage = theaterfile->getImage(tile);
-  if (retimage == NULL)
-  {
+  if (retimage == NULL) {
     std::stringstream message;
     message << "Illegal template " << templ << ", " << tile << " ('" << tilefilename.str() << "')! using tile 0, 0 instead\n",
     Logger::getInstance()->Warning(message.str());
@@ -3031,21 +2996,17 @@ SDL_Surface* CnCMap::loadTile(INIFile* templini, Uint16 templ, Uint8 tile, Uint3
   templateTileCache.push_back(pair);
 
   return retimage;
-
 }
 
 /**
  * Reloads all the tile's SDL_Image
  */
-void CnCMap::reloadTiles()
-{
+void CnCMap::reloadTiles() {
   SDL_Surface *image;
 
   // Free the old surfaces
-  for (std::vector<SDL_Surface*>::size_type i = 0; i < tileimages.size(); i++)
-  {
-    if (tileimages[i] != NULL)
-    {
+  for (std::vector<SDL_Surface*>::size_type i = 0; i < tileimages.size(); i++) {
+    if (tileimages[i] != NULL) {
       SDL_FreeSurface(tileimages[i]);
     }
     tileimages[i] = NULL;
@@ -3065,26 +3026,22 @@ void CnCMap::reloadTiles()
 /**
  * Return true if it's the last mission of the game
  */
-bool CnCMap::isEndOfGame()
-{
+bool CnCMap::isEndOfGame() {
   return missionData->endOfGame;
 }
 
 /**
  * Loading of TeamTypes
  */
-void CnCMap::loadTeamTypes(INIFile* fileIni)
-{
+void CnCMap::loadTeamTypes(INIFile* fileIni) {
   // Checks that fileIni exist
-  if (fileIni == 0)
-  {
+  if (fileIni == 0) {
     Logger::getInstance()->Error(__FILE__ , __LINE__, "[CnCMap::loadTeamTypes] fileIni == NULL !!!\n");
     return;
   }
 
   // Check if the "[TeamTypes]" section exist
-  if (fileIni->isSection("TeamTypes") == false)
-  {
+  if (fileIni->isSection("TeamTypes") == false) {
     Logger::getInstance()->Error(__FILE__ , __LINE__, "[CnCMap::loadTeamTypes] section [TeamTypes] was not found in ini file.\n");
     return;
   }

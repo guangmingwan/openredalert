@@ -1332,9 +1332,8 @@ void Sidebar::DrawButton(Uint8 index)
   }
 
   // Extract type name from icon name, e.g. NUKE from NUKEICON.SHP
-  int length = icons[offset].size() - 8;
-  if (length>13)
-  {
+  int length = (int)icons[offset].size() - 8;
+  if (length>13) {
     length = 13;
   }
 

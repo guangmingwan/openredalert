@@ -39,8 +39,6 @@
 #include "UnitType.h"
 #include "StructureType.h"
 
-#include "SDL.h"
-
 #define DEBUG_AI
 
 namespace p {
