@@ -132,7 +132,6 @@ void CnCMap::Init(gametypes gameNumber, Uint8 gameMode) {
   // notify
   loaded = false;
 
-
   //this->maptype = pc::Config.gamenum;
   this->maptype = gameNumber;
   //this->gamemode = pc::Config.gamemode;
@@ -153,7 +152,7 @@ void CnCMap::Init(gametypes gameNumber, Uint8 gameMode) {
   scrollvec.y = 0;
   scrollvec.t = 0;
   toscroll = false;
-  for (Uint8 i=0; i<NUMMARKS; ++i) {
+  for (uint8_t i=0; i<NUMMARKS; ++i) {
     scrollbookmarks[i].x = 0;
     scrollbookmarks[i].y = 0;
     scrollbookmarks[i].xtile = 0;
@@ -187,14 +186,11 @@ CnCMap::~CnCMap() {
   // Release Trigger Pool
   delete this->triggerPool;
 
-  Uint32 i;
-
-  for (i = 0; i < tileimages.size(); i++) {
-    if (tileimages[i] != NULL)
-      SDL_FreeSurface(tileimages[i]);
-    tileimages[i] = NULL;
+  while (tileimages.size()) {
+    SDL_Surface *surface = tileimages.back();
+    tileimages.pop_back();
+    SDL_FreeSurface(surface);
   }
-  tileimages.clear();
 
   // Empty the cache of TemplateImage* & Tile
   for_each(templateTileCache.begin(), templateTileCache.end(),
@@ -203,19 +199,20 @@ CnCMap::~CnCMap() {
   // Empty the pool of TemplateImage*
   for_each(templateCache.begin(), templateCache.end(), TemplateCacheCleaner());
 
-  if (p::uspool != NULL)
+  if (p::uspool != nullptr) {
     delete p::uspool;
-  p::uspool = NULL;
+  }
+  p::uspool = nullptr;
 
-
-  if (minimap != NULL)
+  if (minimap != nullptr) {
     SDL_FreeSurface(minimap);
-  minimap = NULL;
-  for (i = 0; i < numShadowImg; i++)
-  {
-    if (shadowimages[i] != NULL)
-      SDL_FreeSurface(shadowimages[i]);
-    shadowimages[i] = NULL;
+  }
+  minimap = nullptr;
+
+  while (shadowimages.size()) {
+    SDL_Surface *surface = shadowimages.back();
+    shadowimages.pop_back();
+    SDL_FreeSurface(surface);
   }
 }
 
@@ -1247,30 +1244,25 @@ RA_Teamtype* CnCMap::getTeamtypeByName(std::string teamNameString)
   return 0;
 }
 
-SDL_Surface *CnCMap::getShadowTile(Uint8 shadownum)
-{
+SDL_Surface *CnCMap::getShadowTile(uint8_t shadownum) {
   // ra has 48 shadow images...
-  if (shadownum >= numShadowImg)
-  {
+  if (shadownum >= shadowimages.size()) {
     return 0;
   }
 
   return shadowimages[shadownum];
 }
 
-SDL_Surface* CnCMap::getMapTile(Uint32 pos)
-{
+SDL_Surface* CnCMap::getMapTile(Uint32 pos) {
   return tileimages[tilematrix[pos]];
 }
 
 /**
  * Get the terrain overlay
  */
-Uint32 CnCMap::getTerrainOverlay(Uint32 pos)
-{
+Uint32 CnCMap::getTerrainOverlay(Uint32 pos) {
   // Check if the pos(ition) is in the map
-  if (pos < terrainoverlay.size())
-  {
+  if (pos < terrainoverlay.size()) {
     // return the overlay
     return terrainoverlay[pos];
   }
@@ -1281,11 +1273,9 @@ Uint32 CnCMap::getTerrainOverlay(Uint32 pos)
 /**
  * Set the terrain overlay to an Image/Frame
  */
-void CnCMap::setTerrainOverlay(Uint32 pos, Uint32 ImgNum, Uint16 Frame)
-{
+void CnCMap::setTerrainOverlay(Uint32 pos, Uint32 ImgNum, Uint16 Frame) {
   // Check if the pos(ition) is in the map
-  if (pos < terrainoverlay.size())
-  {
+  if (pos < terrainoverlay.size()) {
     // Set the overlay
     terrainoverlay[pos] = ImgNum | (Frame &0x7FF);
   }
@@ -1778,19 +1768,16 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
 
   // set player start locations
-  for (int k = 0; k < 8; k++)
-  {
+  for (int k = 0; k < 8; k++) {
     playerPool->setPlayerStarts(k, getWaypoint(k));
   }
 
   // load the shadowimages
-  try
-  {
+  try {
     image = new SHPImage("shadow.shp", -1);
-    numShadowImg = image->getNumImg();
-    shadowimages.resize(numShadowImg);
-    for(int i = 0; i < 48; i++)
-    {
+    unsigned int shadow_count = image->getNumImg();
+    shadowimages.resize(shadow_count);
+    for(int i = 0; i < shadow_count; i++) {
       // decode the SHP and get a SDL_Surface
       image->getImageAsAlpha(i, &shadowimages[i]);
     }
@@ -1798,11 +1785,8 @@ void CnCMap::advancedSections(INIFile *inifile) {
       delete image;
     }
     image = 0;
-  }
-  catch(ImageNotFound&)
-  {
+  } catch(ImageNotFound&) {
     Logger::getInstance()->Warning(__FILE__ , __LINE__, "Unable to load 'shadow.shp'");
-    numShadowImg = 0;
   }
   // Log it (end of Shadow decode
   Logger::getInstance()->Info(__FILE__ , __LINE__, "Shadow images loaded...");

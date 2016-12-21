@@ -360,7 +360,6 @@ private:
   std::vector<SDL_Surface*> tileimages_backup; //Holds the SDL_Surfaces of the TemplateImage
   TemplateTileCache templateTileCache; //Stores the TemplateImage* and Tile# of each SDL_Surface in tileimages
 
-  uint16_t numShadowImg;
   std::vector<SDL_Surface*> shadowimages;
 
   /** These come from the WAYPOINTS section of the inifile, and contain start
