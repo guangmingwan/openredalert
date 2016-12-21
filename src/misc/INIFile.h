@@ -19,9 +19,6 @@
 
 #include <vector>
 #include <string>
-#include <map>
-
-class INISection : public std::map<std::string, std::string> {};
 
 /**
  * Parses inifiles.
@@ -34,7 +31,15 @@ class INIFile {
     KeyNotFound(const std::string& msg) : std::runtime_error(msg) {}
   };
 
+  class KeyNode {
+   public:
+    std::string name;
+    std::string value;
+  };
+
  protected:
+  typedef std::vector<KeyNode> INISection;
+
   class SectionNode {
    public:
     std::string name;
@@ -58,8 +63,8 @@ class INIFile {
   float readFloat(const std::string& section, const std::string& key);
   float readFloat(const std::string& section, const std::string& key, const float defaultValue);
 
-  INISection::const_iterator readKeyValue(const std::string& section, unsigned int keynum);
-  INISection::const_iterator readIndexedKeyValue(const std::string& section, unsigned int keynum, const char* prefix=0);
+  KeyNode readKeyValue(const std::string& section, unsigned int keynum);
+  std::string readIndexedKeyValue(const std::string& section, unsigned int keynum, const std::string& prefix = std::string());
   std::string readSection(unsigned int secnum);
 
   /** Read a Key with value equal 'yes' or 'no' */

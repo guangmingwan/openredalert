@@ -69,17 +69,17 @@ void Talkback::load(std::string talkback, INIFile *tbini) {
     for (int keynum=0;;++keynum) {
       // Still @todo: stringify rest of code
       char* first;
-      INISection::const_iterator key = tbini->readKeyValue(talkback.c_str(), keynum);
-      first = stripNumbers(key->first.c_str());
+      INIFile::KeyNode key = tbini->readKeyValue(talkback.c_str(), keynum);
+      first = stripNumbers(key.name.c_str());
       if (std::string(first) == "include") {
-        if (key->second != talkback) {
-          merge(p::uspool->getTalkback(key->second.c_str()));
+        if (key.value != talkback) {
+          merge(p::uspool->getTalkback(key.value.c_str()));
         } else {
           Logger::getInstance()->Warning("skipping self-referential include in " + talkback);
         }
       } else {
         if (std::string(first) == "delete") {
-          TalkbackType tbt = getTypeNum(key->second);
+          TalkbackType tbt = getTypeNum(key.value);
           if (tbt == TB_invalid) {
             continue;
           }
@@ -90,9 +90,9 @@ void Talkback::load(std::string talkback, INIFile *tbini) {
         if (tbt == TB_invalid) {
           continue;
         }
-        pc::sfxeng->LoadSound(key->second.c_str());
+        pc::sfxeng->LoadSound(key.value.c_str());
         //logger->debug("Pushing back %s\n", key->second.c_str());
-        talkstore[tbt].push_back(key->second);
+        talkstore[tbt].push_back(key.value);
       }
       delete[] first;
     }

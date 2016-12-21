@@ -84,7 +84,10 @@ INIFile::INIFile(const std::string& filename) {
       transform(keyName.begin(), keyName.end(), keyName.begin(), toupper);
       std::string valueString(value);
       valueString = trim(valueString);
-      Inidata.back().section[keyName] = valueString;
+      KeyNode node;
+      node.name = keyName;
+      node.value = valueString;
+      Inidata.back().section.push_back(node);
     }
   }
 
@@ -100,7 +103,7 @@ INIFile::~INIFile() {
   Inidata.clear();
 }
 
-const INISection *INIFile::findSection(const std::string& section) const {
+const INIFile::INISection *INIFile::findSection(const std::string& section) const {
   std::string s = section;
   transform(s.begin(), s.end(), s.begin(), toupper);
 
@@ -132,12 +135,13 @@ std::string INIFile::readString(const std::string& section,
   std::string v = key;
   transform(v.begin(), v.end(), v.begin(), toupper);
 
-  std::map<std::string, std::string>::const_iterator it = foundSection->find(v);
-  if (it == foundSection->end()) {
-    return std::string();
+  for (const KeyNode &keyNode : *foundSection) {
+    if (keyNode.name == v) {
+      return keyNode.value;
+    }
   }
 
-  return it->second;
+  return std::string();
 }
 
 /**
@@ -261,11 +265,15 @@ size_t INIFile::getNumberOfKeysInSection(const std::string& section) const {
  * @param keynum Will skip (keynum-1) entries in section.
  * @returns an iterator to the keynum'th key in section.
  */
-INISection::const_iterator INIFile::readKeyValue(const std::string& section,
-                                                 unsigned int keynum) {
+INIFile::KeyNode INIFile::readKeyValue(const std::string& section,
+                                       unsigned int keynum) {
   const INISection *foundSection = findSection(section);
   if (foundSection == nullptr) {
     throw KeyNotFound("Can't find the section [" + section + "] in ini file.");
+  }
+
+  if (keynum >= foundSection->size()) {
+    throw KeyNotFound("Can't find the key with # in ini file.");
   }
 
   INISection::const_iterator it = foundSection->begin();
@@ -275,32 +283,23 @@ INISection::const_iterator INIFile::readKeyValue(const std::string& section,
     i++;
   }
 
-  return it;
+  return *it;
 }
 
 /**
  */
-INISection::const_iterator
+std::string
 INIFile::readIndexedKeyValue(const std::string& section, unsigned int index,
-                             const char* prefix) {
+                             const std::string& prefix) {
   std::stringstream TempStr;
   TempStr << prefix << index;
   std::string key = TempStr.str();
 
-  const INISection *foundSection = findSection(section);
-  if (foundSection == nullptr) {
-    throw KeyNotFound("Can't find the section [" + section + "] in ini file.");
+  if (!isKeyInSection(section, key)) {
+    throw KeyNotFound("Can't find the key '" + key + "' in ini file.");
   }
 
-  INISection::const_iterator it = foundSection->begin();
-  while (it != foundSection->end()) {
-    if (it->first == key) {
-      return it;
-    }
-    it++;
-  }
-
-  return it;
+  return readString(section, key);
 }
 
 std::string INIFile::readSection(unsigned int secnum) {
@@ -335,8 +334,13 @@ bool INIFile::isKeyInSection(const std::string &section,
   std::string v = key;
   transform(v.begin(), v.end(), v.begin(), toupper);
 
-  std::map<std::string, std::string>::const_iterator it = foundSection->find(v);
-  return (it != foundSection->end());
+  for (const KeyNode &keyNode : *foundSection) {
+    if (keyNode.name == v) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 int INIFile::readYesNo(const std::string& section, const std::string& value,

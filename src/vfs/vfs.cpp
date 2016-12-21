@@ -35,8 +35,7 @@ MIXFiles * VFSUtils::mixfiles = 0;
 
 /**
  */
-void VFSUtils::VFS_PreInit(const char* binpath)
-{
+void VFSUtils::VFS_PreInit(const char* binpath) {
   externals = new ExternalFiles(binpath);
   externals->loadArchive("data/settings/");
   externals->loadArchive("data/maps/");
@@ -47,10 +46,8 @@ void VFSUtils::VFS_PreInit(const char* binpath)
  *
  * @param binpath Directory to parse the files
  */
-void VFSUtils::VFS_Init(const std::string& binpath)
-{
-  if (binpath != ".")
-  {
+void VFSUtils::VFS_Init(const std::string& binpath) {
+  if (binpath != ".") {
     externals->loadArchive("./");
   }
 
@@ -58,31 +55,24 @@ void VFSUtils::VFS_Init(const std::string& binpath)
   externals->loadArchive(std::string(binpath + "/").c_str());
 
   INIFile* filesini = 0;
-  try
-  {
+  try {
     filesini = GetConfig("files.ini");
-  }
-  catch(std::runtime_error&)
-  {
+  } catch(std::runtime_error&) {
     Logger::getInstance()->Error("Unable to locate files.ini.\n");
     return;
   }
   //for (Uint32 pathnum = 1;; ++pathnum)
   int pathnum = 1;
   {
-    INISection::const_iterator key;
-    try
-    {
+    std::string key;
+    try {
       key = filesini->readIndexedKeyValue("GENERAL", pathnum, "PATH");
-    }
-    catch (...)
-    {
+    } catch (...) {
       //logger->error("Unenable to read [GENERAL]-PATH\n");
       //break;
     }
-    std::string defpath = key->second;
-    if (defpath[defpath.length() - 1] != '/' && defpath[defpath.length() - 1] != '\\')
-    {
+    std::string defpath = key;
+    if (defpath[defpath.length() - 1] != '/' && defpath[defpath.length() - 1] != '\\') {
       defpath += "/";
     }
     externals->loadArchive(defpath.c_str());
@@ -94,54 +84,41 @@ void VFSUtils::VFS_Init(const std::string& binpath)
   int gamenum = 1;
   //for (Uint32 gamenum = 1;; ++gamenum)
   {
-    INISection::const_iterator key;
-    try
-    {
+    std::string key;
+    try {
       key = filesini->readIndexedKeyValue("GENERAL", gamenum, "GAME");
-    }
-    catch(...)
-    {
+    } catch(...) {
       Logger::getInstance()->Error("Unenable to read [GENERAL]-GAME\n");
       //break;
     }
-    Logger::getInstance()->Info("Trying to load '" + key->second + "'");
+    Logger::getInstance()->Info("Trying to load '" + key + "'");
 
     // Get the number of files
-    int numKeys = filesini->getNumberOfKeysInSection("RedAlert");
+    size_t numKeys = filesini->getNumberOfKeysInSection("RedAlert");
     int keynum;
-    try
-    {
+    try {
       // First check we have all the required mixfiles.
-      for (keynum = 1; keynum < numKeys; keynum++)
-      {
-        INISection::const_iterator key2;
-        try
-        {
-          key2 = filesini->readIndexedKeyValue(key->second.c_str(), keynum,
-                                               "REQUIRED");
-        }
-        catch (...)
-        {
+      for (keynum = 1; keynum < numKeys; keynum++) {
+        std::string key2;
+        try {
+          key2 = filesini->readIndexedKeyValue(key, keynum, "REQUIRED");
+        } catch (...) {
           //logger->error("Unenable to read [%s]-REQUIRED%d\n", key->second.c_str(), keynum);
           break;
         }
-        if (!mixfiles->loadArchive(key2->second.c_str()))
-        {
-          Logger::getInstance()->Warning("Missing required file '" + key2->second + "'");
-          throw std::runtime_error("Missing required file" + key2->second);
+        if (!mixfiles->loadArchive(key2.c_str())) {
+          Logger::getInstance()->Warning("Missing required file '" + key2 + "'");
+          throw std::runtime_error("Missing required file" + key2);
         }
 
       }
-    }
-    catch (...)
-    {
+    } catch (...) {
       mixfiles->unloadArchives();
       //continue;
     }
     // Now load as many of the optional mixfiles as we can.
-    int maxOpti = filesini->getNumberOfKeysInSection("RedAlert");
-    for (keynum = 1; keynum < maxOpti; keynum++)
-    {
+    size_t maxOpti = filesini->getNumberOfKeysInSection("RedAlert");
+    for (keynum = 1; keynum < maxOpti; keynum++) {
       std::stringstream deco;
       deco << keynum;
       std::string keyName = "optional" + deco.str();
@@ -164,18 +141,15 @@ void VFSUtils::VFS_Init(const std::string& binpath)
 
 /**
  */
-void VFSUtils::VFS_Destroy()
-{
+void VFSUtils::VFS_Destroy() {
   // Free mixfiles (originals from Westwood)
-  if (mixfiles != 0)
-  {
+  if (mixfiles != 0) {
     delete mixfiles;
   }
   mixfiles = 0;
 
   // Free externals files
-  if (externals != 0)
-  {
+  if (externals != 0) {
     delete externals;
   }
   externals = 0;
@@ -183,16 +157,14 @@ void VFSUtils::VFS_Destroy()
 
 /**
  */
-VFile * VFSUtils::VFS_Open(const char *fname)
-{
+VFile * VFSUtils::VFS_Open(const char *fname) {
   // By default open in "read only + binary" mode
   return VFS_Open(fname, "rb");
 }
 
 /**
  */
-VFile * VFSUtils::VFS_Open(const char *fname, const char* mode)
-{
+VFile * VFSUtils::VFS_Open(const char *fname, const char* mode) {
   uintptr_t fnum; // id of the loaded file
 
   // Try to get the file

@@ -1721,7 +1721,7 @@ Uint8 CnCMap::UnitActionToNr(const std::string action)
 /**
  * Function to load all the advanced sections in the inifile.
  *
- * @param a pointer to the inifile
+ * @param inifile a pointer to the inifile
  */
 void CnCMap::advancedSections(INIFile *inifile) {
   char trigger[128];
@@ -1744,12 +1744,12 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
   try {
     for (int keynum = 0;; keynum++) {
-      INISection::const_iterator key = inifile->readKeyValue("WAYPOINTS", keynum);
-      if (sscanf(key->first.c_str(), "%d", &tmpval) == 1) {
+      INIFile::KeyNode key = inifile->readKeyValue("WAYPOINTS", keynum);
+      if (sscanf(key.name.c_str(), "%d", &tmpval) == 1) {
         if (maptype == GAME_RA)
         {
           // waypoints 0-7 are the starting locations in multiplayer maps
-          unsigned int tmp2 = atoi(key->second.c_str());
+          unsigned int tmp2 = atoi(key.value.c_str());
           unsigned int tx = 0;
           unsigned int ty = 0;
           translateCoord(tmp2, &tx, &ty);
@@ -1763,7 +1763,7 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
         } else if (maptype == GAME_TD) {
           if (tmpval == 26) { // waypoint 26 is the startpos of the map
-            tmp2 = (Uint16)atoi(key->second.c_str());
+            tmp2 = (Uint16)atoi(key.value.c_str());
             unsigned int tx = 0;
             unsigned int ty = 0;
             //waypoints.push_back(tmp2);
@@ -1773,7 +1773,7 @@ void CnCMap::advancedSections(INIFile *inifile) {
           }
           if (tmpval < 8)
           {
-            tmp2 = (Uint16)atoi(key->second.c_str());
+            tmp2 = (Uint16)atoi(key.value.c_str());
             setWaypoint (tmpval, tmp2);
           }
         }
@@ -1827,33 +1827,26 @@ void CnCMap::advancedSections(INIFile *inifile) {
     //	sname = "TI1";
     //}
     //else
-    if (maptype == GAME_RA)
-    {
+    if (maptype == GAME_RA) {
       sname = "GOLD01";
-    }
-    else
-    {
+    } else {
       Logger::getInstance()->Error(__FILE__ , __LINE__, "Unsuported maptype");
       throw LoadMapError("Unsuported maptype\n");
     }
 
     resourcenames[sname] = 0;
     sname += "." + missionData->theater.substr(0, 3);
-    try
-    {
+    try {
       image = new SHPImage(sname.c_str(), -1);
       resourcebases.push_back(pc::imagepool->size());
       pc::imagepool->push_back(image);
-    }
-    catch (ImageNotFound&)
-    {
+    } catch (ImageNotFound&) {
       Logger::getInstance()->Error(__FILE__ , __LINE__, "Could not load " + sname);
       throw LoadMapError("Could not load " + sname);
     }
 
     // Load scorch marks
-    for (int i = 1; i <= 6; i++)
-    {
+    for (int i = 1; i <= 6; i++) {
       // build name of scorch like that SC1.XXX , SC2.XXX ...
       // Where XXX is the 3 first letters of the theater (SNO or TEM)
       std::stringstream shpname;
@@ -1861,12 +1854,9 @@ void CnCMap::advancedSections(INIFile *inifile) {
       shpname << i;
       shpname << ".";
       shpname << missionData->theater.substr(0, 3);
-      try
-      {
+      try {
         image = new SHPImage(shpname.str().c_str(), -1);
-      }
-      catch (ImageNotFound&)
-      {
+      } catch (ImageNotFound&) {
         continue;
       }
       pc::imagepool->push_back(image);
@@ -1874,8 +1864,7 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
 
     // Load craters
-    for (int i = 1; i <= 6; i++)
-    {
+    for (int i = 1; i <= 6; i++) {
       // build name of scorch like that SC1.XXX , SC2.XXX ...
       // Where XXX is the 3 first letters of the theater (SNO or TEM)
       std::stringstream shpname;
@@ -1883,12 +1872,11 @@ void CnCMap::advancedSections(INIFile *inifile) {
       shpname << i;
       shpname << ".";
       shpname << missionData->theater.substr(0, 3);
-      try
-      {
+      try {
         image = new SHPImage(shpname.str().c_str(), -1);
+      } catch (ImageNotFound&) {
+        continue;
       }
-      catch (ImageNotFound&)
-      {	continue;}
       pc::imagepool->push_back(image);
     }
 
@@ -1903,17 +1891,16 @@ void CnCMap::advancedSections(INIFile *inifile) {
   INIFile* arts = new INIFile("art.ini");
 
   // Loading of [TERRAIN] section of the inifile
-  int numKeys = inifile->getNumberOfKeysInSection("TERRAIN");
-  for (int keynum = 0; keynum<numKeys; keynum++)
-  {
+  size_t numKeys = inifile->getNumberOfKeysInSection("TERRAIN");
+  for (int keynum = 0; keynum<numKeys; keynum++) {
     bool bad = false;
 
     // Try to load the number ?keynum? section
-    INISection::const_iterator key = inifile->readKeyValue("TERRAIN", keynum);
+    INIFile::KeyNode key = inifile->readKeyValue("TERRAIN", keynum);
 
     // Get the name of the TERRAIN item
-    std::string nameTerrain = (*key).second;
-    std::string positionString = (*key).first;
+    std::string nameTerrain = key.name;
+    std::string positionString = key.value;
 
     // Set the next entry in the terrain vector to the correct values.
     // the map-array and shp files vill be set later
@@ -1926,14 +1913,12 @@ void CnCMap::advancedSections(INIFile *inifile) {
     translateCoord(posNumber, &posX, &posY);
 
     // Check that position are in width/height
-    if (posX < x || posY < y || posX > x+width || posY > height+y)
-    {
+    if (posX < x || posY < y || posX > x+width || posY > height+y) {
       continue;
     }
 
     // Detect Tree
-    if (nameTerrain[0] == 't' || nameTerrain[0] == 'T')
-    {
+    if (nameTerrain[0] == 't' || nameTerrain[0] == 'T') {
       ttype = t_tree;
     }
     else if (nameTerrain[0] == 'r' || nameTerrain[0] == 'R')
@@ -1958,10 +1943,8 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
     linenum = xsize*ysize;
     int done = 0;
-    do
-    {
-      if (linenum == 0)
-      {
+    do {
+      if (linenum == 0) {
         Logger::getInstance()->Error(__FILE__ , __LINE__, "BUG: Could not find an entry in art.ini for " + nameTerrain);
         bad = true;
         break;
@@ -1970,19 +1953,15 @@ void CnCMap::advancedSections(INIFile *inifile) {
       sprintf(type, "NOTBLOCKED%d", linenum);
 
       // Try to read
-      try
-      {
+      try {
         arts->readInt(nameTerrain, type);
-      }
-      catch (...)
-      {
+      } catch (...) {
         done = 1;
       }
     }
     while (done == 0);
 
-    if (bad)
-    {
+    if (bad) {
       continue;
     }
 
@@ -1990,15 +1969,13 @@ void CnCMap::advancedSections(INIFile *inifile) {
     tmpterrain.yoffset = -(linenum / ysize)*24;
 
     posX += linenum % ysize;
-    if (posX >= width + x)
-    {
+    if (posX >= width + x) {
       tmpterrain.xoffset += 1 + posX - (width + x);
       posX = width + x - 1;
     }
 
     posY += linenum / ysize;
-    if (posY >= height + y)
-    {
+    if (posY >= height + y) {
       tmpterrain.yoffset += 1 + posY - (height + y);
       posY = height + y - 1;
     }
@@ -2010,15 +1987,12 @@ void CnCMap::advancedSections(INIFile *inifile) {
     imgpos = imagelist.find(shpnameTerrain);
 
     // set up the overlay matrix and load some shps
-    if (imgpos != imagelist.end())
-    {
+    if (imgpos != imagelist.end()) {
       // this tile already has a number
       overlaymatrix[linenum] |= HAS_TERRAIN;
       tmpterrain.shpnum = imgpos->second << 16;
       terrains[linenum] = tmpterrain;
-    }
-    else
-    {
+    } else {
       // a new tile
       imagelist[shpnameTerrain] = pc::imagepool->size();
       overlaymatrix[linenum] |= HAS_TERRAIN;
@@ -2041,12 +2015,9 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
 
   // decode OverlayPack section
-  if (maptype == GAME_RA)
-  {
+  if (maptype == GAME_RA) {
     unOverlayPack(inifile);
-  }
-  else
-  {
+  } else {
     loadOverlay(inifile);
   }
   // Log it (end of waypoint decode
@@ -2054,14 +2025,12 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
 
   // Try to set SMUDGE
-  try
-  {
-    for (int keynumb = 0;; keynumb++)
-    {
-      INISection::const_iterator key = inifile->readKeyValue("SMUDGE", keynumb);
+  try {
+    for (int keynumb = 0;; keynumb++) {
+      INIFile::KeyNode key = inifile->readKeyValue("SMUDGE", keynumb);
       // , is the char which separate terraintype from action.
-      if (sscanf(key->first.c_str(), "%d", &linenum) == 1 &&
-          sscanf(key->second.c_str(), "SC%d", &smudgenum) == 1)
+      if (sscanf(key.name.c_str(), "%d", &linenum) == 1 &&
+          sscanf(key.value.c_str(), "SC%d", &smudgenum) == 1)
       {
         unsigned int txb;
         unsigned int tyb;
@@ -2073,8 +2042,8 @@ void CnCMap::advancedSections(INIFile *inifile) {
         linenum = (tyb - y) * width + txb - x;
         overlaymatrix[linenum] |= (smudgenum << 4);
       }
-      else if (sscanf(key->first.c_str(), "%d", &linenum) == 1 &&
-               sscanf(key->second.c_str(), "CR%d", &smudgenum) == 1)
+      else if (sscanf(key.name.c_str(), "%d", &linenum) == 1 &&
+               sscanf(key.value.c_str(), "CR%d", &smudgenum) == 1)
       {
         unsigned int txc;
         unsigned int tyc;
@@ -2123,26 +2092,21 @@ void CnCMap::advancedSections(INIFile *inifile) {
   // @FIXME Bug in owner reading
   // @TODO refactoring this section to use the methods of the inifile
   // If their are a section called "STRUCTURES"
-  if (inifile->isSection(std::string("STRUCTURES")) == true)
-  {
-    try
-    {
-      for (int keynumd = 0;; keynumd++)
-      {
-        if (maptype == GAME_RA)
-        {
-          INISection::const_iterator key = inifile->readKeyValue("STRUCTURES", keynumd);
+  if (inifile->isSection(std::string("STRUCTURES")) == true) {
+    try {
+      for (int keynumd = 0;; keynumd++) {
+        if (maptype == GAME_RA) {
+          INIFile::KeyNode key = inifile->readKeyValue("STRUCTURES", keynumd);
           // ',' is the char which separate terraintype from action.
-          if (sscanf(key->first.c_str(), "%d", &tmpval) == 1 &&
-              sscanf(key->second.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,]", owner, type,
+          if (sscanf(key.name.c_str(), "%d", &tmpval) == 1 &&
+              sscanf(key.value.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,]", owner, type,
                      &health, &linenum, &facing, trigger) == 6)
           {
             unsigned int txd;
             unsigned int tyd;
             translateCoord(linenum, &txd, &tyd);
             facing = std::min(31, facing >> 3);
-            if (txd < x || tyd < y || txd > x + width || tyd > height + y)
-            {
+            if (txd < x || tyd < y || txd > x + width || tyd > height + y) {
               continue;
             }
             linenum = (tyd - y) * width + txd - x;
@@ -2152,13 +2116,10 @@ void CnCMap::advancedSections(INIFile *inifile) {
             int playerNum = playerPool->getPlayerNum(std::string(owner));
             //Player* thePlayer = playerPool->getPlayer(playerNum);
             //if (thePlayer != 0)
-            if (playerNum != -1)
-            {
+            if (playerNum != -1) {
               // printf ("%s line %i: createStructure STRUCTURE %s, trigger = %s\n", __FILE__, __LINE__, type, trigger);
               p::uspool->createStructure(type, linenum, playerNum, health, facing, false, trigger);
-            }
-            else
-            {
+            } else {
               Logger::getInstance()->Error("[cncmap::advancedscetion::STRUCTURES The owner  is not found !!!!!!\n");
             }
           }
@@ -2186,9 +2147,7 @@ void CnCMap::advancedSections(INIFile *inifile) {
          }
          }*/
       }
-    }
-    catch (...)
-    {
+    } catch (...) {
       // Log it
       Logger::getInstance()->Error("error in CncMap::advanced...STRUCTURES ok\n");
     }
@@ -2201,18 +2160,15 @@ void CnCMap::advancedSections(INIFile *inifile) {
   // Decode Units section
   //
   // If their are a section called "UNITS"
-  if (inifile->isSection(std::string("UNITS")) == true)
-  {
-    try
-    {
-      for(int keynum = 0;;keynum++ )
-      {
+  if (inifile->isSection(std::string("UNITS")) == true) {
+    try {
+      for(int keynum = 0;;keynum++ ) {
         // Read the key number "keynum"
-        INISection::const_iterator key = inifile->readKeyValue("UNITS", keynum);
+        INIFile::KeyNode key = inifile->readKeyValue("UNITS", keynum);
 
         // ',' is the char which separate terraintype from action.
-        if( sscanf(key->first.c_str(), "%d", &tmpval) == 1 &&
-           sscanf(key->second.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,],%s", owner, type,
+        if (sscanf(key.name.c_str(), "%d", &tmpval) == 1 &&
+            sscanf(key.value.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,],%s", owner, type,
                   &health, &linenum, &facing, action, trigger ) == 7 )
         {
           unsigned int tx;
@@ -2239,7 +2195,7 @@ void CnCMap::advancedSections(INIFile *inifile) {
           }
           //printf ("%s line %i: createUnit UNIT %s, trigger = %s\n", __FILE__, __LINE__, key->first.c_str(), trigger);
         } else {
-          Logger::getInstance()->Error("ERROR DURING DECODE Line read in UNIT = " + key->second);
+          Logger::getInstance()->Error("ERROR DURING DECODE Line read in UNIT = " + key.value);
         }
       }
     }
@@ -2254,55 +2210,46 @@ void CnCMap::advancedSections(INIFile *inifile) {
   // Read the "Infantry" section of the ini file
   //
   // get the number of keys
-  int numberOfKey = inifile->getNumberOfKeysInSection("INFANTRY");
+  size_t numberOfKey = inifile->getNumberOfKeysInSection("INFANTRY");
 
   char typeCustom[500];
 
-  for (int keynum = 0; (keynum < numberOfKey) && (keynum<22); keynum++ )
-  {
-    INISection::const_iterator key = inifile->readKeyValue("INFANTRY", keynum);
+  for (int keynum = 0; (keynum < numberOfKey) && (keynum<22); keynum++ ) {
+    INIFile::KeyNode key = inifile->readKeyValue("INFANTRY", keynum);
     // , is the char which separate terraintype from action.
-    if( sscanf(key->first.c_str(), "%d", &tmpval ) == 1 &&
-       sscanf(key->second.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,],%d,%s", owner, typeCustom,
+    if( sscanf(key.name.c_str(), "%d", &tmpval ) == 1 &&
+       sscanf(key.value.c_str(), "%[^,],%[^,],%d,%d,%d,%[^,],%d,%s", owner, typeCustom,
               &health, &linenum, &subpos, action, &facing, trigger ) == 8 )
     {
       unsigned tx;
       unsigned ty;
       translateCoord(linenum, &tx, &ty);
       facing = std::min(31,facing>>3);
-      if( tx < x || ty < y || tx> x+width || ty> height+y )
-      {
+      if( tx < x || ty < y || tx> x+width || ty> height+y ) {
         continue;
       }
       linenum = (ty-y)*width + tx - x;
 
       int playerNumber = playerPool->getPlayerNum(owner);
-      if (playerNumber != -1)
-      {
+      if (playerNumber != -1) {
         p::uspool->createUnit(typeCustom, linenum, subpos, playerNumber, health, facing, UnitActionToNr(action), trigger);
         //printf ("%s line %i: createUnit INFANTRY, unit = %c%c%c, trigger = %s\n", __FILE__, __LINE__, type[0], type[1], type[2], trigger);
-      }
-      else
-      {
+      } else {
         Logger::getInstance()->Info("cncmap::advanced   Infantry   owner = %s");
       }
     }
   }
 
   // Decode and create CellTriggers
-  if (maptype == GAME_RA)
-  {
-    try
-    {
-      for(int keynum = 0;;keynum++ )
-      {
-
+  if (maptype == GAME_RA) {
+    try {
+      for(int keynum = 0;;keynum++ ) {
         // Read the "CellTriggers" section
-        INISection::const_iterator key = inifile->readKeyValue("CellTriggers", keynum);
+        INIFile::KeyNode key = inifile->readKeyValue("CellTriggers", keynum);
 
         // First read the coordinates and triggername of the celltrigger
-        if( sscanf(key->first.c_str(), "%d", &linenum) == 1 &&
-           sscanf(key->second.c_str(), "%[^,],", trigger) == 1 )
+        if (sscanf(key.name.c_str(), "%d", &linenum) == 1 &&
+            sscanf(key.value.c_str(), "%[^,],", trigger) == 1 )
         {
           CellTrigger* cellTrigger;
 
@@ -2339,9 +2286,9 @@ void CnCMap::advancedSections(INIFile *inifile) {
   try {
     for (int keynum = 0;; keynum++) {
       if (maptype == GAME_RA) {
-        INISection::const_iterator key = inifile->readKeyValue("TRIGS", keynum);
+        INIFile::KeyNode key = inifile->readKeyValue("TRIGS", keynum);
         // is the char which separate terraintype from action.
-        RA_Tigger triggers(key->first, key->second);
+        RA_Tigger triggers(key.name, key.value);
         triggers.Print();
         RaTriggers.push_back(&triggers);
       } else if (maptype == GAME_TD) {
@@ -2526,29 +2473,24 @@ struct tiledata
 /**
  * @param inifile Inifile to decode [MapPack] section
  */
-void CnCMap::unMapPack(INIFile *inifile)
-{
+void CnCMap::unMapPack(INIFile *inifile) {
   int tmpval;
   Uint32 curpos;
   int xtile, ytile;
   TileList *bindata;
   Uint32 keynum;
-  INISection::const_iterator key;
+  std::string key;
   Uint8 *mapdata1 = new Uint8[49152]; // 48k
   Uint8 *mapdata2 = new Uint8[49152];
 
   // read packed data into array
   mapdata1[0] = 0;
-  try
-  {
-    for (keynum = 1;;++keynum)
-    {
+  try {
+    for (keynum = 1;;++keynum) {
       key = inifile->readIndexedKeyValue("MAPPACK", keynum);
-      strcat(((char*)mapdata1), key->second.c_str());
+      strcat(((char*)mapdata1), key.c_str());
     }
-  }
-  catch(...)
-  {}
+  } catch(...) {}
 
   unsigned int lengthToDecode = strlen(((char*)mapdata1));
 
@@ -2557,8 +2499,7 @@ void CnCMap::unMapPack(INIFile *inifile)
 
   // decode the format80 coded data (6 chunks)
   curpos = 0;
-  for (tmpval = 0; tmpval < 6; tmpval++)
-  {
+  for (tmpval = 0; tmpval < 6; tmpval++) {
     //printf("first vals in data is %x %x %x %x\n", mapdata2[curpos],
     //mapdata2[curpos+1], mapdata2[curpos+2], mapdata2[curpos+3]);
     if (Compression::decode80((Uint8 *)mapdata2+4+curpos, mapdata1+8192
@@ -2612,8 +2553,7 @@ void CnCMap::unMapPack(INIFile *inifile)
 /**
  *
  **/
-void CnCMap::parseBin(TileList* bindata)
-{
+void CnCMap::parseBin(TileList* bindata) {
   Uint32 index;
 
   Uint16 templ;
@@ -2634,8 +2574,7 @@ void CnCMap::parseBin(TileList* bindata)
   terrainoverlay.resize(width*height);
 
   // Initialize terrain overlay to 0
-  for (unsigned int i = 0; i < terrainoverlay.size(); i++)
-  {
+  for (unsigned int i = 0; i < terrainoverlay.size(); i++) {
     terrainoverlay[i] = 0;
   }
 
@@ -2649,10 +2588,8 @@ void CnCMap::parseBin(TileList* bindata)
   INIFile* templini = new INIFile("templates.ini");
 
   index = 0;
-  for (ytile = 0; ytile < height; ytile++)
-  {
-    for (xtile = 0; xtile < width; xtile++)
-    {
+  for (ytile = 0; ytile < height; ytile++) {
+    for (xtile = 0; xtile < width; xtile++) {
       // Read template and tile
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
       templ = SDL_Swap16(bindata[index].templateNum);
@@ -2662,8 +2599,7 @@ void CnCMap::parseBin(TileList* bindata)
       tile = bindata[index].tileNum;
       index++;
       // Template 0xff is an empty tile
-      if (templ == ((maptype == GAME_RA) ? 0xffff : 0xff))
-      {
+      if (templ == ((maptype == GAME_RA) ? 0xffff : 0xff)) {
         templ = 0;
         tile = 0;
       }
@@ -2678,18 +2614,14 @@ void CnCMap::parseBin(TileList* bindata)
       imgpos = tilelist.find(templ<<8 | tile);
 
       // set up the tile matrix and load some tiles
-      if (imgpos != tilelist.end() )
-      {
+      if (imgpos != tilelist.end() ) {
         // this tile already has a number
         tileidx = imgpos->second.image;
         tiletype = imgpos->second.type;
-      }
-      else
-      {
+      } else {
         // a new tile
         tileimg = loadTile(templini, templ, tile, &tiletype);
-        if (tileimg == 0)
-        {
+        if (tileimg == 0) {
           Logger::getInstance()->Error("Error loading tiles");
           throw LoadMapError("Error loading tiles\n");
         }
@@ -2745,29 +2677,23 @@ void CnCMap::parseBin(TileList* bindata)
 /**
  * Overlay loading routines
  */
-void CnCMap::loadOverlay(INIFile *inifile)
-{
-  INISection::const_iterator key;
+void CnCMap::loadOverlay(INIFile *inifile) {
   unsigned int  linenum;
   unsigned int  tx, ty;
-  try
-  {
-    for (Uint32 keynum = 0;;keynum++)
-    {
-      key = inifile->readKeyValue("OVERLAY", keynum);
-      if (sscanf(key->first.c_str(), "%u", &linenum) == 1)
-      {
+  try {
+    for (uint32_t keynum = 0;;keynum++) {
+      INIFile::KeyNode key = inifile->readKeyValue("OVERLAY", keynum);
+      if (sscanf(key.name.c_str(), "%u", &linenum) == 1) {
         translateCoord(linenum, &tx, &ty);
         if (!validCoord(tx, ty))
           continue;
         linenum = normaliseCoord(tx, ty);
 
-        this->parseOverlay(linenum, key->second);
+        this->parseOverlay(linenum, key.value);
       }
     }
+  } catch(...) {
   }
-  catch(...)
-  {}
 }
 
 const char	* RAOverlayNames[] =
@@ -2796,7 +2722,7 @@ void CnCMap::unOverlayPack(INIFile *inifile)
   mapdata[0] = 0;
 
   // Get number of keys in OverlayPack Section
-  int numKeys = inifile->getNumberOfKeysInSection("OVERLAYPACK");
+  size_t numKeys = inifile->getNumberOfKeysInSection("OVERLAYPACK");
   // read packed data into array
   for (int keynum = 1; keynum < numKeys+1; keynum++) {
     std::stringstream tempStrS;
@@ -2818,8 +2744,7 @@ void CnCMap::unOverlayPack(INIFile *inifile)
 
   // decode the format80 coded data (2 chunks)
   int curpos = 0;
-  for (int tmpval = 0; tmpval < 2; tmpval++)
-  {
+  for (int tmpval = 0; tmpval < 2; tmpval++) {
     if (Compression::decode80((Uint8 *)temp+4+curpos, mapdata+8192*tmpval)
         != 8192)
     {
@@ -2830,12 +2755,10 @@ void CnCMap::unOverlayPack(INIFile *inifile)
   }
 
 
-  for (Uint16 ytile = y; ytile <= y+height; ++ytile)
-  {
-    for (Uint16 xtile = x; xtile <= x+width; ++xtile)
-    {
-      Uint32 curpos = xtile+ytile*128;
-      Uint32 tilepos = xtile-x+(ytile-y)*width;
+  for (uint16_t ytile = y; ytile <= y+height; ++ytile) {
+    for (uint16_t xtile = x; xtile <= x+width; ++xtile) {
+      uint32_t curpos = xtile+ytile*128;
+      uint32_t tilepos = xtile-x+(ytile-y)*width;
 
       if (mapdata[curpos] == 0xff) // No overlay
         continue;
@@ -3167,26 +3090,23 @@ void CnCMap::loadTeamTypes(INIFile* fileIni)
   }
 
   // get number of line in '[TeamTypes]' section of the ini file
-  int numberOfKey = fileIni->getNumberOfKeysInSection("TeamTypes");
+  size_t numberOfKey = fileIni->getNumberOfKeysInSection("TeamTypes");
 
   int keynum = 0; // Use to parse the key
-  INISection::const_iterator key; // Key to get the key values
-  for (keynum = 0; keynum < numberOfKey; keynum++)
-  {
-    if (maptype == GAME_RA)
-    {
+  INIFile::KeyNode key; // Key to get the key values
+  for (keynum = 0; keynum < numberOfKey; keynum++) {
+    if (maptype == GAME_RA) {
       RA_Teamtype team;
       size_t pos;
       char teamname[255]; // Use to keep the team name
 
       team.Units.clear();
       key = fileIni->readKeyValue("TeamTypes", keynum);
-      team.tname = key->first;
-      sscanf(key->second.c_str(), "%i, %i, %i, %i, %i, %i, %i, %i, %[^,]", &team.country, &team.props, &team.unknown1, &team.unknown2, &team.maxteams, &team.waypoint, &team.trigger, &team.numb_teamtypes, teamname);
-      pos = key->second.find(teamname, 0);
-      std::string temp = key->second.substr(pos, key->second.size());
-      for (int j = 0; j < team.numb_teamtypes; j++)
-      {
+      team.tname = key.name;
+      sscanf(key.value.c_str(), "%i, %i, %i, %i, %i, %i, %i, %i, %[^,]", &team.country, &team.props, &team.unknown1, &team.unknown2, &team.maxteams, &team.waypoint, &team.trigger, &team.numb_teamtypes, teamname);
+      pos = key.value.find(teamname, 0);
+      std::string temp = key.value.substr(pos, key.value.size());
+      for (int j = 0; j < team.numb_teamtypes; j++) {
         RA_TeamUnits unit;
         sscanf(temp.c_str(), "%[^:]:%i ,", teamname, &unit.numb);
         unit.tname = teamname;
@@ -3209,8 +3129,7 @@ void CnCMap::loadTeamTypes(INIFile* fileIni)
       sscanf(temp3.c_str(), "%i", &numcommand);
       //team.aiCommandList = new vector<AiCommand*>();
       //team.aiCommandList->resize(numcommand);
-      for (int j = 0; j < numcommand; j++)
-      {
+      for (int j = 0; j < numcommand; j++) {
         int id;
         int wayp;
         sscanf(splitList(cppstrdup(temp2.c_str()), ':')[0], "%i", &id);

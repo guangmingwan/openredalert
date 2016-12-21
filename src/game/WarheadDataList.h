@@ -17,6 +17,8 @@
 #ifndef WARHEADDATALIST_H
 #define WARHEADDATALIST_H
 
+#include <map>
+
 #include "misc/INIFile.h"
 
 class WarheadData;

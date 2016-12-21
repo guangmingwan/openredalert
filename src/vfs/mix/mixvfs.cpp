@@ -46,6 +46,7 @@ bool MIXFiles::loadArchive(const char *fname) {
   if (file == 0) {
     return false;
   }
+  printf("MIX archive loaded '%s'\n", fname);
   mixfiles.push_back(file);
   readMIXHeader(file);
   return true;
