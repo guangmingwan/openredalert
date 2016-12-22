@@ -32,11 +32,9 @@ namespace pc {
 
 /**
  */
-PlayerPool::PlayerPool()
-{
+PlayerPool::PlayerPool() {
   // RAZ of players starts
-  for (unsigned int i = 0; i < 8; i++)
-  {
+  for (unsigned int i = 0; i < 8; i++) {
     playerstarts[i] = 0;
   }
 
@@ -119,45 +117,28 @@ const int PlayerPool::MultiColourStringToNumb(const std::string& colour) {
     return 1;
   } else if (colour == "red") {
     return 2;
-  }
-  else if (colour == "green")
-  {
+  } else if (colour == "green") {
     return 3;
-  }
-  else if (colour == "yellow")
-  {
+  } else if (colour == "yellow") {
     return 4;
-  }
-  else if (colour == "orange")
-  {
+  } else if (colour == "orange") {
     return 5;
-  }
-  else if (colour  == "gray")
-  {
+  } else if (colour  == "gray") {
     return 6;
-  }
-  else if (colour == "turquoise")
-  {
+  } else if (colour == "turquoise") {
     return 7;
-  }
-  else if (colour == "darkred")
-  {
+  } else if (colour == "darkred") {
     return 8;
-  }
-  else
-  {
+  } else {
     // Error
     // @todo do something better than this :)
     return 1;
   }
 }
 
-void PlayerPool::setLPlayer(const std::string& pname)
-{
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
-    if (playerpool.at(i)->getName() == pname)
-    {
+void PlayerPool::setLPlayer(const std::string& pname) {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
+    if (playerpool.at(i)->getName() == pname) {
       localPlayer = i;
       return;
     }
@@ -214,13 +195,10 @@ void PlayerPool::setLPlayer(const std::string& pname)
 /**
  * Return the number of the player with this name
  */
-int PlayerPool::getPlayerNum(const std::string& pname)
-{
+int PlayerPool::getPlayerNum(const std::string& pname) {
   // Parse each players to found it
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
-    if (playerpool.at(i)->getName() == pname)
-    {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
+    if (playerpool.at(i)->getName() == pname) {
       return i;
     }
   }
@@ -233,10 +211,10 @@ int PlayerPool::getPlayerNum(const std::string& pname)
   return -1;
 }
 
-char RA_house[20][10] =
-{ "Spain", "Greece", "Ussr", "England", "Ukraine", "Germany", "France",
-		"Turkey", "Goodguy", "Badguy", "Special", "Neutral", "Multi1",
-		"Multi2", "Multi3", "Multi4", "Multi5", "Multi6", "Multi7", "Multi8"
+char RA_house[20][10] = {
+  "Spain", "Greece", "Ussr", "England", "Ukraine", "Germany", "France",
+  "Turkey", "Goodguy", "Badguy", "Special", "Neutral", "Multi1",
+  "Multi2", "Multi3", "Multi4", "Multi5", "Multi6", "Multi7", "Multi8"
 };
 
 /**
@@ -244,18 +222,14 @@ char RA_house[20][10] =
  *
  * @param house number of the house
  */
-int PlayerPool::getPlayerNumByHouseNum(int house) const
-{
+int PlayerPool::getPlayerNumByHouseNum(int house) const {
   // Check if num <19 (because their are only 20 houses)
-  if (house > 19 || house < 0)
-  {
+  if (house > 19 || house < 0) {
     return -1;
   }
 
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
-    if (playerpool[i]->getName() == RA_house[house])
-    {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
+    if (playerpool[i]->getName() == RA_house[house]) {
       return i;
     }
   }
@@ -267,20 +241,16 @@ int PlayerPool::getPlayerNumByHouseNum(int house) const
 /**
  * @param playerNumber number of the player
  */
-int PlayerPool::getHouseNumByPlayerNum(unsigned int playerNumber) const
-{
+int PlayerPool::getHouseNumByPlayerNum(unsigned int playerNumber) const {
   // If the player is not in the pool
-  if (playerNumber >= playerpool.size())
-  {
+  if (playerNumber >= playerpool.size()) {
     // Return -1 (WRONG)
     return -1;
   }
 
   // Parse the vector
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
-    if (std::string(playerpool[playerNumber]->getName()) == RA_house[i])
-    {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
+    if (std::string(playerpool[playerNumber]->getName()) == RA_house[i]) {
       return i;
     }
   }
@@ -289,13 +259,11 @@ int PlayerPool::getHouseNumByPlayerNum(unsigned int playerNumber) const
   return -1;
 }
 
-Player* PlayerPool::getPlayer(const std::string& pname)
-{
+Player* PlayerPool::getPlayer(const std::string& pname) {
   return getPlayerByName(pname.c_str());
 }
 
-Player* PlayerPool::getPlayerByName(const char* pname)
-{
+Player* PlayerPool::getPlayerByName(const char* pname) {
   return playerpool[getPlayerNum(pname)];
 }
 
@@ -417,11 +385,9 @@ Player* PlayerPool::getPlayerByName(const char* pname)
 	return mapini;
  }*/
 
-void PlayerPool::setAlliances(INIFile* mapini)
-{
+void PlayerPool::setAlliances(INIFile* mapini) {
   // @todo refactor this to set by player the ally
-  for (unsigned int i = 0; i < playerpool.size(); i++)
-  {
+  for (unsigned int i = 0; i < playerpool.size(); i++) {
     playerpool[i]->setAlliances(mapini);
   }
 }
@@ -455,8 +421,7 @@ uint16_t PlayerPool::getAStart() {
 
   // pick a starting location at random
   rnd = (int) ((double)sze*rand()/(RAND_MAX+1.0));
-  while (playerstarts[rnd] == 0)
-  {
+  while (playerstarts[rnd] == 0) {
     rnd = (int) ((double)sze*rand()/(RAND_MAX+1.0));
   }
   rv = playerstarts[rnd];
@@ -484,8 +449,7 @@ bool PlayerPool::pollSidebar() {
   return false;
 }
 
-void PlayerPool::updateSidebar()
-{
+void PlayerPool::updateSidebar() {
   updatesidebar = true;
 }
 
@@ -514,56 +478,42 @@ uint8_t PlayerPool::statRadar() {
   res = 0;
 
   // If same number of radars
-  if (old_numRadarLocalPlayer == localPlayer->getNumberRadars())
-  {
+  if (old_numRadarLocalPlayer == localPlayer->getNumberRadars()) {
     // if old their was radars
-    if (old_numRadarLocalPlayer >0)
-    {
-      if (powerOk == false && old_powerOk == true)
-      {
+    if (old_numRadarLocalPlayer >0) {
+      if (powerOk == false && old_powerOk == true) {
         res = 3;
-      } else if (powerOk == true && old_powerOk == false)
-      {
+      } else if (powerOk == true && old_powerOk == false) {
         res = 1;
       }
     }
-  }
-  else
+  } else {
     // If more radar
-    if (localPlayer->getNumberRadars() > old_numRadarLocalPlayer)
-    {
+    if (localPlayer->getNumberRadars() > old_numRadarLocalPlayer) {
       // if old their was no radars
-      if (old_numRadarLocalPlayer == 0)
-      {
-        if (powerOk == true)
-        {
+      if (old_numRadarLocalPlayer == 0) {
+        if (powerOk == true) {
           res = 1;
         } else {
           res = 3;
         }
-
       }
-    }
-    else
+    } else {
       // There are less radar
-      if (localPlayer->getNumberRadars() < old_numRadarLocalPlayer)
-      {
+      if (localPlayer->getNumberRadars() < old_numRadarLocalPlayer) {
         // if there are no radar
-        if (localPlayer->getNumberRadars() == 0)
-        {
+        if (localPlayer->getNumberRadars() == 0) {
           res = 2;
-        }
-        else
-        {
-          if (powerOk == true && old_powerOk == false)
-          {
+        } else {
+          if (powerOk == true && old_powerOk == false) {
             res = 1;
-          } else if (powerOk == false && old_powerOk == true)
-          {
+          } else if (powerOk == false && old_powerOk == true) {
             res = 2;
           }
         }
       }
+    }
+  }
 
   // Save olds
   old_numRadarLocalPlayer = localPlayer->getNumberRadars();
@@ -585,7 +535,7 @@ Player* PlayerPool::getLPlayer() {
   if (localPlayer < playerpool.size()) {
     return playerpool[localPlayer];
   }
-  return 0;
+  return nullptr;
 }
 
 Player* PlayerPool::getPlayer(int playerNumber) const {
@@ -593,7 +543,7 @@ Player* PlayerPool::getPlayer(int playerNumber) const {
     return playerpool[playerNumber];
   }
   // Return NULL
-  return 0;
+  return nullptr;
 }
 
 uint8_t PlayerPool::getUnitpalNum(uint8_t player) const {

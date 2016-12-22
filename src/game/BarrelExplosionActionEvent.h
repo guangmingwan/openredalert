@@ -1,6 +1,5 @@
 // BarrelExplosionActionEvent.h
 // 1.2
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -27,18 +26,17 @@
  * @version 1.2
  * @since r388
  */
-class BarrelExplosionActionEvent : public ActionEvent
-{
-public:
-    /** Constructor */
-    BarrelExplosionActionEvent(unsigned int p, unsigned int pos);
+class BarrelExplosionActionEvent : public ActionEvent {
+ public:
+  /** Constructor */
+  BarrelExplosionActionEvent(unsigned int p, unsigned int pos);
 
-    /** */
-    virtual void run();
+  /** */
+  virtual void run();
 
-private:
-    /** Position of the animation in the map */
-    unsigned int position;
+ private:
+  /** Position of the animation in the map */
+  unsigned int position;
 };
 
 #endif //BARRELEXPLOSIONANIMEVENT_H

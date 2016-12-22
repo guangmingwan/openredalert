@@ -883,105 +883,86 @@ void Player::didUnally(Player* pl)
 /**
  * @param mapini alliance in this map
  */
-void Player::setAlliances(INIFile* mapini)
-{/*
-  // Get map ini
-  //INIFile* mapini = p::ccmap->getPlayerPool()->getMapINI();
-
+void Player::setAlliances(INIFile* mapini) {
   // populate "allies_n" with allies
-  string tmp = mapini->readString(playername, "Allies", "");
+  std::string tmp = mapini->readString(playername, "Allies", "");
   std::vector<char*> allies_n;
-  if (tmp.size() > 0)
-  {
-  allies_n = splitList(tmp.c_str(), ',');
+  if (tmp.size() > 0) {
+    allies_n = splitList(tmp.c_str(), ',');
   }
 
   // always allied to self
   allyWithPlayer(this);
   // no initial allies for multiplayer
-  if (multiside == 0)
-  {
-  for (Uint16 i=0;i<allies_n.size();++i)
-  {
-  if (playername == (allies_n[i]))
-  {
-  allyWithPlayer(p::ccmap->getPlayerPool()->getPlayerByName(allies_n[i]));
+  if (multiside == 0) {
+    for (size_t i = 0; i < allies_n.size(); ++i) {
+      if (playername == allies_n[i]) {
+        allyWithPlayer(p::ccmap->getPlayerPool()->getPlayerByName(allies_n[i]));
+      }
+    }
   }
-  if (allies_n[i] != NULL)
-  delete[] allies_n[i];
-  allies_n[i] = NULL;
+
+  while (allies_n.size()) {
+    char *str = allies_n.back();
+    allies_n.pop_back();
+    delete[] str;
   }
-  } else {
-  for (Uint16 i=0;i<allies_n.size();++i) {
-  if (allies_n[i] != NULL)
-  delete[] allies_n[i];
-  allies_n[i] = NULL;
-  }
-  }
+
   // since this part of the initialisation is deferred until after map
   // is loaded check for no units or structures
-  if (unitpool.empty() && structurepool.empty()) {
-  defeated = true;
-  clearAlliances();
-  return;
-  }*/
+//  if (unitpool.empty() && structurepool.empty()) {
+//    defeated = true;
+//    clearAlliances();
+//    return;
+//  }
 }
 
-void Player::clearAlliances()
-{
-  /*   Uint32 i;
-   Player* tmp;
-   for (i = 0; i < allies.size() ; ++i) {
-   if (allies[i] != NULL) {
-   tmp = allies[i];
-   unallyWithPlayer(tmp);
-   }
-   }
-   for (i = 0; i < non_reciproc_allies.size() ; ++i) {
-   if (non_reciproc_allies[i] != NULL) {
-   non_reciproc_allies[i]->unallyWithPlayer(this);
-   }
-   }*/
+void Player::clearAlliances() {
+  Player* tmp;
+  for (size_t i = 0; i < allies.size() ; ++i) {
+    if (allies[i] != NULL) {
+      tmp = allies[i];
+      unallyWithPlayer(tmp);
+    }
+  }
+  for (size_t i = 0; i < non_reciproc_allies.size() ; ++i) {
+    if (non_reciproc_allies[i] != NULL) {
+      non_reciproc_allies[i]->unallyWithPlayer(this);
+    }
+  }
 }
 
-void Player::addUnitKill()
-{
+void Player::addUnitKill() {
   ++unitkills;
 }
 
-void Player::addStructureKill()
-{
+void Player::addStructureKill() {
   ++structurekills;
 }
 
-Uint32 Player::getUnitKills() const
-{
+uint32_t Player::getUnitKills() const {
   return unitkills;
 }
 
-Uint32 Player::getUnitLosses() const {return unitlosses;}
+uint32_t Player::getUnitLosses() const {return unitlosses;}
 
-Uint32 Player::getStructureKills() const {return structurekills;}
+uint32_t Player::getStructureKills() const {return structurekills;}
 
 Uint16 Player::getStructureLosses() const {return structurelosses;}
 
-size_t Player::ownsStructure(StructureType* stype)
-{
+size_t Player::ownsStructure(StructureType* stype) {
   return structures_owned[stype].size();
 }
 
-Structure*& Player::getPrimary(const UnitOrStructureType* uostype)
-{
+Structure*& Player::getPrimary(const UnitOrStructureType* uostype) {
   return primary_structure[uostype->getPType()];
 }
 
-Structure*& Player::getPrimary(Uint32 ptype)
-{
+Structure*& Player::getPrimary(uint32_t ptype) {
   return primary_structure[ptype];
 }
 
-void Player::setPrimary(Structure* str)
-{
+void Player::setPrimary(Structure* str) {
   StructureType* st = (StructureType*)str->getType();
   if (st->primarySettable()) {
     Structure*& os = getPrimary(st);
@@ -998,9 +979,8 @@ void Player::setPrimary(Structure* str)
  *
  * @param waypointNumber number of the waypoint of the map
  */
-void Player::revealAroundWaypoint(Uint32 waypointNumber)
-{
-  Uint32 wp_cellpos; // Position of the waypoint
+void Player::revealAroundWaypoint(Uint32 waypointNumber) {
+  uint32_t wp_cellpos; // Position of the waypoint
 
   // Get the position of the waypoint
   wp_cellpos = p::ccmap->getWaypoint(waypointNumber);
@@ -1012,8 +992,7 @@ void Player::revealAroundWaypoint(Uint32 waypointNumber)
 /**
  * si SOB_update = SOB_SIGHT alors update la vue sinon le build
  */
-void Player::setVisBuild(SOB_update mode, bool val)
-{
+void Player::setVisBuild(SOB_update mode, bool val) {
   if (mode == SOB_SIGHT) {
     fill(mapVisible->begin(), mapVisible->end(), val);
   } else {
@@ -1031,13 +1010,11 @@ std::vector<bool>* Player::getMapBuildable() {
 
 /**
  */
-void Player::addSoB(Uint32 pos, Uint8 width, Uint8 height, Uint8 sight, SOB_update mode) {
+void Player::addSoB(uint32_t pos, Uint8 width, Uint8 height, Uint8 sight, SOB_update mode) {
   // for each line of the screen
-  for (int j=0; j<height; j++)
-  {
+  for (int j = 0; j < height; j++) {
     // for each column of the screen
-    for (int i = 0; i<width; i++)
-    {
+    for (int i = 0; i<width; i++) {
       // Turns on cells
       addSoB(pos + i + (j*p::ccmap->getWidth()), sight, mode);
     }
@@ -1046,11 +1023,11 @@ void Player::addSoB(Uint32 pos, Uint8 width, Uint8 height, Uint8 sight, SOB_upda
 
 #if 1
 
-void Player::addSoB(Uint32 pos, Uint8 sight, SOB_update mode) {
-  Uint32 initX = 0;
-  Uint32 endX = 0;
-  Uint32 initY = 0;
-  Uint32 endY = 0;
+void Player::addSoB(uint32_t pos, Uint8 sight, SOB_update mode) {
+  uint32_t initX = 0;
+  uint32_t endX = 0;
+  uint32_t initY = 0;
+  uint32_t endY = 0;
   std::vector<bool>* mapVoB = 0;
 
   /*if (mode == SOB_SIGHT) {

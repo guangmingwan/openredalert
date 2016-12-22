@@ -31,27 +31,26 @@ class UnitOrStructure;
  *
  * @author Damien Carol (OpenRedAlert)
  */
-class BAttackAnimEvent : public BuildingAnimEvent
-{
-public:
-    /** Constructor */
-    BAttackAnimEvent(unsigned int p, Structure* str);
-    ~BAttackAnimEvent();
+class BAttackAnimEvent : public BuildingAnimEvent {
+ public:
+  /** Constructor */
+  BAttackAnimEvent(unsigned int p, Structure* str);
+  ~BAttackAnimEvent();
 
-    void run();
-    void stop();
-    void anim_func(anim_nfo* data);
-    void update();
+  void run();
+  void stop();
+  void anim_func(anim_nfo* data);
+  void update();
 
-private:
-    unsigned int frame;
-    Structure* strct;
-    /** the unit or structure to be attacked */
-    UnitOrStructure* target;
-    bool done;
-    /** True if the building must charge this weapon before attack (like for tesla coil) */
-    bool NeedToCharge;
-    unsigned int StartFrame;
+ private:
+  unsigned int frame;
+  Structure* strct;
+  /** the unit or structure to be attacked */
+  UnitOrStructure* target;
+  bool done;
+  /** True if the building must charge this weapon before attack (like for tesla coil) */
+  bool NeedToCharge;
+  unsigned int StartFrame;
 };
 
 #endif //BATTACKANIMEVENT_H

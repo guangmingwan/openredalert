@@ -1,6 +1,5 @@
 // UnitTypes.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -18,9 +17,12 @@
 #ifndef UNITTYPES_H
 #define UNITTYPES_H
 
-enum unittypes
-{
-    UN_INFANTRY = 1, UN_VEHICLE = 2, UN_BOAT = 3, UN_PLANE = 4, UN_HELICOPTER = 5
+enum unittypes {
+  UN_INFANTRY = 1,
+  UN_VEHICLE = 2,
+  UN_BOAT = 3,
+  UN_PLANE = 4,
+  UN_HELICOPTER = 5
 };
 
 #endif

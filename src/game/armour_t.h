@@ -1,6 +1,5 @@
 // armor_t.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -20,20 +19,20 @@
 
 /** Armor type in RedAlert */
 enum armor_t {
-    /** none, no armor (default) */
-    AC_none = 0,
+  /** none, no armor (default) */
+  AC_none = 0,
 
-    /** Wood Armor */
-    AC_wood = 1,
+  /** Wood Armor */
+  AC_wood = 1,
 
-    /** Light Armor */
-    AC_light = 2,
+  /** Light Armor */
+  AC_light = 2,
 
-    /** Heavy Armor */
-    AC_heavy = 3,
+  /** Heavy Armor */
+  AC_heavy = 3,
 
-    /** Concrete Armor */
-    AC_concrete = 4
+  /** Concrete Armor */
+  AC_concrete = 4
 };
 
 #endif //ARMOR_T_H

@@ -26,13 +26,11 @@
 #include "WarheadData.h"
 #include "WarheadDataList.h"
 
-namespace pc
-{
-  extern std::vector <SHPImage *> * imagepool;
+namespace pc {
+  extern std::vector<SHPImage*> *imagepool;
 }
 
-Warhead::Warhead(std::string name, WarheadDataList* data)
-{
+Warhead::Warhead(std::string name, WarheadDataList* data) {
   // Get the Data of this warhead
   WarheadData* lWarheadData = data->getData(name);
 
@@ -43,8 +41,7 @@ Warhead::Warhead(std::string name, WarheadDataList* data)
   this->explosionImages = 0;
 
   // switch with Explosion type
-  switch (this->lnkWarheadData->getExplosion())
-  {
+  switch (this->lnkWarheadData->getExplosion()) {
     case 0:
       // If explosion type = 0(none) no anim
       this->explosionImages = 0;
@@ -82,26 +79,21 @@ Warhead::Warhead(std::string name, WarheadDataList* data)
   }
 }
 
-Warhead::~Warhead()
-{
+Warhead::~Warhead() {
   // Free the Data
   delete this->lnkWarheadData;
 }
 
-bool Warhead::getWall()
-{
+bool Warhead::getWall() {
   return this->lnkWarheadData->getWall() != 0;
 }
 
-WarheadData* Warhead::getType()
-{
+WarheadData* Warhead::getType() {
   return this->lnkWarheadData;
 }
 
-Uint8 Warhead::getVersus(armor_t armor)
-{
-  switch (armor)
-  {
+uint8_t Warhead::getVersus(armor_t armor) {
+  switch (armor) {
     case AC_none:
       return this->lnkWarheadData->getVersusNone();
     case AC_wood:

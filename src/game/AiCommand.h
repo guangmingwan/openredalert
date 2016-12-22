@@ -1,6 +1,5 @@
 // AiCommand.h
 // 1.0
-
 //    This file is part of OpenRedAlert.
 //
 //    OpenRedAlert is free software: you can redistribute it and/or modify
@@ -23,18 +22,16 @@
 /**
  * Command in QMove stack of the Unit
  */
-class AiCommand
-{
-public:
+class AiCommand {
+ public:
+  int getId();
+  void setId(int id);
+  int getWaypoint();
+  void setWaypoint(int waypoint);
 
-    int getId();
-    void setId(int id);
-    int getWaypoint();
-    void setWaypoint(int waypoint);
-
-private:
-    int id;
-    int waypoint;
+ private:
+  int id;
+  int waypoint;
 };
 
 #endif //AICOMMAND_H
