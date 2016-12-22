@@ -936,8 +936,7 @@ Unit* UnitAndStructurePool::getUnitAt(Uint32 cell)
   return un;
 }
 
-Uint32 UnitAndStructurePool::getNumbUnits()
-{
+size_t UnitAndStructurePool::getNumbUnits() {
   return unitpool.size();
 }
 
@@ -980,8 +979,7 @@ Structure* UnitAndStructurePool::getStructure(Uint32 num)
   return 0;
 }
 
-Uint32 UnitAndStructurePool::getNumbStructures()
-{
+size_t UnitAndStructurePool::getNumbStructures() {
   return structurepool.size();
 }
 

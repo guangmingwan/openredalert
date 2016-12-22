@@ -28,7 +28,7 @@ class WarheadDataList {
   void loadWarheadData(INIFile* file, std::string name);
 
   WarheadData* getData(std::string name);
-  int size();
+  size_t size();
   void print();
 
  private:

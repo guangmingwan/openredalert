@@ -2233,8 +2233,8 @@ void CnCMap::advancedSections(INIFile *inifile) {
 
           translateCoord(linenum, &(cellTrigger->x), &(cellTrigger->y));
 
-          if( cellTrigger->x < x || cellTrigger->y < y || cellTrigger->x > x+width || cellTrigger->y > height+y )
-          {
+          if (cellTrigger->x < x || cellTrigger->y < y ||
+              cellTrigger->x > x+width || cellTrigger->y > height+y) {
             continue;
           }
 

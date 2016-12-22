@@ -114,12 +114,12 @@ class UnitAndStructurePool {
 
   Unit* getUnitAt(uint32_t cell, uint8_t subcell);
   Unit *getUnitAt(uint32_t cell);
-  uint32_t getNumbUnits (void) ;
+  size_t getNumbUnits(void) ;
   Unit* getUnit(uint32_t num);
   //    Structure* getStructureAt(Uint32 cell);
   Structure* getStructureAt(uint32_t cell, bool wall);
   Structure* getStructure(uint32_t num);
-  uint32_t getNumbStructures (void);
+  size_t getNumbStructures (void);
 
   //    UnitOrStructure* getSelectedUnitOrStructureAt(Uint32 cell, Uint8 subcell, bool wall = false);
   //    UnitOrStructure* getSelectedUnitOrStructureAt(Uint32 cell);

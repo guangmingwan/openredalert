@@ -272,8 +272,7 @@ UnitOrStructureType()
     animinfo.loopend = structini->readInt(typeName, "loopend", 0);
     animinfo.loopend2 = structini->readInt(typeName, "loopend2", 0);
 
-    animinfo.animspeed = structini->readInt(typeName, "animspeed", 3);
-    animinfo.animspeed = abs(animinfo.animspeed);
+    animinfo.animspeed = abs(structini->readInt(typeName, "animspeed", 3));
     animinfo.animspeed = (animinfo.animspeed>1 ? animinfo.animspeed : 2);
     animinfo.animdelay = structini->readInt(typeName, "delay", 0);
 

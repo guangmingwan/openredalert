@@ -29,7 +29,7 @@
 
 extern Logger * logger;
 
-int WarheadDataList::size() {
+size_t WarheadDataList::size() {
   return data.size();
 }
 

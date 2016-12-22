@@ -42,8 +42,7 @@
  * @param fname the filename
  * @param scaleq scaling option (-1 is disabled)
  */
-SHPImage::SHPImage(const char *fname, Sint8 scaleq) : SHPBase(fname, scaleq)
-{
+SHPImage::SHPImage(const char *fname, Sint8 scaleq) : SHPBase(fname, scaleq) {
   // Create the header
   lnkHeader = new SHPHeader();
 
@@ -85,8 +84,7 @@ SHPImage::SHPImage(const char *fname, Sint8 scaleq) : SHPBase(fname, scaleq)
 
   // "Offsets"
   unsigned int j = 14;
-  for (int i = 0; i < lnkHeader->NumImages + 2; i++)
-  {
+  for (int i = 0; i < lnkHeader->NumImages + 2; i++) {
     lnkHeader->Offset[i] = shpdata[j] + (shpdata[j+1] << 8) + (shpdata[j+2] << 16) + (0 << 24);
     j += 3;
     lnkHeader->Format[i] = shpdata[j];
@@ -104,8 +102,7 @@ SHPImage::SHPImage(const char *fname, Sint8 scaleq) : SHPBase(fname, scaleq)
 /**
  * Destructor, freas the memory used by the shpimage.
  */
-SHPImage::~SHPImage()
-{
+SHPImage::~SHPImage() {
   // Free data from the file
   delete[] shpdata;
   // free headers vars
@@ -126,11 +123,9 @@ SHPImage::~SHPImage()
  * @param shadow pointer to the SDL_Surface* into which the shadow frame is decoded. This can be 0 if you don't need the shadow.
  * @param palnum Number of the palette to use
  */
-void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, Uint8 palnum)
-{
+void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, Uint8 palnum) {
   // If the image is NULL
-  if (0 == img)
-  {
+  if (0 == img) {
     std::string s = name + ": can't decode to a NULL surface";
     throw std::runtime_error(s);
   }
@@ -142,8 +137,7 @@ void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, 
   palette[palnum][0].g = 255;
   palette[palnum][0].b = 22;
 
-  if (imgnum >= lnkHeader->NumImages)
-  {
+  if (imgnum >= lnkHeader->NumImages) {
     Logger::getInstance()->Error("%s line %i: Error want imgnum %i but only %i images availeble, image name = %s\n");//, __FILE__, __LINE__, imgnum, lnkHeader->NumImages, name.c_str());
     *img = 0;
     *shadow = 0;
@@ -153,14 +147,11 @@ void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, 
   Uint8* imgdata = new Uint8[lnkHeader->Width * lnkHeader->Height];
   DecodeSprite(imgdata, imgnum);
 
-  if (shadow != 0)
-  {
+  if (shadow != 0) {
     Uint8* shadowdata = new Uint8[lnkHeader->Width * lnkHeader->Height];
     memset(shadowdata, 0, lnkHeader->Width * lnkHeader->Height);
-    for (int i = 0; i<lnkHeader->Width * lnkHeader->Height; ++i)
-    {
-      if (imgdata[i] == 4)
-      {
+    for (int i = 0; i<lnkHeader->Width * lnkHeader->Height; ++i) {
+      if (imgdata[i] == 4) {
         imgdata[i] = 0;
         shadowdata[i] = 1;
       }
@@ -180,10 +171,8 @@ void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, 
     SDL_FreeSurface(shadowimg);
     delete[] shadowdata;
   } else {
-    for (int i = 0; i<lnkHeader->Width * lnkHeader->Height; ++i)
-    {
-      if (imgdata[i] == 4)
-      {
+    for (int i = 0; i<lnkHeader->Width * lnkHeader->Height; ++i) {
+      if (imgdata[i] == 4) {
         imgdata[i] = 0;
       }
     }
@@ -230,8 +219,7 @@ void SHPImage::getImage(Uint16 imgnum, SDL_Surface **img, SDL_Surface **shadow, 
  * @param imgnum Image number to get
  * @param img Destination image
  */
-void SHPImage::getImageAsAlpha(Uint16 imgnum, SDL_Surface **img)
-{
+void SHPImage::getImageAsAlpha(Uint16 imgnum, SDL_Surface **img) {
   Uint8* imgdata = new Uint8[lnkHeader->Width * lnkHeader->Height];
 
   DecodeSprite(imgdata, imgnum);
@@ -281,8 +269,7 @@ void SHPImage::getImageAsAlpha(Uint16 imgnum, SDL_Surface **img)
  * Get the Width of the image
  * @return Width of the image
  */
-Uint32 SHPImage::getWidth() const
-{
+Uint32 SHPImage::getWidth() const {
   return lnkHeader->Width;
 }
 
@@ -290,8 +277,7 @@ Uint32 SHPImage::getWidth() const
  * Get the Height of the image
  * @return Height of the image
  */
-Uint32 SHPImage::getHeight() const
-{
+Uint32 SHPImage::getHeight() const {
   return lnkHeader->Height;
 }
 
@@ -299,8 +285,7 @@ Uint32 SHPImage::getHeight() const
  * Get number of image in the SHPImage file
  * @return Number of image in the SHPImage file
  */
-Uint16 SHPImage::getNumImg() const
-{
+Uint16 SHPImage::getNumImg() const {
   return lnkHeader->NumImages;
 }
 
@@ -312,14 +297,12 @@ std::string SHPImage::getFileName() const {
   return name;
 }
 
-SDL_Color SHPImage::shadowpal[2] =
-{
+SDL_Color SHPImage::shadowpal[2] = {
   {0xff,0xff,0xff,0},
   {0x00,0x00,0x00,0}
 };
 
-SDL_Color SHPImage::alphapal[6] =
-{
+SDL_Color SHPImage::alphapal[6] = {
   {0x00,0x00,0x00,0x00},
   {0x33,0x33,0x33,0x33},
   {0x66,0x66,0x66,0x66},
@@ -336,8 +319,7 @@ SDL_Color SHPImage::alphapal[6] =
  */
 void SHPImage::DecodeSprite(Uint8 *imgdst, Uint16 imgnum) {
   // Check if imgnum to decompress is <= images in SHP
-  if (imgnum >= lnkHeader->NumImages)
-  {
+  if (imgnum >= lnkHeader->NumImages) {
     Logger::getInstance()->Error("%s: Invalid SHP imagenumber (%i >= %i)\n");//, name.c_str(), imgnum, lnkHeader->NumImages);
     return;
   }
