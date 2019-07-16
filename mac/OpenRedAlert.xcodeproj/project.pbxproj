@@ -159,7 +159,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7B523EF31DFFE72300EB265F /* ./.. */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = ./..; path = OpenRedAlert; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B523EF31DFFE72300EB265F /* OpenRedAlert */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenRedAlert; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B523EFE1DFFE7E100EB265F /* SOUND_DECODE_STATE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SOUND_DECODE_STATE.h; path = ../src/audio/SOUND_DECODE_STATE.h; sourceTree = "<group>"; };
 		7B523EFF1DFFE7E100EB265F /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = ../src/audio/SoundBuffer.h; sourceTree = "<group>"; };
 		7B523F001DFFE7E100EB265F /* SoundCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundCache.h; path = ../src/audio/SoundCache.h; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 		7B523EF41DFFE72300EB265F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7B523EF31DFFE72300EB265F /* ./.. */,
+				7B523EF31DFFE72300EB265F /* OpenRedAlert */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -925,7 +925,7 @@
 			);
 			name = OpenRedAlert;
 			productName = OpenRedAlert;
-			productReference = 7B523EF31DFFE72300EB265F /* ./.. */;
+			productReference = 7B523EF31DFFE72300EB265F /* OpenRedAlert */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -948,6 +948,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7B523EEA1DFFE72300EB265F;
@@ -1208,9 +1209,19 @@
 		7B523EFB1DFFE72300EB265F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include/SDL,
+					../src,
+					/usr/local/include/SDL,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					/usr/local/lib,
+				);
 				OTHER_LDFLAGS = (
 					"-lsdlmain",
 					"-lsdl_mixer",
+					"-lsdl_image",
 					"-lsdl",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1220,9 +1231,19 @@
 		7B523EFC1DFFE72300EB265F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include/SDL,
+					../src,
+					/usr/local/include/SDL,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					/usr/local/lib,
+				);
 				OTHER_LDFLAGS = (
 					"-lsdlmain",
 					"-lsdl_mixer",
+					"-lsdl_image",
 					"-lsdl",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

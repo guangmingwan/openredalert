@@ -18,7 +18,7 @@
 #define L2OVERLAY_H
 
 #include <vector>
-
+#include <cstdint>
 /**
  */
 class L2Overlay {

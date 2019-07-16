@@ -371,8 +371,8 @@ Path::Path(Unit *Unit, Uint32 crBeg, Uint32 crEnd, Uint8 max_dist) : std::stack<
  */
 Path::~Path()
 {
-    while(!empty())
+    while(! empty())
     {
-        pop();
+        this->pop();
     }
 }

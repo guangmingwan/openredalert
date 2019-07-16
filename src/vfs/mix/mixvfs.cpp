@@ -17,7 +17,7 @@
 #include "mixvfs.h"
 
 #include <algorithm>
-
+#include <cstring>
 #include "blowfish.h"
 #include "ws-key.h"
 #include "include/fcnc_endian.h"

@@ -209,8 +209,6 @@ openredalert_SOURCES= \
     src/misc/INIFile.cpp \
     src/misc/INIFile.h \
     src/misc/INISection.h \
-    src/misc/KeyNotFound.cpp \
-    src/misc/KeyNotFound.h \
     src/misc/StringTableFile.cpp \
     src/misc/StringTableFile.h \
     src/ui/Button.cpp \
@@ -301,8 +299,6 @@ openredalert_SOURCES= \
     src/video/PCXHeader.h \
     src/video/PCXImage.cpp \
     src/video/PCXImage.h \
-    src/video/Renderer.cpp \
-    src/video/Renderer.h \
     src/video/sdllayer.cpp \
     src/video/SHPBase.cpp \
     src/video/SHPBase.h \

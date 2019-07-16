@@ -17,7 +17,7 @@
 #include "externalvfs.h"
 
 #include <map>
-
+#include <algorithm>
 // Includes specifics to plateforms
 #ifdef _MSC_VER
 # include <windows.h>

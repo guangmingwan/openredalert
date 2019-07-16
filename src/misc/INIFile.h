@@ -19,7 +19,7 @@
 
 #include <vector>
 #include <string>
-
+#include <stdexcept>
 /**
  * Parses inifiles.
  *

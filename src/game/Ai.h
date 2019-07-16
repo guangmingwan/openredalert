@@ -18,7 +18,8 @@
 #define AI_H
 
 #include <vector>
-
+#include <cstdint>
+#include <string>
 #define DIFFICUTY_EASY		1
 #define DIFFICUTY_MEDIUM	2
 #define DIFFICUTY_HARD		3
@@ -34,7 +35,6 @@ class Structure;
 class AiRules;
 class Unit;
 class UnitOrStructure;
-
 /**
  * Artificial Intelligence that manage Units of a Player during game
  */

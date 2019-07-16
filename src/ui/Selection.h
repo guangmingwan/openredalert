@@ -18,7 +18,7 @@
 #define SELECTION_H
 
 #include <list>
-
+#include <cstdint>
 class Structure;
 class Unit;
 

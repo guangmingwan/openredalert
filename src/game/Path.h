@@ -18,7 +18,7 @@
 #define PATH_H
 
 #include <stack>
-
+#include<cstdint>
 class Unit;
 
 /**
