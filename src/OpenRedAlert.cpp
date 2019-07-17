@@ -96,8 +96,9 @@ int main(int argc, char** argv) {
     return EXIT_SUCCESS;
   }
 
-  const std::string& binpath = determineBinaryLocation(argv[0]);
+  //const std::string& binpath = determineBinaryLocation(argv[0]);
   //const std::string& binpath = "/Users/adouming/Desktop/myprojects/openredalert2";
+const std::string& binpath = "/Users/wanguangming/Desktop/myprojects/openredalert";
   std::string lf(binpath);
   lf += "/debug.log";
 

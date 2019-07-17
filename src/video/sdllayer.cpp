@@ -30,7 +30,7 @@
  * @param x x-pos in the picture to get the pixel color form
  * @param y y-pos in the picture to get the pixel color form
  */
-void SDLLayer::get_pixel ( SDL_Surface* Surface, Uint32 &color, Uint32 x, Uint32 y )
+void SDLLayer::get_pixel ( SDL_Surface* Surface, Uint32 &color, Sint32 x, Sint32 y )
 {
 	//Uint32	color = 0;
 	Uint8	*ubuff8;
@@ -93,7 +93,7 @@ void SDLLayer::get_pixel ( SDL_Surface* Surface, Uint32 &color, Uint32 x, Uint32
  * @param x x-pos in the picture to get the pixel color form
  * @param y y-pos in the picture to get the pixel color form
  */
-void SDLLayer::get_pixel ( SDL_Surface* Surface, SDL_Color &RGBcolor, Uint32 x, Uint32 y )
+void SDLLayer::get_pixel ( SDL_Surface* Surface, SDL_Color &RGBcolor, Sint32 x, Sint32 y )
 {
 	Uint32	color = 0;
 
@@ -109,7 +109,7 @@ void SDLLayer::get_pixel ( SDL_Surface* Surface, SDL_Color &RGBcolor, Uint32 x, 
  * @param x x-pos in the picture to get the pixel color form
  * @param y y-pos in the picture to get the pixel color form
  */
-void SDLLayer::set_pixel ( SDL_Surface* Surface, Uint32 color, Uint32 x, Uint32 y )
+void SDLLayer::set_pixel ( SDL_Surface* Surface, Uint32 color, Sint32 x, Sint32 y )
 {
 	SDL_Rect DestRect;
 
@@ -129,7 +129,7 @@ void SDLLayer::set_pixel ( SDL_Surface* Surface, Uint32 color, Uint32 x, Uint32 
  * @param x x-pos in the picture to get the pixel color form
  * @param y y-pos in the picture to get the pixel color form
  */
-void SDLLayer::set_pixel ( SDL_Surface* Surface, SDL_Color RGBcolor, Uint32 x, Uint32 y )
+void SDLLayer::set_pixel ( SDL_Surface* Surface, SDL_Color RGBcolor, Sint32 x, Sint32 y )
 {
     Uint32 color = SDL_MapRGB( Surface->format, RGBcolor.r, RGBcolor.g, RGBcolor.b );
     set_pixel ( Surface, color, x, y );
